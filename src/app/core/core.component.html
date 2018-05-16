@@ -1,0 +1,82 @@
+
+  <mat-toolbar class="app-header" color="primary">
+	
+		 <mat-toolbar-row>
+			<span style="font-size: 14px;padding-left: 10px;">Quantiam Technologies Inc.</span>
+			<span class="header-spacer"></span>
+			<!-- <mat-icon class="example-icon">favorite</mat-icon>
+			<mat-icon class="example-icon">delete</mat-icon> -->
+			<span class='name-title-box' *ngIf="userLoaded">
+				<p  class='name-title'> {{userName}} </p>
+				<p  class='name-title'> {{userTitle}} </p>
+			</span>
+			<button style="font-size:12px;" mat-button (click)="logout()">Logout</button>
+		</mat-toolbar-row>
+		
+	</mat-toolbar>
+
+  <mat-sidenav-container class="app-container" [style.marginTop.px]="options.value.top">
+
+	
+  
+			<mat-sidenav #sidenav 
+						opened="defaultOpen" 
+						[class]="mobileQuery.matches ? 'app-sidenav-over' : 'app-sidenav'"
+						[mode]="mobileQuery.matches ? 'over' : 'side'" 
+						[fixedInViewport]="mobileQuery.matches" [fixedTopGap]="options.value.top"
+						[fixedBottomGap]="options.value.bottom"
+			>
+			
+			  
+					<mat-accordion class="side-panel" multi="true">
+						<mat-expansion-panel expanded="true">
+							  <mat-expansion-panel-header>
+								<mat-panel-title>
+								    {{mobileQuery.matches ? 'app-sidenav-over' : 'app-sidenav'}}
+								</mat-panel-title>
+								
+							  </mat-expansion-panel-header>
+								<mat-list>
+								 <mat-list-item routerLink="/sample/database" > Database </mat-list-item>
+								 <mat-list-item routerLink="/sample" > Create New Sample </mat-list-item>
+								 <mat-list-item> Analytics </mat-list-item>
+								 <mat-list-item> Test Spot</mat-list-item>
+								</mat-list>  
+						</mat-expansion-panel>
+						<mat-divider></mat-divider>
+						<mat-expansion-panel expanded="true">
+								<mat-expansion-panel-header>
+								
+								
+								<mat-panel-title>
+								  Samples 2
+								</mat-panel-title>
+								
+							  </mat-expansion-panel-header>
+								<mat-list>
+								 <mat-list-item> Database </mat-list-item>
+								 <mat-list-item> Create New Sample </mat-list-item>
+								 <mat-list-item> Analytics </mat-list-item>
+								 <mat-list-item> Test Spot</mat-list-item>
+								</mat-list>
+						</mat-expansion-panel>
+						<mat-divider></mat-divider>
+					
+					
+						</mat-accordion>				  
+			  
+			</mat-sidenav>
+				
+			<mat-sidenav-content class="app-content" >
+				<router-outlet></router-outlet>
+
+			</mat-sidenav-content>
+	
+  </mat-sidenav-container>
+
+  <mat-toolbar class="app-footer" color="primary">
+		
+		
+		
+	</mat-toolbar>
+

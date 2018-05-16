@@ -1,0 +1,85 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";http://localhost:4200/sample/list
+
+/*  */
+
+/* Style Overwrites  */
+
+
+
+/**  STYLE 4 */
+
+.tab-content::-webkit-scrollbar {
+	width: 8px;
+    background: rgb(52, 89, 122);
+    border-radius: 20px; 
+	 cursor:pointer !important;
+} 
+
+.tab-content::-webkit-scrollbar-thumb {
+	background-color: rgb(52, 89, 122);
+    border: 2px solid #555555;
+    border-radius: 20px;
+}
+
+.tab-content::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+    border-radius: 20px;
+}
+
+.tab-content
+{
+	position: relative;
+    z-index: 1;
+    display: block;
+    height: 91%;
+    overflow: auto;
+	margin: 5px;
+}
+
+
+
+.mat-tab-link
+{
+	height: 35px !important;
+    padding: 0 12px !important;
+    min-width: 100px !important;
+	font-size: 11px !important;
+   		
+}
+
+.mat-tab-link-active
+{
+	color: #093758;
+    font-weight: 600;
+    font-size: 12px !important;
+}
+
+/* notification overrieds */
+
+.simple-notification-wrapper.bottom
+{
+	
+	bottom: 60px !important;
+}
+
+.simple-notification.error
+{
+	background: #9c372f !important;
+}
+.simple-notification
+{
+	border-radius: 50px !important;
+}
+
+.simple-notification .sn-progress-loader
+{
+		margin-left:28px;
+		margin-right: 28px;
+		width: 80% !important;
+		top: 3px !important;
+		height: 3px !important;
+	
+}
+
