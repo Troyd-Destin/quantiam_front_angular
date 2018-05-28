@@ -10,7 +10,7 @@
 				<p  class='name-title'> {{userName}} </p>
 				<p  class='name-title'> {{userTitle}} </p>
 			</span>
-			<button style="font-size:12px;" mat-button (click)="logout()">Logout</button>
+			<button style="font-size:14px; font-weight: bold;" mat-button (click)="logout()">Logout</button>
 		</mat-toolbar-row>
 		
 	</mat-toolbar>
@@ -32,15 +32,17 @@
 						<mat-expansion-panel expanded="true">
 							  <mat-expansion-panel-header>
 								<mat-panel-title>
-								    {{mobileQuery.matches ? 'app-sidenav-over' : 'app-sidenav'}}
+								    Materials
 								</mat-panel-title>
 								
 							  </mat-expansion-panel-header>
 								<mat-list>
-								 <mat-list-item routerLink="/sample/database" > Database </mat-list-item>
-								 <mat-list-item routerLink="/sample" > Create New Sample </mat-list-item>
-								 <mat-list-item> Analytics </mat-list-item>
-								 <mat-list-item> Test Spot</mat-list-item>
+								 <mat-list-item  > 
+										<button routerLink="/material" mat-button>Home</button>
+								</mat-list-item>
+								 <mat-list-item > 
+									 <button routerLink="/material/database" mat-button>Database</button>
+								</mat-list-item>
 								</mat-list>  
 						</mat-expansion-panel>
 						<mat-divider></mat-divider>
@@ -49,15 +51,15 @@
 								
 								
 								<mat-panel-title>
-								  Samples 2
+									Samples
 								</mat-panel-title>
 								
 							  </mat-expansion-panel-header>
 								<mat-list>
-								 <mat-list-item> Database </mat-list-item>
-								 <mat-list-item> Create New Sample </mat-list-item>
-								 <mat-list-item> Analytics </mat-list-item>
-								 <mat-list-item> Test Spot</mat-list-item>
+								 <mat-list-item  > 
+										 <button routerLink="/sample" mat-button>Sample</button>
+								</mat-list-item>
+								
 								</mat-list>
 						</mat-expansion-panel>
 						<mat-divider></mat-divider>

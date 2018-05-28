@@ -26,6 +26,7 @@ import { NgHttpLoaderModule } from 'ng-http-loader/ng-http-loader.module';
   
 import { Routes, RouterModule } from '@angular/router';
 import { Observable} from 'rxjs';
+
 //
 //import { CoreModule } from './core/core.module';
 //
@@ -34,7 +35,6 @@ import { Observable} from 'rxjs';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
 import { CoreModule } from './core/core.module';
-import { SampleModule } from './sample/sample.module';
 
 const routes: Routes = [
   {
@@ -53,7 +53,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    AuthComponent
+    AuthComponent,    
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -78,7 +78,7 @@ const routes: Routes = [
       }), 
     
   
-    
+   
     //Angular Material Modules 
     MatButtonModule,
 		MatCheckboxModule,//

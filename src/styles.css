@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";http://localhost:4200/sample/list
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 /*  */
 
@@ -10,7 +10,7 @@
 /**  STYLE 4 */
 
 .tab-content::-webkit-scrollbar {
-	width: 8px;
+	width: 5px;
     background: rgb(52, 89, 122);
     border-radius: 20px; 
 	 cursor:pointer !important;
@@ -33,9 +33,10 @@
 	position: relative;
     z-index: 1;
     display: block;
-    height: 91%;
+    height: 90%;
     overflow: auto;
-	margin: 5px;
+	padding: 15px 25px 0px 20px;
+	
 }
 
 
@@ -45,7 +46,7 @@
 	height: 35px !important;
     padding: 0 12px !important;
     min-width: 100px !important;
-	font-size: 11px !important;
+	font-size: 13px !important;
    		
 }
 
@@ -53,7 +54,7 @@
 {
 	color: #093758;
     font-weight: 600;
-    font-size: 12px !important;
+    font-size: 14px !important;
 }
 
 /* notification overrieds */
@@ -83,3 +84,82 @@
 	
 }
 
+/** Because I can **/
+
+
+
+/** Datatable Tweaks **/
+
+.dataTables_length 
+{
+	margin-bottom:20px !important;
+}
+
+.dataTables_filter input[type=search] {
+    border: 1px solid #E4E4E4;
+    border-radius: 3px;
+}
+
+.dataTables_wrapper {
+	font-size: 13px;
+}
+
+
+/** Table "Stats" **/
+
+.table-stats {
+    border: 1px solid #C2C2C2;
+    border-collapse: separate;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0 !important;
+    font-family: verdana,helvetica,arial,sans-serif;
+    font-size: 12px;
+    color: #333;
+}
+
+.table-clickable tbody tr{
+	
+	cursor: pointer;
+}
+
+.table-stats thead tr:nth-child(1) th {
+    /* font-size: 13px; */
+    font-size: 1.0em;
+    font-weight: bold;
+    font-family: helvetica,arial,sans-serif;
+    background: rgb(45, 89, 122);
+    color: #FFF;
+    border-bottom: 1px solid #FFF;
+    border-radius: 0 !important;
+	    text-align: start;
+}
+
+.table-striped > tbody > tr:nth-of-type(even) {
+    background-color: rgba(242, 243, 243, 0.40);
+}
+
+.table-stats.table-condensed th {
+    padding: 4px;
+}
+
+.table-stats.table-condensed td {
+	padding: 2px 4px;
+	font-size: 10px;
+}
+
+
+.table-condensed > tbody > tr > td {
+    vertical-align: middle;
+}
+
+/* select2  */
+
+.select2-results__option div
+{
+	display:inline-block;
+}
+
+.bigdrop{
+	width: 800px !important;
+}

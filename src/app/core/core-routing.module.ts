@@ -7,10 +7,15 @@ const routes: Routes = [
 		path:'',
 		component: CoreComponent,
 		children:[		
-			{
+			
+      {
+				path: 'material',
+				loadChildren: '../material/material.module#MaterialModule',
+			},
+      {
 				path: 'sample',
 				loadChildren: '../sample/sample.module#SampleModule',
-			}
+			},
 		]
 	},
  

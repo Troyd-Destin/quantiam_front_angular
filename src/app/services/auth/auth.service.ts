@@ -10,6 +10,12 @@ import { NotificationsService } from 'angular2-notifications';
 
 import { UserService } from '../user/user.service';
 
+interface Authentication {
+	
+	token: string;
+	
+}
+
 @Injectable({providedIn: 'root',})
 export class AuthService {
 //
@@ -26,12 +32,15 @@ export class AuthService {
    
       var params = {username: username, pass: pass};
       console.log(params);
-      return this.http.post(environment.apiUrl+'/auth',params).subscribe(
+      return this.http.post<Authentication>(environment.apiUrl+'/auth',params).subscribe(
       
           response => {
             console.log(response);
-            localStorage.setItem('token',response.token);                      
-            this.router.navigate(['']);
+            if(response.token)
+			{
+				localStorage.setItem('token',response.token);                      
+				this.router.navigate(['']);
+			}
             //this.notification.success('Authenticated','Seems good.',{timeOut:3000,showProgressBar:true,clickToClose: true});
           },
           error => {

@@ -4,6 +4,9 @@ import { SampleIndexComponent } from './sample-index/sample-index.component';
 import { SampleDatabaseComponent } from './sample-database/sample-database.component';
 import { SampleComponent } from './sample/sample.component';
 import { SampleFormComponent } from './sample-form/sample-form.component';
+import { SgxScaleAuthComponent } from './sgx-scale-auth/sgx-scale-auth.component';
+
+
 const routes: Routes = [
   
   {
@@ -15,11 +18,17 @@ const routes: Routes = [
           path:'database',
           component: SampleDatabaseComponent,
          },
+      
+        {
+          path:'sgx-scale-auth',
+          component: SgxScaleAuthComponent,
+  
+        },
         {
           path:':id',
           component: SampleComponent,
   
-        }
+        },
   
   
         

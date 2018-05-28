@@ -4,6 +4,16 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {MediaMatcher} from '@angular/cdk/layout';
 import { AuthService } from '../services/auth/auth.service';
 import { UserService } from '../services/user/user.service';
+import { catchError, map, tap, delay } from 'rxjs/operators';
+
+
+import { WebsocketService } from '../services/websocket/websocket.service'; 
+
+
+interface webSocketMessages {
+	
+}
+
 
 @Component({
   selector: 'app-core',
@@ -12,9 +22,14 @@ import { UserService } from '../services/user/user.service';
    providers: [
       MediaMatcher,
       UserService,
+	  WebsocketService,
    
   ],
 })
+
+
+	
+
 export class CoreComponent implements OnInit {
 
   
@@ -25,13 +40,55 @@ export class CoreComponent implements OnInit {
   userLoaded: boolean = false;
   userTitle: null;
   userName: null;
+  
+  webSocketMessages: webSocketMessages;
+  lastWebSocketMessage;
+  
+  
 	options: FormGroup;	
 	mobileQuery: MediaQueryList;
 	private _mobileQueryListener: () => void;	
 	
 
-  constructor(fb: FormBuilder,changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private userService: UserService, private auth: AuthService) {
-    
+  constructor(
+		fb: FormBuilder,
+		changeDetectorRef: ChangeDetectorRef, 
+		media: MediaMatcher,
+		private userService: UserService, 
+		private auth: AuthService,
+		websocket: WebsocketService
+		
+	) {
+	
+	
+	this.webSocketMessages = {};
+	this.lastWebSocketMessage = {};
+  
+  
+  const quantiamWebsocket = websocket.connect().subscribe(res=>{
+			
+		let response = JSON.parse(res.data); 
+      try{ 
+        if(!this.webSocketMessages[response.machine.name]) this.webSocketMessages[response.machine.name] = {};
+        
+        if(JSON.stringify(this.webSocketMessages[response.machine.name]) === JSON.stringify(response))
+        {
+          
+        }
+        else
+        {
+          this.webSocketMessages[response.machine.name] = response;			
+          console.log('Websocket Messages', this.webSocketMessages);
+        }
+      }
+      catch(e){}
+   
+	});
+
+
+  
+  console.log(quantiamWebsocket);
+  
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
       this._mobileQueryListener = () => changeDetectorRef.detectChanges();
       this.mobileQuery.addListener(this._mobileQueryListener);
@@ -43,14 +100,14 @@ export class CoreComponent implements OnInit {
       });
       
      // get user data and store in user Variable
-     this.userService.getAuthedUser().subscribe( res => { 
-       console.log('worked'); 
-       this.userTitle = res.title; 
+      this.userService.getAuthedUser().subscribe(res=>{
+        
+         this.userTitle = res.title; 
        this.userName = res.name; 
        this.userLoaded = true;
-       
-       });
-      
+        
+        });
+     
       //this.user.getUser
   }
   
@@ -64,7 +121,13 @@ export class CoreComponent implements OnInit {
   
   
   ngOnInit() {
-    
+      
+ setTimeout(function(){
+  // websocket.subject.destination.next({'machine':{'name':'test_machine'}})
+  console.log(this.connection);
+   //this.connection.next({'machine':{'name':'test_machine'}});
+   },2000);
+  
     //
     
   }

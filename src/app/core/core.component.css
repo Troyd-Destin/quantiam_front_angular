@@ -1,7 +1,7 @@
 
 .app-container {
   position: absolute;
-  top: 30px;
+  top: 40px;
   bottom: 30px;
   left: 0;
   right: 0;
@@ -25,10 +25,11 @@
     top: 0;
     bottom: 0;
     z-index: 3;
-    outline: 0;
+    outline: 0 !important;
     box-sizing: border-box;
     overflow-y: auto;
     transform: translate3d(-100%,0,0);
+	width: 125px;
 
 }
 
@@ -73,7 +74,7 @@
   bottom: 0;
   left: 0;
   right: 0;
- height:30px;
+ height:10px;
 background: rgb(52, 89, 122); 
 }
 
@@ -89,7 +90,7 @@ background: rgb(52, 89, 122);
 
 .app-header mat-toolbar-row {
 	
-	height:30px !important;
+	height:40px !important;
 	    padding: 0 8px !important;
 }
 
@@ -98,15 +99,15 @@ background: rgb(52, 89, 122);
 }
 
 .app-header .name-title-box {
-	font-size: 9px;
+	font-size: 11px;
 	height: 30px;
-	padding-top: 10px;
+	padding-top: 0px;
 	margin: 0px 5px 0px 5px;
 }
 
 .app-header .name-title
 {
-	line-height:10px;
+	line-height:15px;
 	margin: 0px 0px 0px 0px;
 }
 
@@ -175,9 +176,25 @@ background: rgb(52, 89, 122);
 	padding: 0px;
 }
 
+.side-panel .mat-button
+{
+		font-size: 12px;
+    height: 20px;
+    line-height: 0px;
+   width: 122px;
+    position: absolute;
+    padding: 0px;
+    left: -23px;
+}
+
 
 .app-header-mobile {
   position: fixed;
   /* Make sure the toolbar will stay on top of the content as it scrolls past. */
   z-index: 2;
 }
+
+mat-list-item:focus{
+	outline: none !important;
+}
+
