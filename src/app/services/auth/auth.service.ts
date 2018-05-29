@@ -37,10 +37,18 @@ export class AuthService {
           response => {
             console.log(response);
             if(response.token)
-			{
-				localStorage.setItem('token',response.token);                      
-				this.router.navigate(['']);
-			}
+              {
+                localStorage.setItem('token',response.token);
+                
+              if(sessionStorage.getItem("redirectAuthPreviousRouteUrl") === null){ this.router.navigate(['']) } 
+              else { 
+              
+                this.router.navigate([sessionStorage.getItem('redirectAuthPreviousRouteUrl')]); 
+                sessionStorage.removeItem('redirectAuthPreviousRouteUrl');
+                }
+                
+               
+              }
             //this.notification.success('Authenticated','Seems good.',{timeOut:3000,showProgressBar:true,clickToClose: true});
           },
           error => {

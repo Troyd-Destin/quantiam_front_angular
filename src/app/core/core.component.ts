@@ -124,6 +124,8 @@ export class CoreComponent implements OnInit {
   
   logout()
   {
+  
+      
       this.auth.logout();
   
   }
