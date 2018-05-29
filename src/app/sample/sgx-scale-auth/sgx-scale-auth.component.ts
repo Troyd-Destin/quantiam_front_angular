@@ -51,7 +51,7 @@ export class SgxScaleAuthComponent implements OnInit {
      
           // if(res.event == 'status') this.scaleInfo = res;
       
-        //   console.log(res);
+           console.log(res.data);
           this.scaleInfoTest = true;
           
           
@@ -60,7 +60,7 @@ export class SgxScaleAuthComponent implements OnInit {
           this.scaleInfo = JSON.parse(res.data);
           
          
-          console.log(this.scaleInfo );
+          //console.log(this.scaleInfo );
          } catch(e) {}
           //console.log(this.ws);
          
@@ -78,6 +78,17 @@ export class SgxScaleAuthComponent implements OnInit {
     this.locked = true;
     
     this.ws.next(payload);    
+    
+    
+        let payload = {
+      "purpose":"balance_command",
+      "string":"K 3"
+      };
+    
+  
+    
+    this.ws.next(payload);    
+    
   }
   
   public unlockScale(){
@@ -89,11 +100,15 @@ export class SgxScaleAuthComponent implements OnInit {
       };
     
     this.locked = false;
-    
-  
-   // console.log(payload,this.ws.destination.next(payload));
     this.ws.next(payload); 
       
+    
+    
+      let payload = {
+      "purpose":"balance_command",
+      "string":"K 1"
+      };
+   this.ws.next(payload); 
     
    }
    
