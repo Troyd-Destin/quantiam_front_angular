@@ -51,17 +51,26 @@ export class SgxScaleAuthComponent implements OnInit {
      
           // if(res.event == 'status') this.scaleInfo = res;
       
-           console.log(res.data);
+         
           this.scaleInfoTest = true;
           
           
           
          try{
-          this.scaleInfo = JSON.parse(res.data);
+            let data = JSON.parse(res.data);
+          try{
+                if(data.machine) this.scaleInfo = data;
+            
+            
+          }catch(e){}
+        
           
-         
+           
           //console.log(this.scaleInfo );
-         } catch(e) {}
+         } catch(e) {
+         
+               console.log(e,res.data);
+         }
           //console.log(this.ws);
          
          });
