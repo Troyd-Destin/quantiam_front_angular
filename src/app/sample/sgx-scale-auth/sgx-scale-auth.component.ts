@@ -80,7 +80,7 @@ export class SgxScaleAuthComponent implements OnInit {
     this.ws.next(payload);    
     
     
-        let payload = {
+         payload = {
       "purpose":"balance_command",
       "string":"K 3"
       };
@@ -104,7 +104,7 @@ export class SgxScaleAuthComponent implements OnInit {
       
     
     
-      let payload = {
+       payload = {
       "purpose":"balance_command",
       "string":"K 1"
       };
