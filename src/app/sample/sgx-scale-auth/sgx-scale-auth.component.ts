@@ -27,30 +27,46 @@ export class SgxScaleAuthComponent implements OnInit {
     
     //console.log(permissionTest);
     
-    if(this.permissionTest) this.ws = scale_websocket.connect().subscribe(res=>{
-     
-          // if(res.event == 'status') this.scaleInfo = res;
-      
-          // console.log(res);
-          this.scaleInfoTest = true;
-         try{
-         
-          if(res.machine.name == '') this.scaleInfo = res;
-         } catch(e) {}
-          //console.log(this.ws);
-         
-         });
+    if(this.permissionTest) this.ws = scale_websocket.connect();
+   
+    console.log(this.ws);
+   
+   /*  
+   
+   
+   */
     
     
     }
 
   ngOnInit() {
     
-    
+    this.subscribeToScale();
    
     
   }
   
+  subscribeToScale(){
+  this.ws.subscribe(res=>{
+     
+          // if(res.event == 'status') this.scaleInfo = res;
+      
+        //   console.log(res);
+          this.scaleInfoTest = true;
+          
+          
+          
+         try{
+          this.scaleInfo = JSON.parse(res.data);
+          
+         
+          console.log(this.scaleInfo );
+         } catch(e) {}
+          //console.log(this.ws);
+         
+         });
+  
+  }
   
   public lockScale(){
   
@@ -59,22 +75,24 @@ export class SgxScaleAuthComponent implements OnInit {
       "string":"D \"Locked\""
       };
     
-    locked = true;
+    this.locked = true;
     
-    this.ws.destination.next(payload);    
+    this.ws.next(payload);    
   }
   
   public unlockScale(){
     
-       
+    
     let payload = {
       "purpose":"balance_command",
       "string":"DW"
       };
     
-    locked = false;
+    this.locked = false;
+    
   
-    this.ws.destination.next(payload);
+   // console.log(payload,this.ws.destination.next(payload));
+    this.ws.next(payload); 
       
     
    }

@@ -43,7 +43,7 @@ export class CoreComponent implements OnInit {
   
   webSocketMessages: webSocketMessages;
   lastWebSocketMessage;
-  
+  ws;
   
 	options: FormGroup;	
 	mobileQuery: MediaQueryList;
@@ -63,11 +63,15 @@ export class CoreComponent implements OnInit {
 	
 	this.webSocketMessages = {};
 	this.lastWebSocketMessage = {};
-  
-  
-  const quantiamWebsocket = websocket.connect().subscribe(res=>{
+	
+	//global websocket logger
+	this.ws = websocket;
+  console.log(this.ws);
+  this.ws.connect().subscribe(res=>{
 			
-		let response = JSON.parse(res.data); 
+		let response = JSON.parse(res.data);
+		
+   
       try{ 
         if(!this.webSocketMessages[response.machine.name]) this.webSocketMessages[response.machine.name] = {};
         
@@ -82,12 +86,15 @@ export class CoreComponent implements OnInit {
         }
       }
       catch(e){}
-   
+
+    
+
+	
 	});
-
-
   
-  console.log(quantiamWebsocket);
+  
+
+  console.log(websocket);
   
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
       this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -111,6 +118,10 @@ export class CoreComponent implements OnInit {
       //this.user.getUser
   }
   
+  
+
+  
+  
   logout()
   {
       this.auth.logout();
@@ -121,14 +132,16 @@ export class CoreComponent implements OnInit {
   
   
   ngOnInit() {
-      
- setTimeout(function(){
-  // websocket.subject.destination.next({'machine':{'name':'test_machine'}})
-  console.log(this.connection);
-   //this.connection.next({'machine':{'name':'test_machine'}});
-   },2000);
-  
+    
     //
+    
+/*     setTimeout(function(){
+   console.log(this.ws);
+   
+     this.ws.subject.destination.next({'machine':{'name':'test_machine'}})
+   
+},1000); */
+  
     
   }
   
