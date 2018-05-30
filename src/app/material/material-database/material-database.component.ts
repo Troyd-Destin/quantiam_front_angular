@@ -95,7 +95,7 @@ export class MaterialDatabaseComponent implements OnInit {
             { data: 'name', title:"Material",orderable:false,"width": "15%",},
             { data: 'grade', title:"Grade",orderable:false, "width": "auto",searchable:false},
             { data: 'supplier.supplier_name', title:"Supplier",orderable:false, searchable:false,"width": "auto",},
-            { data: 'formula', title:"Formula",orderable:false, searchable:false},
+            { data: 'formula', title:"Formula",orderable:false, searchable:true},
             { data: 'catalog', title:"Catalog",orderable:false, searchable:false},
             { data: 'cas', title:"CAS",orderable:false, searchable:false},
             { data: 'density', title:"Density",orderable:false, searchable:false },

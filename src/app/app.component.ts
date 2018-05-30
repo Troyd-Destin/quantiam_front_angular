@@ -14,10 +14,15 @@ export class AppComponent {
     
     router.events    
     .subscribe(e => {    
+  
      if(sessionStorage.getItem("redirectAuthPreviousRouteUrl") === null && e.url != '/auth' && typeof e.url !== 'undefined') 
      {  
         sessionStorage.setItem('redirectAuthPreviousRouteUrl',e.url);
      }
+     
+     
+    // if (e instanceof ResolveStart) sessionStorage.setItem('redirectAuthPreviousRouteUrl',e.url);
+
     });
   }
 }

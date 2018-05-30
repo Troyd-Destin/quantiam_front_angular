@@ -65,8 +65,10 @@ export class CoreComponent implements OnInit {
 	this.lastWebSocketMessage = {};
 	
 	//global websocket logger
+  
 	this.ws = websocket;
-  console.log(this.ws);
+  
+  
   this.ws.connect().subscribe(res=>{
 			
 		let response = JSON.parse(res.data);
@@ -86,15 +88,9 @@ export class CoreComponent implements OnInit {
         }
       }
       catch(e){}
-
-    
-
-	
-	});
+	}); 
   
   
-
-  console.log(websocket);
   
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
       this._mobileQueryListener = () => changeDetectorRef.detectChanges();

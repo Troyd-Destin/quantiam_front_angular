@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MaterialService } from '../../services/material/material.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, Params,RoutesRecognized  } from '@angular/router';
 import { catchError, map, tap,delay } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
+
+
 @Component({
   selector: 'app-material-view',
   templateUrl: './material-view.component.html',
@@ -9,33 +13,45 @@ import { catchError, map, tap,delay } from 'rxjs/operators';
 })
 export class MaterialViewComponent implements OnInit {
 
+  _material = null;
   
+  material = {};
+  renderView: boolean = false;
 
-  constructor(private material: MaterialService,private route: ActivatedRoute ) { }
+  constructor(private materialService: MaterialService,private route: ActivatedRoute, private router: Router ) { }
 
   ngOnInit() {
-    //console.log(this.route.params);
-    let id; 
-	this.route.params.subscribe(
-		params => {
-		
-			id = params.id;
-		} 
-	);
-	
-   //  console.log(this.route.params);
-    this.material.get(id).subscribe(
-    
-      res=>{
+   
+    let id  = this.route.snapshot.params.id;  //obtain ID from route   
+      console.log(id);
+       this.materialService.getMaterial(id);  // fetch the material belonging to this id
       
-        this.material = res;
-        console.log('Material Obj',res);
-        
-        }
-    );
+      this._material = this.materialService.material$.subscribe(res=> { //subscribe to the material service for updates
+     
+        if(typeof res !== 'undefined') this.material = res;
+        console.log(this._material, res);
+       
+       });
     
+    
+     
+     // setInterval(function(){     this.},2000);
+     
   }
-  empty() {
-    console.log('things');
+  
+  
+  updateMaterial(field){
+  
+    var params = {};
+    params[field.name] =  field.value;
+    this.materialService.updateMaterial(params);
+  
+  }
+  
+  
+  ngOnDestroy()
+  {
+    this._material.unsubscribe();
+    
   }
 }

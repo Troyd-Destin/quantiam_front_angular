@@ -1,13 +1,13 @@
 <nav mat-tab-nav-bar>
 			<a mat-tab-link routerLink="database" routerLinkActive="mat-tab-link-active"> Materials </a>
-			<a mat-tab-link [hidden]="!selectedMaterialId" [routerLink]="selectedMaterialId" routerLinkActive="mat-tab-link-active"> 
+			<a mat-tab-link *ngIf="selectedMaterialId" [routerLink]="['/material',selectedMaterialId]" routerLinkActive="mat-tab-link-active"> 
 				Material{{' - '+selectedMaterialId}}
 			</a>
 			<a mat-tab-link  routerLink="container/database"> Containers </a>
 			<a mat-tab-link > Container View </a>		
 			<a mat-tab-link  (click)="openDialog()" >Container - 34</a>
 		</nav>
-				
+			
 		<div class="tab-content">
 				<router-outlet ></router-outlet>
 		</div>

@@ -2,60 +2,67 @@ import { environment } from '../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap, delay } from 'rxjs/operators';
-import { Observable,of, Subject } from 'rxjs'
+import { catchError, map, tap, delay,shareReplay, publishReplay,refCount } from 'rxjs/operators';
+import { Observable,of, BehaviorSubject,throwError } from 'rxjs'
+import { NotificationsService } from 'angular2-notifications';
 
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class MaterialService {
 
-  endpoint = '/material';
-  material = new Subject<any>();
+  public _materialSource = new BehaviorSubject({});
+  public material$: Observable<any> = this._materialSource.asObservable();
   
-  //Material$;
+  private last_id: number;  
+  private endpoint = '/material';
 
-  constructor(public http: HttpClient) { }
+  constructor(public http: HttpClient, public notification: NotificationsService) { }
   
     
-  public get(id = null) {
-  
-    let storedMaterial = JSON.parse(localStorage.getItem('material')) || null; 
-    
-    console.log(storedMaterial);
-    
-    if(storedMaterial.id == id || !id)
+  getMaterial(id :number)
+  {
+    if(id != this.last_id) // fetch if id is different
     {
-     
-      this.material.next(storedMaterial);
+      
+     this.http.get<any>(environment.apiUrl+`${this.endpoint}/${id}`)
+     .pipe(
+        tap( r => { 
+                    this.last_id = id;
+                    
+                    }), //set id to be last_id
+        map( res => res), // return results without transformation
+      
+      )
+      .subscribe(
+        (material) => this._materialSource.next(material) //broadcast the material to all subscribers       
+      );
     }
-    else
-    {    
-   
-     this.http.get(environment.apiUrl+`${this.endpoint}/${id}`).subscribe(
-      //  delay(1000), // simulate slow network
+  }
+  
+  updateMaterial(params)
+  {
+     let id = this.last_id;    
+     
+     this.http.put<any>(environment.apiUrl+`${this.endpoint}/${id}?filterSpinner`, params)
+     .pipe(
+        tap( r => {}), 
+        map( res => res), // return results without transformation
+         //catchError( (e) => this.notification.error('Error','Problem updating material.',{showProgressBar:false,timeOut:3000,clickToClose: true})),
        
-          x => {
-            console.log(`Fetched Material ${id}`, x);
-            localStorage.setItem('material',JSON.stringify(x));
-            this.material.next(x);
-          }
-        
-        );
-    }   
-    
-    return this.material.asObservable();
-  }
-  
-  public update (){
-  
+      )
+      .subscribe(
+        (material) => 
+        {
+        //  this._materialSource.next(material); //broadcast the material to all subscribers 
+          this.notification.success('Updated','material updated',{showProgressBar:false,timeOut:3000,clickToClose: true});
+        }
+      );
   
   }
-  
-  public delete(){
-  
-  
-  }
+ 
   
   
   

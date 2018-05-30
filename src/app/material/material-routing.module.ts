@@ -22,6 +22,7 @@ const routes: Routes = [
 		 {
           path:'container/:id',
           component: MaterialContainerViewComponent,
+          pathMatch: 'full',
          },
 		 {
           path:'database',
@@ -35,8 +36,8 @@ const routes: Routes = [
         {
 		  //name: 'material_view',
           path:':id',
-          component: MaterialViewComponent
-  
+          component: MaterialViewComponent,
+          pathMatch: 'full'
         },
         
   
