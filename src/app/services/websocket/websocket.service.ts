@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import {Observable, Subject, Observer} from 'rxjs';
+import {Observable, Subject, Observer,BehaviorSubject} from 'rxjs';
+
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +12,49 @@ export class WebsocketService {
  
   private subject: Subject<MessageEvent>;
 	private subjectData: Subject<number>;
+  
+  public _wsSource = new BehaviorSubject({});
+  public ws$: Observable<any> = this._wsSource.asObservable();
+  
+  private prefixNavigationMap = { 
+    'QCID': '/material/container/QCID-',
+    'QMSMLC': '/material/container/',
+    'QMSML': '/material/lot/',
+    'QMIM': '/material/',
+  
+  };
+  
+  private redirectOnScan: boolean = true;
 
+  
+  constructor(public router: Router) { }
+  
 	// For chat box
 	public connect(): Subject<MessageEvent> {
 		if (!this.subject) {
-			this.subject = this.create(this.socketUrl);
+			this.subject = this.create(this.socketUrl).subscribe(
+      res =>
+      {
+        this._wsSource.next(res);
+      // console.log(resres.data.indexOf('"type": "Balance"'));
+        
+        try{
+            if(res.data.indexOf('"type": "Scanner"') !== -1 && this.redirectOnScan){
+                
+                let scannerResponse = JSON.parse(res.data);
+                let codeObj = parseScannerCode(scannerResponse.data);
+               // console.log(codeObj);
+                let selectedRoute = this.prefixNavigationMap[codeObj.prefix];                
+                this.router.navigate([selectedRoute+codeObj.id]);
+                
+            }
+              
+            //if(res..data.machine.type == 'scanner') console.log(res);
+        }catch(e){}
+       //   console.log(res);
+      }
+      
+      );
 		}
 		return this.subject;
 	}
@@ -30,6 +70,8 @@ export class WebsocketService {
 
 				return ws.close.bind(ws);
 			});
+      
+      return observable;
 
 		let observer = {
 			next: (data: Object) => {
@@ -42,40 +84,29 @@ export class WebsocketService {
 		return Subject.create(observer, observable);
 	}
 
-	// For random numbers
-	public connectData(url: string): Subject<number> {
-		if (!this.subjectData) {
-			this.subjectData = this.createData(url);
-		}
-		return this.subjectData;
-	}
-
-	private createData(url: string): Subject<number> {
-		let ws = new WebSocket(url);
-
-		let observable = Observable.create(
-			(obs: Observer<number>) => {
-				ws.onmessage = obs.next.bind(obs);
-				ws.onerror   = obs.error.bind(obs);
-				ws.onclose   = obs.complete.bind(obs);
-
-				return ws.close.bind(ws);
-			});
-
-		let observer = {
-			next: (data: Object) => {
-				if (ws.readyState === WebSocket.OPEN) {
-					ws.send(JSON.stringify(data));
-				}
-			}
-		};
-
-		return Subject.create(observer, observable);
-	}
   
   sendMessage (msg)
   {
  //  this.subjectData
+  
+  }
+  
+  function parseScannerCode (code)
+  {
+    try{
+        let explode = code.split("-");
+        let r = {};
+        r['prefix'] = explode[0];
+        r['id'] = explode[1];
+        return r;
+    
+    }
+    catch(e){
+    
+    return false;
+    
+    }
+  
   
   }
   

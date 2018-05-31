@@ -4,8 +4,9 @@
 				Material{{' - '+selectedMaterialId}}
 			</a>
 			<a mat-tab-link  routerLink="container/database"> Containers </a>
-			<a mat-tab-link > Container View </a>		
-			<a mat-tab-link  (click)="openDialog()" >Container - 34</a>
+			<!-- <a mat-tab-link > Container View </a> -->		
+			<a mat-tab-link  *ngIf="selectedContainerId" [routerLink]="['/material/container',selectedContainerId]" >Container{{' - '+selectedContainerId}}</a>
+			<!-- <a mat-tab-link   (click)="openDialog()" >Container - 34</a> -->
 		</nav>
 			
 		<div class="tab-content">

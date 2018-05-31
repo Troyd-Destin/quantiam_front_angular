@@ -28,9 +28,7 @@ interface webSocketMessages {
 })
 
 
-	
-
-export class CoreComponent implements OnInit {
+	export class CoreComponent implements OnInit {
 
   
 
@@ -43,7 +41,7 @@ export class CoreComponent implements OnInit {
   
   webSocketMessages: webSocketMessages;
   lastWebSocketMessage;
-  ws;
+  _ws;
   
 	options: FormGroup;	
 	mobileQuery: MediaQueryList;
@@ -56,41 +54,10 @@ export class CoreComponent implements OnInit {
 		media: MediaMatcher,
 		private userService: UserService, 
 		private auth: AuthService,
-		websocket: WebsocketService
+		private websocket: WebsocketService
 		
 	) {
-	
-	
-	this.webSocketMessages = {};
-	this.lastWebSocketMessage = {};
-	
-	//global websocket logger
-  
-	this.ws = websocket;
-  
-  
-  this.ws.connect().subscribe(res=>{
-			
-		let response = JSON.parse(res.data);
-		
-   
-      try{ 
-        if(!this.webSocketMessages[response.machine.name]) this.webSocketMessages[response.machine.name] = {};
-        
-        if(JSON.stringify(this.webSocketMessages[response.machine.name]) === JSON.stringify(response))
-        {
-          
-        }
-        else
-        {
-          this.webSocketMessages[response.machine.name] = response;			
-          console.log('Websocket Messages', this.webSocketMessages);
-        }
-      }
-      catch(e){}
-	}); 
-  
-  
+	  
   
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
       this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -115,9 +82,6 @@ export class CoreComponent implements OnInit {
   }
   
   
-
-  
-  
   logout()
   {
   
@@ -130,15 +94,33 @@ export class CoreComponent implements OnInit {
   
   
   ngOnInit() {
-    
-    //
-    
-/*     setTimeout(function(){
-   console.log(this.ws);
+  
+    this.websocket.connect();
+  
+ 
+ /*      
+ 
+  this.webSocketMessages = {};
+	this.lastWebSocketMessage = {};
+		let response = JSON.parse(res.data);
+		
    
-     this.ws.subject.destination.next({'machine':{'name':'test_machine'}})
-   
-},1000); */
+      try{ 
+        if(!this.webSocketMessages[response.machine.name]) this.webSocketMessages[response.machine.name] = {};
+        
+        if(JSON.stringify(this.webSocketMessages[response.machine.name]) === JSON.stringify(response))
+        {
+          
+        }
+        else
+        {
+          this.webSocketMessages[response.machine.name] = response;			
+          console.log('Websocket Messages', this.webSocketMessages);
+        }
+      }
+      catch(e){} */
+
+  
   
     
   }

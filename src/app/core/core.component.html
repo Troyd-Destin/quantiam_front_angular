@@ -37,11 +37,11 @@
 								
 							  </mat-expansion-panel-header>
 								<mat-list>
-								 <mat-list-item  > 
+								<!--  <mat-list-item  > 
 										<button routerLink="/material" mat-button>Home</button>
-								</mat-list-item>
+								</mat-list-item> -->
 								 <mat-list-item > 
-									 <button routerLink="/material/database" mat-button>Database</button>
+									 <button routerLink="/material/database" routerLinkActive="mat-list-item-button-active" mat-button>Database</button>
 								</mat-list-item>
 								</mat-list>  
 						</mat-expansion-panel>
@@ -57,7 +57,10 @@
 							  </mat-expansion-panel-header>
 								<mat-list>
 								 <mat-list-item  > 
-										 <button routerLink="/sample" mat-button>Sample</button>
+										 <button routerLink="/sample/database" routerLinkActive="mat-list-item-button-active" mat-button>Database</button>
+								</mat-list-item>
+								 <mat-list-item  > 
+										 <button routerLink="/sample/sgx-scale-auth" routerLinkActive="mat-list-item-button-active" mat-button>Scale Auth</button>
 								</mat-list-item>
 								
 								</mat-list>

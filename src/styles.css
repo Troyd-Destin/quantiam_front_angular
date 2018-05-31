@@ -38,7 +38,7 @@
     z-index: 1;
     display: block;
     height: 86.5vh;
-    overflow: auto;
+    overflow: hidden;
 	padding: 0px 25px 0px 20px;
 	margin-top: 10px;
 }
@@ -56,9 +56,17 @@
 
 .mat-tab-link-active
 {
-	color: #093758;
-    font-weight: 600;
+	color: #104e7b;
+    font-weight: bold;
     font-size: 14px !important;
+	background-color: #d0cfcf60;
+}
+
+.mat-list-item-button-active
+{
+	color: #005da0 !important;
+    font-weight: bold !important;
+    background-color: #e0e0e0 !important;
 }
 
 /* notification overrieds */

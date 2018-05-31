@@ -118,7 +118,7 @@ background: rgb(52, 89, 122);
 	padding:5px;
 	float: right;
 	flex: 1;
-	
+	overflow: hidden;
 	margin-left: 0px !important;
 	
 }
