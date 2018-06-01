@@ -1,4 +1,3 @@
-
 import { MaterialModule} from '../material.module';
 import { environment } from '../../../environments/environment';
 import { Injectable } from '@angular/core';
@@ -12,13 +11,13 @@ import { NotificationsService } from 'angular2-notifications';
 @Injectable({
   providedIn: 'MaterialModule'
 })
-export class MaterialDatatableService {
+export class MaterialLotContainerDatatableService {
 
-    public _materialDatatableSource = new BehaviorSubject({});
-    public materialDatatable$: Observable<any> = this._materialDatatableSource.asObservable();
+    public _materialLotContainerDatatableSource = new BehaviorSubject({});
+    public materialLotContainerDatatable$: Observable<any> = this._materialLotContainerDatatableSource.asObservable();
   
     private last_params: string;  
-    private endpoint = '/material/list/datatable';
+    private endpoint = '/material/lot/container/list/datatable';
 
 
     constructor(public http: HttpClient, public notification: NotificationsService) { }
@@ -38,7 +37,7 @@ export class MaterialDatatableService {
       return str.join("&");
     }
 
-    getMaterialDatatable(params){
+    getMaterialLotContainerDatatable(params){
       
       
           let defaultRequest = false;
@@ -48,9 +47,7 @@ export class MaterialDatatableService {
           delete new_string.draw; //drwa increments, for every request, complicates caching purposes.
           new_string = JSON.stringify(params);
          
-          
-          console.log(((new_string != this.last_params) && !defaultRequest),'String Compare',(!this.last_params && defaultRequest));
-            
+        
           if(((new_string != this.last_params) && !defaultRequest) || (!this.last_params && defaultRequest)) // fetch if things are different.
           { 
               
@@ -67,7 +64,7 @@ export class MaterialDatatableService {
             
             )
             .subscribe(
-              (r) => this._materialDatatableSource.next(r) //broadcast the response to all subscribers       
+              (r) => this._materialLotContainerDatatableSource.next(r) //broadcast the response to all subscribers       
             );
           }
         

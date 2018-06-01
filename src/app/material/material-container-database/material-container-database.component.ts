@@ -4,6 +4,8 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 
+import { MaterialLotContainerDatatableService } from '../services/material-lot-container-datatable.service';
+
 import { environment } from '../../../environments/environment';
 
 
@@ -15,16 +17,12 @@ import { environment } from '../../../environments/environment';
 export class MaterialContainerDatabaseComponent implements OnInit {
   @ViewChild(DataTableDirective)
   datatableElement: DataTableDirective;
+  dtOptions: DataTables.Settings = {};   
 
-  dtOptions: DataTables.Settings = {};                                
- // materials: Material[];
-
-   constructor(private http: HttpClient,public router: Router,) {}
+   constructor(private http: HttpClient,public router: Router,private materialLotContainerDatatable: MaterialLotContainerDatatableService) {}
    
   someClickHandler(info: any): void {
-        //console.log(info);
        this.router.navigate(['/material/container/'+info.id]);
-     // this.message = info.id + ' - ' + info.firstName;
   }
 
   
@@ -32,7 +30,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
   ngOnInit() {
   
      const that = this;
-
+     const _materialLotContainerDatatable = null;
   
      this.dtOptions = {
       pagingType: 'full_numbers',
@@ -41,14 +39,26 @@ export class MaterialContainerDatabaseComponent implements OnInit {
       processing: true,
       searchDelay: 1000,
        //"bDeferRender": true,
-      ajax: {
-        url: environment.apiUrl+'/material/lot/container/list/datatable',
-        type: "POST",
-        headers:
-        {
-          'Authorization': 'Bearer '+localStorage.getItem('token'),
-        },
-      },
+      ajax:(dataTablesParameters: any, callback) => {
+      
+        this.materialLotContainerDatatable.getMaterialLotContainerDatatable(dataTablesParameters);
+                
+        if(!this._materialLotContainerDatatable) this._materialLotContainerDatatable = this.materialLotContainerDatatable.materialLotContainerDatatable$.subscribe(resp => {
+        
+            that.materials = resp.data;
+            
+            if(typeof resp.data !== 'undefined'){
+
+            callback({
+              recordsTotal: resp.recordsTotal,
+              recordsFiltered: resp.recordsFiltered,
+              data: resp.data,
+              draw: resp.draw,
+            }); 
+            }
+          });
+      
+      },    
       columns: [
                
             {  
@@ -115,6 +125,12 @@ export class MaterialContainerDatabaseComponent implements OnInit {
                 return row;
       }
     };
+    
+  }
+   ngOnDestroy()
+  {
+    this._materialLotContainerDatatable.unsubscribe();
+  
     
   }
 

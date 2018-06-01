@@ -44,7 +44,7 @@ export class MaterialDatabaseComponent implements OnInit {
   ngOnInit() {
   
      const that = this;
-
+     const _materialDatatable = null;
   
      this.dtOptions = {
       pagingType: 'full_numbers',
@@ -55,28 +55,39 @@ export class MaterialDatabaseComponent implements OnInit {
 	//  "bDeferRender": true,
 	//   "deferLoading": 0,
       ajax: 
-      (dataTablesParameters: any, callback) => {
-        this.materialDatatable.materialDatatable$.subscribe(resp => {
+         (dataTablesParameters: any, callback) => {
+      
+   //     console.log(dataTablesParameters);
+      
+        this.materialDatatable.getMaterialDatatable(dataTablesParameters);
         
-            console.log(resp);
-          /*   that.persons = resp.data;
+        
+        if(!this._materialDatatable) this._materialDatatable = this.materialDatatable.materialDatatable$.subscribe(resp => {
+        
+            console.log('subjects');
+            that.materials = resp.data;
+            
+            if(typeof resp.data !== 'undefined'){
 
             callback({
               recordsTotal: resp.recordsTotal,
               recordsFiltered: resp.recordsFiltered,
-              data: []
-            }); */
+              data: resp.data,
+              draw: resp.draw,
+            }); 
+            }
           });
       
-      },
+      },    
 	  
-			/* url: environment.apiUrl+'/material/list/datatable',
+		/*  	  {url: environment.apiUrl+'/material/list/datatable',
 			type: "POST",
+      dataType: 'json',
 			headers:
 			{
 			  'Authorization': 'Bearer '+localStorage.getItem('token'),
-			}, */
-		
+			}, }   */
+		 
     
     
     
@@ -99,7 +110,7 @@ export class MaterialDatabaseComponent implements OnInit {
               "width": "25px",
 
             },    
-            { data: 'name', title:"Material",orderable:false,"width": "15%",},
+            { data: 'name', title:"Material",orderable:false,searchable:true,"width": "15%",},
             { data: 'grade', title:"Grade",orderable:false, "width": "auto",searchable:false},
             { data: 'supplier.supplier_name', title:"Supplier",orderable:false, searchable:false,"width": "auto",},
             { data: 'formula', title:"Formula",orderable:false, searchable:true},
@@ -120,6 +131,13 @@ export class MaterialDatabaseComponent implements OnInit {
                 return row;
       }
     };
+    
+  }
+  
+    ngOnDestroy()
+  {
+    this._materialDatatable.unsubscribe();
+  
     
   }
 
