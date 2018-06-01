@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialService } from '../services/material/material.service';
 import { MaterialLotContainerService } from '../services/material-lot-container/material-lot-container.service';
+import { MaterialDatatableService } from './services/material-datatable.service';
 import { FormsModule } from '@angular/forms';
 
 import {FlexLayoutModule} from "@angular/flex-layout";
@@ -29,6 +30,7 @@ import { MaterialContainerDatabaseComponent } from './material-container-databas
     CommonModule,
     FormsModule,
 	SharedModule,
+  
     MaterialRoutingModule,
      FlexLayoutModule,
      DataTablesModule,
@@ -50,7 +52,7 @@ import { MaterialContainerDatabaseComponent } from './material-container-databas
     MatDialogModule,
   ],
   declarations: [MaterialCreationDialogComponent, MaterialIndexComponent, MaterialDatabaseComponent, MaterialViewComponent, MaterialComponent, MaterialContainerViewComponent, MaterialContainerDatabaseComponent],
-  providers: [MaterialService,MaterialLotContainerService],
+  providers: [MaterialService,MaterialLotContainerService,MaterialDatatableService],
 })
 export class MaterialModule { }
 //

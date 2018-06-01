@@ -71,6 +71,10 @@
 
 /* notification overrieds */
 
+.simple-notification.info {
+    background: #2f7798 !important;
+}
+
 .simple-notification-wrapper.bottom
 {
 	
@@ -89,7 +93,9 @@
 }
 .simple-notification .icon {
 	
-	top: -10px !important;
+	top: -9px !important;
+	right: -10px !important;
+	height: 65px !important;
 }
 
 .simple-notification .sn-title {

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Observable, Subject, Observer,BehaviorSubject} from 'rxjs';
+import { NotificationsService } from 'angular2-notifications';
+
 
 import { Router } from '@angular/router';
 
@@ -27,7 +29,7 @@ export class WebsocketService {
   private redirectOnScan: boolean = true;
 
   
-  constructor(public router: Router) { }
+  constructor(public router: Router, private notification: NotificationsService) { }
   
 	// For chat box
 	public connect(): Subject<MessageEvent> {
@@ -39,14 +41,20 @@ export class WebsocketService {
       // console.log(resres.data.indexOf('"type": "Balance"'));
         
         try{
-            if(res.data.indexOf('"type": "Scanner"') !== -1 && this.redirectOnScan){
+            if(res.data.indexOf('"type": "Scanner"') !== -1){
                 
                 let scannerResponse = JSON.parse(res.data);
-                let codeObj = parseScannerCode(scannerResponse.data);
+               
                // console.log(codeObj);
-                let selectedRoute = this.prefixNavigationMap[codeObj.prefix];                
-                this.router.navigate([selectedRoute+codeObj.id]);
-                
+               console.log('Scanner Response',scannerResponse);
+                this.notification.info('Scanner Event',scannerResponse.data,{timeOut:3000,showProgressBar:false,clickToClose: true});
+                              
+               if(this.redirectOnScan)
+               {
+                   let codeObj = parseScannerCode(scannerResponse.data);
+                  let selectedRoute = this.prefixNavigationMap[codeObj.prefix];
+                  this.router.navigate([selectedRoute+codeObj.id]);                   
+               }
             }
               
             //if(res..data.machine.type == 'scanner') console.log(res);
@@ -112,4 +120,4 @@ export class WebsocketService {
   
 
 
-  }
+}

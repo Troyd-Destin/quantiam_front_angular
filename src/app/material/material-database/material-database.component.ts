@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
+
+import { MaterialDatatableService } from '../services/material-datatable.service';
+
 import { environment } from '../../../environments/environment';
 
 class Material {
@@ -28,7 +31,7 @@ export class MaterialDatabaseComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   materials: Material[];
 
-   constructor(private http: HttpClient,public router: Router,) {}
+   constructor(private http: HttpClient,public router: Router,private materialDatatable: MaterialDatatableService) {}
    
   someClickHandler(info: any): void {
         //console.log(info);
@@ -51,29 +54,33 @@ export class MaterialDatabaseComponent implements OnInit {
 	  searchDelay: 800,
 	//  "bDeferRender": true,
 	//   "deferLoading": 0,
-      ajax: {      
+      ajax: 
+      (dataTablesParameters: any, callback) => {
+        this.materialDatatable.materialDatatable$.subscribe(resp => {
+        
+            console.log(resp);
+          /*   that.persons = resp.data;
+
+            callback({
+              recordsTotal: resp.recordsTotal,
+              recordsFiltered: resp.recordsFiltered,
+              data: []
+            }); */
+          });
+      
+      },
 	  
-			url: environment.apiUrl+'/material/list/datatable',
+			/* url: environment.apiUrl+'/material/list/datatable',
 			type: "POST",
 			headers:
 			{
 			  'Authorization': 'Bearer '+localStorage.getItem('token'),
-			},
+			}, */
 		
-      },
-	  "initComplete": function(settings, json) {
-			//console.log( 'DataTables has finished its initialisation.' );
-			let  cache = (JSON.parse( localStorage.getItem('test')));
-			if(cache) this.fnGetData(cache, false)
-				else this.fnDraw();
-			console.log(this);
-		},
-      /*   "fnStateSave": function (oSettings, oData) {
-            localStorage.setItem( 'DataTables_'+window.location.pathname, JSON.stringify(oData) );
-        },
-        "fnStateLoad": function (oSettings) {
-            return JSON.parse( localStorage.getItem('DataTables_'+window.location.pathname) );
-        }, */
+    
+    
+    
+      
       columns: [
                
             {  
