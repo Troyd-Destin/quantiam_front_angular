@@ -90,6 +90,7 @@
 	border-radius: 25px !important;
 	padding: 5px 0px 5px 20px !important;
 	min-height: inherit !important;
+	z-index:9000;
 }
 .simple-notification .icon {
 	

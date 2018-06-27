@@ -141,18 +141,20 @@
 		   </div>
 					   
 					   
-			<div fxLayoutGap="5px"  fxLayout="row" fxLayout.sm="column"  >	
+			<div fxLayoutGap="10px"  fxLayout="row" fxLayout.sm="column"  >	
 					
+					
+						<mat-form-field class="full-width" fxFlex="20">
+						  <input  #Denomination (change)="updateContainerField(Denomination)" [disabled]="!editContainer" type="text" matInput placeholder="Denomination" [(ngModel)] ='container.denomination' name="denomination" >
+					 </mat-form-field> 	
 					  <mat-form-field class="full-width" fxFlex>
-						  <input #AmountOrdered (change)="updateContainerField(AmountOrdered)" [disabled]="!editContainer"   type="text" matInput placeholder="Amount Ordered (g)" [(ngModel)] ='container.amount_ordered' name="amount_ordered" >
+						  <input #AmountOrdered (change)="updateContainerField(AmountOrdered)" [disabled]="!editContainer"   type="text" matInput placeholder="Amount Ordered ({{container.denomination}})" [(ngModel)] ='container.amount_ordered' name="amount_ordered" >
 					 </mat-form-field>
 					  <mat-form-field class="full-width" fxFlex>
 						  <input #GrossWeight (change)="updateContainerField(GrossWeight)" [disabled]="!editContainer"  type="text" matInput placeholder="Gross Weight (g)" [(ngModel)] ='container.gross_weight' name="gross_weight" >
 					 </mat-form-field>	 
 
-					 <mat-form-field class="full-width" fxFlex>
-						  <input  #Denomination (change)="updateContainerField(Denomination)" [disabled]="!editContainer" type="text" matInput placeholder="Denomination" [(ngModel)] ='container.denomination' name="denomination" >
-					 </mat-form-field> 						  
+									  
 			</div>	
 		</div>
 		

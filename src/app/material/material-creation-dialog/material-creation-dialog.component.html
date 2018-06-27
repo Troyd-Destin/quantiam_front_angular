@@ -112,7 +112,7 @@
 					
 					
 					  <mat-form-field  fxFlex="20">
-						  <input  #Denomination type="text" required matInput placeholder="Denomination" [(ngModel)] ='container.denomination' name="denomination" >
+						  <input  #Denomination id="container_denomination" type="text" required matInput placeholder="Denomination" [(ngModel)] ='container.denomination' name="denomination" >
 						     <mat-hint>g,ml,L</mat-hint>
 							   <mat-error *ngIf="!container.denomination">Required  g,ml,L</mat-error>
 					 </mat-form-field> 	

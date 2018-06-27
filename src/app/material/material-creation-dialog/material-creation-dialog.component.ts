@@ -146,6 +146,7 @@ export class MaterialCreationDialogComponent implements OnInit {
 	 {
 		this.lot = this.newLot;
 		this.lot.isNew = true;
+	 setTimeout(function(){$('#container_denomination').focus();},300);
 	 
 	 }
 	 
@@ -225,7 +226,29 @@ export class MaterialCreationDialogComponent implements OnInit {
 		};
 		
 		//if there is only a new lot 
-		
+		if(!this.creatingMaterial && this.lot.isNew){ 
+				
+							this.lot.slip_material_id = this.material.slip_material_id;
+							
+							this.materialLotService.create(this.lot).subscribe((response) => {
+								
+										console.log(response);
+										this.container.lot_id = response.id;
+										this.materialLotContainerService.create(this.container).subscribe((response)=>{
+											
+											this.container = response;
+											this.codeRegistryStep = true;
+											this.materialCreationStep = false;
+											setTimeout(function(){$('#qcid_entry').focus()},1000);
+											
+											});
+										
+								
+								});
+					
+			return;
+				
+		};
 		
 		///// Only new container.
 		this.container.lot_id = this.lot.id;
