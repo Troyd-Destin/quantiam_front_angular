@@ -11,7 +11,7 @@
 </form>
 
 
-	<div fxLayoutGap="20px" fxLayout="row" fxLayout.sm="column"  fxLayoutAlign="start stretch">
+	<div fxLayoutGap="20px" fxLayout="column" fxLayout.lg="row" fxLayout.xl="row"  fxLayoutAlign="start stretch">
 			
 		<mat-accordion  multi="true">
 			<mat-expansion-panel>
@@ -116,11 +116,11 @@
 			
 				
 			
-		<div fxLayoutGap="20px" fxLayout="column"  fxLayoutAlign="start center">
+		<div fxLayoutGap="20px" fxLayout="column"  fxLayoutAlign="center stretch" fxFlex>
 		
 			
-			<img fxFlex width=75px height=75px style="" [(src)]="container.datamatrix"/>
-			<div   fxLayoutGap="5px"   fxLayout="row"    fxFlex>	
+			<img fxFlex width=75px height=75px style=""  fxLayoutAlign="center center"  [(src)]="container.datamatrix"/>
+			<div   fxLayoutGap="5px"   fxLayout.xl="row" fxLayout="column"    fxFlex>	
 					
 					
 				
@@ -141,10 +141,10 @@
 		   </div>
 					   
 					   
-			<div fxLayoutGap="10px"  fxLayout="row" fxLayout.sm="column"  >	
+			<div fxLayoutGap="10px"  fxLayout="row" fxLayout.sm="column"  fxFlex >	
 					
 					
-						<mat-form-field class="full-width" fxFlex="20">
+						<mat-form-field class="full-width" fxFlex.xl="20">
 						  <input  #Denomination (change)="updateContainerField(Denomination)" [disabled]="!editContainer" type="text" matInput placeholder="Denomination" [(ngModel)] ='container.denomination' name="denomination" >
 					 </mat-form-field> 	
 					  <mat-form-field class="full-width" fxFlex>
