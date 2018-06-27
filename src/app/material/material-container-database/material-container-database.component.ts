@@ -109,12 +109,24 @@ export class MaterialContainerDatabaseComponent implements OnInit {
              { data: 'location.name', title:"Location",orderable:false,  searchable: true,render: function (data,type,row,meta){
                     if(data) return ''+data+'';
                     return '';
-                } },
+                } 
+				
+			}, 
+
              { data: 'active', title:"In Stock?",orderable:false,  searchable: true,render: function (data,type,row,meta){
-                    if(data == 0) return 'No';
-                    return '<button class="mat-raised-button" style="color:white; background:green; line-height:20px;">Yes</button>';
+                    if(data == 0) return '';
+                    return '<button class="mat-raised-button" style="color:white; background:green; line-height:20px; font-size:12px;     min-width: 50px;">Yes</button>';
                 } 
                },
+			   
+			  
+			{ data: 'active', title:"Left",orderable:false,  searchable: true,render: function (data,type,row,meta){
+			
+                    if(data) return '<b>'+(row.remaining.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))+' g</b>';
+                    return '';
+                } 
+				
+			},
             { data: 'created_at', title: "Created",orderable:false,searchable: false, },
           ],
           
