@@ -101,7 +101,7 @@ export class WebsocketService {
 						   {					 
 							  this.codeObj = this.parseScannerCode(scannerResponse.data);
 							  let selectedRoute = this.prefixNavigationMap[this.codeObj.prefix];
-							  this.router.navigate([selectedRoute+this.codeObj.id]).catch(error => {
+							  this.router.navigate([selectedRoute+this.codeObj.id],{scannerNavigation:true}).catch(error => {
 							  
 								this.notification.error('Redirect Not Registered',scannerResponse.data,{timeOut:3000,showProgressBar:false,clickToClose: true});
 							});				

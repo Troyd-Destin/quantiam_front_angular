@@ -14,7 +14,7 @@
 	<div fxLayoutGap="20px" fxLayout="column" fxLayout.lg="row" fxLayout.xl="row"  fxLayoutAlign="start stretch">
 			
 		<mat-accordion  multi="true">
-			<mat-expansion-panel>
+			<mat-expansion-panel expanded="true">
 				<mat-expansion-panel-header>
 					<mat-panel-title>
 						<b>	Material Information </b>
@@ -61,7 +61,7 @@
 					
 				</div>
 			</mat-expansion-panel>
-			<mat-expansion-panel>
+			<mat-expansion-panel expanded="true">
 				<mat-expansion-panel-header>
 					<mat-panel-title>
 						<b>	Lot Information </b>
@@ -116,11 +116,11 @@
 			
 				
 			
-		<div fxLayoutGap="20px" fxLayout="column"  fxLayoutAlign="center stretch" fxFlex>
+		<div fxLayoutGap="20px" fxLayout="column"  fxLayoutAlign="center stretch" fxLayoutAlign.xl="center center" fxFlex>
 		
 			
-			<img fxFlex width=75px height=75px style=""  fxLayoutAlign="center center"  [(src)]="container.datamatrix"/>
-			<div   fxLayoutGap="5px"   fxLayout.xl="row" fxLayout="column"    fxFlex>	
+			<img fxFlex width=75px height=75px style=""    [(src)]="container.datamatrix"/>
+			<div   fxLayoutGap="5px"  fxLayoutAlign="start stretch"   fxLayout="column" fxLayout.xl="row"    fxFlex>	
 					
 					
 				
@@ -141,7 +141,7 @@
 		   </div>
 					   
 					   
-			<div fxLayoutGap="10px"  fxLayout="row" fxLayout.sm="column"  fxFlex >	
+			<div fxLayoutGap="10px" fxLayoutAlign="start stretch"  fxLayout="column" fxLayout.xl="row"  fxFlex >	
 					
 					
 						<mat-form-field class="full-width" fxFlex.xl="20">

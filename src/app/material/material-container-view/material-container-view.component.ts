@@ -34,11 +34,18 @@ export class MaterialContainerViewComponent implements OnInit {
       this.materialLotCotainerService.getMaterialLotContainer(id); 
 
       this.route.params.subscribe(val => {
-         
+         // console.log(val);
+		 
+		  if(val.scannerNavigation && val.id) this.materialLotCotainerService.update({active:1},val.id).subscribe();
+
+		 
         if(id != val.id){
           id = val.id;
            this.materialLotCotainerService.getMaterialLotContainer(id);
-
+		   
+		  
+		   
+		  
         }
       }); 
 	  
