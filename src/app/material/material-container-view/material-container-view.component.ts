@@ -34,9 +34,9 @@ export class MaterialContainerViewComponent implements OnInit {
       this.materialLotCotainerService.getMaterialLotContainer(id); 
 
       this.route.params.subscribe(val => {
-         // console.log(val);
+          console.log(val);
 		 
-		  if(val.scannerNavigation && val.id) this.materialLotCotainerService.update({active:1},val.id).subscribe();
+		
 
 		 
         if(id != val.id){
@@ -49,10 +49,19 @@ export class MaterialContainerViewComponent implements OnInit {
         }
       }); 
 	  
+	  this.route.queryParams.subscribe(p=>{
+	  
+			
+			  this.scannerNavigation = p['scannerNavigation'];
+			
+	  });
+	  
       this._container = this.materialLotCotainerService.materialLotContainer$.subscribe(res=> { //subscribe to the material service for updates
      
         if(typeof res !== 'undefined') {
 			this.container = res;
+			
+			if(this.scannerNavigation) this.materialLotCotainerService.update({active:1},this.container.id).subscribe((r)=>{ this.container.active = true;});
 			
 		}
        });

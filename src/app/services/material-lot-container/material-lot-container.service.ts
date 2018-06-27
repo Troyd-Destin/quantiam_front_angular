@@ -33,14 +33,17 @@ export class MaterialLotContainerService {
      this.http.get<any>(environment.apiUrl+`${this.endpoint}/${id}`)
      .pipe(
         tap( r => { 
-                    this.last_id = id;
+                   
                     
                     }), //set id to be last_id
         map( res => res), // return results without transformation
       
       )
       .subscribe(
-        (container) => this._containerSource.next(container) //broadcast the material to all subscribers       
+        (container) => {
+			this._containerSource.next(container); //broadcast the material to all subscribers 
+			 this.last_id = container.id;
+		}
       );
     }
   }
