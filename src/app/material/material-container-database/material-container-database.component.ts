@@ -110,9 +110,9 @@ export class MaterialContainerDatabaseComponent implements OnInit {
                     if(data) return ''+data+'';
                     return '';
                 } },
-             { data: 'active', title:"Avail?",orderable:false,  searchable: true,render: function (data,type,row,meta){
+             { data: 'active', title:"In Stock?",orderable:false,  searchable: true,render: function (data,type,row,meta){
                     if(data == 0) return 'No';
-                    return 'Yes';
+                    return '<button class="mat-raised-button" style="color:white; background:green; line-height:20px;">Yes</button>';
                 } 
                },
             { data: 'created_at', title: "Created",orderable:false,searchable: false, },
