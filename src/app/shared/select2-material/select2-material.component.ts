@@ -1,13 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input,EventEmitter, Output } from '@angular/core';
 import { Select2OptionData } from 'ng2-select2';
 import { environment } from '../../../environments/environment';
 
-interface Select2SelectionObject {
-  
-  html: string,
-  text: string, 
-  label: string,
-}
+
 
 @Component({
   selector: 'app-select2-material',
@@ -18,18 +13,25 @@ export class Select2MaterialComponent implements OnInit {
 
   public options: Select2Options;
   public value: string;
+  public d;
+  
   
   @Input() width: string;
+  @Input() multiSelect: boolean = false;
+  @Input() material_id: number;
+  
+  @Output() selectedValue = new EventEmitter<any>();
+  
 
   ngOnInit() {
     
     this.value = 'test';
-
+	
       this.options = {
        // multiple: true,
         allowClear: true,
-        placeholder: "Material Name",
-        tags: true,
+        placeholder: "Material",
+        theme: 'classic',
        // dropdownCssClass : 'bigdrop',
         //cache: true,
         dropdownAutoWidth : true,
@@ -37,8 +39,8 @@ export class Select2MaterialComponent implements OnInit {
         templateResult: function (d) { if(d.html) { return d.html; } else { return d.text;} },
         escapeMarkup: function(m) { return m;	},
         
-        width: this.width,
-        theme: 'bootstrap',
+     //   width: this.width,
+       
         ajax: {
               url: environment.apiUrl+'/material/list',
               type: "GET",
@@ -59,7 +61,17 @@ export class Select2MaterialComponent implements OnInit {
                
               }
            },
-         createTag: function (params){
+       
+
+      
+    }
+	
+	if(this.multiSelect) {
+	
+	console.log(this.multiSelect);
+	
+	this.options.tags = true;
+	this.options.createTag = function (params){
            
              console.log(params);
              
@@ -71,18 +83,16 @@ export class Select2MaterialComponent implements OnInit {
               }
              
            
-           }
-
-      
-    }
-
+           };
+	}
  
 
   }
   
 changed(data) {
    
-      this.value = data.value;
+      this.selectedValue.emit(data);
+     // this.value = data.value;
       console.log(data);
-    } 
+    }
 }

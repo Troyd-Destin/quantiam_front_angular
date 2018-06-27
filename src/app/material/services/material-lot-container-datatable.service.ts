@@ -9,7 +9,7 @@ import { NotificationsService } from 'angular2-notifications';
 
 
 @Injectable({
-  providedIn: 'MaterialModule'
+  providedIn: 'root'
 })
 export class MaterialLotContainerDatatableService {
 

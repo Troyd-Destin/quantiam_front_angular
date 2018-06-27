@@ -29,7 +29,7 @@
     box-sizing: border-box;
     overflow-y: auto;
     transform: translate3d(-100%,0,0);
-	width: 125px;
+	width: 155px;
 
 }
 
@@ -100,15 +100,25 @@ background: rgb(52, 89, 122);
 
 .app-header .name-title-box {
 	font-size: 11px;
-	height: 30px;
+	height: 38px;
 	padding-top: 0px;
 	margin: 0px 5px 0px 5px;
+	text-align:left;
+	
 }
 
 .app-header .name-title
 {
 	line-height:15px;
 	margin: 0px 0px 0px 0px;
+	font-size:smaller;
+}
+
+.app-header .name
+{
+	line-height:15px;
+	margin: 0px 0px 0px 0px;
+	font-weight:bold;
 }
 
 
@@ -130,7 +140,7 @@ background: rgb(52, 89, 122);
 
 .side-panel
 {
-	
+	    width: inherit;
 /* margin:10px; */	
 }
 
@@ -138,7 +148,6 @@ background: rgb(52, 89, 122);
 .side-panel mat-expansion-panel
 {
 	margin: 0px !important;
-	width:100%;
 	background: #fafafa;
 	box-shadow: 0 0px 0px 0px rgba(0,0,0,0), 0 0px 0px 0 rgba(0,0,0,0), 0 0px 0px 0 rgba(0,0,0,0) !important
 	
@@ -164,6 +173,11 @@ background: rgb(52, 89, 122);
 	padding: 0 10px;
 }
 
+.side-panel > mat-expansion-panel > div
+{
+ test: 0px;
+}
+
 .side-panel .mat-expansion-panel-header:hover
 {
 	
@@ -171,20 +185,22 @@ background: rgb(52, 89, 122);
 }
 	
 
-.side-panel .mat-expansion-panel-content
+.side-panel mat-accordion mat-expansion-panel div.mat-expansion-panel-content
 {
 	padding: 0px;
+	width:155px !important;
 }
 
 .side-panel .mat-button
 {
-		font-size: 12px;
+	font-size: 12px;
     height: 20px;
     line-height: 0px;
-   width: 122px;
+	width: 148px;
     position: absolute;
-    padding: 0px;
-    left: -23px;
+    padding: inherit;
+    left: -21px;
+	text-align: left;
 }
 
 

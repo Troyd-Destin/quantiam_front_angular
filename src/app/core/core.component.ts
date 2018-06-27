@@ -8,6 +8,7 @@ import { catchError, map, tap, delay } from 'rxjs/operators';
 
 
 import { WebsocketService } from '../services/websocket/websocket.service'; 
+import { SettingsService } from '../services/settings/settings.service'; 
 
 
 interface webSocketMessages {
@@ -22,13 +23,11 @@ interface webSocketMessages {
    providers: [
       MediaMatcher,
       UserService,
-	  WebsocketService,
-   
   ],
 })
 
 
-	export class CoreComponent implements OnInit {
+export class CoreComponent implements OnInit {
 
   
 
@@ -38,10 +37,15 @@ interface webSocketMessages {
   userLoaded: boolean = false;
   userTitle: null;
   userName: null;
+  selectedScanner;
+  scannerList = [];
+  scannerSelect2Options={"theme":"classic"};
   
   webSocketMessages: webSocketMessages;
   lastWebSocketMessage;
   _ws;
+  
+  
   
 	options: FormGroup;	
 	mobileQuery: MediaQueryList;
@@ -54,10 +58,16 @@ interface webSocketMessages {
 		media: MediaMatcher,
 		private userService: UserService, 
 		private auth: AuthService,
-		private websocket: WebsocketService
+		private websocketService: WebsocketService,
+		private settings: SettingsService
 		
 	) {
 	  
+	  
+	
+	
+	this.getScanner();
+	
   
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
       this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -90,43 +100,53 @@ interface webSocketMessages {
   
   }
   
+  updateScanner(obj)
+  {
+	
+	this.selectedScanner = obj.data[0];
+	this.settings.set('selectedScanner',this.selectedScanner);
+	this.websocketService.selectedScanner = this.selectedScanner;
+	
+	
+  
+  }
+  
+  getScanner()
+  {
+	this.scannerList = this.websocketService.selectableScanners; //set the selectable list of scanners.
+	let savedScanner = this.settings.get('selectedScanner');
+	console.log(savedScanner);
+	if(savedScanner && savedScanner.id)
+	{
+		this.selectedScanner = this.settings.get('selectedScanner');
+	}
+	else {
+		this.selectedScanner = this.websocketService.selectableScanners[0];
+	}
+  
+  }
   
   
   
   ngOnInit() {
   
-    this.websocket.connect();
   
- 
- /*      
- 
-  this.webSocketMessages = {};
-	this.lastWebSocketMessage = {};
-		let response = JSON.parse(res.data);
+	this.websocketService.connect();
+	this._ws = this.websocketService.observable.subscribe((data)=>{
 		
+	//	console.log('core');
+			
+		})
    
-      try{ 
-        if(!this.webSocketMessages[response.machine.name]) this.webSocketMessages[response.machine.name] = {};
-        
-        if(JSON.stringify(this.webSocketMessages[response.machine.name]) === JSON.stringify(response))
-        {
-          
-        }
-        else
-        {
-          this.webSocketMessages[response.machine.name] = response;			
-          console.log('Websocket Messages', this.webSocketMessages);
-        }
-      }
-      catch(e){} */
+//setTimeout(function(){this.websocket.toggleRedirectOnScan();},3000);
 
-  
   
     
   }
   
    ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
+	this._ws.unsubscribe();
   }
   
   

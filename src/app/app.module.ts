@@ -24,6 +24,10 @@ import {
 import { NgHttpLoaderModule } from 'ng-http-loader/ng-http-loader.module';
  import { SimpleNotificationsModule } from 'angular2-notifications';
   
+  
+  import { WebsocketService } from './services/websocket/websocket.service'; 
+
+  
 import { Routes, RouterModule } from '@angular/router';
 import { Observable} from 'rxjs';
 
@@ -53,7 +57,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    AuthComponent,    
+    AuthComponent,
+        
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -106,7 +111,7 @@ const routes: Routes = [
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
-    }],
+    },WebsocketService],
   exports: [],
   bootstrap: [AppComponent]
 })

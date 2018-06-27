@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import {Observable, Subject, Observer,BehaviorSubject} from 'rxjs';
 import { NotificationsService } from 'angular2-notifications';
+import { catchError, map, tap, delay,share } from 'rxjs/operators';
 
+import { SettingsService } from '../../services/settings/settings.service'; 
 
 import { Router } from '@angular/router';
 
@@ -10,96 +12,126 @@ import { Router } from '@angular/router';
 })
 export class WebsocketService {
 
-  private socketUrl = 'ws://api.edm.quantiam.com:8081';
+  private url = 'ws://api.edm.quantiam.com:8081';
  
   private subject: Subject<MessageEvent>;
-	private subjectData: Subject<number>;
+  private subjectData: Subject<number>;
+  private codeObj;
+  private randomNumber = Math.random();
+  public observable;
   
-  public _wsSource = new BehaviorSubject({});
-  public ws$: Observable<any> = this._wsSource.asObservable();
+//  public _wsSource = new BehaviorSubject({});
+ // public ws$: Observable<any> = this._wsSource.asObservable();
+  
+
+  public selectableScanners = [{'text': "QAQC", id: 1},{'text': "Powders", id: 2},{'text': "Slipcasting", id: 3},{'text':"Furnaces",id:4}];
+  public selectedScanner;
+  
   
   private prefixNavigationMap = { 
     'QCID': '/material/container/QCID-',
     'QMSMLC': '/material/container/',
     'QMSML': '/material/lot/',
     'QMIM': '/material/',
+	'QMIS': '/steel/',
   
   };
   
-  private redirectOnScan: boolean = true;
+  public redirectOnScan: boolean = true;
+  private selectedScanner: string;
 
   
-  constructor(public router: Router, private notification: NotificationsService) { }
-  
-	// For chat box
-	public connect(): Subject<MessageEvent> {
-		if (!this.subject) {
-			this.subject = this.create(this.socketUrl).subscribe(
-      res =>
-      {
-        this._wsSource.next(res);
-      // console.log(resres.data.indexOf('"type": "Balance"'));
-        
-        try{
-            if(res.data.indexOf('"type": "Scanner"') !== -1){
-                
-                let scannerResponse = JSON.parse(res.data);
-               
-               // console.log(codeObj);
-               console.log('Scanner Response',scannerResponse);
-                this.notification.info('Scanner Event',scannerResponse.data,{timeOut:3000,showProgressBar:false,clickToClose: true});
-                              
-               if(this.redirectOnScan)
-               {
-                   let codeObj = parseScannerCode(scannerResponse.data);
-                  let selectedRoute = this.prefixNavigationMap[codeObj.prefix];
-                  this.router.navigate([selectedRoute+codeObj.id]);                   
-               }
-            }
-              
-            //if(res..data.machine.type == 'scanner') console.log(res);
-        }catch(e){}
-       //   console.log(res);
-      }
-      
-      );
+  constructor(
+	public router: Router, 
+	private notification: NotificationsService,
+	private settings: SettingsService,
+	) {
+		
+		this.selectedScanner = settings.get('selectedScanner');
+		
 		}
-		return this.subject;
+  
+  
+	public toggleRedirectOnScan()
+	{
+		this.redirectOnScan = !this.redirectOnScan;
 	}
+	// For chat box
+	public connect() {
+	
+	
+				this.observable = Observable.create((observer) => {
+				this.ws = new WebSocket(this.url);
 
-	private create(url: string): Subject<MessageEvent> {
-		let ws = new WebSocket(url);
-  console.log(ws);
-		let observable = Observable.create(
-			(obs: Observer<MessageEvent>) => {
-				ws.onmessage = obs.next.bind(obs);
-				ws.onerror   = obs.error.bind(obs);
-				ws.onclose   = obs.complete.bind(obs);
+				this.ws.onopen = (e) => {
+					
+					console.log('Websocket Connected',this.url);
+				 
+				};
 
-				return ws.close.bind(ws);
-			});
-      
-      return observable;
+				this.ws.onclose = (e) => {
+				  if (e.wasClean) {
+					observer.complete();
+				  } else {
+					observer.error(e);
+				  }
+				};
 
-		let observer = {
-			next: (data: Object) => {
-				if (ws.readyState === WebSocket.OPEN) {
-					ws.send(JSON.stringify(data));
+				this.ws.onerror = (e) => {
+				  observer.error(e);
 				}
-			}
-		};
 
-		return Subject.create(observer, observable);
+				this.ws.onmessage = (e) => {
+				//console.log(e);
+					let r = JSON.parse(e.data);
+				  observer.next(r);
+				
+				
+					
+				   try{  //Redirect user to specific screen based on scan event. 
+						//console.log(r);
+						let scannerResponse = r;
+						if(scannerResponse.type == 'Scanner'){
+							
+						   console.log('Scanner Response',scannerResponse,this.redirectOnScan);
+						  
+						   this.notification.info('Scanner Event',scannerResponse.data,{timeOut:3000,showProgressBar:false,clickToClose: true});           
+						   
+						   if(this.redirectOnScan && scannerResponse.machine.name == this.selectedScanner.text) // is the app in rediect mode?
+						   {					 
+							  this.codeObj = this.parseScannerCode(scannerResponse.data);
+							  let selectedRoute = this.prefixNavigationMap[this.codeObj.prefix];
+							  this.router.navigate([selectedRoute+this.codeObj.id]).catch(error => {
+							  
+								this.notification.error('Redirect Not Registered',scannerResponse.data,{timeOut:3000,showProgressBar:false,clickToClose: true});
+							});				
+								
+						   }
+						}
+						  
+					}catch(e){} 
+				
+				}
+
+				return () => {
+				  this.ws.close();
+				};
+			  }).pipe(share());
+	
+		// this.ws$..next(JSON.stringify({ op: 'hello' }));
+			
+		
+			  
+	  
+	  
+				/* */
+			   //   console.log(res); 
+		
+		
 	}
 
-  
-  sendMessage (msg)
-  {
- //  this.subjectData
-  
-  }
-  
-  function parseScannerCode (code)
+	
+  parseScannerCode (code)
   {
     try{
         let explode = code.split("-");

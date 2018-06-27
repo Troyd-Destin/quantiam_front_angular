@@ -122,7 +122,10 @@ export class SgxScaleAuthComponent implements OnInit {
    }
    
    
+   ngOnDestroy(){
    
+		this.ws.unsubscribe();
+   }
   
 
 }

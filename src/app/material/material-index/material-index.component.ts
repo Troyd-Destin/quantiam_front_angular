@@ -63,7 +63,7 @@ export class MaterialIndexComponent implements OnInit {
 
           dialogConfig.disableClose = true;
           dialogConfig.autoFocus = true;
-          dialogConfig.width = '500px';
+          dialogConfig.width = '1000px';
           this.dialog.open(MaterialCreationDialogComponent, dialogConfig);
       }
 }

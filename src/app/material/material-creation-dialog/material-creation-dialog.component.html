@@ -1,17 +1,191 @@
-<h2 mat-dialog-title>Test</h2>
+<h2 mat-dialog-title>MaterialCreation </h2>
 
 <mat-dialog-content >
+	
+	<div *ngIf="materialCreationStep">
+	<form id="materialForm" fxLayout="column"  fxLayoutGap="10px" >
+	
+			<h3 style="margin-top:0px !important;">1. Material Information </h3>	
+			<div *ngIf="!newMaterial" fxLayout="row"  fxLayoutGap="5px" fxLayoutAlign="start center" >
+				
+			
+					<p *ngIf="!selectedMaterial.id"> Select </p>
+					<app-select2-material
+						(selectedValue)="selectMaterial($event)"
+					></app-select2-material>
+					
+						<p *ngIf="!selectedMaterial.id"> or </p>
+				
+				<button mat-button  (click)="createMaterialAttrs()" *ngIf="!selectedMaterial.id"> Create Material </button>
+				
+			</div>
+			<div fxLayoutGap="5px" fxLayout="row">
+				<button mat-button  class="mat-raised-button" (click)="selectingMaterialAttrs()" *ngIf="creatingMaterial" fxFlex="20"> Select Material Instead </button>
+			</div>
+			<div *ngIf="newMaterial || selectedMaterial.id" fxLayout="column"  fxLayoutGap="10px" >
+			
+			
+			
+						<div fxLayoutGap="5px" fxLayout="row" fxLayout.sm="column"  fxLayoutAlign="start stretch"  >	
+						  <mat-form-field class="full-width"  fxFlex>
+							  <input #MaterialName   type="text" matInput placeholder="Name" (change)="validateNewMaterial()" [(ngModel)] ='material.name' name="name" [required]="creatingMaterial" [disabled]="!creatingMaterial">
+						 </mat-form-field>  
+						  <mat-form-field class="full-width" fxFlex>
+							  <input  #MaterialGrade  type="text" matInput placeholder="Grade" [(ngModel)] ='material.grade' name="grade"  [disabled]="!creatingMaterial">
+							  	<mat-hint> "99%", "Si-102","TOTAL Mn/SI" </mat-hint>
+						 </mat-form-field>
+						 
+						 
+					</div>		
+					
+					<div fxLayoutGap="5px"  fxLayout="row" fxLayout.sm="column"  >	
+						
+						  <mat-form-field class="full-width" *ngIf="!creatingMaterial">
+							  <input  type="text" matInput placeholder="Supplier" [value] ='material.supplier_name' name="supplier" disabled>
+						 </mat-form-field>  
+						 
+						 
+						 
+						 
+						   <mat-form-field class="full-width">
+							  <input #Nomenclature  type="text" matInput placeholder="Formula" [(ngModel)] ='material.formula' name="formula" [disabled]="!creatingMaterial" >
+								<mat-hint> Optional </mat-hint>
+						</mat-form-field>  
+						  <mat-form-field class="full-width">
+							  <input   #Cas type="text" matInput placeholder="CAS #" [(ngModel)] ='material.cas' name="cas"  [disabled]="!creatingMaterial" >
+							  <mat-hint> Optional </mat-hint>
+						 </mat-form-field>
+						  <mat-form-field class="full-width">
+							  <input #Catalog type="text" matInput placeholder="Catalog #" [(ngModel)] ='material.catalog' name="catalog"  [disabled]="!creatingMaterial">
+								  <mat-hint> Optional </mat-hint>
+						</mat-form-field> 
+
+						 <mat-form-field class="full-width">
+							  <input #Density type="text" matInput placeholder="Density (g/ml)" [(ngModel)] ='material.density' name="density"   [disabled]="!creatingMaterial">
+							  <mat-hint> Optional </mat-hint>
+						 </mat-form-field> 
+					
+						 
+					</div>
+				
+					
+				
+			</div>
+	
+	</form>
   
-    <mat-form-field>
-        <input matInput
-                placeholder="Course Description"
-               >
-    </mat-form-field>
-      
- 
+  
+	 <form id="lotForm" *ngIf="materialStepComplete">
+	 
+	
+	 <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center" style="margin-top:20px;">
+			
+							<h3>2. Lot Information </h3>
+						  <app-select2-material-lot 
+								
+								
+							
+								fxLayoutAlign="start center"
+								placeholder="Lot Name" 
+								*ngIf="materialStepComplete && !lot.isNew"								
+								query_params='{"material_id":{{selectedMaterial.id}}}'
+								(selectedValue)="selectLot($event)"
+								s2options='{"allowClear":true}'
+								
+								
+						 ></app-select2-material-lot>
+						 <div *ngIf="materialStepComplete && !lot.isNew"> or </div>
+						 
+						 <mat-form-field  class="full-width" *ngIf="lot.isNew || (materialStepComplete && !selectedLot.text)"  fxFlex="30">
+							  <input  #LotName type="text" matInput placeholder="Lot Name" [(ngModel)] ='newLot.lot_name' name="name" (change)="newLotname()" [disabled]="selectedLot.selected">
+							  <mat-hint>"16-SD-284","11563972","AB-3341"</mat-hint>
+						  </mat-form-field>
+		</div>
+	</form> 
+  
+	<form id="containerForm" *ngIf="lot.lot_name">
+	
+		<h3>3. Container Information </h3>
+		<div fxLayoutGap="20px" fxLayout="column"  fxLayoutAlign="start stretch">
+	
+			<div fxLayoutGap="20px"  fxLayout="row" fxLayout.sm="column"  >	
+					
+					
+					  <mat-form-field  fxFlex="20">
+						  <input  #Denomination type="text" required matInput placeholder="Denomination" [(ngModel)] ='container.denomination' name="denomination" >
+						     <mat-hint>g,ml,L</mat-hint>
+							   <mat-error *ngIf="!container.denomination">Required  g,ml,L</mat-error>
+					 </mat-form-field> 	
+					<mat-form-field  fxFlex>
+						  <input #AmountOrdered    type="text"  required matInput placeholder="Amount Ordered" [(ngModel)] ='container.amount_ordered' name="amount_ordered" >
+						   <mat-error *ngIf="!container.amount_ordered">Required</mat-error>
+					 </mat-form-field>
+					
+					 
+					 
+					  <mat-form-field  fxFlex>
+						  <input #GrossWeighttype type="text" required matInput placeholder="Gross Weight (g)" [(ngModel)] ='container.gross_weight' name="gross_weight" >
+						  <mat-hint>Weigh item out on a scale. </mat-hint>
+						   <mat-error *ngIf="container.gross_weight"> Required   </mat-error>
+					 </mat-form-field>	 
+
+										  
+			</div>	
+			<div fxLayoutGap="10px"  fxLayoutGap.sm="5px"   fxLayout="row" fxLayout.sm="column"  >	
+					
+				<!-- 	<img width=50px height=50px style="margin-right:40px;" [(src)]="container.datamatrix"/> -->
+				
+					  <mat-form-field  fxFlex>
+						  <input  #ContainerName  type="text" matInput placeholder="Container Name" [(ngModel)] ='container.container_name' name="container_name" >
+						   <mat-hint>Optional: eg. "Robert's Chinese Tungsten"</mat-hint>
+					 </mat-form-field>  
+					   <mat-form-field  fxFlex>
+						  <input  #ContainerNumber type="text" matInput placeholder="Container #" [(ngModel)] ='container.container_number' name="container_number" >
+						   <mat-hint>Optional</mat-hint>
+					 </mat-form-field>   
+
+					 <mat-form-field fxFlex>
+						  <input  #PurchaseOrder  type="text" matInput placeholder="P.O. #" [(ngModel)] ='container.purchase_order' name="purchase_order" >
+						   <mat-hint>Optional: eg. 2018-xxxxx</mat-hint>
+					 </mat-form-field>  
+					
+					
+		   </div>
+					   
+					   
+	
+		</div>
+	</form>
+	</div>
+	
+	<div *ngIf="codeRegistryStep">
+		<h3>4. Code Registry, Label Creation. </h3>
+		<div fxLayout="row" fxLayoutGap="50px" fxLayoutAlign="center center" style="padding-bottom:50px;"> 
+				
+				<div fxLayout="column" fxFlex="30">
+					<mat-form-field  fxFlex>
+						  <input  id="qcid_entry" #QCID type="text" (change)="updateContainer(QCID)" matInput placeholder="QCID#" [(ngModel)] ='container.qcid' name="qcid" >
+						   <mat-hint>Optional: Scan or type a code you wish to associate.</mat-hint>
+					 </mat-form-field>
+					 
+					 <div fxLayout="row" fxLayoutAlign="center center" style="margin-top:20px" > 
+						 <button mat-button  class="mat-raised-button mat-primary" (click)="updateQCID()">Confirm</button>
+					</div>
+				
+					 
+				</div>
+				
+				<div fxLayout="column" fxFlex="20">
+					<button mat-button class="mat-raised-button" disabled >Print Large Label</button>					
+				</div>
+				 
+		</div>
+	
+	</div>
 </mat-dialog-content>
 
-<mat-dialog-actions>
-    <button class="mat-raised-button"(click)="close()">Close</button>
-    <button class="mat-raised-button mat-primary"(click)="save()">Save</button>
+<mat-dialog-actions style="margin-top:20px;">
+    <button style="float:right;"class="mat-raised-button"(click)="close()">Close</button>
+    <button *ngIf="!codeRegistryStep" class="mat-raised-button mat-primary"(click)="createButton()" [disabled]="!validateForm()">Create </button>
+
 </mat-dialog-actions>

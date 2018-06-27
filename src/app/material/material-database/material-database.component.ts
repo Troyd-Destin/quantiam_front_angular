@@ -30,6 +30,7 @@ export class MaterialDatabaseComponent implements OnInit {
   
   dtOptions: DataTables.Settings = {};
   materials: Material[];
+  _materialDatatable = null;
 
    constructor(private http: HttpClient,public router: Router,private materialDatatable: MaterialDatatableService) {}
    
@@ -42,9 +43,6 @@ export class MaterialDatabaseComponent implements OnInit {
   
 
   ngOnInit() {
-  
-     const that = this;
-     const _materialDatatable = null;
   
      this.dtOptions = {
       pagingType: 'full_numbers',
@@ -62,11 +60,8 @@ export class MaterialDatabaseComponent implements OnInit {
         this.materialDatatable.getMaterialDatatable(dataTablesParameters);
         
         
-        if(!this._materialDatatable) this._materialDatatable = this.materialDatatable.materialDatatable$.subscribe(resp => {
-        
-            console.log('subjects');
-            that.materials = resp.data;
-            
+        if(!this._materialDatatable) this._materialDatatable = this.materialDatatable.materialDatatable$.subscribe(resp => {        
+         
             if(typeof resp.data !== 'undefined'){
 
             callback({
@@ -94,7 +89,7 @@ export class MaterialDatabaseComponent implements OnInit {
       
       columns: [
                
-            {  
+            {    
               title: 'Code',
               data: 'datamatrix', "width": "1%", 
               orderable:false,
@@ -111,9 +106,10 @@ export class MaterialDatabaseComponent implements OnInit {
 
             },    
             { data: 'name', title:"Material",orderable:false,searchable:true,"width": "15%",},
+            { data: 'formula', title:"Formula",orderable:false, searchable:true},
             { data: 'grade', title:"Grade",orderable:false, "width": "auto",searchable:false},
             { data: 'supplier.supplier_name', title:"Supplier",orderable:false, searchable:false,"width": "auto",},
-            { data: 'formula', title:"Formula",orderable:false, searchable:true},
+            
             { data: 'catalog', title:"Catalog",orderable:false, searchable:false},
             { data: 'cas', title:"CAS",orderable:false, searchable:false},
             { data: 'density', title:"Density",orderable:false, searchable:false },

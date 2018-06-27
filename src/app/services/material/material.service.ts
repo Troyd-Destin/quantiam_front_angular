@@ -42,9 +42,9 @@ export class MaterialService {
     }
   }
   
-  updateMaterial(params)
+  updateMaterial(params, id = null)
   {
-     let id = this.last_id;    
+		if(!id)  id = this.last_id;    
      
      this.http.put<any>(environment.apiUrl+`${this.endpoint}/${id}?filterSpinner`, params)
      .pipe(
@@ -64,7 +64,21 @@ export class MaterialService {
   }
  
   
+  create(params)
+  {
   
+	return this.http.post<any>(environment.apiUrl+`${this.endpoint}?filterSpinner`, params)
+     .pipe(
+        tap( r => {}), 
+        map( res => {
+	
+			this.notification.success('Material Created',null,{showProgressBar:false,timeOut:3000,clickToClose: true});
+			return res;
+		}), // return results without transformation
+         //catchError( (e) => this.notification.error('Error','Problem updating material.',{showProgressBar:false,timeOut:3000,clickToClose: true})),
+       
+      );
+  }
   
   
 }

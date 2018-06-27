@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { WebsocketService } from '../services/websocket/websocket.service'; 
+//window.websocketService = new WebsocketService(); //initialize websocket here for some reason
+
 
 import { CoreRoutingModule } from './core-routing.module';
 
-
+import { Select2Module } from 'ng2-select2';
 
 import {
 	MatButtonModule, MatCheckboxModule,MatDatepickerModule,MatFormFieldModule,
-	MatInputModule,MatNativeDateModule,MatCardModule,MatSidenavModule,
+	MatInputModule,MatNativeDateModule,MatCardModule,MatSidenavModule,MatSelectModule,
 	MatToolbarModule,MatTabsModule,MatGridListModule,MatListModule,MatIconModule,MatExpansionModule,MatDividerModule  } from '@angular/material';
 
 
@@ -38,6 +41,8 @@ import { CoreComponent } from './core.component';
 		MatIconModule,
 		MatListModule,
 		MatExpansionModule,
+		MatSelectModule,
+		Select2Module,
 		
   ],
   exports:[
@@ -48,8 +53,8 @@ import { CoreComponent } from './core.component';
 	HeaderComponent,	
 	CoreComponent
 	],
-	providers:[
+	bootstrap:[CoreComponent],
 	
-	]
+	providers:[]
 })
 export class CoreModule { }

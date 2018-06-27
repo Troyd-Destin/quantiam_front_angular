@@ -2,23 +2,43 @@
   <mat-toolbar class="app-header" color="primary">
 	
 		 <mat-toolbar-row>
-			<span style="font-size: 14px;padding-left: 10px;">Quantiam Technologies Inc.</span>
+			<button mat-button style="font-size: 14px;padding-left: 10px;text-align:left">Quantiam Technologies Inc.</button>
 			<span class="header-spacer"></span>
 			<!-- <mat-icon class="example-icon">favorite</mat-icon>
 			<mat-icon class="example-icon">delete</mat-icon> -->
-			<span class='name-title-box' *ngIf="userLoaded">
-				<p  class='name-title'> {{userName}} </p>
+	<!-- 		<mat-form-field>
+				<mat-select placeholder="Scanner"  style="width:100px; line-height:5px;" [(value)]="selectedScanner">
+					<mat-option value="1">Scanner 1</mat-option>
+					<mat-option value="2">Scanner 2</mat-option>
+			  </mat-select>
+			</mat-form-field> -->
+			
+			<select2									
+					 (valueChanged)="updateScanner($event)"
+					cssImport ="true"
+			><option disabled></option>
+				<option
+					*ngFor="let scanner of scannerList" 
+					[value]="scanner.id"
+					[attr.selected]="selectedScanner.id==scanner.id ? true : null"
+					>{{scanner.text}}</option>
+			</select2>
+						
+			<button mat-button class='name-title-box' *ngIf="userLoaded">
+				<p  class='name'> {{userName}} </p>
 				<p  class='name-title'> {{userTitle}} </p>
-			</span>
+			</button>
 			<button style="font-size:14px; font-weight: bold;" mat-button (click)="logout()">Logout</button>
+			<button style="font-size:14px; font-weight: bold;" mat-button (click)="logout()">{{selectedScanner}}
+  </button>
 		</mat-toolbar-row>
 		
 	</mat-toolbar>
 
+					
   <mat-sidenav-container class="app-container" [style.marginTop.px]="options.value.top">
 
-	
-  
+		
 			<mat-sidenav #sidenav 
 						opened="defaultOpen" 
 						[class]="mobileQuery.matches ? 'app-sidenav-over' : 'app-sidenav'"
@@ -29,10 +49,10 @@
 			
 			  
 					<mat-accordion class="side-panel" multi="true">
-						<mat-expansion-panel expanded="true">
-							  <mat-expansion-panel-header>
+						<mat-expansion-panel expanded="false" style="display:none">
+						  <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
 								<mat-panel-title>
-								    Materials
+								    Admin
 								</mat-panel-title>
 								
 							  </mat-expansion-panel-header>
@@ -41,13 +61,85 @@
 										<button routerLink="/material" mat-button>Home</button>
 								</mat-list-item> -->
 								 <mat-list-item > 
-									 <button routerLink="/material/database" routerLinkActive="mat-list-item-button-active" mat-button>Database</button>
+									 <button  routerLinkActive="mat-list-item-button-active" mat-button> Users </button>
 								</mat-list-item>
+								 <mat-list-item > 
+									 <button routerLinkActive="mat-list-item-button-active" mat-button> Groups </button>
+								</mat-list-item>	
+									 <mat-list-item > 
+									 <button  routerLinkActive="mat-list-item-button-active" mat-button> Permissions </button>
+								</mat-list-item>	
+							
+								</mat-list>  
+						</mat-expansion-panel>
+						
+							<mat-divider style="display:none"></mat-divider >
+						<mat-expansion-panel expanded="false" style="display:none">
+						 <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
+							<mat-panel-title>
+								    Timesheet
+								</mat-panel-title>
+								
+							  </mat-expansion-panel-header>
+								<mat-list>
+								<!--  <mat-list-item  > 
+										<button routerLink="/material" mat-button>Home</button>
+								</mat-list-item> -->
+								 <mat-list-item > 
+									 <button  routerLinkActive="mat-list-item-button-active" mat-button> Timesheet </button>
+								</mat-list-item>	
+								 <mat-list-item > 
+									 <button  routerLinkActive="mat-list-item-button-active" mat-button> Calendar </button>
+								</mat-list-item>
+								<mat-list-item > 
+									 <button  routerLinkActive="mat-list-item-button-active" mat-button> RTO </button>
+								</mat-list-item>
+								
+							
+								</mat-list>  
+						</mat-expansion-panel>
+						
+						
+						<mat-divider style="display:none"></mat-divider>
+						<mat-expansion-panel expanded="true" >
+							  <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
+								<mat-panel-title>
+								    Inventory
+								</mat-panel-title>
+								
+							  </mat-expansion-panel-header>
+								<mat-list>
+								<!--  <mat-list-item  > 
+										<button routerLink="/material" mat-button>Home</button>
+								</mat-list-item> -->
+									
+								
+									 <mat-list-item  > 
+										 <button  routerLinkActive="mat-list-item-button-active" mat-button> Steel </button>
+									</mat-list-item>									
+								
+									 <mat-list-item > 
+										 <button routerLink="/material/database" routerLinkActive="mat-list-item-button-active" mat-button> Materials </button>
+									</mat-list-item> 
+
+										 <mat-list-item > 
+										 <button routerLink="/material/container/database" routerLinkActive="mat-list-item-button-active" mat-button> Containers </button>
+									</mat-list-item> 
+
+								
+									 <mat-list-item style="display:none" > 
+										 <button  routerLinkActive="mat-list-item-button-active" mat-button> Racks </button>
+									</mat-list-item> 
+									
+									<mat-list-item style="display:none" > 
+										<button routerLink="/inventory/database" routerLinkActive="mat-list-item-button-active" mat-button> Inventory Jobs </button>
+									</mat-list-item>
+								
 								</mat-list>  
 						</mat-expansion-panel>
 						<mat-divider></mat-divider>
 						<mat-expansion-panel expanded="true">
-								<mat-expansion-panel-header>
+								 <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
 								
 								
 								<mat-panel-title>
@@ -65,7 +157,91 @@
 								
 								</mat-list>
 						</mat-expansion-panel>
-						<mat-divider></mat-divider>
+						
+						
+						<mat-divider style="display:none"></mat-divider>
+						<mat-expansion-panel expanded="false" style="display:none">
+								 <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
+								
+								
+								<mat-panel-title>
+									Operations
+								</mat-panel-title>
+								
+							  </mat-expansion-panel-header>
+								<mat-list>
+								 <mat-list-item  > 
+										 <button routerLinkActive="mat-list-item-button-active" mat-button>Receiving</button>
+								</mat-list-item>
+									 <mat-list-item  > 
+										 <button routerLinkActive="mat-list-item-button-active" mat-button>Surface Finishing</button>
+								</mat-list-item>
+								<mat-list-item  > 
+										 <button routerLinkActive="mat-list-item-button-active" mat-button>Powder Processing</button>
+								</mat-list-item>
+								<mat-list-item  > 
+										 <button routerLinkActive="mat-list-item-button-active" mat-button>Slip Making</button>
+								</mat-list-item>
+								<mat-list-item  > 
+										 <button routerLinkActive="mat-list-item-button-active" mat-button>Slip Casting</button>
+								</mat-list-item>
+								 <mat-list-item  > 
+										 <button routerLinkActive="mat-list-item-button-active" mat-button>Furnace Runs</button>
+								</mat-list-item>
+									 <mat-list-item  > 
+										 <button routerLinkActive="mat-list-item-button-active" mat-button>Shipping</button>
+								</mat-list-item>
+								
+								
+								</mat-list>
+						</mat-expansion-panel>
+						
+						<mat-divider style="display:none"></mat-divider>
+						<mat-expansion-panel expanded="false" style="display:none">
+								 <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
+								
+								
+								<mat-panel-title>
+									QAQC
+								</mat-panel-title>
+								
+							  </mat-expansion-panel-header>
+								<mat-list>
+								 <mat-list-item  > 
+										 <button routerLinkActive="mat-list-item-button-active" mat-button>Inspections</button>
+								</mat-list-item>
+									 <mat-list-item  > 
+										 <button routerLinkActive="mat-list-item-button-active" mat-button>Analytics</button>
+								</mat-list-item>
+					
+								
+								</mat-list>
+						</mat-expansion-panel>
+						
+						
+						<mat-divider style="display:none"></mat-divider>
+						<mat-expansion-panel expanded="false" style="display:none">
+								 <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
+								
+								
+								<mat-panel-title>
+									Instruments
+								</mat-panel-title>
+								
+							  </mat-expansion-panel-header>
+								<mat-list>
+								 <mat-list-item  > 
+										 <button routerLinkActive="mat-list-item-button-active" mat-button>SEM / EDS</button>
+								</mat-list-item>
+									 <mat-list-item  > 
+										 <button routerLinkActive="mat-list-item-button-active" mat-button>XRD</button>
+								</mat-list-item>
+					
+								
+								</mat-list>
+						</mat-expansion-panel>
+						
+						<!-- <mat-divider></mat-divider> -->
 					
 					
 						</mat-accordion>				  

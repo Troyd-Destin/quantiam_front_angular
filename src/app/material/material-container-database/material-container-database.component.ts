@@ -25,12 +25,10 @@ export class MaterialContainerDatabaseComponent implements OnInit {
        this.router.navigate(['/material/container/'+info.id]);
   }
 
-  
+  _materialLotContainerDatatable = null;
 
   ngOnInit() {
   
-     const that = this;
-     const _materialLotContainerDatatable = null;
   
      this.dtOptions = {
       pagingType: 'full_numbers',
@@ -45,9 +43,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
                 
         if(!this._materialLotContainerDatatable) this._materialLotContainerDatatable = this.materialLotContainerDatatable.materialLotContainerDatatable$.subscribe(resp => {
         
-            that.materials = resp.data;
-            
-            if(typeof resp.data !== 'undefined'){
+          if(typeof resp.data !== 'undefined'){
 
             callback({
               recordsTotal: resp.recordsTotal,
@@ -75,6 +71,14 @@ export class MaterialContainerDatabaseComponent implements OnInit {
               title: 'ID',
               orderable:false,
               "width": "25px",
+             },
+			 
+			 {
+              data: 'qcid',
+              title: 'ID',
+              orderable:false,
+			  searchable: true,
+			  visible: false,
              },
             { data: 'lot.material.name', title:"Material",orderable:false, searchable: true,"width": "15%", render: function (data,type,row,meta){ 
               

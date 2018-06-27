@@ -10,19 +10,19 @@
 					
 						  
 						<mat-form-field class="full-width">
-							<input #materialName matInput placeholder="name" [(ngModel)] ='material.name' name="name" (blur)="updateMaterial(materialName)">
+							<input #materialName matInput placeholder="name" [(ngModel)] ='material.name' name="name" (change)="updateMaterial(materialName)">
 						  </mat-form-field> 
 						 
 						  
 				
 
 						  <mat-form-field class="full-width">
-							<input #materialGrade type="text" matInput placeholder="Grade" [(ngModel)] ='material.grade' name="grade" (blur)="updateMaterial(materialGrade)">
+							<input #materialGrade type="text" matInput placeholder="Grade" [(ngModel)] ='material.grade' name="grade" (change)="updateMaterial(materialGrade)">
 						  </mat-form-field> 
 						  
 						  
 					<mat-form-field class="full-width">
-							<input #Nomenclature matInput placeholder="Nomenclature"  [(ngModel)] ='material.formula' name="formula" (blur)="updateMaterial(Nomenclature)">
+							<input #Nomenclature matInput placeholder="Nomenclature"  [(ngModel)] ='material.formula' name="formula" (change)="updateMaterial(Nomenclature)">
 						  </mat-form-field>
 				
 				</div>
@@ -34,7 +34,7 @@
 						  </mat-form-field>
 
 						  <mat-form-field class="full-width">
-							<input #materialCatalog matInput placeholder="Catalog #" [(ngModel)] ='material.catalog' name="catalog"  (blur)="updateMaterial(materialCatalog)">
+							<input #materialCatalog matInput placeholder="Catalog #" [(ngModel)] ='material.catalog' name="catalog"  (change)="updateMaterial(materialCatalog)">
 						  </mat-form-field>
 
 						  <mat-form-field class="full-width">
@@ -42,11 +42,11 @@
 						  </mat-form-field>
 						  
 						<mat-form-field class="full-width">
-							<input #materialMolarmass matInput type="number" step="0.1" [(ngModel)] ='material.molar_mass' name="molar_mass" placeholder="Molar Mass" (blur)="updateMaterial(materialMolarmass)">
+							<input #materialMolarmass matInput type="number" step="0.1" [(ngModel)] ='material.molar_mass' name="molar_mass" placeholder="Molar Mass" (change)="updateMaterial(materialMolarmass)">
 						  </mat-form-field>
 
 						  <mat-form-field class="full-width">
-							<input #materialDensity matInput type="number" step="0.1"   placeholder="Density"  [(ngModel)] ='material.density' name="density"  (blur)="updateMaterial(materialDensity)">
+							<input #materialDensity matInput type="number" step="0.1"   placeholder="Density"  [(ngModel)] ='material.density' name="density"  (change)="updateMaterial(materialDensity)">
 						  </mat-form-field> 
 						 
 						  
