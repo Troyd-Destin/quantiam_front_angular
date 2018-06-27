@@ -24,7 +24,7 @@ export class WebsocketService {
  // public ws$: Observable<any> = this._wsSource.asObservable();
   
 
-  public selectableScanners = [{'text': "QAQC", id: 1},{'text': "Powders", id: 2},{'text': "Slipcasting", id: 3},{'text':"Furnaces",id:4}];
+  public selectableScanners = [{'text':"None",id:0},{'text': "QAQC", id: 1},{'text': "Powders", id: 2},{'text': "Slipcasting", id: 3},{'text':"Furnaces",id:4}];
   public selectedScanner;
   
   
