@@ -7,7 +7,7 @@ import { MaterialLotService } from '../../services/material-lot/material-lot.ser
 import { MaterialService } from '../../services/material/material.service';
 
 import { WebsocketService } from '../../services/websocket/websocket.service'; 
-
+import { Router } from '@angular/router';
 
 
 
@@ -44,6 +44,7 @@ export class MaterialCreationDialogComponent implements OnInit {
 		private materialService: MaterialService, 
 		private materialLotService: MaterialLotService, 
 		private websocket: WebsocketService,
+		public router: Router, 
 		
 		) {  }
 
@@ -151,7 +152,7 @@ export class MaterialCreationDialogComponent implements OnInit {
 	 }
 	 
 	 
-	 updateQCID()
+	 updateQCID(field)
 	 {
 		var params = {};
         params[field.name] =  field.value;
@@ -159,6 +160,7 @@ export class MaterialCreationDialogComponent implements OnInit {
 			
 			
 					this.close();
+					this.router.navigate('/material/container/'+this.container.id);
 			
 			});
 	 
