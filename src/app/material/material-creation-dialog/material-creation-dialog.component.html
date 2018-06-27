@@ -117,7 +117,7 @@
 							   <mat-error *ngIf="!container.denomination">Required  g,ml,L</mat-error>
 					 </mat-form-field> 	
 					<mat-form-field  fxFlex>
-						  <input #AmountOrdered    type="text"  required matInput placeholder="Amount Ordered" [(ngModel)] ='container.amount_ordered' name="amount_ordered" >
+						  <input #AmountOrdered    type="text"  required matInput placeholder="Amount Ordered {{container.denomination}}" [(ngModel)] ='container.amount_ordered' name="amount_ordered" >
 						   <mat-error *ngIf="!container.amount_ordered">Required</mat-error>
 					 </mat-form-field>
 					

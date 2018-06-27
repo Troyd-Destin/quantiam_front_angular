@@ -122,7 +122,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 			  
 			{ data: 'active', title:"Left",orderable:false,  searchable: true,render: function (data,type,row,meta){
 			
-                    if(data) return '<b>'+(row.remaining.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))+' g</b>';
+                    if(row.remaining) return '<b>'+(row.remaining.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))+' g</b>';
                     return '';
                 } 
 				
