@@ -155,14 +155,16 @@ export class MaterialCreationDialogComponent implements OnInit {
 	 updateQCID(field)
 	 {
 		var params = {};
-        params[field.name] =  field.value;
-		if(this.container.id) this.materialLotContainerService.update(params,this.container.id).subscribe((r)=>{
+		
+        params['qcid'] =  this.container.qcid;
+		
+		 if(this.container.id) this.materialLotContainerService.update(params,this.container.id).subscribe((r)=>{
 			
 			
 					this.close();
 					this.router.navigate('/material/container/'+this.container.id);
 			
-			});
+			}); 
 	 
 	 }
 	 
