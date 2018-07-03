@@ -137,19 +137,25 @@
 							   <mat-error *ngIf="!container.denomination">Required  g,ml,L</mat-error>
 					 </mat-form-field> 	
 					<mat-form-field  fxFlex>
-						  <input #AmountOrdered    type="text"  required matInput placeholder="Amount Ordered {{container.denomination}}" [(ngModel)] ='container.amount_ordered' name="amount_ordered" >
-						   <mat-error *ngIf="!container.amount_ordered">Required</mat-error>
+						  <input #AmountOrdered    type="number"  required matInput placeholder="Amount Ordered {{container.denomination}}"
+						  [(ngModel)] ='container.amount_ordered' 
+						  name="amount_ordered" >
+						   
+						 <mat-error *ngIf="!container.amount_ordered">Required</mat-error>
+						 
 						   <mat-hint> "500g","500ml", "5L","6kg" </mat-hint>
 					 </mat-form-field>
 					
 					 
 					 
 					  <mat-form-field  fxFlex>
-						  <input #GrossWeighttype type="text" required matInput placeholder="Gross Weight (g)" [(ngModel)] ='container.gross_weight' name="gross_weight" >
+						  <input #GrossWeighttype type="number" required matInput placeholder="Gross Weight (g)" [(ngModel)] ='container.gross_weight' name="gross_weight" >
 						  <mat-hint>Weigh item out on a scale. </mat-hint>
-						   <mat-error *ngIf="container.gross_weight"> Required   </mat-error>
+						  
+						   <mat-error *ngIf="!container.gross_weight"> Required   </mat-error>
 					 </mat-form-field>	 
 					 
+					
 					 
 
 										  

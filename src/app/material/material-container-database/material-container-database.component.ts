@@ -15,9 +15,11 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./material-container-database.component.css']
 })
 export class MaterialContainerDatabaseComponent implements OnInit {
+	
   @ViewChild(DataTableDirective)
   datatableElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};   
+  
 
    constructor(private http: HttpClient,public router: Router,private materialLotContainerDatatable: MaterialLotContainerDatatableService) {}
    
@@ -26,6 +28,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
   }
 
   _materialLotContainerDatatable = null;
+  forceRefreshTable = false;
 
   ngOnInit() {
   
@@ -39,7 +42,9 @@ export class MaterialContainerDatabaseComponent implements OnInit {
        //"bDeferRender": true,
       ajax:(dataTablesParameters: any, callback) => {
       
-        this.materialLotContainerDatatable.getMaterialLotContainerDatatable(dataTablesParameters);
+		
+	  
+        this.materialLotContainerDatatable.getMaterialLotContainerDatatable(dataTablesParameters,this.forceRefreshTable);
                 
         if(!this._materialLotContainerDatatable) this._materialLotContainerDatatable = this.materialLotContainerDatatable.materialLotContainerDatatable$.subscribe(resp => {
         
@@ -53,6 +58,8 @@ export class MaterialContainerDatabaseComponent implements OnInit {
             }); 
             }
           });
+		  
+		  console.log('test');
       
       },    
       columns: [
@@ -143,9 +150,21 @@ export class MaterialContainerDatabaseComponent implements OnInit {
     };
     
   }
+  
+  refreshTable()
+  {
+	this.forceRefreshTable = true;
+	  this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.draw();
+	  this.forceRefreshTable = false;
+    });
+  
+  }
+  
+  
    ngOnDestroy()
   {
-    this._materialLotContainerDatatable.unsubscribe();
+    if(this._materialLotContainerDatatable) this._materialLotContainerDatatable.unsubscribe();
   
     
   }

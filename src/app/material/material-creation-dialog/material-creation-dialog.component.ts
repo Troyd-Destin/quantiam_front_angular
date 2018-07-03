@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup }   from '@angular/forms';
 import { MaterialLotContainerService } from '../../services/material-lot-container/material-lot-container.service';
 import { MaterialLotService } from '../../services/material-lot/material-lot.service';
 import { MaterialService } from '../../services/material/material.service';
-
+import { MaterialLotContainerDatatableService } from '../services/material-lot-container-datatable.service';
 import { WebsocketService } from '../../services/websocket/websocket.service'; 
 import { Router } from '@angular/router';
 
@@ -16,8 +16,11 @@ import { Router } from '@angular/router';
   templateUrl: './material-creation-dialog.component.html',
   styleUrls: ['./material-creation-dialog.component.css'],
    providers: [],
-})
+}
+
 export class MaterialCreationDialogComponent implements OnInit {
+
+	
 
     form: FormGroup;
     description:string;
@@ -51,6 +54,8 @@ export class MaterialCreationDialogComponent implements OnInit {
 		{id:9,text:"South Wall Shelves"},
 	  
 	  ];
+	  
+	// @Output() refreshContainerTable = new EventEmitter();
    
    
     constructor(
@@ -61,7 +66,8 @@ export class MaterialCreationDialogComponent implements OnInit {
 		private materialService: MaterialService, 
 		private materialLotService: MaterialLotService, 
 		private websocket: WebsocketService,
-		public router: Router, 
+		public router: Router,
+		private materialLotContainerDatatable: MaterialLotContainerDatatableService,
 		
 		) {  }
 
@@ -305,6 +311,8 @@ export class MaterialCreationDialogComponent implements OnInit {
 	 
 	  ngOnDestroy()
 		  {
+			
+		   this.materialLotContainerDatatable.getMaterialLotContainerDatatable({draw:1,length:20, start:0},true);
 			this.websocket.redirectOnScan = true;
 			this._ws.unsubscribe();	
 			this._wsk.unsubscribe();	

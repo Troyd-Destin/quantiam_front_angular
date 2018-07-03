@@ -18,6 +18,7 @@ export class MaterialLotContainerDatatableService {
   
     private last_params: string;  
     private endpoint = '/material/lot/container/list/datatable';
+	//private forceRefresh = false;
 
 
     constructor(public http: HttpClient, public notification: NotificationsService) { }
@@ -37,19 +38,21 @@ export class MaterialLotContainerDatatableService {
       return str.join("&");
     }
 
-    getMaterialLotContainerDatatable(params){
+    getMaterialLotContainerDatatable(params,forceRefresh){
       
-      
+			
           let defaultRequest = false;
           if(params.draw == 1) defaultRequest = true;  //identify if it is teh default request
           params.active = 1;
+		  
+		
 		  
           let new_string = params;          
           delete new_string.draw; //drwa increments, for every request, complicates caching purposes.
           new_string = JSON.stringify(params);
          
         
-          if(((new_string != this.last_params) && !defaultRequest) || (!this.last_params && defaultRequest)) // fetch if things are different.
+          if(forceRefresh || (((new_string != this.last_params) && !defaultRequest) || (!this.last_params && defaultRequest))) // fetch if things are different.
           { 
               
            this.http.post<any>(environment.apiUrl+`${this.endpoint}`,this.serialize(params,null),  {
