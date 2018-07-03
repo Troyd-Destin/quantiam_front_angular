@@ -35,6 +35,22 @@ export class MaterialCreationDialogComponent implements OnInit {
 	_ws;
    
    
+   //Temporary until we link to DB
+   locationList = [
+	  
+		{id:6,text:"General Compounds"},
+		{id:3,text:"Buto/Etho Oxides"},
+		{id:2,text:"Acids Cabinet (Research)"},
+		
+		{id:4,text:"Explosives Cabinet (Research) "},
+		{id:5,text:"Fridge(Research)"},
+	  
+		{id:7,text:"Metals"},
+		{id:8,text:"Oxidizing Compounds"},
+		{id:9,text:"South Wall Shelves"},
+	  
+	  ];
+   
    
     constructor(
         private fb: FormBuilder,
@@ -191,7 +207,7 @@ export class MaterialCreationDialogComponent implements OnInit {
 	 {
 		if(!this.material.name) return false;
 		if(!this.lot.lot_name) return false;
-		if(!this.container.denomination || !this.container.gross_weight || !this.container.amount_ordered) return false;
+		if(!this.container.denomination || !this.container.gross_weight || !this.container.amount_ordered || !this.container.location_id) return false;
 	 
 		return true;
 	 }

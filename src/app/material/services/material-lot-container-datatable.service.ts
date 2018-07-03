@@ -42,7 +42,8 @@ export class MaterialLotContainerDatatableService {
       
           let defaultRequest = false;
           if(params.draw == 1) defaultRequest = true;  //identify if it is teh default request
-          
+          params.active = 1;
+		  
           let new_string = params;          
           delete new_string.draw; //drwa increments, for every request, complicates caching purposes.
           new_string = JSON.stringify(params);

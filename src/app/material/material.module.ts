@@ -8,13 +8,15 @@ import { FormsModule } from '@angular/forms';
 import { WebsocketService } from '../services/websocket/websocket.service'; 
 import {FlexLayoutModule} from "@angular/flex-layout";
 
+import { Select2Module } from 'ng2-select2';
+
 import { DataTablesModule } from 'angular-datatables';
 
 import { SharedModule } from '../shared/shared.module';
 
 import {
 	MatButtonModule, MatCheckboxModule,MatDatepickerModule,MatFormFieldModule,
-	MatInputModule,MatNativeDateModule,MatCardModule,MatSidenavModule,MatTableModule,
+	MatInputModule,MatNativeDateModule,MatCardModule,MatSidenavModule,MatTableModule,MatSelectModule,
 	MatToolbarModule,MatTabsModule,MatGridListModule,MatListModule,MatIconModule,MatExpansionModule,MatDividerModule,MatDialogModule  } from '@angular/material';
 import {MatChipsModule} from '@angular/material/chips';
 	
@@ -53,8 +55,10 @@ import { MaterialContainerDatabaseComponent } from './material-container-databas
 		MatListModule,
 		MatExpansionModule,
 		MatChipsModule,
+		MatSelectModule,
     MatDialogModule,
     MatTableModule,
+	Select2Module,
   ],
   declarations: [MaterialCreationDialogComponent, MaterialIndexComponent, MaterialDatabaseComponent, MaterialViewComponent, 
 	  MaterialComponent, MaterialContainerViewComponent, MaterialContainerDatabaseComponent],

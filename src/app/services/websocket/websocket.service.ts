@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, HostListener } from '@angular/core';
 import {Observable, Subject, Observer,BehaviorSubject} from 'rxjs';
 import { NotificationsService } from 'angular2-notifications';
 import { catchError, map, tap, delay,share } from 'rxjs/operators';
@@ -6,6 +6,8 @@ import { catchError, map, tap, delay,share } from 'rxjs/operators';
 import { SettingsService } from '../../services/settings/settings.service'; 
 
 import { Router } from '@angular/router';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +21,8 @@ export class WebsocketService {
   private codeObj;
   private randomNumber = Math.random();
   public observable;
+  public _keyBoardSubject = new BehaviorSubject({});
+  public keyboardObservable: Observable<any> = this._keyBoardSubject.asObservable();
   
 //  public _wsSource = new BehaviorSubject({});
  // public ws$: Observable<any> = this._wsSource.asObservable();
@@ -39,6 +43,14 @@ export class WebsocketService {
   
   public redirectOnScan: boolean = true;
   private selectedScanner: string;
+  
+	private id_string = '';
+	private last_key_name;
+	private lastKeyPressTime;
+	private triggerTimeout = false;
+	private keypressIncrement = 0;
+	private lastKeypressCh = '';
+	private timeout;
 
   
   constructor(
@@ -48,6 +60,15 @@ export class WebsocketService {
 	) {
 		
 		this.selectedScanner = settings.get('selectedScanner');
+		this.lastKeyPressTime = Date.now();
+		
+		window.addEventListener('keydown', (event) => {
+			//console.dir(event);
+			 var keypressTime =  Date.now();
+			this.identifyScannedObjectKeyboardInput (event.key,keypressTime);
+	  
+		
+	  });
 		
 		}
   
@@ -99,13 +120,9 @@ export class WebsocketService {
 						   
 						   if(this.redirectOnScan && scannerResponse.machine.name == this.selectedScanner.text) // is the app in rediect mode?
 						   {					 
-							  this.codeObj = this.parseScannerCode(scannerResponse.data);
-							  let selectedRoute = this.prefixNavigationMap[this.codeObj.prefix];
-							  this.router.navigate([selectedRoute+this.codeObj.id],{queryParams: {scannerNavigation:true}}).catch(error => {
-							  
-								this.notification.error('Redirect Not Registered',scannerResponse.data,{timeOut:3000,showProgressBar:false,clickToClose: true});
-							});				
-								
+							 this.redirectOnScanFn(scannerResponse.data);
+							 
+							
 						   }
 						}
 						  
@@ -117,20 +134,26 @@ export class WebsocketService {
 				  this.ws.close();
 				};
 			  }).pipe(share());
-	
-		// this.ws$..next(JSON.stringify({ op: 'hello' }));
-			
-		
-			  
-	  
-	  
-				/* */
-			   //   console.log(res); 
-		
 		
 	}
-
 	
+ redirectOnScanFn(scannedString)
+ {
+  if(this.redirectOnScan)
+  {
+    var codeObj = this.parseScannerCode(scannedString);
+	
+							  let selectedRoute = this.prefixNavigationMap[codeObj.prefix];
+							  this.router.navigate([selectedRoute+codeObj.id],{queryParams: {scannerNavigation:true}}).catch(error => {
+							  
+								this.notification.error('Redirect Not Registered',scannedString,{timeOut:3000,showProgressBar:false,clickToClose: true});
+							});				
+								
+  }
+ }
+ 
+ 
+ 
   parseScannerCode (code)
   {
     try{
@@ -149,6 +172,54 @@ export class WebsocketService {
   
   
   }
+  
+  
+ public identifyScannedObjectKeyboardInput(ch,keypressTime)
+{
+
+	
+	//console.log(ch,keypressTime,this.lastKeyPressTime);
+	if(this.lastKeyPressTime)
+	{
+		var calc = keypressTime - this.lastKeyPressTime; 
+				
+		if(calc < 100)
+		{
+			
+			if(!this.keypressIncrement) this.id_string = this.id_string + this.lastKeypressCh; 
+			if(ch != 'Shift' && ch != 'Enter') this.id_string = this.id_string+ch;
+			
+				
+				clearTimeout(this.timeout);
+				
+				this.timeout = setTimeout(()=>{
+		
+							var message = this.id_string.replace('Shift','');
+							//console.log('timeout thing',message);
+						 
+							this._keyBoardSubject.next(message);
+								
+							this.redirectOnScanFn(message);
+							
+						  
+							this.id_string = '';
+							this.keypressIncrement = 0;
+							
+							
+						
+					},400);
+			this.keypressIncrement++
+		}
+	}
+	
+	//if(triggerTimeout) setTimeout
+
+	this.lastKeyPressTime = keypressTime;
+	this.lastKeypressCh = ch;
+}
+
+
+  
   
 
 

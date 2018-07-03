@@ -110,8 +110,28 @@
 	
 			<div fxLayoutGap="20px"  fxLayout="row" fxLayout.sm="column"  >	
 					
-					
-					  <mat-form-field  fxFlex="20">
+					 <mat-form-field class="full-width" fxFlex>
+					 <mat-hint>Where does this chemical live. </mat-hint>
+									 <mat-select required
+											#LocationId
+											placeholder="Location"
+											name="location_id"
+											 [(ngModel)]="container.location_id"
+											
+											
+									>
+									
+										<mat-option
+											*ngFor="let location of locationList" 
+											[value]="location.id"
+											
+											>{{location.text}}</mat-option>
+									</mat-select>
+							
+							
+					 </mat-form-field>   
+							 
+					  <mat-form-field  fxFlex="15">
 						  <input  #Denomination id="container_denomination" type="text" required matInput placeholder="Denomination" [(ngModel)] ='container.denomination' name="denomination" >
 						     <mat-hint>g,ml,L</mat-hint>
 							   <mat-error *ngIf="!container.denomination">Required  g,ml,L</mat-error>
@@ -119,6 +139,7 @@
 					<mat-form-field  fxFlex>
 						  <input #AmountOrdered    type="text"  required matInput placeholder="Amount Ordered {{container.denomination}}" [(ngModel)] ='container.amount_ordered' name="amount_ordered" >
 						   <mat-error *ngIf="!container.amount_ordered">Required</mat-error>
+						   <mat-hint> "500g","500ml", "5L","6kg" </mat-hint>
 					 </mat-form-field>
 					
 					 
@@ -128,6 +149,8 @@
 						  <mat-hint>Weigh item out on a scale. </mat-hint>
 						   <mat-error *ngIf="container.gross_weight"> Required   </mat-error>
 					 </mat-form-field>	 
+					 
+					 
 
 										  
 			</div>	

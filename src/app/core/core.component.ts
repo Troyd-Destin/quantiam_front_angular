@@ -44,6 +44,7 @@ export class CoreComponent implements OnInit {
   webSocketMessages: webSocketMessages;
   lastWebSocketMessage;
   _ws;
+  _wsk;
   
   
   
@@ -137,10 +138,7 @@ export class CoreComponent implements OnInit {
 	//	console.log('core');
 			
 		})
-   
-//setTimeout(function(){this.websocket.toggleRedirectOnScan();},3000);
 
-  
     
   }
   

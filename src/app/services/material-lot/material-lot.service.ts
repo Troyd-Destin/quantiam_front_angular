@@ -32,7 +32,7 @@ export class MaterialLotService {
         tap( r => {	}), 
         map( res => {
 			
-			  this.notification.success(' Lot','Created lot '+res.id,,{showProgressBar:false,timeOut:3000,clickToClose: true});
+			  this.notification.success(' Lot','Created lot '+res.id,{showProgressBar:false,timeOut:3000,clickToClose: true});
 			  return res;
 		
 		

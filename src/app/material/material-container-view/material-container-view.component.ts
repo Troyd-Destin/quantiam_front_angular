@@ -13,12 +13,26 @@ import { ActivatedRoute } from '@angular/router';
 export class MaterialContainerViewComponent implements OnInit {
 
   _container = null;
-  container = null;
+  container;
   editMaterial = false;
   editLot = false;
   editContainer = false;
   test_selector = null;
   newLotCreated = false;
+  
+  
+  locationList = [
+	  
+	  {id:2,text:"Acids Cabinet (Research)"},
+	  {id:3,text:"Buto/Etho Oxides"},
+	  {id:4,text:"Explosives Cabinet (Research) "},
+	  {id:5,text:"Fridge(Research)"},
+	  {id:6,text:"General Compounds"},
+	  {id:7,text:"Metals"},
+	  {id:8,text:"Oxidizing Compounds"},
+	  {id:9,text:"South Wall Shelves"},
+	  
+	  ];
 
   constructor(
 	private materialLotCotainerService: MaterialLotContainerService,
@@ -31,6 +45,7 @@ export class MaterialContainerViewComponent implements OnInit {
   ngOnInit() {
   
       let id  = this.route.snapshot.params.id;  //obtain ID from route   
+	 
       this.materialLotCotainerService.getMaterialLotContainer(id); 
 
       this.route.params.subscribe(val => {
@@ -58,10 +73,11 @@ export class MaterialContainerViewComponent implements OnInit {
 	  
       this._container = this.materialLotCotainerService.materialLotContainer$.subscribe(res=> { //subscribe to the material service for updates
      
+		console.log('test');
         if(typeof res !== 'undefined') {
 			this.container = res;
 			
-			if(this.scannerNavigation) this.materialLotCotainerService.update({active:1},this.container.id).subscribe((r)=>{ this.container.active = true;});
+			if(this.scannerNavigation && this.container.id && !this.container.active) this.materialLotCotainerService.update({active:1},this.container.id).subscribe((r)=>{ this.container.active = true;});
 			
 		}
        });
@@ -72,9 +88,13 @@ export class MaterialContainerViewComponent implements OnInit {
     this._container.unsubscribe(); 
   }
   
-  updateContainerField(field){
+  updateContainerField(field,specific_field){
+		
         var params = {};
-        params[field.name] =  field.value;
+        if(specific_field) {
+			params[specific_field] = field;
+		
+		}else{ params[field.name] =  field.value; }
         this.materialLotCotainerService.update(params).subscribe((r)=>{console.log(r)});      
   }
   
