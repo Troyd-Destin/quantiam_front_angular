@@ -33,6 +33,7 @@ export class MaterialCreationDialogComponent implements OnInit {
 	material = {};
     lot = {};
 	_ws;
+	_wsk;
    
    
    //Temporary until we link to DB
@@ -80,6 +81,17 @@ export class MaterialCreationDialogComponent implements OnInit {
 		
 		//console.log('dialog');
 				if(this.codeRegistryStep && r.type == 'Scanner')
+				{
+					//take scanned data and add it to the container.
+					this.container.qcid = r.data;
+				}
+			
+		 });
+		 
+		 this._wsk = this.websocket.keyboardObservable.subscribe((r)=>{
+		
+		//console.log('dialog');
+				if(this.codeRegistryStep)
 				{
 					//take scanned data and add it to the container.
 					this.container.qcid = r.data;
@@ -295,6 +307,7 @@ export class MaterialCreationDialogComponent implements OnInit {
 		  {
 			this.websocket.redirectOnScan = true;
 			this._ws.unsubscribe();	
+			this._wsk.unsubscribe();	
   
 		  }
 

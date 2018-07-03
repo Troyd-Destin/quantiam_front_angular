@@ -42,6 +42,7 @@ export class Select2MaterialLotComponent implements OnInit {
        
        // dropdownCssClass : 'bigdrop',
         //cache: true,
+		
         dropdownAutoWidth : true,
         templateSelection: function(d, c) {	
         
@@ -62,7 +63,7 @@ export class Select2MaterialLotComponent implements OnInit {
         },
         escapeMarkup: function(m) { return m;	},
        
-        //width: this.width,
+      //  width: '400px',
         theme: 'classic',
         ajax: {
               url: environment.apiUrl+'/material/lot/list', 

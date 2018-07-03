@@ -49,16 +49,10 @@ export class MaterialContainerViewComponent implements OnInit {
       this.materialLotCotainerService.getMaterialLotContainer(id); 
 
       this.route.params.subscribe(val => {
-          console.log(val);
-		 
-		
-
 		 
         if(id != val.id){
           id = val.id;
            this.materialLotCotainerService.getMaterialLotContainer(id);
-		   
-		  
 		   
 		  
         }
@@ -73,11 +67,19 @@ export class MaterialContainerViewComponent implements OnInit {
 	  
       this._container = this.materialLotCotainerService.materialLotContainer$.subscribe(res=> { //subscribe to the material service for updates
      
-		console.log('test');
+		
         if(typeof res !== 'undefined') {
 			this.container = res;
 			
 			if(this.scannerNavigation && this.container.id && !this.container.active) this.materialLotCotainerService.update({active:1},this.container.id).subscribe((r)=>{ this.container.active = true;});
+			
+			
+			console.log(moment(this.container.container_opened).format("YYYY-MM-DDTHH:mm:ss.SSS")+'Z');
+			
+			//Need to find a better way of translating this
+			if(this.container.container_received) this.container.container_received = moment(this.container.container_received).format("YYYY-MM-DDTHH:mm:ss.SSS")+'Z';
+			if(this.container.container_opened) this.container.container_opened = moment(this.container.container_opened).format("YYYY-MM-DDTHH:mm:ss.SSS")+'Z';
+			
 			
 		}
        });
