@@ -23,7 +23,7 @@ export class Select2MaterialLotComponent implements OnInit {
   @Input() enable_create: boolean = false;
   @Input() disabled: boolean = false;
   @Input() multiple: string = '';
-  @Input() default_lot = {};
+  @Input() default_lot: any = {};
   @Input() s2options = null;
 
   @Output() selectedValue = new EventEmitter<any>();
@@ -44,13 +44,13 @@ export class Select2MaterialLotComponent implements OnInit {
         //cache: true,
 		
         dropdownAutoWidth : true,
-        templateSelection: function(d, c) {	
+        templateSelection: function(d:any, c) {	
         
 		//if(!d.label){ return d.text;	} else { return d.label;}
             
             return ''+(d.text || d.lot_name)+'';
          },
-        templateResult: function (d) { 
+        templateResult: function (d:any) { 
           
           //console.log(d);
           
@@ -77,7 +77,7 @@ export class Select2MaterialLotComponent implements OnInit {
               
               processResults: function (data) {
               
-                 let returnObj = {};
+                 let returnObj:any = {};
                  returnObj.results = data;
                   
                  if(data.more) returnObj.pagination.more = true;  

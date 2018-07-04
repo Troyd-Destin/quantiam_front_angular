@@ -73,19 +73,7 @@ export class MaterialDatabaseComponent implements OnInit {
             }
           });
       
-      },    
-	  
-		/*  	  {url: environment.apiUrl+'/material/list/datatable',
-			type: "POST",
-      dataType: 'json',
-			headers:
-			{
-			  'Authorization': 'Bearer '+localStorage.getItem('token'),
-			}, }   */
-		 
-    
-    
-    
+      },  
       
       columns: [
                

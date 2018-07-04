@@ -13,12 +13,13 @@ import { ActivatedRoute } from '@angular/router';
 export class MaterialContainerViewComponent implements OnInit {
 
   _container = null;
-  container;
+  container: any;
   editMaterial = false;
   editLot = false;
   editContainer = false;
   test_selector = null;
   newLotCreated = false;
+  scannerNavigation:any;
   
   
   locationList = [
@@ -58,7 +59,7 @@ export class MaterialContainerViewComponent implements OnInit {
         }
       }); 
 	  
-	  this.route.queryParams.subscribe(p=>{
+	  this.route.queryParams.subscribe((p:any)=>{
 	  
 			
 			  this.scannerNavigation = p['scannerNavigation'];
@@ -74,7 +75,7 @@ export class MaterialContainerViewComponent implements OnInit {
 			if(this.scannerNavigation && this.container.id && !this.container.active) this.materialLotCotainerService.update({active:1},this.container.id).subscribe((r)=>{ this.container.active = true;});
 			
 			
-			console.log(moment(this.container.container_opened).format("YYYY-MM-DDTHH:mm:ss.SSS")+'Z');
+			//console.log(moment(this.container.container_opened).format("YYYY-MM-DDTHH:mm:ss.SSS")+'Z');
 			
 			//Need to find a better way of translating this
 			if(this.container.container_received) this.container.container_received = moment(this.container.container_received).format("YYYY-MM-DDTHH:mm:ss.SSS")+'Z';

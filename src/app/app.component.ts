@@ -13,7 +13,7 @@ export class AppComponent {
   {
     
     router.events    
-    .subscribe(e => {    
+    .subscribe((e:any) => {    
   
       if(e.hasOwnProperty('url'))
       {

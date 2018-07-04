@@ -18,18 +18,19 @@ export class WebsocketService {
  
   private subject: Subject<MessageEvent>;
   private subjectData: Subject<number>;
-  private codeObj;
+  private codeObj: any;
   private randomNumber = Math.random();
-  public observable;
+  public observable: any;
   public _keyBoardSubject = new BehaviorSubject({});
   public keyboardObservable: Observable<any> = this._keyBoardSubject.asObservable();
+  ws: any;
   
 //  public _wsSource = new BehaviorSubject({});
  // public ws$: Observable<any> = this._wsSource.asObservable();
   
 
   public selectableScanners = [{'text':"None",id:0},{'text': "QAQC", id: 1},{'text': "Powders", id: 2},{'text': "Slipcasting", id: 3},{'text':"Furnaces",id:4}];
-  public selectedScanner;
+  public selectedScanner:any;
   
   
   private prefixNavigationMap = { 
@@ -42,7 +43,6 @@ export class WebsocketService {
   };
   
   public redirectOnScan: boolean = true;
-  private selectedScanner: string;
   
 	private id_string = '';
 	private last_key_name;
@@ -141,9 +141,9 @@ export class WebsocketService {
  {
   if(this.redirectOnScan)
   {
-    var codeObj = this.parseScannerCode(scannedString);
+    var codeObj:any = this.parseScannerCode(scannedString);
 	
-							  let selectedRoute = this.prefixNavigationMap[codeObj.prefix];
+							  let selectedRoute:any = this.prefixNavigationMap[codeObj.prefix];
 							  this.router.navigate([selectedRoute+codeObj.id],{queryParams: {scannerNavigation:true}}).catch(error => {
 							  
 								this.notification.error('Redirect Not Registered',scannedString,{timeOut:3000,showProgressBar:false,clickToClose: true});
@@ -183,7 +183,7 @@ export class WebsocketService {
 	{
 		var calc = keypressTime - this.lastKeyPressTime; 
 				
-		if(calc < 100)
+		if(calc < 50)
 		{
 			
 			if(!this.keypressIncrement) this.id_string = this.id_string + this.lastKeypressCh; 

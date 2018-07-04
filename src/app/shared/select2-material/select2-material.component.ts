@@ -35,8 +35,8 @@ export class Select2MaterialComponent implements OnInit {
        // dropdownCssClass : 'bigdrop',
         //cache: true,
         dropdownAutoWidth : true,
-        templateSelection: function(d, c) {	if(!d.label){ return d.text;	} else { return d.label;}	},
-        templateResult: function (d) { if(d.html) { return d.html; } else { return d.text;} },
+        templateSelection: function(d:any, c) {	if(!d.label){ return d.text;	} else { return d.label;}	},
+        templateResult: function (d:any) { if(d.html) { return d.html; } else { return d.text;} },
         escapeMarkup: function(m) { return m;	},
         
      //   width: this.width,

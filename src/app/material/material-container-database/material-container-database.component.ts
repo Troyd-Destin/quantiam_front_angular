@@ -38,11 +38,8 @@ export class MaterialContainerDatabaseComponent implements OnInit {
       pageLength: 20,
       serverSide: true,
       processing: true,
-      searchDelay: 1000,
-       //"bDeferRender": true,
+      searchDelay: 500,
       ajax:(dataTablesParameters: any, callback) => {
-      
-		
 	  
         this.materialLotContainerDatatable.getMaterialLotContainerDatatable(dataTablesParameters,this.forceRefreshTable);
                 
@@ -76,25 +73,34 @@ export class MaterialContainerDatabaseComponent implements OnInit {
              {
               data: 'container_id',
               title: 'ID',
-              orderable:false,
+              orderable:true,
               "width": "25px",
              },
 			 
+			
 			 {
               data: 'qcid',
-              title: 'ID',
+              title: 'QCID',
               orderable:false,
 			  searchable: true,
-			  visible: false,
+			  visible: true,
+			  width: "25px",
+			  render: function (data,type,row,meta){
+                    if(data) return data.replace('QCID-','');
+					
+					return '';
+                } 
+			  
              },
-            { data: 'lot.material.name', title:"Material",orderable:false, searchable: true,"width": "15%", render: function (data,type,row,meta){ 
+            { data: 'lot.material.name', title:"Material",orderable:true, searchable: true,"width": "15%", render: function (data,type,row,meta){ 
               
-                return '<b>'+data+'</b>';
-              },
+				if(data) return '<b>'+data+'</b>';
+				return '';
+			  },
             },
-            { data: 'lot.material.grade', title:"Grade",orderable:false,searchable: true, "width": "20%",},
-            { data: 'lot.material.supplier.supplier_name', title:"Supplier",orderable:false,searchable: true, },
-            { data: 'lot.lot_name', title:"Lot",orderable:false, },
+            { data: 'lot.material.grade', title:"Grade",orderable:true,searchable: true, "width": "20%",},
+            { data: 'lot.material.supplier.supplier_name', title:"Supplier",orderable:true,searchable: true, },
+            { data: 'lot.lot_name', title:"Lot",orderable:true,searchable: true, },
             { data: 'container_name', title:"Container",orderable:false,  searchable: false, "width": "50px", },
             { data: 'container_number', title:"#",orderable:false,  searchable: false, },
          
@@ -121,20 +127,20 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 			}, 
 
              { data: 'active', title:"In Stock?",orderable:false,  searchable: true,render: function (data,type,row,meta){
-                    if(data == 0) return '';
+                    if(row.active == 0) return '';
                     return '<button class="mat-raised-button" style="color:white; background:green; line-height:20px; font-size:12px;     min-width: 50px;">Yes</button>';
                 } 
                },
 			   
 			  
-			{ data: 'active', title:"Left",orderable:false,  searchable: true,render: function (data,type,row,meta){
+			/* { data: 'active', title:"Left",orderable:false,  searchable: true,render: function (data,type,row,meta){
 			
                     if(row.remaining) return '<b>'+(row.remaining.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))+' g</b>';
                     return '';
                 } 
 				
-			},
-            { data: 'created_at', title: "Created",orderable:false,searchable: false, },
+			}, */
+            { data: 'created_at', title: "Created",orderable:true,searchable: false, },
           ],
           
            rowCallback: (row: Node, data: any[] | Object, index: number) => {
@@ -153,12 +159,14 @@ export class MaterialContainerDatabaseComponent implements OnInit {
   
   refreshTable()
   {
-	this.forceRefreshTable = true;
-	  this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      dtInstance.draw();
-	  this.forceRefreshTable = false;
-    });
-  
+	//this.forceRefreshTable = true;
+	
+	$scope.dtInstance.rerender();
+	/*   this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.rerender();
+	  
+    }); */
+ // this.forceRefreshTable = false;
   }
   
   

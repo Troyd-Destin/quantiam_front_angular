@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
   templateUrl: './material-creation-dialog.component.html',
   styleUrls: ['./material-creation-dialog.component.css'],
    providers: [],
-}
+})
 
 export class MaterialCreationDialogComponent implements OnInit {
 
@@ -25,16 +25,16 @@ export class MaterialCreationDialogComponent implements OnInit {
     form: FormGroup;
     description:string;
     newMaterial: boolean = false;
-    selectedMaterial = {};
-    selectedLot = {};
+    selectedMaterial: any = {};
+    selectedLot: any = {};
     materialStepComplete = false;
 	codeRegistryStep = false;
 	materialCreationStep = true;
     creatingMaterial = false;
-    newLot = {};
-	container = {};
-	material = {};
-    lot = {};
+    newLot: any = {};
+	container: any = {};
+	material: any = {};
+    lot: any = {};
 	_ws;
 	_wsk;
    
@@ -196,7 +196,7 @@ export class MaterialCreationDialogComponent implements OnInit {
 			
 			
 					this.close();
-					this.router.navigate('/material/container/'+this.container.id);
+					//this.router.navigate('/material/container/'+this.container.id);
 			
 			}); 
 	 
