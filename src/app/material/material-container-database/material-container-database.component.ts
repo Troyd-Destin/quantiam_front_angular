@@ -92,13 +92,13 @@ export class MaterialContainerDatabaseComponent implements OnInit {
                 } 
 			  
              },
-            { data: 'lot.material.name', title:"Material",orderable:true, searchable: true,"width": "15%", render: function (data,type,row,meta){ 
+            { data: 'lot.material.name', title:"Material",orderable:true, searchable: true, render: function (data,type,row,meta){ 
               
 				if(data) return '<b>'+data+'</b>';
 				return '';
 			  },
             },
-            { data: 'lot.material.grade', title:"Grade",orderable:true,searchable: true, "width": "20%",},
+            { data: 'lot.material.grade', title:"Grade",orderable:true,searchable: true},
             { data: 'lot.material.supplier.supplier_name', title:"Supplier",orderable:true,searchable: true, },
             { data: 'lot.lot_name', title:"Lot",orderable:true,searchable: true, },
             { data: 'container_name', title:"Container",orderable:false,  searchable: false, "width": "50px", },
@@ -158,15 +158,8 @@ export class MaterialContainerDatabaseComponent implements OnInit {
   }
   
   refreshTable()
-  {
-	//this.forceRefreshTable = true;
-	
+  {	
 	$scope.dtInstance.rerender();
-	/*   this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      dtInstance.rerender();
-	  
-    }); */
- // this.forceRefreshTable = false;
   }
   
   

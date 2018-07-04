@@ -157,7 +157,7 @@
 
 .table-stats thead tr:nth-child(1) th {
     /* font-size: 13px; */
-    font-size: 1.0em;
+    font-size: 0.9em;
     font-weight: bold;
     font-family: helvetica,arial,sans-serif;
     background: rgb(45, 89, 122);
@@ -176,8 +176,8 @@
 }
 
 .table-stats.table-condensed td {
-	padding: 2px 4px;
-	font-size: 10px;
+	padding: 2px 2px;
+	font-size: 0.8em;
 }
 
 
