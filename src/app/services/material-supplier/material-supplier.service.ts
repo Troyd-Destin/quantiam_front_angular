@@ -1,4 +1,4 @@
-import { MaterialModule} from '../material.module';
+
 import { environment } from '../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -13,11 +13,12 @@ import { NotificationsService } from 'angular2-notifications';
 })
 export class MaterialSupplierService {
 
+  private endpoint = '/material/supplier';
+ 
+  //public _materialLotContainerDatatableSource = new BehaviorSubject({});
+  //public materialLotContainerDatatable$: Observable<any> = this._materialLotContainerDatatableSource.asObservable();
 
-  public _materialLotContainerDatatableSource = new BehaviorSubject({});
-  public materialLotContainerDatatable$: Observable<any> = this._materialLotContainerDatatableSource.asObservable();
-
-  constructor() { }
+  constructor(public http: HttpClient, public notification: NotificationsService) { }
   
   
   getList()
@@ -27,4 +28,24 @@ export class MaterialSupplierService {
   
   }
   
+  
+  create(params)
+  {
+    
+    	 
+    return this.http.post<any>(environment.apiUrl+`${this.endpoint}`, params)
+     .pipe(
+        tap( r => {	}), 
+        map( res => {
+			
+			  this.notification.success('Supplier','Created Supplier '+res.id,{showProgressBar:false,timeOut:3000,clickToClose: true});
+			  return res;
+		
+		
+		}), // return results without transformation
+         //catchError( (e) => this.notification.error('Error','Problem updating material.',{showProgressBar:false,timeOut:3000,clickToClose: true})),
+       
+      );
+    
+  }
 }

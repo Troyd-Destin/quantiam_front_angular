@@ -43,7 +43,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 	  
 		console.log(dataTablesParameters);
 	  
-        this.materialLotContainerDatatable.getMaterialLotContainerDatatable(dataTablesParameters);
+        this.materialLotContainerDatatable.getMaterialLotContainerDatatable(dataTablesParameters,null);
                 
         if(!this._materialLotContainerDatatable) this._materialLotContainerDatatable = this.materialLotContainerDatatable.materialLotContainerDatatable$.subscribe(resp => {
         

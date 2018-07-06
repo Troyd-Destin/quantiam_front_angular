@@ -59,15 +59,15 @@
 							  <input #Nomenclature [disabled]="!editMaterial" (change)="updateMaterial(Nomenclature)" type="text" matInput placeholder="Formula" [(ngModel)] ='container.lot.material.formula' name="formula" >
 						 </mat-form-field>  
 						
-						  <mat-form-field class="full-width" fxFlex=20>
+						  <mat-form-field class="full-width">
 							  <input   #Cas [disabled]="!editMaterial" (change)="updateMaterial(Cas)" type="text" matInput placeholder="CAS #" [(ngModel)] ='container.lot.material.cas' name="cas" >
 						 </mat-form-field>
 						   <mat-form-field class="full-width" fxFlex=20>
 						 	  <input   #Density [disabled]="!editMaterial" (change)="updateMaterial(Density)" type="text" matInput placeholder="Density (g/ml)" [(ngModel)] ='container.lot.material.density' name="density" >
 						</mat-form-field>	
-						  <mat-form-field class="full-width" fxFlex>
+						  <!-- <mat-form-field class="full-width" fxFlex>
 							  <input #Catalog [disabled]="!editMaterial" (change)="updateMaterial(Catalog)"  type="text" matInput placeholder="Catalog #" [(ngModel)] ='container.lot.material.catalog' name="catalog" >
-						 </mat-form-field> 
+						 </mat-form-field> --> 
 						 
 						
 					</div>
@@ -215,7 +215,7 @@
 							 
 						
 						<mat-form-field >
-								  <input  #QCID (change)="updateContainerField(QCID)" [disabled]="!editContainer"  type="text" matInput placeholder="QCID (optional)" [(ngModel)] ='container.qcid' name="purchase_order" >
+								  <input  #QCID (change)="updateContainerField(QCID)" [disabled]="!editContainer"  type="text" matInput placeholder="QCID (optional)" [(ngModel)] ='container.qcid' name="qcid" >
 							 </mat-form-field>  
 
 										  

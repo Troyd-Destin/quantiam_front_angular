@@ -146,7 +146,7 @@ export class WebsocketService {
 							  let selectedRoute:any = this.prefixNavigationMap[codeObj.prefix];
 							  this.router.navigate([selectedRoute+codeObj.id],{queryParams: {scannerNavigation:true}}).catch(error => {
 							  
-								this.notification.error('Redirect Not Registered',scannedString,{timeOut:3000,showProgressBar:false,clickToClose: true});
+								if(scannedString.length > 5) this.notification.error('Redirect Not Registered',scannedString,{timeOut:3000,showProgressBar:false,clickToClose: true});
 							});				
 								
   }
@@ -192,13 +192,14 @@ export class WebsocketService {
 				
 				clearTimeout(this.timeout);
 				
+				
 				this.timeout = setTimeout(()=>{
 		
 							var message = this.id_string.replace('Shift','');
 							//console.log('timeout thing',message);
 						 
-							this._keyBoardSubject.next(message);
-								
+							
+							this._keyBoardSubject.next(message);								
 							this.redirectOnScanFn(message);
 							
 						  
@@ -208,6 +209,7 @@ export class WebsocketService {
 							
 						
 					},400);
+					
 			this.keypressIncrement++
 		}
 	}

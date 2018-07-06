@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MaterialLotContainerService } from '../../services/material-lot-container/material-lot-container.service';
 import { MaterialLotService } from '../../services/material-lot/material-lot.service';
 import { MaterialService } from '../../services/material/material.service';
+import { MaterialSupplierService } from '../../services/material-supplier/material-supplier.service';
 
 import { ActivatedRoute } from '@angular/router';
 
@@ -39,6 +40,7 @@ export class MaterialContainerViewComponent implements OnInit {
 	private materialLotCotainerService: MaterialLotContainerService,
 	private materialService: MaterialService, 
 	private materialLotService: MaterialLotService, 
+	private materialSupplierService: MaterialSupplierService, 
 	private route: ActivatedRoute 
 	
 	) { }
@@ -116,7 +118,8 @@ export class MaterialContainerViewComponent implements OnInit {
 	   
     var params = {};
     params[field.name] =  field.value;
-    this.materialService.updateMaterial(params,this.container.lot.material.id);
+	params.supplier = true;
+    this.materialService.updateMaterial(params,this.container.lot.material.id).subscribe((r)=>{  this.container.lot.material = r;   });
   
   }
   
@@ -170,7 +173,7 @@ export class MaterialContainerViewComponent implements OnInit {
 				//trigger some sort of confirm popup
 				if(window.confirm("Are you sure you want to create '"+supplier_obj.text+"' ?")) {
 						
-						let params = {'lot_name':supplier_obj.text,'material_id':this.container.lot.material.supplier_id};
+						let params = {'supplier_name':supplier_obj.text};
 						this.createMaterialSupplier(params);
 						
 					  }
@@ -178,9 +181,8 @@ export class MaterialContainerViewComponent implements OnInit {
 			return;
 		}
 		
-	let payload = {'supplier_id':supplier_obj.id};
-	console.log(payload);
-	 this.materialService.updateMaterial(payload,this.container.lot.material.id);
+	let payload = {'supplier_id':supplier_obj.id,'supplier':true};
+	 this.materialService.updateMaterial(payload,this.container.lot.material.id).subscribe((r)=>{  this.container.lot.material = r;   });
   
   
   }
@@ -190,10 +192,9 @@ export class MaterialContainerViewComponent implements OnInit {
 	console.log(obj);
 	this.materialSupplierService.create(obj).subscribe((r)=>{
 		
-			console.log(r);
-			this.newSupplierCreated = true;		
-			let payload = {'supplier_id':r.id,'lot':true};
-			this.materialLotCotainerService.update(payload);
+			console.log(r);	
+			let payload = {'supplier_id':r.id,'supplier':true};
+			this.materialService.updateMaterial(payload,this.container.lot.material.id).subscribe((r)=>{  this.container.lot.material = r;   });
 		
 			
 		});

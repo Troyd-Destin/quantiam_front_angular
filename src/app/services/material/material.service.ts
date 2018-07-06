@@ -46,19 +46,17 @@ export class MaterialService {
   {
 		if(!id)  id = this.last_id;    
      
-     this.http.put<any>(environment.apiUrl+`${this.endpoint}/${id}?filterSpinner`, params)
+     return this.http.put<any>(environment.apiUrl+`${this.endpoint}/${id}?filterSpinner`, params)
      .pipe(
         tap( r => {}), 
-        map( res => res), // return results without transformation
+        map( res =>{
+			
+			
+			 this.notification.success('Updated','Material updated',{showProgressBar:false,timeOut:3000,clickToClose: true});
+			 return res;
+		}), // return results without transformation
          //catchError( (e) => this.notification.error('Error','Problem updating material.',{showProgressBar:false,timeOut:3000,clickToClose: true})),
        
-      )
-      .subscribe(
-        (material) => 
-        {
-        //  this._materialSource.next(material); //broadcast the material to all subscribers 
-          this.notification.success('Updated','material updated',{showProgressBar:false,timeOut:3000,clickToClose: true});
-        }
       );
   
   }

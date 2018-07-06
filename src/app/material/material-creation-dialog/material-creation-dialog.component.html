@@ -55,17 +55,19 @@
 							  <input   #Cas type="text" matInput placeholder="CAS #" [(ngModel)] ='material.cas' name="cas"  [disabled]="!creatingMaterial" >
 							  <mat-hint> Optional </mat-hint>
 						 </mat-form-field>
-						  <mat-form-field class="full-width">
+					<!-- 	  <mat-form-field class="full-width">
 							  <input #Catalog type="text" matInput placeholder="Catalog #" [(ngModel)] ='material.catalog' name="catalog"  [disabled]="!creatingMaterial">
 								  <mat-hint> Optional </mat-hint>
-						</mat-form-field> 
+						</mat-form-field>  -->
 
 						 <mat-form-field class="full-width">
 							  <input #Density type="text" matInput placeholder="Density (g/ml)" [(ngModel)] ='material.density' name="density"   [disabled]="!creatingMaterial">
 							  <mat-hint> Optional </mat-hint>
 						 </mat-form-field> 
 					
-						 
+						 <app-select2-material-supplier
+							(selectedValue)="selectSupplier($event)"
+						></app-select2-material-supplier>
 					</div>
 				
 					

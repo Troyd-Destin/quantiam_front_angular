@@ -141,6 +141,16 @@ export class MaterialCreationDialogComponent implements OnInit {
         console.log(this.selectedMaterial);
       
       }
+	  
+	  
+	  selectSupplier(obj){
+      
+        
+          this.material.supplier_id = obj.data[0].id;
+       
+       
+      
+      }
       
      createMaterialAttrs()
      {
