@@ -104,27 +104,27 @@ export class MaterialContainerDatabaseComponent implements OnInit {
             { data: 'container_name', title:"Container",orderable:false,  searchable: false, "width": "50px", },
             { data: 'container_number', title:"#",orderable:false,  searchable: false, },
          
-            { data: 'amount_ordered', title:"Size",orderable:false, searchable: false,"width": "75px",  render: function (data,type,row,meta){
+       /*      { data: 'amount_ordered', title:"Size",orderable:false, searchable: false,"width": "75px",  render: function (data,type,row,meta){
             
             
                     if(data) return '<b>'+(data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))+' '+row.denomination+'</b>';
                     return '';
-                },   
+                },    */
                 
-            /*   { data: 'remaining', title:"~ Left",orderable:false, searchable: false, width: "75px",  render: function (data,type,row,meta){            
+              { data: 'remaining', title:"Remains",orderable:false, searchable: false, width: "75px",  render: function (data,type,row,meta){            
             
-                   // if(data) return '<b>'+(data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))+' '+row.denomination+'</b>';
+                    if(data) return '<b>'+(data)+' '+row.denomination+'</b>';
                     return '';
                 },   
-                 */
+                
               
              }, 
-             { data: 'location.name', title:"Location",orderable:false,  searchable: true,render: function (data,type,row,meta){
+			   { data: 'location.name', title:"Location",orderable:false,  searchable: true,render: function (data,type,row,meta){
                     if(data) return ''+data+'';
                     return '';
                 } 
 				
-			}, 
+			},
 
              { data: 'active', title:"In Stock?",orderable:false,  searchable: true,render: function (data,type,row,meta){
                     if(row.active == 0) return '';
