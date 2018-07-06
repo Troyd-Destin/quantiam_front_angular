@@ -45,7 +45,7 @@ export class CoreComponent implements OnInit {
   lastWebSocketMessage;
   _ws;
   _wsk;
-  
+  isAdmin = false;
   
   
 	options: FormGroup;	
@@ -83,15 +83,39 @@ export class CoreComponent implements OnInit {
      // get user data and store in user Variable
       this.userService.getAuthedUser().subscribe(res=>{
         
-         this.userTitle = res.title; 
-       this.userName = res.name; 
-       this.userLoaded = true;
+		   this.userTitle = res.title; 
+		   this.userName = res.name; 
+		   this.userLoaded = true;
+		   
+		   this.adminCheck();
+		   
+		//   console.log(this.userService.hasPermission(38));
         
         });
      
       //this.user.getUser
   }
   
+  adminCheck()
+  {
+	let adminPermissionArray = [27,28,5,6,7,8,9]; // permission which allow you to see the admin side menu
+	
+	
+	for (var i = 0; i < adminPermissionArray.length; i++) {
+		
+		
+			if(this.userService.hasPermission(adminPermissionArray[i]))
+			{
+				//console.log(r);
+				this.isAdmin = true;
+				return;
+			}
+		}
+	
+	
+	
+  
+  }
   
   logout()
   {

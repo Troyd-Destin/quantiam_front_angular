@@ -45,7 +45,9 @@
 }
 
 
-
+.mat-input-element:disabled {
+    color: rgba(0, 0, 0, 0.65) !important;
+}
 .mat-tab-link
 {
 	height: 35px !important;

@@ -23,7 +23,7 @@ export class SgxScaleAuthComponent implements OnInit {
   user: UserService,
   ) { 
   
-    this.permissionTest = user.checkPermission(38);
+    this.permissionTest = user.hasPermission(38);
     
     //console.log(permissionTest);
     

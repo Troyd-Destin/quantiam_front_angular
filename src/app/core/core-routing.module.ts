@@ -8,13 +8,17 @@ const routes: Routes = [
 		component: CoreComponent,
 		children:[		
 			
-      {
+			{
 				path: 'material',
 				loadChildren: '../material/material.module#MaterialModule',
 			},
-      {
+			{
 				path: 'sample',
 				loadChildren: '../sample/sample.module#SampleModule',
+			},
+			{
+				path: 'user',
+				loadChildren: '../user/user.module#UserModule',
 			},
 		]
 	},

@@ -33,9 +33,21 @@
 						  <mat-form-field class="full-width" fxFlex>
 							  <input  #Grade [disabled]="!editMaterial" (change)="updateMaterial(Grade)" type="text" matInput placeholder="Grade" [(ngModel)] ='container.lot.material.grade' name="grade" disabled>
 						 </mat-form-field>
-						   <mat-form-field class="full-width" fxFlex>
+						   <mat-form-field class="full-width" fxFlex *ngIf="!editMaterial">
 							  <input  type="text" matInput placeholder="Supplier" [(ngModel)] ='container.lot.material.supplier.supplier_name' name="supplier" disabled>
 						 </mat-form-field>  
+						 
+						 <app-select2-material-supplier
+								fxLayoutAlign="start center"
+								[placeholder]="container.lot.material.supplier.supplier_name" 
+								*ngIf="editMaterial"
+								enable_create="true"
+								(selectedValue)="changedSupplier($event)"
+								[default_lot]="container.lot.material.supplier_id"
+						
+						
+						></app-select2-material-supplier>
+						
 						 
 						 
 					</div>		
@@ -132,7 +144,8 @@
 						
 						
 						  <mat-form-field class="full-width" fxFlex>
-								  <input  #ContainerName (change)="updateContainerField(ContainerName)" [disabled]="!editContainer"   type="text" matInput placeholder="Container Name" [(ngModel)] ='container.container_name' name="container_name" >
+								  <input  #ContainerName (change)="updateContainerField(ContainerName)" [disabled]="!editContainer"   type="text" matInput placeholder="Container Name " [(ngModel)] ='container.container_name' name="container_name" >
+								<mat-hint> Optional </mat-hint>
 							 </mat-form-field >  
 							   <mat-form-field fxFlex="20" class="full-width">
 								  <input  #ContainerNumber (change)="updateContainerField(ContainerNumber)"  [disabled]="!editContainer" type="text" matInput placeholder="Container #" [(ngModel)] ='container.container_number' name="container_number" >
@@ -173,6 +186,10 @@
 						 </mat-form-field >
 						  <mat-form-field  fxFlex class="full-width">
 							  <input #GrossWeight (change)="updateContainerField(GrossWeight)" [disabled]="!editContainer"  type="text" matInput placeholder="Gross Weight (g)" [(ngModel)] ='container.gross_weight' name="gross_weight" >
+						 </mat-form-field>	
+
+						 <mat-form-field  fxFlex class="full-width">
+							  <input #Remaining (change)="updateContainerField(Remaining)" [disabled]="!editContainer"  type="text" matInput placeholder="Remaining Weight (g)" [(ngModel)] ='container.remaining' name="remaining" >
 						 </mat-form-field>	 
 						 
 				

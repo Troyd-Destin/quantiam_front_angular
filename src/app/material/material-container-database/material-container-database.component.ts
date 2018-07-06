@@ -41,7 +41,9 @@ export class MaterialContainerDatabaseComponent implements OnInit {
       searchDelay: 500,
       ajax:(dataTablesParameters: any, callback) => {
 	  
-        this.materialLotContainerDatatable.getMaterialLotContainerDatatable(dataTablesParameters,this.forceRefreshTable);
+		console.log(dataTablesParameters);
+	  
+        this.materialLotContainerDatatable.getMaterialLotContainerDatatable(dataTablesParameters);
                 
         if(!this._materialLotContainerDatatable) this._materialLotContainerDatatable = this.materialLotContainerDatatable.materialLotContainerDatatable$.subscribe(resp => {
         
@@ -159,6 +161,14 @@ export class MaterialContainerDatabaseComponent implements OnInit {
   
   refreshTable()
   {	
+	
+	
+	$.fn['dataTable'].ext.search.push((settings, data, dataIndex) => {
+	
+	 return true;
+	
+	});
+	
 	$scope.dtInstance.rerender();
   }
   

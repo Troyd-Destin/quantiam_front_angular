@@ -15,6 +15,8 @@ import { Select2MaterialSupplierComponent } from './select2-material-supplier/se
   exports:[
     Select2MaterialComponent,
     Select2MaterialLotComponent,
+	Select2MaterialSupplierComponent,
+	Select2LocationComponent,
     
   ],
   schemas:[NO_ERRORS_SCHEMA]

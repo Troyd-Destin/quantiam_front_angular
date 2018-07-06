@@ -82,6 +82,10 @@ export class MaterialContainerViewComponent implements OnInit {
 			if(this.container.container_opened) this.container.container_opened = moment(this.container.container_opened).format("YYYY-MM-DDTHH:mm:ss.SSS")+'Z';
 			
 			
+			
+			  this.editMaterial = false;
+			  this.editLot = false;
+			  this.editContainer = false;
 		}
        });
   }
@@ -143,10 +147,10 @@ export class MaterialContainerViewComponent implements OnInit {
   
   createMaterialLot(obj)
   {
-	console.log(obj);
+	
 	this.materialLotService.create(obj).subscribe((r)=>{
 		
-			console.log(r);
+			
 			this.newLotCreated = true;		
 			let payload = {'lot_id':r.id,'lot':true};
 			this.materialLotCotainerService.update(payload);
@@ -156,6 +160,45 @@ export class MaterialContainerViewComponent implements OnInit {
 	
   }
   
+  changedSupplier(obj)
+  {
+	let supplier_obj = obj.data[0];
+	
+	console.log(supplier_obj);
+	if(supplier_obj.isNew)
+		{
+				//trigger some sort of confirm popup
+				if(window.confirm("Are you sure you want to create '"+supplier_obj.text+"' ?")) {
+						
+						let params = {'lot_name':supplier_obj.text,'material_id':this.container.lot.material.supplier_id};
+						this.createMaterialSupplier(params);
+						
+					  }
+			
+			return;
+		}
+		
+	let payload = {'supplier_id':supplier_obj.id};
+	console.log(payload);
+	 this.materialService.updateMaterial(payload,this.container.lot.material.id);
+  
+  
+  }
+  
+  createMaterialSupplier(obj)
+  {
+	console.log(obj);
+	this.materialSupplierService.create(obj).subscribe((r)=>{
+		
+			console.log(r);
+			this.newSupplierCreated = true;		
+			let payload = {'supplier_id':r.id,'lot':true};
+			this.materialLotCotainerService.update(payload);
+		
+			
+		});
+	
+  }
   
   
   

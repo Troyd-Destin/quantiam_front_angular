@@ -1,0 +1,183 @@
+<div fxLayout="column" fxLayout.xl="row" fxFlex fxLayoutGap="10px">
+	
+		<mat-card fxFlex fxFlex.xl="50" fxLayout="column">
+		
+			<div   fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start stretch">
+			
+				
+				
+				<mat-form-field  fxFlex="10">
+							<input  #EmployeeID 
+							(change)="updateUser(EmployeeID)"
+							[disabled]="!editUser" 
+							type="number" 
+							matInput 
+							placeholder="ID" 
+							[(ngModel)] ='user.employeeid'
+							name="employeeud"
+					>
+				</mat-form-field >
+				
+				
+				<mat-form-field  fxFlex="10">
+							<input  #FirstName 
+							(change)="updateUser(FirstName)"
+							[disabled]="!editUser" 
+							type="text" 
+							matInput 
+							placeholder="Prefix" 
+							[(ngModel)] ='user.prefix'
+							name="prefix"
+					>
+				</mat-form-field ><mat-form-field  fxFlex>
+							<input  #FirstName 
+							(change)="updateUser(FirstName)"
+							[disabled]="!editUser" 
+							type="text" 
+							matInput 
+							placeholder="First Name" 
+							[(ngModel)] ='user.firstname'
+							name="firstname"
+					>
+				</mat-form-field >
+					<mat-form-field  fxFlex>
+							<input  #LastName 
+							(change)="updateUser(LastName)"
+							[disabled]="!editUser" 
+							type="text" 
+							matInput 
+							placeholder="Last Name" 
+							[(ngModel)] ='user.lastname'
+							name="lastname"
+					>
+					</mat-form-field >
+			
+			
+					
+				
+			
+			
+			</div>
+			
+			<div fxLayoutAlign="start stretch" >
+				<mat-form-field  fxFlex>
+								<input  #Title 
+								(change)="updateUser(Title)"
+								[disabled]="!editUser" 
+								type="text" 
+								matInput 
+								placeholder="Title" 
+								[(ngModel)] ='user.title'
+								name="title"
+						>
+					</mat-form-field >		
+				
+			
+			</div>
+			
+			<div>
+				
+			
+			
+			</div>
+			
+			<div fxLayout="row">
+				
+				<button mat-button> Edit </button>
+			
+			
+			</div>
+			
+			
+		</mat-card>
+		
+		<div fxFlex>
+			<!-- <mat-button-toggle-group name="fontStyle" aria-label="Font Style" >
+			  <mat-button-toggle value="bold">Bold</mat-button-toggle>
+			  <mat-button-toggle value="italic">Italic</mat-button-toggle>
+			  <mat-button-toggle value="underline">Underline</mat-button-toggle>
+			</mat-button-toggle-group> -->
+			
+			
+			<mat-card style="padding:10px !important;" fxLayout="column" >
+			
+			<nav mat-tab-nav-bar>
+				<a mat-tab-link (click)="selectedTable = 'supervisors'"> Supervisors </a>
+				<a mat-tab-link (click)="selectedTable = 'permissions'"> Permissions </a>
+				<a mat-tab-link (click)="selectedTable = 'machines'"> Machines </a>
+			
+			</nav>
+			
+			<table *ngIf="selectedTable == 'supervisors'" fxFlex="100" style="box-shadow: none; margin:10px" mat-table [dataSource]="user.supervisors" >
+
+					<!--- Note that these columns can be defined in any order.
+							The actual rendered columns are set as a property on the row definition" -->
+
+					  <!-- Position Column -->
+					  <ng-container matColumnDef="id">
+						<th mat-header-cell *matHeaderCellDef> ID </th>
+						<td mat-cell *matCellDef="let element"> {{element.id}} </td>
+					  </ng-container>
+
+					  <!-- Name Column -->
+					  <ng-container matColumnDef="name">
+						<th mat-header-cell *matHeaderCellDef> Name </th>
+						<td mat-cell *matCellDef="let element"> {{element.name}} </td>
+					  </ng-container> 
+					  <ng-container matColumnDef="title">
+						<th mat-header-cell *matHeaderCellDef> Title </th>
+						<td mat-cell *matCellDef="let element"> {{element.title}} </td>
+					  </ng-container>
+
+					
+
+					  <tr mat-header-row *matHeaderRowDef="displayedColumnsSupervisors"></tr>
+					  <tr mat-row *matRowDef="let row; columns: displayedColumnsSupervisors;"></tr>
+			</table>
+			
+			<table *ngIf="selectedTable == 'permissions'" fxFlex="100" style="margin:10px" mat-table [dataSource]="permissionTableSource" >
+
+					<!--- Note that these columns can be defined in any order.
+							The actual rendered columns are set as a property on the row definition" -->
+
+					  <!-- Position Column -->
+					  <ng-container matColumnDef="permission_id">
+						<th mat-header-cell *matHeaderCellDef> ID </th>
+						<td mat-cell *matCellDef="let element"> {{element.permission_id}} </td>
+					  </ng-container> 
+					  
+					  <ng-container matColumnDef="permission_name">
+						<th mat-header-cell *matHeaderCellDef> Name </th>
+						<td mat-cell *matCellDef="let element"> {{element.permission_name}} </td>
+					  </ng-container>
+
+					  <!-- Name Column -->
+					  <ng-container matColumnDef="permission_description">
+						<th mat-header-cell *matHeaderCellDef> Description </th>
+						<td mat-cell *matCellDef="let element"> {{element.permission_description}} </td>
+					  </ng-container> 
+					  <ng-container matColumnDef="derived_from_group">
+						<th mat-header-cell *matHeaderCellDef> Derived </th>
+						<td mat-cell *matCellDef="let element"> 
+							
+							
+						</td>
+					  </ng-container>
+
+					
+
+					  <tr mat-header-row *matHeaderRowDef="displayedColumnsPermissions"></tr>
+					  <tr mat-row *matRowDef="let row; columns: displayedColumnsPermissions;"></tr>
+			</table>
+			<mat-paginator [pageSizeOptions]="pageSizeOptions"
+						  (page)="pageEvent = $event" showFirstLastButtons>
+			</mat-paginator>
+					
+			</mat-card>		
+			
+			<router-outlet ></router-outlet>
+		</div>
+	
+		
+	
+	</div>

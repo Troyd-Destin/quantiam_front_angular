@@ -6,19 +6,13 @@ import { MaterialDatatableService } from './services/material-datatable.service'
 import { MaterialLotContainerDatatableService } from './services/material-lot-container-datatable.service';
 import { FormsModule } from '@angular/forms';
 import { WebsocketService } from '../services/websocket/websocket.service'; 
-import {FlexLayoutModule} from "@angular/flex-layout";
 
 import { Select2Module } from 'ng2-select2';
 
 import { DataTablesModule } from 'angular-datatables';
 
 import { SharedModule } from '../shared/shared.module';
-
-import {
-	MatButtonModule, MatCheckboxModule,MatDatepickerModule,MatFormFieldModule,
-	MatInputModule,MatNativeDateModule,MatCardModule,MatSidenavModule,MatTableModule,MatSelectModule,
-	MatToolbarModule,MatTabsModule,MatGridListModule,MatListModule,MatIconModule,MatExpansionModule,MatDividerModule,MatDialogModule  } from '@angular/material';
-import {MatChipsModule} from '@angular/material/chips';
+import { MaterialDesignModule } from '../material-design/material-design.module';
 	
 import { MaterialRoutingModule } from './material-routing.module';
 import { MaterialCreationDialogComponent } from './material-creation-dialog/material-creation-dialog.component';
@@ -35,29 +29,9 @@ import { MaterialContainerDatabaseComponent } from './material-container-databas
     CommonModule,
     FormsModule,
 	SharedModule,
-  
+	MaterialDesignModule,
     MaterialRoutingModule,
-     FlexLayoutModule,
-     DataTablesModule,
-    MatButtonModule,
-		MatCheckboxModule,
-		MatDatepickerModule,
-		MatFormFieldModule,
-		MatInputModule,
-		MatNativeDateModule,
-		MatCardModule,
-		MatSidenavModule,
-		MatToolbarModule,
-		MatTabsModule,
-		MatDividerModule,		
-		MatGridListModule,
-		MatIconModule,
-		MatListModule,
-		MatExpansionModule,
-		MatChipsModule,
-		MatSelectModule,
-    MatDialogModule,
-    MatTableModule,
+	DataTablesModule,	  
 	Select2Module,
   ],
   declarations: [MaterialCreationDialogComponent, MaterialIndexComponent, MaterialDatabaseComponent, MaterialViewComponent, 

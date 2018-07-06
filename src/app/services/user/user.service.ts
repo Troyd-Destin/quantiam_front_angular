@@ -2,8 +2,8 @@ import { environment } from '../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap, delay } from 'rxjs/operators';
-import { Observable,of,fromEvent } from 'rxjs';
+import { catchError, map, tap, delay,shareReplay, publishReplay,refCount } from 'rxjs/operators';
+import { Observable,of, BehaviorSubject,throwError } from 'rxjs'
 
  //
 interface authedUser$ {}
@@ -12,32 +12,55 @@ interface authedUser$ {}
 export class UserService  {
   
   endpoint = '/user';
- // const authedUser$ = Observable.create(of(JSON.parse(localStorage.getItem('authedUser'))));
-	//authedUser$ =
-	authedUser$;
+  authedUser$;
+ 
 	
+  public _selectedUserSource = new BehaviorSubject({});
+  public user$: Observable<any> = this._selectedUserSource.asObservable();
+  
+  private last_id: string; 
+
+
   constructor(public jwtHelper: JwtHelperService,public http: HttpClient, ) { 
     
   
     
     
     }
-  
-  /* getUser(){
+	
+	
+	    
+  getUser(id :string)
+  {
+   //  console.log(id,this.last_id);
+    if(id != this.last_id) // fetch if id is different
+    {
       
-     
-      const token = this.jwtHelper.decodeToken(localStorage.getItem('token'));      
-      let params = {};
-      return this.http.get(environment.apiUrl+'/user/'+token.employeeID,params);
+     this.http.get<any>(environment.apiUrl+`${this.endpoint}/${id}`)
+     .pipe(
+        tap( r => { 
+                   
+                    
+                    }), //set id to be last_id
+        map( res => res), // return results without transformation
+      
+      )
+      .subscribe(
+        (container) => {
+			this._selectedUserSource.next(container); //broadcast the material to all subscribers 
+			 this.last_id = container.id;
+		}
+      );
+    }
+  }
   
-  } */
+
   
   public getAuthedUser() {
   
      if(localStorage.getItem('authUser') === null){
      
-        //return Observable.create(of(JSON.parse(localStorage.getItem('authedUser')))); //somehow need to turn this into a subcribable observable
-        
+       
      }
   
   
@@ -68,7 +91,7 @@ export class UserService  {
       return JSON.parse(localStorage.getItem('authedUser'));
   }
   
-  public checkPermission(permission_id){
+  public hasPermission(permission_id){
   
      // console.log(this.authedUser$);
       let user = this.fetchAuthUserObj();
