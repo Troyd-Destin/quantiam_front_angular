@@ -11,7 +11,7 @@
 </form>
 
 
-	<div fxLayoutGap="20px" fxLayout="column"  fxLayout.xl="row"  fxLayout.lg="row" fxLayoutAlign="start stretch">
+	<div fxLayoutGap="20px" fxLayout="column"  fxLayout.xl="row wrap"  fxLayout.lg="row wrap" fxLayoutAlign="start stretch">
 			
 		<mat-accordion  multi="true" fxFlex.lg=40 fxFlex.xl=40>
 			<mat-expansion-panel expanded="true">
@@ -26,7 +26,7 @@
 				</mat-expansion-panel-header>		
 				<div>
 				
-					<div fxLayoutGap="5px" fxLayout="row" fxLayout.sm="column"  fxLayoutAlign="start stretch"  >	
+					<div fxLayoutGap="5px" fxLayout="row wrap" fxLayout.sm="column"  fxLayoutAlign="start stretch"  >	
 						  <mat-form-field class="full-width"  fxFlex>
 							  <input #MaterialName [disabled]="!editMaterial" (change)="updateMaterial(MaterialName)" type="text" matInput placeholder="Name" [(ngModel)] ='container.lot.material.name' name="name" disabled>
 						 </mat-form-field>  
@@ -52,7 +52,7 @@
 						 
 					</div>		
 					
-					<div fxLayoutGap="5px"  fxLayout="row" fxLayout.sm="column"  >	
+					<div fxLayoutGap="5px"  fxLayout="row wrap" fxLayout.sm="column"  >	
 						
 						
 						   <mat-form-field class="full-width" fxFlex>
@@ -61,6 +61,9 @@
 						
 						  <mat-form-field class="full-width">
 							  <input   #Cas [disabled]="!editMaterial" (change)="updateMaterial(Cas)" type="text" matInput placeholder="CAS #" [(ngModel)] ='container.lot.material.cas' name="cas" >
+						 </mat-form-field> 
+						  <mat-form-field class="full-width">
+							  <input   #ForumlaWeight [disabled]="!editMaterial" (change)="updateMaterial(ForumlaWeight)" type="number" matInput placeholder="Forumla Weight" [(ngModel)] ='container.lot.material.formula_weight' name="formula_weight" >
 						 </mat-form-field>
 						   <mat-form-field class="full-width" fxFlex=20>
 						 	  <input   #Density [disabled]="!editMaterial" (change)="updateMaterial(Density)" type="text" matInput placeholder="Density (g/ml)" [(ngModel)] ='container.lot.material.density' name="density" >
@@ -71,7 +74,7 @@
 						 
 						
 					</div>
-					<div fxLayout="row"  fxLayoutAlign="end center">
+					<div fxLayout="row wrap"  fxLayoutAlign="end center">
 					<button mat-button routerLink="/material/{{container.lot.material.id}}" > View </button>
 					<button mat-button  (click)="editMaterial = !editMaterial"  > Edit </button>
 					<button mat-button routerLink="/material/{{container.lot.material.id}}" > MSDS </button>
@@ -91,7 +94,7 @@
 				</mat-expansion-panel-header>		
 				<div fxLayoutGap.sm="20px" fxLayout="column"  fxLayoutAlign="start stretch">
 				
-					<div fxLayoutGap="5px" fxLayout="row" fxLayout.sm="column"  fxFlex="100" >	
+					<div fxLayoutGap="5px" fxLayout="row wrap" fxLayout.sm="column"  fxFlex="100" >	
 						  <mat-form-field *ngIf="!editLot" class="full-width" fxFlex>
 							  <input  type="text" matInput placeholder="Name" [(ngModel)] ='container.lot.lot_name' name="name" disabled>
 						  </mat-form-field>
@@ -120,7 +123,7 @@
 					
 					
 				</div>
-					<div fxLayout="row"  fxLayoutAlign="end center">
+					<div fxLayout="row wrap"  fxLayoutAlign="end center">
 					
 					<button mat-button  (click)="editLot = !editLot"  > Edit </button>
 					
@@ -140,7 +143,7 @@
 				
 				<img fxFlex width=75px height=75px    [(src)]="container.datamatrix"/> 
 			
-			   <div fxLayoutGap="10px" fxLayoutAlign="start stretch"  fxLayout="column" fxLayout.xl="row" fxLayout.lg="row"   fxFlex >	
+			   <div fxLayoutGap="10px" fxLayoutAlign="start stretch"  fxLayout="column" fxLayout.xl="row wrap" fxLayout.lg="row wrap"   fxFlex >	
 						
 						
 						  <mat-form-field class="full-width" fxFlex>
@@ -175,13 +178,13 @@
 			   </div>
 						   
 						   
-				<div fxLayoutGap="10px" fxLayoutAlign="start stretch"  fxLayout="column" fxLayout.xl="row" fxLayout.lg="row"   fxFlex >	
+				<div fxLayoutGap="10px" fxLayoutAlign="start stretch"  fxLayout="column" fxLayout.xl="row wrap" fxLayout.lg="row wrap"   fxFlex >	
 						
 						
-						<mat-form-field class="full-width" fxFlex="20">
+						<mat-form-field class="full-width" fxFlex.xl="10" fxFlex.lg="20">
 										<input  #Denomination (change)="updateContainerField(Denomination)" [disabled]="!editContainer" type="text" matInput placeholder="Denomination" [(ngModel)] ='container.denomination' name="denomination" >
 						 </mat-form-field >
-						  <mat-form-field  fxFlex="30" class="full-width">
+						  <mat-form-field  fxFlex.xl="20" class="full-width">
 							  <input #AmountOrdered (change)="updateContainerField(AmountOrdered)" [disabled]="!editContainer"   type="text" matInput placeholder="Amount Ordered ({{container.denomination}})" [(ngModel)] ='container.amount_ordered' name="amount_ordered" >
 						 </mat-form-field >
 						  <mat-form-field  fxFlex class="full-width">
@@ -196,7 +199,7 @@
 										  
 				</div>	
 				
-				<div fxLayoutGap="10px" fxLayoutAlign="start stretch"  fxLayout="column" fxLayout.xl="row" fxLayout.lg="row"   fxFlex >	
+				<div fxLayoutGap="10px" fxLayoutAlign="start stretch"  fxLayout="column" fxLayout.xl="row wrap" fxLayout.lg="row wrap"   fxFlex >	
 						
 						<mat-form-field class="full-width">
 						  <input matInput [matDatepicker]="myDatepicker2" placeholder="Date Received" [(ngModel)] ='container.container_received' (dateChange)="updateContainerField($event.value,'container_received')" [disabled]="!editContainer">
@@ -224,11 +227,11 @@
 				</div>	
 			</div>
 			
-			<div fxLayout="row"  >	
-				<div fxLayout="row">
+			<div fxLayout="row wrap"  >	
+				<div fxLayout="row wrap">
 					<mat-checkbox (change)="changeContainerStatus()" [disabled]="!editContainer" [(ngModel)] ='container.active' name="active" fxLayoutAlign="start center">Active</mat-checkbox>
 				</div>
-				<div fxLayout="row"  fxLayoutAlign="end center" fxFlex>			
+				<div fxLayout="row wrap"  fxLayoutAlign="end center" fxFlex>			
 							<button mat-button  (click)="editContainer = !editContainer"  > Edit </button>						
 							<button mat-button routerLink="/material/{{container.lot.material.id}}" >MSDS</button>
 				</div>

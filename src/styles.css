@@ -212,3 +212,74 @@
 	
 	/* padding-right: 30px !important; */
 }
+
+
+/** General Use Case **/
+
+.borderless {
+	
+	border: 0px;
+}
+
+
+.clickable {
+	
+	cursor: pointer;
+}
+
+/** Custom mat-card**/
+
+.quantiam-mat-card {
+	
+	padding: 0px !important;
+}
+
+.quantiam-mat-card mat-card-content{
+	
+	padding: 5px 15px 15px 15px !important;
+	margin: 0px;
+}
+
+.quantiam-mat-card mat-card-actions {
+	 margin: 5px !important;
+	 padding: 0px;
+}
+
+.quantiam-mat-card mat-card-title{
+	
+	background-color: #2d597a;
+    color: white;
+    padding: 6px;
+    font-size: 12px;
+	margin-bottom: 5px;
+}
+
+.quantiam-mat-card table {
+	
+	margin-top:10px;
+	margin-bottom:10px;
+	
+	
+}
+
+.quantiam-mat-card table thead tr {
+	
+	height: 30px;
+}
+
+.quantiam-mat-card table thead tr th {
+	
+	padding: 5px;
+}
+
+.quantiam-mat-card table tbody tr {
+	
+	height:30px;
+}
+
+.quantiam-mat-card table tbody tr td {
+	
+	font-size: 12px;
+	border: 0px;
+	padding: 5px;
+}

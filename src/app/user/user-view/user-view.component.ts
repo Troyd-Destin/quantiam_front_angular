@@ -2,7 +2,7 @@ import { Component, OnInit,ViewChild } from '@angular/core';
 import { UserService } from '../../services/user/user.service';
 import { ActivatedRoute } from '@angular/router';
 
-import {MatPaginator, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatTableDataSource,MatSort} from '@angular/material';
 
 import { FormBuilder, FormGroup }   from '@angular/forms';
 
@@ -14,14 +14,16 @@ import { FormBuilder, FormGroup }   from '@angular/forms';
 export class UserViewComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+   @ViewChild(MatSort) sort: MatSort;
   
   user: {};
   user$: any;
   userID: number;
   editUser = false;
   displayedColumnsSupervisors: string[] = ['id', 'name','title'];
-  displayedColumnsPermissions: string[] = ['permission_id', 'permission_name','derived_from_group','permission_description'];
-  pageSizeOptions: number[] = [5, 10, 25, 100];
+  displayedColumnsPermissions: string[] = ['permission_id', 'permission_name','permission_description','derived_from_group','customColumn1'];
+  displayedColumnsMachines: string[] = ['id', 'machine_name'];
+  pageSizeOptions: number[] = [5,10, 25, 100];
   selectedTable: string = 'supervisors';
   permissionTableSource: any;
 
@@ -44,6 +46,7 @@ export class UserViewComponent implements OnInit {
       
       this.permissionTableSource = new MatTableDataSource<any>(r.permissions);
       this.permissionTableSource.paginator = this.paginator;
+      this.permissionTableSource.sort = this.sort;
     })
       
       
@@ -59,6 +62,13 @@ export class UserViewComponent implements OnInit {
   
   }
   
+  
+  deletePermission(id)
+  {
+    console.log(id);
+  
+  
+  }
   
   
 
