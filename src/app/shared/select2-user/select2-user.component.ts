@@ -42,12 +42,9 @@ export class Select2UserComponent implements OnInit {
         //cache: true,
 		
         dropdownAutoWidth : true,
-        templateSelection: function(d:any, c) {	
-            return ''+(d.text || d.name)+'';
-         },
-        templateResult: function (d:any) { 
-          return (d.text || d.name);
-        },
+        templateSelection: function(d:any, c) {	if(!d.label){ return d.name;	} else { return d.label;}	},
+        templateResult: function (d:any) { if(d.html) { return d.html; } else { return d.text;} },
+        escapeMarkup: function(m) { return m;	},
         escapeMarkup: function(m) { return m;	},
         
         theme: 'classic',
@@ -62,8 +59,11 @@ export class Select2UserComponent implements OnInit {
               
               processResults: function (data) {
               
-                 let returnObj = data;
+                  
+              
+                 let returnObj:any = {};
                  returnObj.pagination = {};
+                 returnObj.results = data;
                   
                   if(data.more) returnObj.pagination.more = true;  
                 

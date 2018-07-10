@@ -88,7 +88,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 			  visible: true,
 			  width: "25px",
 			  render: function (data,type,row,meta){
-                    if(data) return data.replace('QCID-','');
+                    if(data) return data.replace('QCID-','').replace('qcid-','');
 					
 					return '';
                 } 

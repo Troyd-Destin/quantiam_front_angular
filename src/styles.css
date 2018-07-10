@@ -227,6 +227,21 @@
 	cursor: pointer;
 }
 
+.hidden {
+	
+	display: none !important;
+}
+
+.top-mat-form-buffer
+{
+	
+}
+
+.top-mat-form-buffer mat-form-field {
+	
+	margin-top:15px !important;
+}
+
 /** Custom mat-card**/
 
 .quantiam-mat-card {

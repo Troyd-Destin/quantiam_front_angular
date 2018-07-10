@@ -1,8 +1,8 @@
 
 <div fxLayout="row" fxLayoutAlign="center center">
-<div fxLayout="column" fxFlex fxFlex.lg="70" fxFlex.xl="50" fxLayoutAlign="center stretch" fxLayoutGap="10px">
+<div  fxLayout="column" fxFlex fxFlex.lg="70" fxFlex.xl="50" fxLayoutAlign="center stretch" fxLayoutGap="10px">
 	
-		<mat-card class="quantiam-mat-card" fxFlex fxFlex.xl="40" fxLayout="column">
+		<mat-card class="quantiam-mat-card" fxFlex fxFlex.xl="40" fxLayout="column" >
 		<mat-card-title>
 			 Attributes
 		</mat-card-title> 
@@ -65,7 +65,34 @@
 			
 			</div>
 			
-			<div fxLayoutAlign="start stretch" >
+			<div fxLayoutAlign="start stretch" fxLayoutGap="10px" >
+				
+					<p *ngIf="editUser"	fxLayoutAlign="start center"> Supervisor </p>
+					 <app-select2-user
+						
+								*ngIf="editUser && user.employeeid"
+								fxLayoutAlign="start center"
+								[placeholder]="user.supervisors[0].name" 
+								[disabled]="!editUser" 
+								(selectedValue)="changedSupervisor($event)"
+								
+						
+						
+						></app-select2-user> 
+						
+						
+						<mat-form-field *ngIf="!editUser" fxFlex fxFlex.xl="25">
+								<input  #Title 
+								
+								disabled
+								type="text" 
+								matInput 
+								placeholder="Immediate Supervisor" 
+								[(ngModel)] ='user.supervisors[0].name'
+								name="supervisor"
+						>
+					</mat-form-field >	
+			
 				<mat-form-field  fxFlex>
 								<input  #Title 
 								(change)="updateUser(Title)"
@@ -77,15 +104,7 @@
 								name="title"
 						>
 					</mat-form-field >		
-		<!-- 		 <app-select2-user
-								
-								[placeholder]="user.supervisors[0].name" 
-								[disabled]="!editUser" 
-								(selectedValue)="changedSupplier($event)"
-								
-						
-						
-						></app-select2-user> -->
+			
 			
 			</div>
 			
@@ -138,7 +157,7 @@
 			
 			</nav>
 			
-				<div [hidden]="!(selectedTable == 'supervisors')" *ngIf="user.supervisors[0]">
+				<div  [ngClass]="{'hidden': !(selectedTable == 'supervisors')}" >
 					<table  fxFlex style="box-shadow: none; width:100%;" mat-table [dataSource]="user.supervisors" matSort >
 
 							<!--- Note that these columns can be defined in any order.
@@ -166,7 +185,7 @@
 							  <tr mat-row *matRowDef="let row; columns: displayedColumnsSupervisors;"></tr>
 					</table>
 			  </div>	
-				<div  [hidden]="!(selectedTable == 'permissions')" >
+				<div   [ngClass]="{'hidden': !(selectedTable == 'permissions')}"  fxLayout="column"> 
 				<table fxFlex style="box-shadow: none;  width:100%;" mat-table [dataSource]="permissionTableSource" matSort>
 
 						<!--- Note that these columns can be defined in any order.
@@ -219,8 +238,8 @@
 			  </div>
 			
 				
-			 <div  [hidden]="!(selectedTable == 'machines')">
-				<table *ngIf="user.machines[0]" fxFlex style="box-shadow: none;  width:100%;" mat-table [dataSource]="user.machines" matSort>
+			 <div [ngClass]="{'hidden': !(selectedTable == 'machines')}" >
+				<table fxFlex style="box-shadow: none;  width:100%;" mat-table [dataSource]="user.machines" matSort>
 
 					
 						  <ng-container matColumnDef="id">

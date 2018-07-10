@@ -143,7 +143,7 @@ export class MaterialContainerViewComponent implements OnInit {
 		
 	let payload = {'lot_id':lot_obj.id,'lot':true};
 	console.log(payload);
-	this.materialLotCotainerService.update(payload);
+	this.materialLotCotainerService.update(payload).subscribe();
 		
   
   }
@@ -156,7 +156,7 @@ export class MaterialContainerViewComponent implements OnInit {
 			
 			this.newLotCreated = true;		
 			let payload = {'lot_id':r.id,'lot':true};
-			this.materialLotCotainerService.update(payload);
+			this.materialLotCotainerService.update(payload).subscribe();
 		
 			
 		});
