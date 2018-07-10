@@ -116,9 +116,9 @@ export class MaterialContainerViewComponent implements OnInit {
   
   updateMaterial(field){
 	   
-    var params = {};
+    let params = {};
     params[field.name] =  field.value;
-	params.supplier = true;
+	params['supplier'] = true;
     this.materialService.updateMaterial(params,this.container.lot.material.id).subscribe((r)=>{  this.container.lot.material = r;   });
   
   }

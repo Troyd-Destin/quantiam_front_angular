@@ -8,11 +8,8 @@ import { CoreRoutingModule } from './core-routing.module';
 
 import { Select2Module } from 'ng2-select2';
 
-import {
-	MatButtonModule, MatCheckboxModule,MatDatepickerModule,MatFormFieldModule,
-	MatInputModule,MatNativeDateModule,MatCardModule,MatSidenavModule,MatSelectModule,
-	MatToolbarModule,MatTabsModule,MatGridListModule,MatListModule,MatIconModule,MatExpansionModule,MatDividerModule  } from '@angular/material';
-
+import { MaterialDesignModule } from '../material-design/material-design.module';
+	
 
 import { RouterModule, Routes } from '@angular/router';
 
@@ -26,24 +23,8 @@ import { CoreComponent } from './core.component';
   imports: [
     CommonModule,
     CoreRoutingModule,	
-		MatButtonModule,
-		MatCheckboxModule,
-		MatDatepickerModule,
-		MatFormFieldModule,
-		MatInputModule,
-		MatNativeDateModule,
-		MatCardModule,
-		MatSidenavModule,
-		MatToolbarModule,
-		MatTabsModule,
-		MatDividerModule,		
-		MatGridListModule,
-		MatIconModule,
-		MatListModule,
-		MatExpansionModule,
-		MatSelectModule,
-		Select2Module,
-		
+	MaterialDesignModule,
+	Select2Module
   ],
   exports:[
 	RouterModule,

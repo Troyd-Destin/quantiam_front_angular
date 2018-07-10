@@ -1,7 +1,9 @@
-import { NgModule } from '@angular/core';
+import { NgModule,NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { SharedModule } from '../shared/shared.module';
 import { MaterialDesignModule } from '../material-design/material-design.module';
+
 
 
 import { UserRoutingModule } from './user-routing.module';
@@ -17,8 +19,10 @@ import { UserDatabaseComponent } from './user-database/user-database.component';
   imports: [
     CommonModule,
     UserRoutingModule,
-    MaterialDesignModule
+    MaterialDesignModule,
+    SharedModule,
   ],
-  declarations: [UserIndexComponent, UserViewComponent, UserViewPermissionsComponent, UserViewKeycardComponent, UserViewMachinesComponent, UserDatabaseComponent]
+  declarations: [UserIndexComponent, UserViewComponent, UserViewPermissionsComponent, UserViewKeycardComponent, UserViewMachinesComponent, UserDatabaseComponent],
+   // schemas:[NO_ERRORS_SCHEMA]
 })
 export class UserModule { }

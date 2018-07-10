@@ -144,11 +144,11 @@ export class WebsocketService {
     var codeObj:any = this.parseScannerCode(scannedString);
 	
 							  let selectedRoute:any = this.prefixNavigationMap[codeObj.prefix];
-							  this.router.navigate([selectedRoute+codeObj.id],{queryParams: {scannerNavigation:true}}).catch(error => {
+						if(scannedString.length > 5){	  this.router.navigate([selectedRoute+codeObj.id],{queryParams: {scannerNavigation:true}}).catch(error => {
 							  
-								if(scannedString.length > 5) this.notification.error('Redirect Not Registered',scannedString,{timeOut:3000,showProgressBar:false,clickToClose: true});
+								 this.notification.error('Redirect Not Registered',scannedString,{timeOut:3000,showProgressBar:false,clickToClose: true});
 							});				
-								
+						}							
   }
  }
  

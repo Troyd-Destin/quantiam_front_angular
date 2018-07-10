@@ -16,6 +16,7 @@ export class UserViewComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
    @ViewChild(MatSort) sort: MatSort;
   
+  id: any;
   user: {};
   user$: any;
   userID: number;
