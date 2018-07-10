@@ -52,20 +52,20 @@
 						 
 					</div>		
 					
-					<div fxLayoutGap="5px"  fxLayout.gt-lg="row" fxLayout="column"  >	
+					<div fxLayoutGap="5px"  fxLayout="row wrap"   >	
 						
 						
 						   <mat-form-field class="full-width" fxFlex>
 							  <input #Nomenclature [disabled]="!editMaterial" (change)="updateMaterial(Nomenclature)" type="text" matInput placeholder="Formula" [(ngModel)] ='container.lot.material.formula' name="formula" >
 						 </mat-form-field>  
 						
-						  <mat-form-field class="full-width"  fxFlex fxFlex.xl=20>
+						  <mat-form-field class="full-width"  fxFlex="20" fxFlex.lt-lg="20">
 							  <input   #Cas [disabled]="!editMaterial" (change)="updateMaterial(Cas)" type="text" matInput placeholder="CAS #" [(ngModel)] ='container.lot.material.cas' name="cas" >
 						 </mat-form-field> 
 						  <mat-form-field class="full-width">
 							  <input   #ForumlaWeight [disabled]="!editMaterial" (change)="updateMaterial(ForumlaWeight)" type="number" matInput placeholder="Forumla Weight" [(ngModel)] ='container.lot.material.formula_weight' name="formula_weight" >
 						 </mat-form-field>
-						   <mat-form-field class="full-width" fxFlex fxFlex.xl=20>
+						   <mat-form-field class="full-width" fxFlex fxFlex.lt-lg="20">
 						 	  <input   #Density [disabled]="!editMaterial" (change)="updateMaterial(Density)" type="text" matInput placeholder="Density (g/ml)" [(ngModel)] ='container.lot.material.density' name="density" >
 						</mat-form-field>	
 						  <!-- <mat-form-field class="full-width" fxFlex>
@@ -134,10 +134,10 @@
 		
 	
 		<div fxFlex>
-			<mat-card   >
-					
-						
-					
+			<mat-card class="quantiam-mat-card" style="padding-bottom:10px !important;"   >
+			<mat-card-title style="margin:0px">
+				 Container Attributes
+			</mat-card-title>		
 				<mat-card-content fxLayoutGap="20px"   >
 				
 					
@@ -150,7 +150,7 @@
 									  <input  #ContainerName (change)="updateContainerField(ContainerName)" [disabled]="!editContainer"   type="text" matInput placeholder="Container Name " [(ngModel)] ='container.container_name' name="container_name" >
 									<mat-hint> Optional </mat-hint>
 								 </mat-form-field >  
-								   <mat-form-field fxFlex="20" class="full-width">
+								   <mat-form-field fxFlex="20"  class="full-width">
 									  <input  #ContainerNumber (change)="updateContainerField(ContainerNumber)"  [disabled]="!editContainer" type="text" matInput placeholder="Container #" [(ngModel)] ='container.container_number' name="container_number" >
 								 </mat-form-field>   
 								   
@@ -178,10 +178,10 @@
 				  
 							
 							
-							<mat-form-field class="full-width" fxFlex.xl="10" fxFlex.lg="20">
+							<mat-form-field class="full-width" fxFlex="10" >
 											<input  #Denomination (change)="updateContainerField(Denomination)" [disabled]="!editContainer" type="text" matInput placeholder="Denomination" [(ngModel)] ='container.denomination' name="denomination" >
 							 </mat-form-field >
-							  <mat-form-field  fxFlex.xl="20" class="full-width">
+							  <mat-form-field  fxFlex.gt-lg="20" fxFlex="30" class="full-width">
 								  <input #AmountOrdered (change)="updateContainerField(AmountOrdered)" [disabled]="!editContainer"   type="text" matInput placeholder="Amount Ordered ({{container.denomination}})" [(ngModel)] ='container.amount_ordered' name="amount_ordered" >
 							 </mat-form-field >
 							  <mat-form-field  fxFlex class="full-width">
@@ -193,6 +193,10 @@
 							 </mat-form-field>	 
 							 
 				
+							<mat-form-field fxFlex>
+									  <input  #PurchaseOrder (change)="updateContainerField(PurchaseOrder)" [disabled]="!editContainer"  type="text" matInput placeholder="P.O. #" [(ngModel)] ='container.purchase_order' name="purchase_order" >
+								 </mat-form-field>  
+								 
 							<mat-form-field class="full-width" fxFlex>
 							  <input matInput [matDatepicker]="myDatepicker2" placeholder="Date Received" [(ngModel)] ='container.container_received' (dateChange)="updateContainerField($event.value,'container_received')" [disabled]="!editContainer">
 							  <mat-datepicker-toggle matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
@@ -204,10 +208,6 @@
 							  <mat-datepicker #myDatepicker></mat-datepicker>
 							</mat-form-field>
 							
-							<mat-form-field fxFlex>
-									  <input  #PurchaseOrder (change)="updateContainerField(PurchaseOrder)" [disabled]="!editContainer"  type="text" matInput placeholder="P.O. #" [(ngModel)] ='container.purchase_order' name="purchase_order" >
-								 </mat-form-field>  
-								 
 							
 							<mat-form-field fxFlex>
 									  <input  #QCID (change)="updateContainerField(QCID)" [disabled]="!editContainer"  type="text" matInput placeholder="QCID (optional)" [(ngModel)] ='container.qcid' name="qcid" >
