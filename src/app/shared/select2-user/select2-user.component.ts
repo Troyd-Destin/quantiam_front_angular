@@ -45,7 +45,6 @@ export class Select2UserComponent implements OnInit {
         templateSelection: function(d:any, c) {	if(!d.label){ return d.name;	} else { return d.label;}	},
         templateResult: function (d:any) { if(d.html) { return d.html; } else { return d.text;} },
         escapeMarkup: function(m) { return m;	},
-        escapeMarkup: function(m) { return m;	},
         
         theme: 'classic',
            ajax: {

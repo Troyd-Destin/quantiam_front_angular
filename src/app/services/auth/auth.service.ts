@@ -29,18 +29,10 @@ export class AuthService {
     public notification: NotificationsService,
    ) { }
   
-  login(username,pass)
-  { 
-   
-      var params = {username: username, pass: pass};
-      console.log(params);
-      return this.http.post<Authentication>(environment.apiUrl+'/auth',params).subscribe(
-      
-          response => {
-            console.log(response);
-            if(response.token)
-              {
-                localStorage.setItem('token',response.token);
+  
+  token_auth(token){
+  
+				localStorage.setItem('token',token);
                 
               if(sessionStorage.getItem("redirectAuthPreviousRouteUrl") === null){ this.router.navigate(['']) } 
               else { 
@@ -48,7 +40,22 @@ export class AuthService {
                 this.router.navigate([sessionStorage.getItem('redirectAuthPreviousRouteUrl')]); 
                 sessionStorage.removeItem('redirectAuthPreviousRouteUrl');
                 }
-                
+  
+  }
+  
+  login(username,pass,rfid)
+  { 
+   
+      var params = {username: username, pass: pass, rfid: rfid};
+      console.log(params);
+      return this.http.post<Authentication>(environment.apiUrl+'/auth',params).subscribe(
+      
+          response => {
+            console.log(response);
+            if(response.token)
+              {
+               
+               this.token_auth(response.token); 
                
               }
             //this.notification.success('Authenticated','Seems good.',{timeOut:3000,showProgressBar:true,clickToClose: true});

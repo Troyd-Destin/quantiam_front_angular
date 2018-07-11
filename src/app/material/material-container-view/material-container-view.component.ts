@@ -21,6 +21,7 @@ export class MaterialContainerViewComponent implements OnInit {
   test_selector = null;
   newLotCreated = false;
   scannerNavigation:any;
+  fetched = false;
   
   
   locationList = [
@@ -70,7 +71,8 @@ export class MaterialContainerViewComponent implements OnInit {
 	  
       this._container = this.materialLotCotainerService.materialLotContainer$.subscribe(res=> { //subscribe to the material service for updates
      
-		
+	 console.log(res);
+		this.fetched = true;
         if(typeof res !== 'undefined') {
 			this.container = res;
 			
@@ -89,7 +91,12 @@ export class MaterialContainerViewComponent implements OnInit {
 			  this.editLot = false;
 			  this.editContainer = false;
 		}
-       });
+	  }, (error:any)=>{  
+	  console.log('test');
+	  this.fetched = false;
+		this.container = {};
+	  
+	  });
   }
   
   ngOnDestroy()

@@ -58,7 +58,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
             }
           });
 		  
-		  console.log('test');
+		 // console.log('test');
       
       },    
       columns: [

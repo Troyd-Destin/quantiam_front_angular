@@ -4,7 +4,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap, delay,shareReplay, publishReplay,refCount } from 'rxjs/operators';
 import { Observable,of, BehaviorSubject,throwError } from 'rxjs'
-
+import { NotificationsService } from 'angular2-notifications';
  //
 interface authedUser$ {}
  
@@ -21,7 +21,7 @@ export class UserService  {
   private last_id: string; 
 
 
-  constructor(public jwtHelper: JwtHelperService,public http: HttpClient, ) { 
+  constructor(public jwtHelper: JwtHelperService,public http: HttpClient, public notification: NotificationsService ) { 
     
   
     
@@ -53,6 +53,44 @@ export class UserService  {
       );
     }
   }
+  
+  deletePermission(id)
+  {
+  
+   return this.http.delete<authedUser$>(environment.apiUrl+`${this.endpoint}/permission/${id}`).pipe(
+			tap( r => {
+				
+				}), 
+			map( res => {
+			
+			
+				this.notification.success('Updated','Was successful.',{showProgressBar:false,timeOut:3000,clickToClose: true});
+				
+				return res; 
+				
+			})
+		);
+  
+  
+  }
+  
+  deleteRfid(id){
+	   return this.http.delete<authedUser$>(environment.apiUrl+`${this.endpoint}/rfid/${id}`).pipe(
+			tap( r => {
+				
+				}), 
+			map( res => {
+			
+			
+				this.notification.success('Updated','We updated the user for you.',{showProgressBar:false,timeOut:3000,clickToClose: true});
+				
+				return res; 
+				
+			})
+		);
+	  
+ }
+  
   
 
   

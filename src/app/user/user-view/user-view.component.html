@@ -153,7 +153,7 @@
 				<a mat-tab-link (click)="selectedTable = 'supervisors'"> Supervisors </a>
 				<a mat-tab-link (click)="selectedTable = 'permissions'"> Permissions </a>
 				<a mat-tab-link (click)="selectedTable = 'machines'"> Machines </a>
-				<a mat-tab-link (click)="selectedTable = 'keycard'"> Key Cards </a>
+				<a mat-tab-link (click)="selectedTable = 'rfid'"> Key Cards </a>
 			
 			</nav>
 			
@@ -219,10 +219,10 @@
 						
 						 <ng-container matColumnDef="customColumn1">
 							<th mat-header-cell *matHeaderCellDef> More </th>
-							<td mat-cell *matCellDef="let element" > 
+							<td mat-cell *matCellDef="let element; " > 
 								<button mat-button *ngIf="element.group_id" routerLink="../group/{{element.group_id}}" style="font-size:12px"> {{element.group_name}} </button> 
 								<button mat-button>
-									<mat-icon  *ngIf="!element.group_id" mat-raised-button color="warn" (click)="deletePermission(element.permission_id)"> delete </mat-icon> 
+									<mat-icon  *ngIf="!element.group_id" mat-raised-button color="warn" (click)="deletePermission(element)"> delete </mat-icon> 
 								</button>
 								
 							</td>
@@ -264,7 +264,43 @@
 				</mat-paginator> -->
 			  </div>
 				
-			
+			 <div [ngClass]="{'hidden': !(selectedTable == 'rfid')}" >
+				<table fxFlex style="box-shadow: none;  width:100%;" mat-table [dataSource]="rfidTableSource" matSort>
+
+						  <tr mat-header-row *matHeaderRowDef="displayedColumnsRfid"></tr>
+						  <tr mat-row *matRowDef="let row; let index = index; columns: displayedColumnsRfid;"></tr>
+					
+						  <ng-container matColumnDef="id">
+							<th mat-header-cell *matHeaderCellDef mat-sort-header> Card # </th>
+							<td mat-cell *matCellDef="let element"> {{element.id}} </td>
+						  </ng-container> 
+						  
+						  <ng-container matColumnDef="string">
+							<th mat-header-cell *matHeaderCellDef mat-sort-header> String </th>
+							<td mat-cell *matCellDef="let element"> {{element.string}} </td>
+						  </ng-container>
+						<ng-container matColumnDef="customColumn1"> 
+							<th mat-header-cell *matHeaderCellDef> More </th>
+							<td mat-cell *matCellDef="let row; let i = index;" > 
+								
+								<button mat-button>
+									<mat-icon   mat-raised-button color="warn" (click)="deleteRfid(i)"> delete </mat-icon> 
+								</button>
+								
+							</td>
+						  </ng-container>
+
+						
+
+						
+
+						
+				</table>
+				<mat-paginator  style="display:none;" [pageSizeOptions]="pageSizeOptions"
+							  (page)="pageEvent = $event" showFirstLastButtons>
+				</mat-paginator> 
+			  </div>
+				
 			
 			</mat-card-content>	
 			<mat-card-actions fxLayout="row-reverse">

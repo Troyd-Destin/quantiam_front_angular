@@ -1,4 +1,8 @@
-
+<div *ngIf="!container.hasOwnProperty('id')">
+	
+	<center style="margin-top:30px;"><h2> This container does not exist yet. </h2></center>
+	
+</div>
 
 <div *ngIf="container.hasOwnProperty('id')">
 	

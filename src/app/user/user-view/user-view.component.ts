@@ -17,22 +17,23 @@ export class UserViewComponent implements OnInit {
    @ViewChild(MatSort) sort: MatSort;
   
   id: any;
-  user: {};
+  user:any = {};
   user$: any;
   userID: number;
   editUser = false;
   displayedColumnsSupervisors: string[] = ['id', 'name','title'];
   displayedColumnsPermissions: string[] = ['permission_id', 'permission_name','permission_description','derived_from_group','customColumn1'];
   displayedColumnsMachines: string[] = ['id', 'machine_name'];
+  displayedColumnsRfid: string[] = ['id', 'string','customColumn1'];
   pageSizeOptions: number[] = [5,10, 25, 100];
   selectedTable: string = 'supervisors';
   permissionTableSource: any;
+  rfidTableSource: any;
 
   constructor(
   private fb: FormBuilder,
   private userService: UserService,
-  private route: ActivatedRoute 
-  
+  private route: ActivatedRoute,
  ) { }
 
   ngOnInit() {
@@ -48,6 +49,10 @@ export class UserViewComponent implements OnInit {
       this.permissionTableSource = new MatTableDataSource<any>(r.permissions);
       this.permissionTableSource.paginator = this.paginator;
       this.permissionTableSource.sort = this.sort;
+      
+      
+      this.rfidTableSource = new MatTableDataSource<any>(r.rfid);
+    //  this.rfidTableSource = this.paginator;
     })
       
       
@@ -58,19 +63,41 @@ export class UserViewComponent implements OnInit {
   
   updateUser (){
   
-  
+    
   
   
   }
   
   
-  deletePermission(id)
+  deletePermission(obj)
   {
-    console.log(id);
-  
-  
+    //Find index
+    let index = this.permissionTableSource.data.findIndex(x=> x.permission_id === obj.permission_id);
+    
+    //updated DB
+     this.userService.deletePermission(this.user.permissions[index].permissions_employees_id).subscribe((x)=>{
+      
+      //Fix Table
+      this.permissionTableSource.data.splice(index,1);
+      this.permissionTableSource.paginator = this.paginator;
+      
+      }); 
   }
   
+  
+  
+  deleteRfid(index)
+  {
+   // console.log(index);
+    this.userService.deleteRfid(this.user.rfid[index].id).subscribe((x)=>{
+      
+      this.rfidTableSource.data.splice(index,1);
+      this.rfidTableSource.paginator = this.paginator;
+       
+      console.log(this.rfidTableSource);
+      
+      });
+  }
   
 
   

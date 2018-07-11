@@ -4,7 +4,7 @@ import { environment } from '../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap, delay,shareReplay, publishReplay,refCount } from 'rxjs/operators';
+import { catchError, map, tap, delay,shareReplay, publishReplay,refCount,catchError } from 'rxjs/operators';
 import { Observable,of, BehaviorSubject,throwError } from 'rxjs'
 import { NotificationsService } from 'angular2-notifications';
 
@@ -37,7 +37,11 @@ export class MaterialLotContainerService {
                     
                     }), //set id to be last_id
         map( res => res), // return results without transformation
-      
+		catchError((err, caught) => {
+			
+			this.notification.error(id,'Does not exist.',{showProgressBar:false,timeOut:3000,clickToClose: true});
+			
+         }),
       )
       .subscribe(
         (container) => {
