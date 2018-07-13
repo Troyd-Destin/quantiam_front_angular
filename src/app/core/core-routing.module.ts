@@ -20,6 +20,10 @@ const routes: Routes = [
 				path: 'user',
 				loadChildren: '../user/user.module#UserModule',
 			},
+			{
+				path: 'xps',
+				loadChildren: '../xps/xps.module#XpsModule',
+			},
 		]
 	},
  

@@ -219,7 +219,7 @@
 						
 						
 						<mat-divider style="display:none"></mat-divider>
-						<mat-expansion-panel expanded="false" style="display:none">
+						<mat-expansion-panel expanded="true" >
 								 <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
 								
 								
@@ -229,10 +229,13 @@
 								
 							  </mat-expansion-panel-header>
 								<mat-list>
-								 <mat-list-item  > 
-										 <button routerLinkActive="mat-list-item-button-active" mat-button>SEM / EDS</button>
+								<mat-list-item  > 
+										 <button routerLink="/xps/database" routerLinkActive="mat-list-item-button-active" mat-button> XPS </button>
 								</mat-list-item>
-									 <mat-list-item  > 
+								 <mat-list-item style="display:none"  > 
+										 <button routerLinkActive="mat-list-item-button-active" mat-button>SEM / EDS</button>
+								</mat-list-item >
+									 <mat-list-item  style="display:none" > 
 										 <button routerLinkActive="mat-list-item-button-active" mat-button>XRD</button>
 								</mat-list-item>
 					

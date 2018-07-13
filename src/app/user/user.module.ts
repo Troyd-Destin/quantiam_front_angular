@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialDesignModule } from '../material-design/material-design.module';
 
-
+import { AgGridModule } from 'ag-grid-angular';
 
 import { UserRoutingModule } from './user-routing.module';
 import { UserIndexComponent } from './user-index/user-index.component';
@@ -21,6 +21,7 @@ import { UserDatabaseComponent } from './user-database/user-database.component';
     UserRoutingModule,
     MaterialDesignModule,
     SharedModule,
+	AgGridModule.withComponents([]),
   ],
   declarations: [UserIndexComponent, UserViewComponent, UserViewPermissionsComponent, UserViewKeycardComponent, UserViewMachinesComponent, UserDatabaseComponent],
    // schemas:[NO_ERRORS_SCHEMA]

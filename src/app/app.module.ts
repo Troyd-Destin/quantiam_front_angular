@@ -10,6 +10,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
+import {LicenseManager} from "ag-grid-enterprise/main";
+LicenseManager.setLicenseKey("Evaluation_License_Valid_Until__16_September_2018__MTUzNzA1MjQwMDAwMA==b7ecc78983c1bf33b5eb3682cc62cfaa");
+
+
 import { HttpClientModule,HTTP_INTERCEPTORS} from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { JwtModule  } from '@auth0/angular-jwt';
