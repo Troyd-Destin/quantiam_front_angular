@@ -132,7 +132,7 @@ export class XpsViewComponent implements OnInit {
         
             
               let filename = analysisObject.path.replace(/^.*[\\\/]/, '');
-              let newSeries:any = {];
+              let newSeries:any = {};
               
               newSeries.data = r;
               newSeries.name = 'Element: '+analysisObject.element+' || '+filename;

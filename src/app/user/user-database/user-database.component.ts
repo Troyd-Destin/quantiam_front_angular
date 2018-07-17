@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-user-database',
   templateUrl: './user-database.component.html',
@@ -14,7 +16,7 @@ export class UserDatabaseComponent implements OnInit {
   private rowData: any;
   private paginationPageSize = 25;
   
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   ngOnInit() {
         
@@ -43,7 +45,13 @@ export class UserDatabaseComponent implements OnInit {
     var value = (<HTMLInputElement>document.getElementById("page-size")).value;
     this.gridApi.paginationSetPageSize(Number(value));
   }
-
+ 
+   onRowDoubleClicked(event)
+  {
+    this.router.navigate(['/user/'+event.data.id]);
+    
+    
+  }
     
     
   onGridReady(params)

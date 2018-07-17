@@ -23,21 +23,31 @@ export class XpsDatabaseComponent implements OnInit {
     
   }
 
+	
+	
   
   
    private columnDefs = [
-	   {headerName: 'Actions',field: 'duration', valueGetter: function aPlusBValueGetter(params) {
+	   /* {headerName: 'Actions',field: 'duration', valueGetter: function aPlusBValueGetter(params) {
         
           
            return '<button md-button>Test </button>';
-        }},
-		  {headerName: 'Run Folder Created', field: 'created_at'},
+        }}, */
+		  {headerName: 'Run Folder Created', field: 'created_at', 
+			  cellStyle: function(params) { return {cursor:'pointer'} }
+			  
+			  },
         //{headerName: 'ID', field: 'id', width:100},
-        {headerName: 'Run #', field: 'name',},
-        {headerName: 'Project', field: 'project',},
-        {headerName: 'Sample Name', field: 'sample_name',},
-        {headerName: 'Sample Type', field: 'sample_name',},
-        {headerName: 'Hours',field: 'duration',  type: "numericColumn", valueGetter: function aPlusBValueGetter(params) {
+        {headerName: 'Run #', field: 'name',width:150,cellStyle: function(params) { return {cursor:'pointer'}},
+        {headerName: 'Project', field: 'project', width:150},
+        {headerName: 'Sample Name', field: 'sample_name', editable: true, cellStyle: function(params) { return {cursor:'text'}}    },
+        {headerName: 'Sample Type', field: 'sample_type', editable: true,
+			cellEditorParams: {
+			values: ['Coupon','Powder']
+			},
+			cellEditor: "agRichSelectCellEditor",
+		},
+        {headerName: 'Hours',field: 'duration',  type: "numericColumn", width:140, valueGetter: function aPlusBValueGetter(params) {
         
           if(params.data.duration)
           {
@@ -45,16 +55,26 @@ export class XpsDatabaseComponent implements OnInit {
           }
            return null;
         }},
-         {headerName: 'Seconds', field: 'duration', type: "numericColumn",},
-        {headerName: 'Analyses', field: 'analyses', type: "numericColumn",},
-        {headerName: 'Operator', field: 'operator',},
-        {headerName: 'Requested By', field: 'requested_by',},
+         {headerName: 'Seconds', field: 'duration', type: "numericColumn", width:140,hide:true},
+        {headerName: 'Analyses', field: 'analyses', type: "numericColumn", width:140},
+        {headerName: 'Operator', field: 'operator',editable: true,	cellEditor: "agRichSelectCellEditor",cellEditorParams: {
+		values: [{'id':30,'text':"Peter Unwin"}]}
+			
+		},
+        {headerName: 'Requested By', field: 'requested_by',editable: true},
       
     ];
     
   onPageSizeChanged(newPageSize) {
     let value = (<HTMLInputElement>document.getElementById("page-size")).value;
     this.gridApi.paginationSetPageSize(Number(value));
+  }
+  
+  onCellDoubleClicked(event)
+  {
+	  if(event.column.colId == 'created_at')  this.router.navigate(['/xps/run/'+event.data.id]);
+	  if(event.column.colId == 'name')  this.router.navigate(['/xps/run/'+event.data.id]);
+	  
   }
 
     
@@ -71,14 +91,8 @@ export class XpsDatabaseComponent implements OnInit {
              });
              
     
-      params.api.sizeColumnsToFit();
+      //params.api.sizeColumnsToFit();
     
-  }
-  
-  onRowDoubleClicked(event)
-  {
-	//console.log(params);
-	 this.router.navigate(['/xps/run/'+event.data.id]);
   }
   
   autoSizeAll() {
