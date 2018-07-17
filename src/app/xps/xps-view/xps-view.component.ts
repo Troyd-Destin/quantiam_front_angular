@@ -135,7 +135,7 @@ export class XpsViewComponent implements OnInit {
               let newSeries:any = {];
               
               newSeries.data = r;
-              newSeries.name = analysisObject.element+' '+filename;
+              newSeries.name = 'Element: '+analysisObject.element+' || '+filename;
               newSeries.turboThreshold = 5000;
           
              this.chart.removeSerie(0);
