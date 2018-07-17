@@ -74,7 +74,7 @@ export class XpsViewComponent implements OnInit {
     },
     xAxis:{
       title:{
-        text:'Energy',      
+        text:'Energy (eV)',      
       }    
     },
     yAxis:{
@@ -160,8 +160,8 @@ export class XpsViewComponent implements OnInit {
         //{headerName: 'ID', field: 'id', width:100},
         {headerName: 'Element', field: 'element',},
         {headerName: 'Energy', field: 'energy',hide:true},
-        {headerName: 'Start', field: 'start_energy',hide:true},
-        {headerName: 'End', field: 'end_energy',hide:true},
+        {headerName: 'Start', field: 'start_energy',},
+        {headerName: 'End', field: 'end_energy',},
         {headerName: 'Anode', field: 'anode',},
         {headerName: 'TPS', field: 'time_per_step', type: "numericColumn"},
         {headerName: 'Region', field: 'region', type: "numericColumn"},
