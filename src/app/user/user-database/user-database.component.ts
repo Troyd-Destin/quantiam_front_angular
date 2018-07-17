@@ -40,7 +40,7 @@ export class UserDatabaseComponent implements OnInit {
     ];
     
   onPageSizeChanged(newPageSize) {
-    var value = document.getElementById("page-size").value;
+    var value = (<HTMLInputElement>document.getElementById("page-size")).value;
     this.gridApi.paginationSetPageSize(Number(value));
   }
 

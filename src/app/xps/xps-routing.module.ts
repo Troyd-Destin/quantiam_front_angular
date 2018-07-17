@@ -10,11 +10,20 @@ const routes: Routes = [
 {
     path:'',
     component: XpsIndexComponent,
+	children:[
+		
+		{
+			path:'database',
+			component: XpsDatabaseComponent,
+		},
+		{		 
+              path:'run/:id',
+              component: XpsViewComponent,
+              pathMatch: 'full'
+		}
+	]
 },
-{
-   path:'database',
-   component: XpsDatabaseComponent,
-}
+
      // redirectTo: '/database',
 
 ];

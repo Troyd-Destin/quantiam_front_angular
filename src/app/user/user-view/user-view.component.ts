@@ -39,7 +39,7 @@ export class UserViewComponent implements OnInit {
   ngOnInit() {
   
     this.id  = this.route.snapshot.params.id;  //obtain ID from route 
-   console.log(this.id);
+	console.log(this.id);
      this.userService.getUser(this.id); 
 
     this.user$ = this.userService.user$.subscribe(r=> { 
@@ -99,6 +99,12 @@ export class UserViewComponent implements OnInit {
       });
   }
   
+  ngOnDestroy()
+  {
+    if(this.user$) this.user$.unsubscribe();
+  
+    
+  }
 
   
   

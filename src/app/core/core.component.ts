@@ -1,5 +1,6 @@
 
 import { Component,ChangeDetectorRef,OnInit } from '@angular/core';
+import {Location} from '@angular/common';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MediaMatcher} from '@angular/cdk/layout';
 import { AuthService } from '../services/auth/auth.service';
@@ -60,8 +61,8 @@ export class CoreComponent implements OnInit {
 		private userService: UserService, 
 		private auth: AuthService,
 		private websocketService: WebsocketService,
-		private settings: SettingsService
-		
+		private settings: SettingsService,
+		private _location: Location
 	) {
 	  
 	  
@@ -151,7 +152,12 @@ export class CoreComponent implements OnInit {
   
   }
   
-  
+  backClicked() {
+        this._location.back();
+    }
+   forwardClicked() {
+        this._location.forward();
+    }
   
   ngOnInit() {
   

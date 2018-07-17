@@ -37,6 +37,7 @@
 					
   <mat-sidenav-container class="app-container" [style.marginTop.px]="options.value.top">
 
+			
 		
 			<mat-sidenav #sidenav 
 						opened="defaultOpen" 
@@ -46,7 +47,16 @@
 						[fixedBottomGap]="options.value.bottom"
 			>
 			
-			  
+			<div id="small_navigation" style="margin: 0px 0px 10px 0px;" fxLayout="row" fxLayoutAlign="center center">
+				<button (click)="backClicked()" mat-button style="min-width:60px;"> 
+					<mat-icon>arrow_back</mat-icon> 
+					
+				</button>	
+				<button (click)="forwardClicked()" mat-button style="min-width:60px;"> 
+					<mat-icon>arrow_forward</mat-icon> 
+					
+				</button>
+			</div>
 					<mat-accordion class="side-panel" multi="true">
 						<mat-expansion-panel expanded="true" *ngIf="isAdmin">
 						  <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
@@ -118,7 +128,7 @@
 									</mat-list-item>									
 								
 									 <mat-list-item style="display:none"  > 
-										 <button routerLink="/material/database" routerLinkActive="mat-list-item-button-active" mat-button> Materials </button>
+										 <button routerLink="/material" routerLinkActive="mat-list-item-button-active" mat-button> Materials </button>
 									</mat-list-item> 
 
 										 <mat-list-item  > 

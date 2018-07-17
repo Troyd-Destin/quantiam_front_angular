@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-xps-database',
@@ -15,7 +15,7 @@ export class XpsDatabaseComponent implements OnInit {
   private rowData: any[];
   private paginationPageSize = 25;
   
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   ngOnInit() {
         
@@ -26,10 +26,17 @@ export class XpsDatabaseComponent implements OnInit {
   
   
    private columnDefs = [
-        {headerName: 'ID', field: 'id', width:100},
+	   {headerName: 'Actions',field: 'duration', valueGetter: function aPlusBValueGetter(params) {
+        
+          
+           return '<button md-button>Test </button>';
+        }},
+		  {headerName: 'Run Folder Created', field: 'created_at'},
+        //{headerName: 'ID', field: 'id', width:100},
         {headerName: 'Run #', field: 'name',},
         {headerName: 'Project', field: 'project',},
         {headerName: 'Sample Name', field: 'sample_name',},
+        {headerName: 'Sample Type', field: 'sample_name',},
         {headerName: 'Hours',field: 'duration',  type: "numericColumn", valueGetter: function aPlusBValueGetter(params) {
         
           if(params.data.duration)
@@ -42,11 +49,11 @@ export class XpsDatabaseComponent implements OnInit {
         {headerName: 'Analyses', field: 'analyses', type: "numericColumn",},
         {headerName: 'Operator', field: 'operator',},
         {headerName: 'Requested By', field: 'requested_by',},
-        {headerName: 'Run Created', field: 'updated_at'},
+      
     ];
     
   onPageSizeChanged(newPageSize) {
-    var value = document.getElementById("page-size").value;
+    let value = (<HTMLInputElement>document.getElementById("page-size")).value;
     this.gridApi.paginationSetPageSize(Number(value));
   }
 
@@ -66,6 +73,12 @@ export class XpsDatabaseComponent implements OnInit {
     
       params.api.sizeColumnsToFit();
     
+  }
+  
+  onRowDoubleClicked(event)
+  {
+	//console.log(params);
+	 this.router.navigate(['/xps/run/'+event.data.id]);
   }
   
   autoSizeAll() {
