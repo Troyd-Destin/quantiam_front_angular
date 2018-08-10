@@ -21,6 +21,8 @@ export class WebsocketService {
   private codeObj: any;
   private randomNumber = Math.random();
   public observable: any;
+  public scannerEvents: any;
+  public scanned$: any;
   public _keyBoardSubject = new BehaviorSubject({});
   public keyboardObservable: Observable<any> = this._keyBoardSubject.asObservable();
   ws: any;
@@ -42,7 +44,7 @@ export class WebsocketService {
   
   };
   
-  public redirectOnScan: boolean = true;
+	public redirectOnScan: boolean = true; // will a scan event trigger a redirect?
   
 	private id_string = '';
 	private last_key_name;
@@ -51,6 +53,8 @@ export class WebsocketService {
 	private keypressIncrement = 0;
 	private lastKeypressCh = '';
 	private timeout;
+	
+	
 
   
   constructor(
@@ -80,14 +84,13 @@ export class WebsocketService {
 	// For chat box
 	public connect() {
 	
-	
+				
+				//Raw Data
 				this.observable = Observable.create((observer) => {
 				this.ws = new WebSocket(this.url);
 
-				this.ws.onopen = (e) => {
-					
-					console.log('Websocket Connected',this.url);
-				 
+				this.ws.onopen = (e) => {					
+					console.log('Websocket Connected',this.url);				 
 				};
 
 				this.ws.onclose = (e) => {
@@ -105,17 +108,52 @@ export class WebsocketService {
 				this.ws.onmessage = (e) => {
 				//console.log(e);
 					let r = JSON.parse(e.data);
-				  observer.next(r);
-				
-				
-					
+					observer.next(r);				
+				}
+
+				return () => {
+				  this.ws.close();
+				};
+			  }).pipe(share());
+			  
+			  
+			  
+				this.scannerEvents = Observable.create((observer) => {
+				this.ws = new WebSocket(this.url);
+
+				this.ws.onopen = (e) => {
+					console.log('Websocket Connected',this.url);
+				 
+				};
+
+				this.ws.onclose = (e) => {
+				  if (e.wasClean) {
+					observer.complete();
+				  } else {
+					observer.error(e);
+				  }
+				};
+
+				this.ws.onerror = (e) => {
+				  observer.error(e);
+				}
+
+				this.ws.onmessage = (e) => {
+					let r = JSON.parse(e.data);					
 				   try{  //Redirect user to specific screen based on scan event. 
 						//console.log(r);
 						let scannerResponse = r;
 						if(scannerResponse.type == 'Scanner'){
 							
 						   console.log('Scanner Response',scannerResponse,this.redirectOnScan);
-						  
+							
+							let parsed:any = this.parseScannerCode(r.data);
+							r.prefix = parsed.prefix; 
+							r.id = parsed.id; 
+							
+							observer.next(r);
+							
+							
 						   this.notification.info('Scanner Event',scannerResponse.data,{timeOut:3000,showProgressBar:false,clickToClose: true});           
 						   
 						   if(this.redirectOnScan && scannerResponse.machine.name == this.selectedScanner.text) // is the app in rediect mode?
@@ -127,6 +165,7 @@ export class WebsocketService {
 						}
 						  
 					}catch(e){} 
+				
 				
 				}
 

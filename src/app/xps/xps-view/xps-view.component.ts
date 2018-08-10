@@ -16,7 +16,13 @@ import { catchError, map, tap, delay,shareReplay, publishReplay,refCount } from 
 export class XpsViewComponent implements OnInit {
 
   private xpsRun$:any; 
+  private xpsRun: Object;
+  private rowData:any;
+  private chart:any;
   private edit: boolean = false;
+  private id:string;
+  private gridApi:any;
+  private gridColumnApi:any;
   
   private sampleTypeList = [
 	  

@@ -1,3 +1,39 @@
-<p>
-  sample-database works!
-</p>
+
+
+<div fxLayout="row">
+	
+	<button (click)="onAddRow()" mat-button>Add Row</button>
+	
+</div>
+
+<div fxLayout="row" fxLayoutAlign="center center">
+
+
+
+<ag-grid-angular 
+
+	[toolPanelSuppressSideButtons] = "true"
+  
+	
+	#agGrid	
+	style="width: calc(100%); height:calc(80vh); margin-top:25px;" 
+    class="ag-theme-material"
+	[showToolPanel]="false"
+    [rowData]="rowData" 
+	[toolPanelSuppressSideButtons] = "true"
+    [columnDefs]="columnDefs"
+	[defaultColDef]="defaultColDef"
+	[enableSorting]="true"
+    [enableFilter]="true"	
+    (gridReady)="onGridReady($event)"
+	(cellDoubleClicked)="onCellDoubleClicked($event)"
+	(cellEditingStopped)="onCellEditingStopped($event)"
+	(cellEditingStarted)="onCellEditingStarted($event)"
+	[enableColResize]="true"
+	[enableRangeSelection]="true"
+	[pagination]="false"
+	
+    
+    >
+</ag-grid-angular>
+</div>  

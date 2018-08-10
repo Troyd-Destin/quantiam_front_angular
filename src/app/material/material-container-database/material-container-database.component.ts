@@ -12,6 +12,7 @@ import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-material-container-database',
   templateUrl: './material-container-database.component.html',
+  
   styleUrls: ['./material-container-database.component.css']
 })
 export class MaterialContainerDatabaseComponent implements OnInit {
@@ -169,7 +170,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 	
 	});
 	
-	$scope.dtInstance.rerender();
+	//$scope.dtInstance.rerender();
   }
   
   

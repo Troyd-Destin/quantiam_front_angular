@@ -1,48 +1,35 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { AgGridModule } from 'ag-grid-angular';
 import { SampleRoutingModule } from './sample-routing.module';
 import { SampleIndexComponent } from './sample-index/sample-index.component';
 
 import {FlexLayoutModule} from "@angular/flex-layout";
 
-import { DataTablesModule } from 'angular-datatables';
 
 
-import {
-	MatButtonModule, MatCheckboxModule,MatDatepickerModule,MatFormFieldModule,
-	MatInputModule,MatNativeDateModule,MatCardModule,MatSidenavModule,
-	MatToolbarModule,MatTabsModule,MatGridListModule,MatListModule,MatIconModule,MatExpansionModule,MatDividerModule  } from '@angular/material';
+import { SharedModule } from '../shared/shared.module';
+import { MaterialDesignModule } from '../material-design/material-design.module';
+
 import { SampleListComponent } from './sample-list/sample-list.component';
 import { SampleComponent } from './sample/sample.component';
 import { SampleFormComponent } from './sample-form/sample-form.component';
 import { SampleDatabaseComponent } from './sample-database/sample-database.component';
 import { SgxScaleAuthComponent } from './sgx-scale-auth/sgx-scale-auth.component';
+import { SampleViewComponent } from './sample-view/sample-view.component';
 
 
 @NgModule({
   imports: [
     CommonModule,
     SampleRoutingModule,
-	 FlexLayoutModule,
-     DataTablesModule,
-    	MatButtonModule,
-		MatCheckboxModule,
-		MatDatepickerModule,
-		MatFormFieldModule,
-		MatInputModule,
-		MatNativeDateModule,
-		MatCardModule,
-		MatSidenavModule,
-		MatToolbarModule,
-		MatTabsModule,
-		MatDividerModule,		
-		MatGridListModule,
-		MatIconModule,
-		MatListModule,
-		MatExpansionModule,
+	FlexLayoutModule,
+	SharedModule,
+	MaterialDesignModule,
+	AgGridModule.withComponents([]),
 		
   ],
-  declarations: [SampleIndexComponent, SampleListComponent, SampleComponent, SampleFormComponent, SampleDatabaseComponent, SgxScaleAuthComponent]
+  declarations: [SampleIndexComponent, SampleListComponent, SampleComponent, SampleFormComponent, SampleDatabaseComponent, SgxScaleAuthComponent, SampleViewComponent]
 })
 export class SampleModule { }

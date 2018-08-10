@@ -6,13 +6,14 @@ import { Select2MaterialLotComponent } from './select2-material-lot/select2-mate
 import { Select2LocationComponent } from './select2-location/select2-location.component';
 import { Select2MaterialSupplierComponent } from './select2-material-supplier/select2-material-supplier.component';
 import { Select2UserComponent } from './select2-user/select2-user.component';
+import { Select2MaterialLotContainerComponent } from './select2-material-lot-container/select2-material-lot-container.component';
 
 @NgModule({
   imports: [
     CommonModule,
     Select2Module,
   ],
-  declarations: [Select2MaterialComponent, Select2MaterialLotComponent, Select2LocationComponent, Select2MaterialSupplierComponent, Select2UserComponent],
+  declarations: [Select2MaterialComponent, Select2MaterialLotComponent, Select2LocationComponent, Select2MaterialSupplierComponent, Select2UserComponent, Select2MaterialLotContainerComponent],
   exports:[
     Select2MaterialComponent,
     Select2MaterialLotComponent,

@@ -14,6 +14,7 @@ export class XpsDatabaseComponent implements OnInit {
   private gridColumnApi;
   private rowData: any[];
   private paginationPageSize = 25;
+  private _xrdRuns: any;
   
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -38,7 +39,7 @@ export class XpsDatabaseComponent implements OnInit {
 			  
 			  },
         //{headerName: 'ID', field: 'id', width:100},
-        {headerName: 'Run #', field: 'name',width:150,cellStyle: function(params) { return {cursor:'pointer'}},
+        {headerName: 'Run #', field: 'name',width:150,cellStyle: function(params) { return {cursor:'pointer'}}},
         {headerName: 'Project', field: 'project', width:150},
         {headerName: 'Sample Name', field: 'sample_name', editable: true, cellStyle: function(params) { return {cursor:'text'}}    },
         {headerName: 'Sample Type', field: 'sample_type', editable: true,
@@ -84,7 +85,7 @@ export class XpsDatabaseComponent implements OnInit {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
   
-           this.http.get<any>('http://api.edm.quantiam.com/xps/runs',{params: { }}).subscribe((r)=>{
+    this._xrdRuns =  this.http.get<any>('http://api.edm.quantiam.com/xps/runs',{params: { }}).subscribe((r)=>{
              
                 this.rowData = r;
                //setTimeout(()=>{  this.autoSizeAll();},400);
@@ -102,5 +103,12 @@ export class XpsDatabaseComponent implements OnInit {
     });
     this.gridColumnApi.autoSizeColumns(allColumnIds);
   }
+  
+  
+   ngOnDestroy()
+  {
+    this._xrdRuns.unsubscribe(); 
+  }
+  
   
 }

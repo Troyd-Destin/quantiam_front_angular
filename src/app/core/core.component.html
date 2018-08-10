@@ -127,49 +127,34 @@
 										 <button  routerLinkActive="mat-list-item-button-active" mat-button> Steel </button>
 									</mat-list-item>									
 								
-									 <mat-list-item style="display:none"  > 
-										 <button routerLink="/material" routerLinkActive="mat-list-item-button-active" mat-button> Materials </button>
-									</mat-list-item> 
+								    <mat-list-item style="display:none"  > 
+										 <button routerLink="/steel/database" routerLinkActive="mat-list-item-button-active" mat-button> Steel </button>
+									</mat-list-item>  
 
 										 <mat-list-item  > 
 										 <button routerLink="/material/container/database" routerLinkActive="mat-list-item-button-active" mat-button> Materials </button>
 									</mat-list-item> 
 
+									 <mat-list-item  > 
+										 <button routerLink="/sample/database" routerLinkActive="mat-list-item-button-active" mat-button>Samples</button>
+									</mat-list-item>
+									
 								
-									 <mat-list-item style="display:none" > 
+									<!--  <mat-list-item style="display:none" > 
 										 <button  routerLinkActive="mat-list-item-button-active" mat-button> Racks </button>
 									</mat-list-item> 
 									
 									<mat-list-item style="display:none" > 
 										<button routerLink="/inventory/database" routerLinkActive="mat-list-item-button-active" mat-button> Inventory Jobs </button>
-									</mat-list-item>
+									</mat-list-item> -->
 								
 								</mat-list>  
 						</mat-expansion-panel>
-						<mat-divider></mat-divider>
-						<mat-expansion-panel expanded="true">
-								 <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
-								
-								
-								<mat-panel-title>
-									Samples
-								</mat-panel-title>
-								
-							  </mat-expansion-panel-header>
-								<mat-list>
-								 <mat-list-item  > 
-										 <button routerLink="/sample/database" routerLinkActive="mat-list-item-button-active" mat-button>Database</button>
-								</mat-list-item>
-								 <mat-list-item  > 
-										 <button routerLink="/sample/sgx-scale-auth" routerLinkActive="mat-list-item-button-active" mat-button>Scale Auth</button>
-								</mat-list-item>
-								
-								</mat-list>
-						</mat-expansion-panel>
+					
 						
 						
 						<mat-divider style="display:none"></mat-divider>
-						<mat-expansion-panel expanded="false" style="display:none">
+						<mat-expansion-panel expanded="true" style="display:none">
 								 <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
 								
 								
@@ -196,6 +181,23 @@
 								</mat-list-item>
 								 <mat-list-item  > 
 										 <button routerLinkActive="mat-list-item-button-active" mat-button>Furnace Runs</button>
+										<!--  <mat-list>
+												<div>
+													<mat-list-item  > 														
+																<button routerLinkActive="mat-list-item-button-active" mat-button>Runs</button>											
+													</mat-list-item>
+												</div>
+												<div>
+												<mat-list-item > 														
+															<button routerLinkActive="mat-list-item-button-active" mat-button>Profiles</button>											
+												</mat-list-item>
+												</div>
+												<div>
+												<mat-list-item > 														
+															<button routerLinkActive="mat-list-item-button-active" mat-button>Insights</button>											
+												</mat-list-item>
+												</div>
+										 </mat-list> -->
 								</mat-list-item>
 									 <mat-list-item  > 
 										 <button routerLinkActive="mat-list-item-button-active" mat-button>Shipping</button>
@@ -253,6 +255,24 @@
 								</mat-list>
 						</mat-expansion-panel>
 						
+						<mat-divider></mat-divider>
+						<mat-expansion-panel expanded="true">
+								 <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
+								
+								
+								<mat-panel-title>
+									Tools 
+								</mat-panel-title>
+								
+							  </mat-expansion-panel-header>
+								<mat-list>
+								
+								 <mat-list-item  > 
+										 <button routerLink="/sample/sgx-scale-auth" routerLinkActive="mat-list-item-button-active" mat-button>Scale Auth</button>
+								</mat-list-item>
+								
+								</mat-list>
+						</mat-expansion-panel>
 						<!-- <mat-divider></mat-divider> -->
 					
 					

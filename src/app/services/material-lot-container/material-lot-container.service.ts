@@ -2,7 +2,6 @@
 
 import { environment } from '../../../environments/environment';
 import { Injectable } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap, delay,shareReplay, publishReplay,refCount } from 'rxjs/operators';
 import { Observable,of, BehaviorSubject,throwError } from 'rxjs'
@@ -52,6 +51,27 @@ export class MaterialLotContainerService {
     }
   }
   
+	
+  fetch(id:string, params = {})
+   {
+   
+		return  this.http.get<any>(environment.apiUrl+`${this.endpoint}/${id}?filterSpinner`)
+		 .pipe(
+			tap( r => {
+				
+				}), 
+			map( r => {
+			
+			
+				this.notification.success('Fetched','Container '+r.id,{showProgressBar:false,timeOut:3000,clickToClose: true});
+				
+				return r; 
+				
+			})
+			);
+	   
+   
+   }
   
   update(params, id = null)
   {

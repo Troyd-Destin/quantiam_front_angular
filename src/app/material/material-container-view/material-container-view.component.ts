@@ -3,7 +3,7 @@ import { MaterialLotContainerService } from '../../services/material-lot-contain
 import { MaterialLotService } from '../../services/material-lot/material-lot.service';
 import { MaterialService } from '../../services/material/material.service';
 import { MaterialSupplierService } from '../../services/material-supplier/material-supplier.service';
-
+import * as moment from 'moment';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
