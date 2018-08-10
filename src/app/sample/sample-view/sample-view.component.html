@@ -211,7 +211,7 @@
 				
 			</div>
 			<div id="right_side" fxLayout="column" fxLayoutAlign="center center"  fxFlex="none"  fxFlex.gt-lg="50" fxLayoutGap="10px">
-					<div > Associated Files </div>
+					<!-- <div > Associated Files </div> -->
 					<div id="comment_wrapper"  fxLayout="column" fxFlexFill fxLayoutGap="5px">
 						
 							<h3 class="sample_comment_header_text"> Comments <small> (3) </small> </h3>
@@ -222,7 +222,7 @@
 								
 								
 									<textarea 
-									
+									 [(ngModel)]="commentContent"
 									class="sample_comment"
 									style="height: 20px; 
 										border-radius: 5px;
@@ -236,7 +236,7 @@
 									
 									<div id="add_comment_options" fxLayout="row">
 											
-											<button mat-button (click)="addSampleComment()"> Save </button>
+											<button mat-button (click)="createSampleComment()" [disabled]="!commentContent"> Save </button>
 									
 									</div>
 																
@@ -246,21 +246,23 @@
 							
 							</div>
 							
-							<div id="comments">
+							<div id="comments" *ngIf="sample.comments && sample?.comments[0]" >
 								
-									<div id="comment"    fxLayout="column"  ><!--- loop here against datasoure -->
+									<div id="comment"    fxLayout="column" *ngFor="let comment of sample.comments; index as i;"  ><!--- loop here against datasoure -->
 										
 										<div id="comment_header" style="height:25px;" fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
-											<b> Firstname, Lastname </b>
+											<b> {{comment.creator.firstname}}, {{comment.creator.lastname}} </b>
 											<p style="font-size: 25px;">&#183; </p>
-											<i  style="font-size: 12px;"> 2018-04-08 16:30:50 </i>
-										
+											<i  style="font-size: 10px;">  {{comment.created_at}} </i>
+											
+											<p style="font-size: 25px;" *ngIf="comment.updated_at">&#183; </p>
+											<i  style="font-size: 10px;" *ngIf="comment.updated_at"> Updated on {{comment.updated_at}} </i>
 										</div>
 										<div id="comment_body" fxLayout="row"  fxLayoutGap="5px" fxLayoutAlign="center center">
 											<textarea 
 											
 											class="sample_comment"
-											style="height: 20px; 
+											style="height: 30px; 
 												border-radius: 5px;
 												display: flex;
 												 flex-direction: row;
@@ -268,11 +270,16 @@
 												padding-left: 10px;
 												box-sizing: content-box;
 												border-color: rgb(191, 189, 189);" 
-												disabled
-											>This is some text being displayed</textarea>
-											<div id="comment_options" >	
+												[disabled]="!comment.disabled"
+												[(ngModel)]="comment.content"
+											></textarea>
+											<div id="comment_options" fxLayout="row" >	
 												
-											<button mat-button (click)="addSampleComment()"> Edit </button>
+											
+											<button mat-button (click)="comment.disabled = !comment.disabled; oldCommentContent = comment.content;" *ngIf="!comment.disabled"> Edit </button>
+											<button mat-button (click)="comment.disabled = !comment.disabled; updateSampleComment(i);" *ngIf="comment.disabled"> Save </button>
+											<button mat-button (click)="deleteSampleComment(i)" *ngIf="!comment.disabled"> Delete </button>
+											<button mat-button (click)="comment.disabled = !comment.disabled; comment.content = oldCommentContent;"  *ngIf="comment.disabled"> Cancel </button>
 											
 										
 											</div>

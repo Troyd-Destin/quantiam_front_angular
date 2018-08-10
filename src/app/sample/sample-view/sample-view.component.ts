@@ -3,6 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router,ActivatedRoute } from '@angular/router';
 import { SampleService } from '../../services/sample/sample.service';
 import { SampleContainerService } from '../../services/sample-container/sample-container.service';
+import { SampleCommentService } from '../../services/sample-comment/sample-comment.service';
 
 import { MaterialLotContainerService } from '../../services/material-lot-container/material-lot-container.service';
 import { WebsocketService } from '../../services/websocket/websocket.service'; 
@@ -26,6 +27,11 @@ export class SampleViewComponent implements OnInit {
   private scanContainer: boolean = true;
   private editContainer: boolean = false;
   private containerDataSource;
+  
+  //Comments 
+  
+  private commentContent:string;
+  private oldCommentContent:string;
   
   //Measuring
   
@@ -55,7 +61,8 @@ export class SampleViewComponent implements OnInit {
   private changeDetectorRefs: ChangeDetectorRef,
   private  sgxScaleService: SgxScaleWebsocketService,
   public notification: NotificationsService,
-  private sampleContainerService: SampleContainerService
+  private sampleContainerService: SampleContainerService,
+  private sampleCommentService: SampleCommentService
   
   
   ) { }
@@ -201,9 +208,54 @@ export class SampleViewComponent implements OnInit {
     });
  
  }
+ 
+ createSampleComment()
+ {
+ 
+
+     this.sampleCommentService.create({'content': this.commentContent,'sample': this.sample.id}).subscribe((r)=>{
+        
+        this.sample.comments.push(r);
+        delete  this.commentContent;
+    
+    
+    });
   
+ 
+ }
+ 
+ updateSampleComment(index)
+ {
+ 
+     this.sampleCommentService.update(this.sample.comments[index].id, {'content': this.sample.comments[index].content}).subscribe((r)=>{
+        
+        
+        this.sample.comments[index] = r;
+        delete this.oldCommentContent;
+    
+    
+    });
+ 
+ }
+ 
+ deleteSampleComment(index)
+ {
+    if(confirm('Are you sure you want to delete this comment'))
+    {
+
+       this.sampleCommentService.delete(this.sample.comments[index].id).subscribe((r)=>{
+          
+          this.sample.comments.splice(index,1);
+      
+      
+      });
+    
+    }
+ }
+ 
   
-  deleteSampleContainer(container)
+ 
+ deleteSampleContainer(container)
   {
     console.log(container);
     if(confirm('Are you sure you want to delete this?'))
