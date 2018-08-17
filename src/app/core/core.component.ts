@@ -41,11 +41,14 @@ export class CoreComponent implements OnInit {
   selectedScanner;
   scannerList = [];
   scannerSelect2Options={"theme":"classic"};
+ 
   
   webSocketMessages: webSocketMessages;
   lastWebSocketMessage;
   _ws;
   _wsk;
+  _scannerEvents: any;
+   
   isAdmin = false;
   
   
@@ -86,6 +89,7 @@ export class CoreComponent implements OnInit {
         
 		   this.userTitle = res.title; 
 		   this.userName = res.name; 
+		   this.user = res;
 		   this.userLoaded = true;
 		   
 		   this.adminCheck();
@@ -162,12 +166,9 @@ export class CoreComponent implements OnInit {
   ngOnInit() {
   
   
-	this.websocketService.connect();
-	this._ws = this.websocketService.observable.subscribe((data)=>{
-		
-	//	console.log('core');
+	//this.websocketService.connect();
 			
-		})
+	this._scannerEvents = this.websocketService.scannerEvents.subscribe((data)=>{})
 
     
   }

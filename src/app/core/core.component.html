@@ -24,7 +24,7 @@
 					>{{scanner.text}}</option>
 			</select2>
 						
-			<button mat-button class='name-title-box' *ngIf="userLoaded">
+			<button mat-button class='name-title-box' *ngIf="userLoaded" routerLink="/user/{{user.id}}">
 				<p  class='name'> {{userName}} </p>
 				<p  class='name-title'> {{userTitle}} </p>
 			</button>

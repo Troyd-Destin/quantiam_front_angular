@@ -56,7 +56,7 @@ export class SampleViewComponent implements OnInit {
   public sampleService: SampleService, 
   public router: Router,
   private websocketService: WebsocketService, 
-	private route: ActivatedRoute,
+  private route: ActivatedRoute,
   private containerService: MaterialLotContainerService,
   private changeDetectorRefs: ChangeDetectorRef,
   private  sgxScaleService: SgxScaleWebsocketService,

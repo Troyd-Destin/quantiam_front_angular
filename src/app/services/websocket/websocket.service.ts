@@ -32,6 +32,7 @@ export class WebsocketService {
   
 
   public selectableScanners = [{'text':"None",id:0},{'text': "QAQC", id: 1},{'text': "Powders", id: 2},{'text': "Slipcasting", id: 3},{'text':"Furnaces",id:4}];
+  public selectableScales = [{'text':"None",id:0},{'text': "Powders", id: 1},{'text': "Slipcast", id: 2},{'text': "SGX", id: 3}];
   public selectedScanner:any;
   
   
@@ -74,7 +75,10 @@ export class WebsocketService {
 		
 	  });
 		
-		}
+		this.connect();
+		
+		
+	}
   
   
 	public toggleRedirectOnScan()
@@ -230,7 +234,7 @@ export class WebsocketService {
 			
 				
 				clearTimeout(this.timeout);
-				
+				if (this.id_string.indexOf('-') > -1){
 				
 				this.timeout = setTimeout(()=>{
 		
@@ -248,7 +252,7 @@ export class WebsocketService {
 							
 						
 					},400);
-					
+				}
 			this.keypressIncrement++
 		}
 	}
