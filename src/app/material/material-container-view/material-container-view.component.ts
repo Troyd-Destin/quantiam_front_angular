@@ -34,6 +34,11 @@ export class MaterialContainerViewComponent implements OnInit {
 	  {id:7,text:"Metals"},
 	  {id:8,text:"Oxidizing Compounds"},
 	  {id:9,text:"South Wall Shelves"},
+	  {id:10,text:"Manufacturing"},
+	  {id:11,text:"Manufacturing / Oxide"},
+	  {id:12,text:"Manufacturing / Carbide"},
+	  {id:13,text:"Manufacturing / Silicate / Hydrate / Sulfates"},
+	  {id:14,text:"Powder Room Shelf"},
 	  
 	  ];
 

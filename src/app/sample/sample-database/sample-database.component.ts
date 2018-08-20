@@ -131,9 +131,15 @@ export class SampleDatabaseComponent implements OnInit {
   
 	if(this.cellOldValue != event.value)
 	{
+		console.log(event);
 		let params:any  = {};
 		params[event.column.colId] = event.value;  
-		this.sampleService.update(event.data.id,params).subscribe((r)=>{});
+		this.sampleService.update(event.data.id,params).subscribe((r)=>{
+			
+			
+				
+			
+		});
 	}
   }
   
