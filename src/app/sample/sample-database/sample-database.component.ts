@@ -143,6 +143,11 @@ export class SampleDatabaseComponent implements OnInit {
 	}
   }
   
+  testChange(e)
+  {
+	console.log(e);
+  }
+  
    onAddRow() {
    
   this.sampleService.create({}).subscribe((r)=>{

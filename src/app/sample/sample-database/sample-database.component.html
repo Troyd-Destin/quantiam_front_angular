@@ -4,6 +4,14 @@
 	
 	<button (click)="onAddRow()" mat-button>Add Row</button>
 	
+	<app-select-project fxFlex=20 
+	selectedValue="7330"
+	(change)="testChange($event)"
+	multiple="true"
+	></app-select-project>
+		
+		
+
 </div>
 
 <div fxLayout="row" fxLayoutAlign="center center">

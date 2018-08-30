@@ -36,15 +36,11 @@ export class MaterialSupplierService {
     return this.http.post<any>(environment.apiUrl+`${this.endpoint}`, params)
      .pipe(
         tap( r => {	}), 
-        map( res => {
-			
+        map( res => {			
 			  this.notification.success('Supplier','Created Supplier '+res.id,{showProgressBar:false,timeOut:3000,clickToClose: true});
-			  return res;
-		
-		
+			  return res;		
 		}), // return results without transformation
          //catchError( (e) => this.notification.error('Error','Problem updating material.',{showProgressBar:false,timeOut:3000,clickToClose: true})),
-       
       );
     
   }

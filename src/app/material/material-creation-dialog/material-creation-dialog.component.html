@@ -24,8 +24,6 @@
 			</div>
 			<div *ngIf="newMaterial || selectedMaterial.id" fxLayout="column"  fxLayoutGap="10px" >
 			
-			
-			
 						<div fxLayoutGap="5px" fxLayout="row" fxLayout.sm="column"  fxLayoutAlign="start stretch"  >	
 						  <mat-form-field class="full-width"  fxFlex>
 							  <input #MaterialName   type="text" matInput placeholder="Name" (change)="validateNewMaterial()" [(ngModel)] ='material.name' name="name" [required]="creatingMaterial" [disabled]="!creatingMaterial">
@@ -55,7 +53,7 @@
 							  <input   #Cas type="text" matInput placeholder="CAS #" [(ngModel)] ='material.cas' name="cas"  [disabled]="!creatingMaterial" >
 							  <mat-hint> Optional </mat-hint>
 						 </mat-form-field>
-					<!-- 	  <mat-form-field class="full-width">
+						<!--<mat-form-field class="full-width">
 							  <input #Catalog type="text" matInput placeholder="Catalog #" [(ngModel)] ='material.catalog' name="catalog"  [disabled]="!creatingMaterial">
 								  <mat-hint> Optional </mat-hint>
 						</mat-form-field>  -->
@@ -71,6 +69,7 @@
 						 </mat-form-field> 
 					
 						 <app-select2-material-supplier
+							*ngIf="creatingMaterial"
 							(selectedValue)="selectSupplier($event)"
 						></app-select2-material-supplier>
 					</div>

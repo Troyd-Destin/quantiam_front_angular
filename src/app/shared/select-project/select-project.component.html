@@ -1,0 +1,47 @@
+
+
+<ng-select 
+	
+	[items]="items"
+	[(ngModel)]="selectedValue"
+	placeholder="Project"
+	[multiple]="multiple"
+	(change)="onChange($event)"
+	groupBy="Category"
+		  
+>
+	
+	
+			 <ng-template ng-header-tmp>
+				<div fxLayout="row" fxLayoutAlign="start center"  fxLayoutGap="10px">
+					 <mat-checkbox  [(ngModel)]="showActive" (change)="showItems()" [check]="showActive"> Active </mat-checkbox>
+					 <mat-checkbox  [(ngModel)]="showInactive" (change)="showItems()"> Inactive </mat-checkbox>
+				</div>
+			</ng-template>
+	
+	  <ng-template ng-optgroup-tmp let-item="item">
+        {{item.Category || 'Unnamed group'}}
+		</ng-template>
+	
+	
+	 <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm" >
+			
+					
+			<div fxLayout="row" fxLayoutAlign="center center"  fxLayoutGap="10px">
+				<div fxLayout="row"  fxLayoutAlign="start center" fxFlex >
+					<div style="width:45px"> <b>{{item.id}} </b></div> 
+					<div style="font-size:13px" >{{item.Description}}</div>
+					
+				</div>
+			<!-- 	<div style="width:150px; font-size: 11px; white-space: normal;" > {{item.Category}} </div>
+		 -->
+				<a *ngIf="item.active" mat-button  color="primary" routerLink="/material/{{item.id}}"  > Active </a>
+				<a *ngIf="!item.active" mat-button  color="warn" routerLink="/material/{{item.id}}"  > Inactive </a>
+			</div>
+				
+			
+		
+
+	 </ng-template>
+
+</ng-select>

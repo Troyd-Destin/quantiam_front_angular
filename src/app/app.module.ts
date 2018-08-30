@@ -27,7 +27,7 @@ import {
 
 import { NgHttpLoaderModule } from 'ng-http-loader/ng-http-loader.module';
  import { SimpleNotificationsModule } from 'angular2-notifications';
-  
+ 
   
   import { WebsocketService } from './services/websocket/websocket.service'; 
 
@@ -62,6 +62,7 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     AuthComponent,
+    
         
   ],
   imports: [
