@@ -138,7 +138,7 @@
 					 </mat-form-field>   
 							 
 					  <mat-form-field  fxFlex="15">
-						  <input  #Denomination id="container_denomination" type="text" required matInput placeholder="Denomination" [(ngModel)] ='container.denomination' name="denomination" >
+						  <input  #Denomination id="container_denomination" type="text" required matInput placeholder="Denomination" [(ngModel)] ='container.denomination' name="denomination" value="g" >
 						     <mat-hint>g,ml,L</mat-hint>
 							   <mat-error *ngIf="!container.denomination">Required  g,ml,L</mat-error>
 					 </mat-form-field> 	
@@ -155,7 +155,7 @@
 					 
 					 
 					  <mat-form-field  fxFlex>
-						  <input #GrossWeighttype type="number" required matInput placeholder="Gross Weight (g)" [(ngModel)] ='container.gross_weight' name="gross_weight" >
+						  <input #GrossWeighttype type="number"  matInput placeholder="Gross Weight (g)" [(ngModel)] ='container.gross_weight' name="gross_weight" >
 						  <mat-hint>Weigh item out on a scale. </mat-hint>
 						  
 						   <mat-error *ngIf="!container.gross_weight"> Required   </mat-error>

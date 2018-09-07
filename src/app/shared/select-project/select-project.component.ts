@@ -8,7 +8,7 @@ import { ProjectService } from '../../services/project/project.service';
 })
 export class SelectProjectComponent implements OnInit {
 
-  list$:any;
+list$:any;
   items:any = [];
   allItems:any = [];
   showActive:boolean = true;
@@ -18,6 +18,7 @@ export class SelectProjectComponent implements OnInit {
   //Inputs 
   @Input() selectedValue:any = null; // default value, object or ID
   @Input() multiple:any = false; // multi version
+  @Input() selectableGroup:any = false; // multi version
  
   @Output() change = new EventEmitter<any>();
  

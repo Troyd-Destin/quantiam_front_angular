@@ -240,8 +240,8 @@ export class MaterialCreationDialogComponent implements OnInit {
 	 {
 		if(!this.material.name) return false;
 		if(!this.lot.lot_name) return false;
-		if(!this.container.denomination || !this.container.gross_weight || !this.container.amount_ordered || !this.container.location_id) return false;
-	 
+		if(!this.container.denomination  || !this.container.amount_ordered || !this.container.location_id) return false;
+	 //|| !this.container.gross_weight
 		return true;
 	 }
 	 
