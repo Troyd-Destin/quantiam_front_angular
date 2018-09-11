@@ -39,8 +39,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
       pageLength: 20,
       serverSide: true,
       processing: true,
-      searchDelay: 500,
-	  "order": [[ 1, "desc" ]]
+      searchDelay: 1000,//
       ajax:(dataTablesParameters: any, callback) => {
 	  
 		console.log(dataTablesParameters);
