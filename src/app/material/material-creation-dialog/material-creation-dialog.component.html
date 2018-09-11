@@ -45,37 +45,41 @@
 						 
 						 
 						 
-						   <mat-form-field class="full-width">
+						   <mat-form-field class="full-width" fxFlex>
 							  <input #Nomenclature  type="text" matInput placeholder="Formula" [(ngModel)] ='material.formula' name="formula" [disabled]="!creatingMaterial" >
 								<mat-hint> Optional </mat-hint>
 						</mat-form-field>  
-						  <mat-form-field class="full-width">
+						  <mat-form-field class="full-width" fxFlex>
 							  <input   #Cas type="text" matInput placeholder="CAS #" [(ngModel)] ='material.cas' name="cas"  [disabled]="!creatingMaterial" >
 							  <mat-hint> Optional </mat-hint>
 						 </mat-form-field>
-						<mat-form-field class="full-width">
+						<mat-form-field class="full-width" fxFlex>
 							  <input #Catalog type="text" matInput placeholder="Catalog #" [(ngModel)] ='material.catalog' name="catalog"  [disabled]="!creatingMaterial">
 								  <mat-hint> Optional </mat-hint>
 						</mat-form-field> 
 
-						 <mat-form-field class="full-width">
+						 
+					</div>
+					<div fxLayoutGap="5px"  fxLayout="row" fxLayout.sm="column" fxLayoutAlign="center center" >
+					
+					
+						 <mat-form-field class="full-width" fxFlex>
 							  <input #Density type="text" matInput placeholder="Density (g/ml)" [(ngModel)] ='material.density' name="density"   [disabled]="!creatingMaterial">
 							  <mat-hint> Optional </mat-hint>
 						 </mat-form-field> 
 						 
-						 <mat-form-field class="full-width">
-							  <input #Density type="text" matInput placeholder="Formula Wight" [(ngModel)] ='material.formula_weight' name="formula_weight"   [disabled]="!creatingMaterial">
+						 <mat-form-field class="full-width" fxFlex>
+							  <input #FormulaWeight type="text" matInput placeholder="Formula Wight" [(ngModel)] ='material.formula_weight' name="formula_weight"   [disabled]="!creatingMaterial">
 							  <mat-hint> Optional </mat-hint>
 						 </mat-form-field> 
 					
-						 <app-select2-material-supplier
+					
+					<app-select2-material-supplier
 							*ngIf="creatingMaterial"
 							(selectedValue)="selectSupplier($event)"
 						></app-select2-material-supplier>
-					</div>
-				
 					
-				
+					</div>
 			</div>
 	
 	</form>
