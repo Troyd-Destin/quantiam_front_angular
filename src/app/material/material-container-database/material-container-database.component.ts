@@ -40,6 +40,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
       serverSide: true,
       processing: true,
       searchDelay: 500,
+	  "order": [[ 1, "desc" ]]
       ajax:(dataTablesParameters: any, callback) => {
 	  
 		console.log(dataTablesParameters);
@@ -76,7 +77,8 @@ export class MaterialContainerDatabaseComponent implements OnInit {
              {
               data: 'container_id',
               title: 'ID',
-              orderable:true,
+              orderable:false,
+			   searchable: true,
               "width": "25px",
              },
 			 

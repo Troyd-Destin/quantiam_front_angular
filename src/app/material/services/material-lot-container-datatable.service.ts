@@ -42,14 +42,16 @@ export class MaterialLotContainerDatatableService {
       
 			
           let defaultRequest = false;
-          if(params.draw == 1) 
-		  { 
-				defaultRequest = true;  //identify if it is teh default request
+         // if(params.draw == 1) 
+		 // { 
+				//defaultRequest = true;  //identify if it is teh default request
 				params.order = [];
-				params.order.push({'column':1,'dir':'desc'});				
+				params.order.push({'column':1,'dir':'desc'});
+							
 				params.columns = []; 
 				params.columns[1] = {'data':'container_id','name':''};		
-		  }
+		//  }
+
 		  
 		  console.log(params);
           //params.active = 1;
