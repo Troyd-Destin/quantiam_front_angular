@@ -56,7 +56,7 @@ export class MaterialCreationDialogComponent implements OnInit {
 	  {id:13,text:"Manufacturing / Silicate / Hydrate / Sulfates"},
 	  {id:14,text:"Powder Room Shelf"},
 	  {id:15,text:"Other"},
-	  
+	  {id:16,text:"Zone 1 R&D Chemical Storage"}
 	  
 	  ];
 	  
