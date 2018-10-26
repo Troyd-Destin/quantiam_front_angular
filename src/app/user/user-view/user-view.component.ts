@@ -29,6 +29,8 @@ export class UserViewComponent implements OnInit {
   selectedTable: string = 'supervisors';
   permissionTableSource: any;
   rfidTableSource: any;
+  renderUser: boolean = false;
+  authedUser: any;
 
   constructor(
   private fb: FormBuilder,
@@ -38,36 +40,67 @@ export class UserViewComponent implements OnInit {
 
   ngOnInit() {
   
-    this.id  = this.route.snapshot.params.id;  //obtain ID from route 
-	console.log(this.id);
-     this.userService.getUser(this.id); 
 
-    this.user$ = this.userService.user$.subscribe(r=> { 
+    this.route.params.subscribe(params => {
+
+    this.id  = params.id;  //obtain ID from route 
+	  console.log(this.id);
+    
+    
+     // get user data and store in user Variable
+     this.userService.getAuthedUser().subscribe(res=>{
+        
+  
+          this.authedUser = res;
+
+          if( this.userService.hasPermission(27) || res.id == this.id ) //view yourself or if you have permission to view othres.
+          {
+            this.renderUser = true;
+            this.userService.getUser(this.id); 
+            this.user$ = this.userService.user$.subscribe(r=> { 
+              
+              this.user = r;
+              
+              this.permissionTableSource = new MatTableDataSource<any>(r.permissions);
+              this.permissionTableSource.paginator = this.paginator;
+              this.permissionTableSource.sort = this.sort;   
+              
+              this.rfidTableSource = new MatTableDataSource<any>(r.rfid);
+            //  this.rfidTableSource = this.paginator;
+            })
+
+          }
+
+    
+        });
       
-      this.user = r;
       
-      this.permissionTableSource = new MatTableDataSource<any>(r.permissions);
-      this.permissionTableSource.paginator = this.paginator;
-      this.permissionTableSource.sort = this.sort;
-      
-      
-      this.rfidTableSource = new MatTableDataSource<any>(r.rfid);
-    //  this.rfidTableSource = this.paginator;
-    })
-      
-      
-      
+      });
    
   }
+
+
   
-  
-  updateUser (){
-  
-    
+  updateUser (obj){
+        
+      console.log(obj);
+       this.userService.update(this.user.id,this.user).subscribe((r)=>{
+
+
+      }) 
   
   
   }
   
+  deleteMachine(obj)
+  {
+    if(confirm("Are you sure to delete this permission?")) {
+
+      //deletes machine association
+
+
+    }
+  }
   
   deletePermission(obj)
   {
@@ -75,6 +108,7 @@ export class UserViewComponent implements OnInit {
     let index = this.permissionTableSource.data.findIndex(x=> x.permission_id === obj.permission_id);
     
     //updated DB
+    if(confirm("Are you sure to delete this permission?")) {
      this.userService.deletePermission(this.user.permissions[index].permissions_employees_id).subscribe((x)=>{
       
       //Fix Table
@@ -82,6 +116,7 @@ export class UserViewComponent implements OnInit {
       this.permissionTableSource.paginator = this.paginator;
       
       }); 
+    }
   }
   
   
@@ -89,6 +124,7 @@ export class UserViewComponent implements OnInit {
   deleteRfid(index)
   {
    // console.log(index);
+   if(confirm("Are you sure to delete this card?")) {
     this.userService.deleteRfid(this.user.rfid[index].id).subscribe((x)=>{
       
       this.rfidTableSource.data.splice(index,1);
@@ -97,6 +133,8 @@ export class UserViewComponent implements OnInit {
       console.log(this.rfidTableSource);
       
       });
+
+    }
   }
   
   ngOnDestroy()

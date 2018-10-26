@@ -91,7 +91,24 @@ export class UserService  {
 	  
  }
   
-  
+ public update(id,obj)
+ {
+
+   return this.http.put<any>(environment.apiUrl+`${this.endpoint}/${id}`,obj).pipe(
+     tap( r => {
+       
+       }), 
+     map( res => {
+     
+     
+        this.notification.success('Updated','We updated the user for you.',{showProgressBar:false,timeOut:3000,clickToClose: true});
+       
+       return res; 
+       
+     })
+   );
+   
+ }
 
   
   public getAuthedUser() {

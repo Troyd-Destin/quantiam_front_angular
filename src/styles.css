@@ -5,6 +5,22 @@
 
 /* Style Overwrites  */
 
+/* Angular Fixes */
+
+[hidden] {
+	display: none !important;
+  }
+
+  .mat-expansion-panel{
+
+		box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+	}
+
+	.mat-select-panel
+	{
+		background-color: white;
+
+	}
 
 
 /**  STYLE 4 */
@@ -54,7 +70,13 @@
     padding: 0 12px !important;
     min-width: 100px !important;
 	font-size: 13px !important;
-   		
+/* 	border-radius: 25px;	 */
+}
+
+.rounded-nav-borders a{
+
+	border-radius: 25px;
+
 }
 
 .mat-tab-link-active
@@ -247,6 +269,7 @@
 .quantiam-mat-card {
 	
 	padding: 0px !important;
+	box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
 }
 
 .quantiam-mat-card mat-card-content{
@@ -366,3 +389,5 @@
     padding-left: inherit !important; 
 	
 }
+
+

@@ -144,10 +144,10 @@ export class XpsViewComponent implements OnInit {
               newSeries.name = 'Element: '+analysisObject.element+' || '+filename;
               newSeries.turboThreshold = 5000;
           
-             this.chart.removeSerie(0);
-             this.chart.addSerie(newSeries);
+             this.chart.removeSeries(0);
+             this.chart.addSeries(newSeries);
              
-          
+             
       }
       );
     
@@ -200,7 +200,7 @@ export class XpsViewComponent implements OnInit {
   {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    params.api.sizeColumnsToFit();
+    setTimeout(()=>{  this.gridApi.sizeColumnsToFit();},400);
    //this.autoSizeAll();
     
   }

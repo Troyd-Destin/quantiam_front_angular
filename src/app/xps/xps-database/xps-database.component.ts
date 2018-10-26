@@ -88,7 +88,7 @@ export class XpsDatabaseComponent implements OnInit {
     this._xrdRuns =  this.http.get<any>('http://api.edm.quantiam.com/xps/runs',{params: { }}).subscribe((r)=>{
              
                 this.rowData = r;
-               //setTimeout(()=>{  this.autoSizeAll();},400);
+                setTimeout(()=>{  this.gridApi.sizeColumnsToFit();},400);
              });
              
     

@@ -164,7 +164,7 @@ export class SampleDatabaseComponent implements OnInit {
 
   ngOnInit() {
     
-	this.sampleService.getDatabase({});
+	  this.sampleService.getDatabase({});
     
 
   }

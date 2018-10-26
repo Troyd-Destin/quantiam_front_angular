@@ -73,22 +73,25 @@
 		
 		<ag-grid-angular  
 			*ngIf="xpsRun.analyses[0]"
-			style="width: calc(100%); height:150px; margin-top:25px;" 
-			class="ag-theme-balham"
+			style="width: calc(100%); height:200px; margin-top:25px;" 
+			class="ag-theme-material"
+			[showToolPanel]="false"
+			[toolPanelSuppressSideButtons] = "true"
 			[rowData]="rowData" 
 			[columnDefs]="columnDefs"
-			[enableSorting]="true"
-			[enableFilter]="true"	
+			[enableSorting]="false"
+			[enableFilter]="false"	
 			(gridReady)="onGridReady($event)"
 			(rowDoubleClicked)="onRowDoubleClicked($event)"
 			[enableColResize]="true"
 			[pagination]="false"
 			[paginationPageSize]="paginationPageSize"
+			[enableRangeSelection]="true"
 			>
 		</ag-grid-angular>
 		
 		
-		 <div *ngIf="xpsRun.analyses[0]" fxFlex="100" style="width:100%" [chart]="chart"></div>
+		 <div *ngIf="xpsRun.analyses[0]" fxFlex style="width:90%" [chart]="chart"></div>
 		
 		<!-- 
 		<mat-card class="quantiam-mat-card" fxFlex fxFlex.xl="40" fxLayout="column" >
