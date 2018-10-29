@@ -91,7 +91,14 @@ export class XpsDatabaseComponent implements OnInit {
                 setTimeout(()=>{  this.gridApi.sizeColumnsToFit();},400);
              });
              
-    
+/* 
+             this.sampleService.sampleDatabase$.subscribe((r)=>{
+		
+              this.rowData = r;
+              
+              
+              })
+     */
       //params.api.sizeColumnsToFit();
     
   }

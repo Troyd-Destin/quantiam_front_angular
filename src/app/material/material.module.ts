@@ -7,8 +7,8 @@ import { MaterialLotContainerDatatableService } from './services/material-lot-co
 import { FormsModule } from '@angular/forms';
 import { WebsocketService } from '../services/websocket/websocket.service'; 
 
+import { AgGridModule } from 'ag-grid-angular';
 import { Select2Module } from 'ng2-select2';
-
 import { DataTablesModule } from 'angular-datatables';
 
 import { SharedModule } from '../shared/shared.module';
@@ -28,11 +28,12 @@ import { MaterialContainerDatabaseComponent } from './material-container-databas
   imports: [
     CommonModule,
     FormsModule,
-	SharedModule,
-	MaterialDesignModule,
+  	SharedModule,
+  	MaterialDesignModule,
     MaterialRoutingModule,
-	DataTablesModule,	  
-	Select2Module,
+  	DataTablesModule,	  
+    Select2Module,
+    AgGridModule.withComponents([]),
   ],
   declarations: [MaterialCreationDialogComponent, MaterialIndexComponent, MaterialDatabaseComponent, MaterialViewComponent, 
 	  MaterialComponent, MaterialContainerViewComponent, MaterialContainerDatabaseComponent],
@@ -40,4 +41,3 @@ import { MaterialContainerDatabaseComponent } from './material-container-databas
   schemas:[NO_ERRORS_SCHEMA]
 })
 export class MaterialModule { }
-//

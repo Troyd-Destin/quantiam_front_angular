@@ -71,7 +71,7 @@ export class UserDatabaseComponent implements OnInit {
            this.http.get<any>('http://api.edm.quantiam.com/users',obj).subscribe((r)=>{
              
                 this.rowData = r;
-               //setTimeout(()=>{  this.gridApi.sizeColumnsToFit();},400);
+                  setTimeout(()=>{  this.gridApi.sizeColumnsToFit();},600);
              });
              
     

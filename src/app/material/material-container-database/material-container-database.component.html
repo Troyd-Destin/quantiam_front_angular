@@ -1,3 +1,46 @@
 <!-- <button mat-button (click)="refreshTable()"> Test </button> -->
 
-<table datatable [dtOptions]="dtOptions" class="row-border hover table-stats table-condensed table-striped table-clickable"></table>
+<!-- <table datatable [dtOptions]="dtOptions" class="row-border hover table-stats table-condensed table-striped table-clickable"></table> -->
+
+<div fxLayout="column" fxLayoutAlign="center center" fxFlex fxFlex.gt-lg="100">
+
+   
+<div fxLayout="row" fxLayoutAlign="center center">
+    <mat-form-field style="width:400px">
+      <!--   <span matPrefix>+1 &nbsp;</span> -->
+        <input type="text" matInput (keyup)="onFilterChanged()"  [(ngModel)]="searchBarValue"  placeholder="Search">
+        <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+</div>
+
+
+<ag-grid-angular 
+
+	[toolPanelSuppressSideButtons] = "true"
+  
+	
+	#agGrid	
+	style="width: calc(100%); height:calc(78vh); margin-top:10px;" 
+    class="ag-theme-material"
+	[showToolPanel]="false"
+    [rowData]="rowData" 
+	[toolPanelSuppressSideButtons] = "true"
+    [columnDefs]="columnDefs"
+	[defaultColDef]="defaultColDef"
+	[enableSorting]="true"
+    [enableFilter]="true"	
+    (gridReady)="onGridReady($event)"
+    (rowDoubleClicked)="onRowDoubleClicked($event)"
+	(cellDoubleClicked)="onCellDoubleClicked($event)"
+	(cellEditingStopped)="onCellEditingStopped($event)"
+	(cellEditingStarted)="onCellEditingStarted($event)"
+	[enableColResize]="true"
+	[enableRangeSelection]="true"
+	[pagination]="false"
+	
+    
+    >
+</ag-grid-angular>
+
+
+</div>
