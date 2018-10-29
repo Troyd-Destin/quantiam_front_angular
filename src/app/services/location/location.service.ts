@@ -1,9 +1,8 @@
 import { environment } from '../../../environments/environment';
 import { Injectable } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap, delay,shareReplay, publishReplay,refCount } from 'rxjs/operators';
-import { Observable,of, BehaviorSubject,throwError } from 'rxjs'
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { Observable,BehaviorSubject } from 'rxjs'
 import { NotificationsService } from 'angular2-notifications';
 
 @Injectable({
@@ -11,18 +10,36 @@ import { NotificationsService } from 'angular2-notifications';
 })
 export class LocationService {
 
-  public _Source = new BehaviorSubject({});
-  public obj$: Observable<any> = this._Source.asObservable();
+  public _ListSource = new BehaviorSubject({});
+  public list$: Observable<any> = this._ListSource.asObservable();
   
-  private last_id: number;  
   private endpoint = '/location';
+  private listFetched = false;
 
   constructor(public http: HttpClient, public notification: NotificationsService) { }
   
-  getList(params, id = null)
+  getList(params = {}, forceFetch = false)
   {
-    
-  
+  //  console.log('test');
+    if(!this.listFetched || forceFetch)
+		{
+			
+			this.listFetched = true;
+		  
+		   return  this.http.get<any>(environment.apiUrl+`${this.endpoint}/list?filterSpinner&creator=true`,params)
+			   .pipe( 
+					map( res => {  
+             
+					  return res; 			
+					})
+				)
+			  .subscribe(
+			  	(r:any) => {
+					this._ListSource.next(r); //broadcast the material to all subscribers 					
+				}
+			  );
+	  
+		}    
   
   }
   

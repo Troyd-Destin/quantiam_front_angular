@@ -3,6 +3,7 @@ import { MaterialLotContainerService } from '../../services/material-lot-contain
 import { MaterialLotService } from '../../services/material-lot/material-lot.service';
 import { MaterialService } from '../../services/material/material.service';
 import { MaterialSupplierService } from '../../services/material-supplier/material-supplier.service';
+import { LocationService } from '../../services/location/location.service';
 import * as moment from 'moment';
 import { ActivatedRoute } from '@angular/router';
 
@@ -24,31 +25,15 @@ export class MaterialContainerViewComponent implements OnInit {
   fetched = false;
   
   
-  locationList = [
-	  
-	  {id:2,text:"Acids Cabinet (Research)"},
-	  {id:3,text:"Buto/Etho Oxides"},
-	  {id:4,text:"Explosives Cabinet (Research) "},
-	  {id:5,text:"Fridge(Research)"},
-	  {id:6,text:"General Compounds"},
-	  {id:7,text:"Metals"},
-	  {id:8,text:"Oxidizing Compounds"},
-	  {id:9,text:"South Wall Shelves"},
-	  {id:10,text:"Manufacturing"},
-	  {id:11,text:"Manufacturing / Oxide"},
-	  {id:12,text:"Manufacturing / Carbide"},
-	  {id:13,text:"Manufacturing / Silicate / Hydrate / Sulfates"},
-	  {id:14,text:"Powder Room Shelf"},
-	  {id:15,text:"Other"},
-	  {id:16,text:"Zone 1 R&D Chemical Storage"}
-	  ];
+  locationList:any;
 
   constructor(
 	private materialLotCotainerService: MaterialLotContainerService,
 	private materialService: MaterialService, 
 	private materialLotService: MaterialLotService, 
 	private materialSupplierService: MaterialSupplierService, 
-	private route: ActivatedRoute 
+	private route: ActivatedRoute,
+	private locationService: LocationService, 
 	
 	) { }
 
@@ -77,7 +62,7 @@ export class MaterialContainerViewComponent implements OnInit {
 	  
       this._container = this.materialLotCotainerService.materialLotContainer$.subscribe(res=> { //subscribe to the material service for updates
      
-	 console.log(res);
+		 console.log(res);
 		this.fetched = true;
         if(typeof res !== 'undefined') {
 			this.container = res;
@@ -103,13 +88,35 @@ export class MaterialContainerViewComponent implements OnInit {
 		this.container = {};
 	  
 	  });
-  }
+	
+	
+		this.locationService.getList();
+		this.fetchLocationList();
+	
+	}
   
   ngOnDestroy()
   {
     this._container.unsubscribe(); 
   }
-  
+	
+	fetchLocationList()
+	{
+		this.locationService.list$.subscribe((r)=>{
+
+			console.log(this.locationList);
+		
+				
+				this.locationList = r;
+			
+		
+			
+
+		});
+
+		
+	}
+
   updateContainerField(field,specific_field){
 		
         var params = {};

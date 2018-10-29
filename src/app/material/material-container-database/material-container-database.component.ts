@@ -35,6 +35,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
   this.columnDefs = [{
         field: "container_id",
         width: 100,
+        hide:true, 
         headerName: 'ID',        
       },
       {
@@ -92,7 +93,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
       cellStyle: function (params) {
         return {
-          cursor: 'pointer';
+          cursor: 'pointer',
         }
       },
 
