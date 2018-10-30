@@ -188,6 +188,11 @@
 						   <mat-hint>Optional: eg. 2018-xxxxx</mat-hint>
 					 </mat-form-field>  
 					
+					 <mat-form-field  fxFlex>
+							<input #ContainerReceived matInput [matDatepicker]="myDatepicker2" placeholder="Date Received" [(ngModel)] ='container.container_received' >
+							<mat-datepicker-toggle matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
+							<mat-datepicker #myDatepicker2></mat-datepicker>
+					</mat-form-field>
 					
 		   </div>
 					   

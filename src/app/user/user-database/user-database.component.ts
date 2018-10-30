@@ -29,8 +29,8 @@ export class UserDatabaseComponent implements OnInit {
   
    private columnDefs = [
         {headerName: 'ID', sort:'desc', field: 'employeeid', suppressMenu: true,
-        headerTooltip:"Employee #",cellStyle: function(params) { return {cursor:'pointer'}}, filter:'agTextColumnFilter', maxWidth:60, pinned:true},
-        {headerName: 'Firstname', field: 'firstname', cellStyle: function(params) { return {cursor:'pointer'}}, maxWidth:130, pinned:true},
+        headerTooltip:"Employee #",cellStyle: function(params) { return {cursor:'pointer'}}, filter:'agTextColumnFilter', maxWidth:60, },
+        {headerName: 'Firstname', field: 'firstname', cellStyle: function(params) { return {cursor:'pointer'}}, maxWidth:130, },
         {headerName: 'Lastname', field: 'lastname',cellStyle: function(params) { return {cursor:'pointer'}}, },
         {headerName: 'Email', field: 'email', cellStyle: function(params) { return {cursor:'pointer'}}, },
         {headerName: 'Username', field: 'ldap_username', hide:true, cellStyle: function(params) { return {cursor:'pointer'}},},

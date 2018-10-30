@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { AgGridModule } from 'ag-grid-angular';
+import { MaterialDesignModule } from '../material-design/material-design.module';
 import { TimesheetRoutingModule } from './timesheet-routing.module';
 import { TimesheetIndexComponent } from './timesheet-index/timesheet-index.component';
 import { TimesheetComponent } from './timesheet/timesheet.component';
@@ -13,7 +14,9 @@ import { TimesheetRtoViewComponent } from './timesheet-rto-view/timesheet-rto-vi
 @NgModule({
   imports: [
     CommonModule,
-    TimesheetRoutingModule
+    TimesheetRoutingModule,
+    AgGridModule,    
+    MaterialDesignModule
   ],
   declarations: [TimesheetIndexComponent, TimesheetComponent, TimesheetBankComponent, TimesheetSimpleComponent, TimesheetCalendarComponent, TimesheetRtoComponent, TimesheetRtoViewComponent]
 })

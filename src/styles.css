@@ -5,6 +5,18 @@
 
 /* Style Overwrites  */
 
+
+/* Ag Grid Overwrites */
+
+.ag-theme-material .ag-header-cell, .ag-theme-material .ag-header-group-cell{
+
+padding-left:12px;
+padding-right:12px;
+
+}
+
+
+
 /* Angular Fixes */
 
 [hidden] {

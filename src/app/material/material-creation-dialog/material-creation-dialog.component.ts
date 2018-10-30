@@ -6,6 +6,8 @@ import { MaterialLotContainerService } from '../../services/material-lot-contain
 import { MaterialLotService } from '../../services/material-lot/material-lot.service';
 import { MaterialService } from '../../services/material/material.service';
 import { MaterialLotContainerDatatableService } from '../services/material-lot-container-datatable.service';
+
+import { LocationService } from '../../services/location/location.service';
 import { WebsocketService } from '../../services/websocket/websocket.service'; 
 import { Router } from '@angular/router';
 
@@ -40,25 +42,7 @@ export class MaterialCreationDialogComponent implements OnInit {
    
    
    //Temporary until we link to DB
-   locationList = [
-	  
-	  {id:2,text:"Acids Cabinet (Research)"},
-	  {id:3,text:"Buto/Etho Oxides"},
-	  {id:4,text:"Explosives Cabinet (Research) "},
-	  {id:5,text:"Fridge(Research)"},
-	  {id:6,text:"General Compounds"},
-	  {id:7,text:"Metals"},
-	  {id:8,text:"Oxidizing Compounds"},
-	  {id:9,text:"South Wall Shelves"},
-	  {id:10,text:"Manufacturing"},
-	  {id:11,text:"Manufacturing / Oxide"},
-	  {id:12,text:"Manufacturing / Carbide"},
-	  {id:13,text:"Manufacturing / Silicate / Hydrate / Sulfates"},
-	  {id:14,text:"Powder Room Shelf"},
-	  {id:15,text:"Other"},
-	  {id:16,text:"Zone 1 R&D Chemical Storage"}
-	  
-	  ];
+   locationList :any;
 	  
 	// @Output() refreshContainerTable = new EventEmitter();
    
@@ -72,7 +56,8 @@ export class MaterialCreationDialogComponent implements OnInit {
 		private materialLotService: MaterialLotService, 
 		private websocket: WebsocketService,
 		public router: Router,
-		private materialLotContainerDatatable: MaterialLotContainerDatatableService,
+		private materialLotContainerDatatable: MaterialLotContainerDatatableService,		
+		private locationService: LocationService, 
 		
 		) {  }
 
@@ -109,9 +94,20 @@ export class MaterialCreationDialogComponent implements OnInit {
 				}
 			
 		 });
+
+		 this.locationService.getList();
+		 this.fetchLocationList();
 		 
-    }
+	}
 	
+	fetchLocationList()
+	{
+		this.locationService.list$.subscribe((r)=>{
+			
+				this.locationList = r;	
+		});
+		
+	}
 	
 	
 	
@@ -327,7 +323,7 @@ export class MaterialCreationDialogComponent implements OnInit {
 	  ngOnDestroy()
 		  {
 			
-		   this.materialLotContainerDatatable.getMaterialLotContainerDatatable({draw:1,length:20, start:0},true);
+		 //  this.materialLotContainerDatatable.getMaterialLotContainerDatatable({draw:1,length:20, start:0},true);
 			this.websocket.redirectOnScan = true;
 			this._ws.unsubscribe();	
 			this._wsk.unsubscribe();	

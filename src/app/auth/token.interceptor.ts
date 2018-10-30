@@ -1,6 +1,8 @@
 // src/app/auth/token.interceptor.ts
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
+import {catchError} from "rxjs/internal/operators";
 
 
 import {
@@ -16,7 +18,7 @@ import { Observable, of } from 'rxjs';
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
   
-  constructor(public auth: AuthService) {}
+  constructor(public auth: AuthService,private router: Router) {}
   
   
   
@@ -35,8 +37,26 @@ export class TokenInterceptor implements HttpInterceptor {
       });
     }
     
-    return next.handle(request);
+    return next.handle(request).pipe(catchError((error, caught) => {
+      //intercept the respons error and displace it to the console
+      console.log(error);
+      this.handleAuthError(error);
+      return of(error);
+    }) as any);
   
   
+  }
+
+
+  private handleAuthError(err: HttpErrorResponse): Observable<any> {
+    //handle your auth error or rethrow
+    if (err.status === 401) {
+      //navigate /delete cookies or whatever
+      console.log('handled error ' + err.status);
+      this.router.navigate(['/auth']);
+      // if you've caught / handled the error, you don't want to rethrow it unless you also want downstream consumers to have to handle it as well.
+      return of(err.message);
+    }
+    throw err;
   }
 }
