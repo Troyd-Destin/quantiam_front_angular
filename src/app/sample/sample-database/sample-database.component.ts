@@ -184,12 +184,17 @@ export class SampleDatabaseComponent implements OnInit {
       params[event.column.colId] = event.value;
       this.sampleService.update(event.data.id, params).subscribe((r) => {
 
-
-
-
       });
     }
   }
+
+
+  makeCellsEditable(){
+
+
+    
+  }
+
   onAddRow() {
 
     this.sampleService.create({}).subscribe((r) => {
