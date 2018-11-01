@@ -70,6 +70,9 @@ export class MaterialContainerDatabaseComponent implements OnInit {
       {
         field:"supplier"
       },
+      {
+        field:"lot_name"
+      },
     
       {
         width: 100,
@@ -84,9 +87,19 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         field:"cas",
       },
       {
-        width: 100,
+        width: 120,
         field:"purchase_order",
         headerName:"PO #",
+      },
+      {
+        width: 150,
+        field:"container_name",
+        headerName:"Container Name",
+      },
+      {
+        width: 80,
+        field:"container_number",
+        headerName:"#",
       },
       {
         width: 150,
@@ -111,7 +124,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         field:"active",
         width:80,
         headerName:"Active",
-        cellRenderer: function(){ return '<button mat-button> Test </button>';},
+      //  cellRenderer: function(){ return '<button mat-button> Test </button>';},
        
 
       },
