@@ -40,7 +40,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
   private navigateMode = true;
   private editMode = true;
-  private editableContainerCellFields = ['location','purchase_order','qcid'];
+  private editableContainerCellFields = ['location','purchase_order','qcid','container_name','container_number'];
   
 
   constructor(private http: HttpClient, public router: Router, public containerAggridService: ContainerAggridService,	private locationService: LocationService, private materialLotContainerService: MaterialLotContainerService ) {
@@ -49,7 +49,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
   this.columnDefs = [{
         field: "container_id",
-        width: 80,
+        width: 100,
         hide:true, 
         headerName: 'ID',    
          
@@ -286,7 +286,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         console.log(this.locationList);
 
         this.gridApi.setColumnDefs(this.columnDefs);
-      
+        this.gridApi.sizeColumnsToFit();
     }
 
   onRowDoubleClicked(event)
