@@ -24,6 +24,10 @@ const routes: Routes = [
 				path: 'xps',
 				loadChildren: '../xps/xps.module#XpsModule',
 			},
+			{
+				path: 'tools',
+				loadChildren: '../tools/tools.module#ToolsModule',
+			},
 		]
 	},
  

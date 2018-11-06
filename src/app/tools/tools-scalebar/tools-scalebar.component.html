@@ -1,0 +1,49 @@
+<div fxLayout="column" fxLayoutAlign="center center" fxFlex-gt-lg="50" fxFlex>
+
+  <!-- <p> This tool will stamp mag appropriate scalebars onto your Axio images for you. </p> -->
+
+ 
+  <mat-list >
+    <mat-list-item> <h3> Instructions </h3>  </mat-list-item>
+    <mat-list-item >
+      <p mat-line>Make sure your file name contains the magnification of your image.</p>
+      <p mat-line>Valid Mags: 50x, 100x, 200x, 500x, 1000x</p>
+      <mat-icon mat-list-icon>list</mat-icon>
+    </mat-list-item>
+    <mat-list-item >
+        <img mat-line src="assets/img/examples/scale-bar-tools-mag.PNG" width=500px>
+        <mat-icon mat-list-icon>image</mat-icon>
+    </mat-list-item>
+    <mat-list-item >
+        <p mat-line>Copy and paste the Q: folder directory you wish to process into the input box below.  </p>
+        <p mat-line>This will also process all sub folders.  </p>
+        <mat-icon mat-list-icon>list</mat-icon>
+    </mat-list-item>
+    <mat-list-item style="margin-top:30px;" >
+        <!-- <mat-icon mat-list-icon>folder</mat-icon> -->
+      <mat-form-field appearance="outline" style="width:100%;">
+        <mat-label>Folder Location</mat-label>
+      <input [(ngModel)]="toolOptions.path" matInput name="folder_directory" placeholder="Q:\somedirectory\with\pictures\that\you\want\to\add\scalebars\to"  required minlength="5">
+      <mat-icon matSuffix>folder</mat-icon>
+      <!-- <mat-hint> Q:\somedirectory </mat-hint> -->
+      </mat-form-field>
+    </mat-list-item>
+     
+    <mat-list-item >
+  
+        
+        <button  mat-raised-button color="primary" (click)="processDirectory()" [disabled]="toolOptions.path.length < 7 || enableLoadingGraphic"> Process </button>
+        <mat-spinner [diameter]="30" style="margin-left:20px;" *ngIf="enableLoadingGraphic" mode="indeterminate"></mat-spinner>
+    </mat-list-item>
+
+  
+
+  </mat-list>
+  
+  <div *ngIf="processResponse.length > 0">
+    <h3>Processed Images </h3>
+    <ol>
+      <li *ngFor="let image of processResponse"> {{image}}</li>
+    </ol> 
+  </div>
+</div>

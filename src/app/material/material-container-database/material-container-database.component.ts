@@ -71,7 +71,8 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         field:"supplier"
       },
       {
-        field:"lot_name"
+        field:"lot_name",
+        headerName:"Lot",
       },
     
       {
