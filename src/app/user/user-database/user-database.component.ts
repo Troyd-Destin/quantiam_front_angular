@@ -17,31 +17,40 @@ export class UserDatabaseComponent implements OnInit {
   private paginationPageSize = 25;
   private searchBarValue: string;
   
-  constructor(private http: HttpClient, private router: Router) { }
-
-  ngOnInit() {
-        
-         
-    
-  }
-
+ 
   
   
    private columnDefs = [
-        {headerName: 'ID', sort:'desc', field: 'employeeid', suppressMenu: true,
-        headerTooltip:"Employee #",cellStyle: function(params) { return {cursor:'pointer'}}, filter:'agTextColumnFilter', maxWidth:60, },
-        {headerName: 'Firstname', field: 'firstname', cellStyle: function(params) { return {cursor:'pointer'}}, maxWidth:130, },
-        {headerName: 'Lastname', field: 'lastname',cellStyle: function(params) { return {cursor:'pointer'}}, },
-        {headerName: 'Email', field: 'email', cellStyle: function(params) { return {cursor:'pointer'}}, },
-        {headerName: 'Username', field: 'ldap_username', hide:true, cellStyle: function(params) { return {cursor:'pointer'}},},
-        {headerName: 'Title', field: 'title', cellStyle: function(params) { return {cursor:'pointer'}},},
-        {headerName: 'Compensation', field: 'compensation', cellStyle: function(params) { return {cursor:'pointer'}},},
-        {headerName: 'Supervisor',field: 'employeeid',  valueGetter: function aPlusBValueGetter(params) {
+        {headerName: '#', sort:'desc', field: 'employeeid', suppressMenu: true,
+        headerTooltip:"#",  filter:'agTextColumnFilter', maxWidth:120, },
+        {headerName: 'Firstname', field: 'firstname',   maxWidth:130, },
+        {headerName: 'Lastname', field: 'lastname', maxWidth:130, },
+        {headerName: 'Email', field: 'email',   },
+        {headerName: 'Username', field: 'ldap_username', hide:true,  },
+        {headerName: 'Title', field: 'title',  },
+        {headerName: 'Compensation', field: 'compensation', maxWidth:130, },
+        {headerName: 'Supervisor',field: 'employeeid', maxWidth:130, valueGetter: function aPlusBValueGetter(params) {
             return params.data.supervisor.name;
-        }, cellStyle: function(params) { return {cursor:'pointer'}},},
-        {headerName: 'Start Date', field: 'startdate', cellStyle: function(params) { return {cursor:'pointer'}},},
-        {headerName: 'Leave Date', field: 'leavedate', cellStyle: function(params) { return {cursor:'pointer'}},},
+        },  },
+        {headerName: 'Start Date', field: 'startdate',  },
+        {headerName: 'Leave Date', field: 'leavedate',  },
     ];
+
+    private defaultColDef = { 
+      
+     // maxWidth:120,
+      cellStyle: function (params) {
+        return {
+          cursor: 'pointer',
+        }
+      },
+
+    };
+
+    constructor(private http: HttpClient, private router: Router) { }
+
+    ngOnInit() {  }
+  
     
   onPageSizeChanged(newPageSize) {
     var value = (<HTMLInputElement>document.getElementById("page-size")).value;

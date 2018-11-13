@@ -48,7 +48,7 @@ export class ToolsScalebarComponent implements OnInit {
       .subscribe(
         (r:any) => {
                   this.enableLoadingGraphic = false;
-                  this.notification.success('Success','',{showProgressBar:false,timeOut:3000,clickToClose: true});
+                  this.notification.success('Success','We processed '+r.length+' images.',{showProgressBar:false,timeOut:4000,clickToClose: true});
                   this.processResponse = r;
       }
       );

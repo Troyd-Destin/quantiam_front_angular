@@ -22,10 +22,10 @@ export class SampleService {
   
     private last_params: string;  
     private lastDbParams: any;  
-	private alreadyLoadedDb:boolean = false;
+	  private alreadyLoadedDb:boolean = false;
     private last_id: string;
     private endpoint = '/sample';
-	private modelName = 'Sample';
+  	private modelName = 'Sample';
 
   constructor(
   public http: HttpClient, 

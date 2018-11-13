@@ -68,11 +68,13 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         field:"grade"
       },
       {
+        width: 130,
         field:"supplier"
       },
       {
         field:"lot_name",
         headerName:"Lot",
+        width: 110,
       },
     
       {
@@ -80,11 +82,11 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         field:"size"
       },
       {
-        width: 100,
+        width: 110,
         field:"catalog"
       },
       {
-        width: 100,
+        width: 110,
         field:"cas",
       },
       {
