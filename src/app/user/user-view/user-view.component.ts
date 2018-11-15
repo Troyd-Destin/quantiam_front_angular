@@ -36,7 +36,11 @@ export class UserViewComponent implements OnInit {
   private fb: FormBuilder,
   private userService: UserService,
   private route: ActivatedRoute,
- ) { }
+ ) { 
+
+  this.renderUser = false;
+
+ }
 
   ngOnInit() {
   
@@ -80,7 +84,11 @@ export class UserViewComponent implements OnInit {
   }
 
 
-  
+  changedSupervisor()
+  {
+    confirm('are you sure?');
+
+  }
   updateUser (obj){
         
       console.log(obj);

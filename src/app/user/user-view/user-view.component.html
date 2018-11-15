@@ -1,9 +1,9 @@
-<div  [hidden]="renderUser" fxLayout="row" fxLayoutAlign="center center">
+<div  *ngIf="!renderUser" fxLayout="row" fxLayoutAlign="center center">
 	<h3> You do not have permission to view this user </h3>
 </div>
 
 
-<div [hidden]="!renderUser" fxLayout="row" fxLayoutAlign="center center" fxFlex fxFlex.gt-lg="100">
+<div *ngIf="renderUser" fxLayout="row" fxLayoutAlign="center center" fxFlex fxFlex.gt-lg="100">
 	<div  fxLayout="column"  fxLayoutAlign="center stretch" fxLayoutGap="10px" fxFlex fxFlex.gt-lg="50">
 	
 		<mat-card class="quantiam-mat-card" fxLayout="column" >
@@ -83,12 +83,13 @@
 			
 			<div fxLayoutAlign="start stretch" fxLayoutGap="10px" >
 				
-				<!--	<p *ngIf="editUser"	fxLayoutAlign="start center"> Supervisor </p>
+				<label *ngIf="editUser"	fxLayoutAlign="start center"> Supervisor </label>
 					 <app-select2-user
 						
 								*ngIf="editUser && user.employeeid"
 								fxLayoutAlign="start center"
-								[placeholder]="user.supervisors[0].name" 
+								placeholder="user.supervisors[0].name" 
+							
 								[disabled]="!editUser" 
 								(selectedValue)="changedSupervisor($event)"
 								
@@ -107,7 +108,7 @@
 								[(ngModel)] ='user.supervisors[0].name'
 								name="supervisor"
 						>
-					</mat-form-field >	 -->
+					</mat-form-field >	 
 
 					<mat-form-field   style="width:150px" >
 							<mat-select 	

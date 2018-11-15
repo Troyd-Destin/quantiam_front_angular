@@ -20,6 +20,7 @@ list$:any;
   @Input() multiple:any = false; // multi version
   @Input() selectableGroup:any = false; // multi version
  
+  //Outputs
   @Output() change = new EventEmitter<any>();
  
   constructor(private projectService:ProjectService) { }

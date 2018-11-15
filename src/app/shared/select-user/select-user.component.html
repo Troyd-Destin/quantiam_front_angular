@@ -1,0 +1,32 @@
+<ng-select 
+
+>
+
+  <ng-template ng-header-tmp>
+    <div fxLayout="row" fxLayoutAlign="start center"  fxLayoutGap="10px">
+      <mat-checkbox  [(ngModel)]="showActive" (change)="showItems()" [check]="showActive"> Active </mat-checkbox>
+      <mat-checkbox  [(ngModel)]="showInactive" (change)="showItems()"> Inactive </mat-checkbox>
+    </div>
+  </ng-template>
+
+  <ng-template let-item="item" let-index="index" let-search="searchTerm" >
+			
+					
+			<div fxLayout="row" fxLayoutAlign="center center"  fxLayoutGap="10px">
+				<div fxLayout="row"  fxLayoutAlign="start center" fxFlex >
+					<div style="width:45px"> <b>{{item.id}} </b></div> 
+					<div style="font-size:13px" >{{item.firstname}}</div>
+					<div style="font-size:13px" >{{item.title}}</div>
+					
+				</div>
+				<a *ngIf="item.active" mat-button  color="primary"   > Active </a>
+				<a *ngIf="!item.active" mat-button  color="warn"   > Inactive </a>
+			</div>
+				
+			
+		
+
+	 </ng-template>
+
+
+</ng-select>

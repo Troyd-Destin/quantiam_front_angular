@@ -24,6 +24,7 @@ import { Select2MaterialLotContainerComponent } from './select2-material-lot-con
 
 import { SelectProjectComponent } from './select-project/select-project.component';
 import { SelectMaterialLotContainerComponent } from './select-material-lot-container/select-material-lot-container.component';
+import { SelectUserComponent } from './select-user/select-user.component';
 
 @NgModule({
   imports: [
@@ -37,7 +38,7 @@ import { SelectMaterialLotContainerComponent } from './select-material-lot-conta
 	   MatButtonModule,
 	    MatCheckboxModule,
   ],
-  declarations: [SelectProjectComponent,Select2MaterialComponent, Select2MaterialLotComponent, Select2LocationComponent, Select2MaterialSupplierComponent, Select2UserComponent, Select2MaterialLotContainerComponent, SelectMaterialLotContainerComponent],
+  declarations: [SelectProjectComponent,Select2MaterialComponent, Select2MaterialLotComponent, Select2LocationComponent, Select2MaterialSupplierComponent, Select2UserComponent, Select2MaterialLotContainerComponent, SelectMaterialLotContainerComponent, SelectUserComponent],
   exports:[
     Select2MaterialComponent,
     Select2MaterialLotComponent,

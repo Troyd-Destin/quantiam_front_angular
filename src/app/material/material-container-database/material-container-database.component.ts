@@ -60,37 +60,45 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         headerName:"QCID",
       },
       {
-        width: 200,
-        field:"material"
+        width: 250,
+        field:"material",
+        cellStyle: function (params) {
+        
+          return {  
+            'font-size': '12px',
+            'font-weight': 600,
+            cursor: 'pointer',
+          }
+        },
       },
       {
-        width: 200,
+        width: 150,
         field:"grade"
       },
       {
-        width: 130,
+        width: 100,
         field:"supplier"
       },
       {
         field:"lot_name",
         headerName:"Lot",
-        width: 110,
+        width: 90,
       },
     
       {
-        width: 100,
+        width: 90,
         field:"size"
       },
       {
-        width: 110,
+        width: 90,
         field:"catalog"
       },
       {
-        width: 110,
+        width: 90,
         field:"cas",
       },
       {
-        width: 120,
+        width: 90,
         field:"purchase_order",
         headerName:"PO #",
       },
@@ -105,7 +113,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         headerName:"#",
       },
       {
-        width: 150,
+        width: 120,
         field:"location",
         cellEditorParams: {
           values: this.locationList,
@@ -114,6 +122,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
       },
       
       {
+        width: 120,
         field:"container_received",
         headerName:"Received",
      //   cellEditor: "datePicker",
@@ -127,7 +136,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         field:"active",
         width:80,
         headerName:"Active",
-      //  cellRenderer: function(){ return '<button mat-button> Test </button>';},
+        //cellRenderer: function(data){ return '<button mat-button> Test </button>';},
        
 
       },
@@ -214,8 +223,13 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
     this.containerAggridService.Database$.subscribe((r) => {
       this.rowData = r;
-      setTimeout(()=>{  this.gridApi.sizeColumnsToFit();},300);
+      //setTimeout(()=>{  this.gridApi.sizeColumnsToFit();},300);
     })
+  }
+
+  sizeColumnsToFit()
+  {
+    setTimeout(()=>{  this.gridApi.sizeColumnsToFit();},300);
   }
 
   onCellEditingStarted(event) {
