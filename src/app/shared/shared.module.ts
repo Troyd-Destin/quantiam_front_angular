@@ -38,14 +38,20 @@ import { SelectUserComponent } from './select-user/select-user.component';
 	   MatButtonModule,
 	    MatCheckboxModule,
   ],
-  declarations: [SelectProjectComponent,Select2MaterialComponent, Select2MaterialLotComponent, Select2LocationComponent, Select2MaterialSupplierComponent, Select2UserComponent, Select2MaterialLotContainerComponent, SelectMaterialLotContainerComponent, SelectUserComponent],
+  declarations: [
+    SelectProjectComponent,
+    Select2MaterialComponent,
+     Select2MaterialLotComponent,
+      Select2LocationComponent,
+       Select2MaterialSupplierComponent, Select2UserComponent, Select2MaterialLotContainerComponent, SelectMaterialLotContainerComponent, SelectUserComponent],
   exports:[
     Select2MaterialComponent,
     Select2MaterialLotComponent,
 	Select2MaterialSupplierComponent,
 	Select2LocationComponent,
 	Select2UserComponent,
-	SelectProjectComponent,
+  SelectProjectComponent,
+  SelectUserComponent,
     
   ],
   schemas:[NO_ERRORS_SCHEMA]

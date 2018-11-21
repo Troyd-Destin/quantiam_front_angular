@@ -1,5 +1,11 @@
 <ng-select 
-
+	[items]="items"
+	[(ngModel)]="selectedValue"	
+	[multiple]="multiple"
+	[placeholder]="placeholder"
+	(change)="onChange($event)"
+	bindValue="id"
+	bindLabel="name_abbrev"
 >
 
   <ng-template ng-header-tmp>
@@ -7,25 +13,22 @@
       <mat-checkbox  [(ngModel)]="showActive" (change)="showItems()" [check]="showActive"> Active </mat-checkbox>
       <mat-checkbox  [(ngModel)]="showInactive" (change)="showItems()"> Inactive </mat-checkbox>
     </div>
-  </ng-template>
-
-  <ng-template let-item="item" let-index="index" let-search="searchTerm" >
-			
-					
+	</ng-template> 
+	
+  <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm" >
 			<div fxLayout="row" fxLayoutAlign="center center"  fxLayoutGap="10px">
 				<div fxLayout="row"  fxLayoutAlign="start center" fxFlex >
-					<div style="width:45px"> <b>{{item.id}} </b></div> 
-					<div style="font-size:13px" >{{item.firstname}}</div>
-					<div style="font-size:13px" >{{item.title}}</div>
+					<div style="width:45px"  [ngOptionHighlight]="search"><b>{{item.id}}</b></div> 
+					<div style="width:150px;font-size:13px; margin-right:5px;"  [ngOptionHighlight]="search" >{{item.name}}</div>
+					<div style="font-size:13px; width:200px;     display: inline; word-wrap: break-word;" >{{item.title}}</div>
 					
 				</div>
-				<a *ngIf="item.active" mat-button  color="primary"   > Active </a>
-				<a *ngIf="!item.active" mat-button  color="warn"   > Inactive </a>
-			</div>
+				<div>
+					<a *ngIf="item.active" mat-button  color="primary"   > Active </a>
+					<a *ngIf="!item.active" mat-button  color="warn"   > Inactive </a>
+				</div>
+			</div> 
 				
-			
-		
-
 	 </ng-template>
 
 

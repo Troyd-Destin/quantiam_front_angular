@@ -53,6 +53,28 @@ export class UserService  {
       );
     }
   }
+
+  changeSupervisor(userId, supervisorId)
+  {
+
+
+    var params = {
+      "employeeID": userId,
+      "newSupervisorID": supervisorId,
+     };
+
+
+    this.http.post<any>(environment.apiUrl+`${this.endpoint}/move`,params)
+    .pipe(          
+         map( res => res), // return results without transformation     
+     )
+     .subscribe(
+       (r) => {         	
+        this.notification.success('Updated','User supervisor changed.',{showProgressBar:false,timeOut:3000,clickToClose: true});
+         }
+     );
+
+  }
   
   deletePermission(id)
   {

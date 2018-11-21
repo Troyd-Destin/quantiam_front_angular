@@ -146,6 +146,12 @@ export class SampleDatabaseComponent implements OnInit {
     })
   }
 
+
+  testChange(event)
+  {
+    console.log(event);
+  }
+
   onCellDoubleClicked(event) {
     //console.log(event);
     if (event.column.colId == 'id') this.router.navigate(['/sample/' + event.data.id]);

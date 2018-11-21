@@ -12,7 +12,7 @@ import { NotificationsService } from 'angular2-notifications';
 })
 export class SelectUserService {
 
-  private endpoint = '/user';
+  private endpoint = '/users';
   private modelName = 'User';
   
   private listFetched = false;
@@ -27,17 +27,20 @@ export class SelectUserService {
  list() {
   //  console.log(id,this.last_id);
        
-       console.log('thing');
        
        if(!this.listFetched)
        {
           this.http.get<any>(environment.apiUrl+`${this.endpoint}`)
           .pipe(
              tap( r => { 
-                      
-                         
                          }), //set id to be last_id
-             map( r => r), // return results without transformation
+             map( r => {
+
+             
+              
+              return r; 
+
+             }), // return results without transformation
          catchError((err) => {
            
            this.notification.error('Error','Does not exist.',{showProgressBar:false,timeOut:3000,clickToClose: true});

@@ -8,11 +8,12 @@ import { ProjectService } from '../../services/project/project.service';
 })
 export class SelectProjectComponent implements OnInit {
 
-list$:any;
+  list$:any;
   items:any = [];
   allItems:any = [];
   showActive:boolean = true;
   showInactive:boolean = false;
+  virtualScroll:boolean = true;
  
  
   //Inputs 

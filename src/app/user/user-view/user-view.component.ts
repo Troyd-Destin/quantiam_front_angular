@@ -1,6 +1,7 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
 import { UserService } from '../../services/user/user.service';
 import { ActivatedRoute } from '@angular/router';
+import {Location} from '@angular/common';
 
 import {MatPaginator, MatTableDataSource,MatSort} from '@angular/material';
 
@@ -36,15 +37,18 @@ export class UserViewComponent implements OnInit {
   private fb: FormBuilder,
   private userService: UserService,
   private route: ActivatedRoute,
+  private location: Location
  ) { 
 
   this.renderUser = false;
-
+  this.editUser = false;
  }
 
   ngOnInit() {
   
-
+    
+    
+    
     this.route.params.subscribe(params => {
 
     this.id  = params.id;  //obtain ID from route 
@@ -84,18 +88,27 @@ export class UserViewComponent implements OnInit {
   }
 
 
-  changedSupervisor()
+  updateSupervisor(selectedSupervisorObj)
   {
-    confirm('are you sure?');
+    if( confirm('are you sure?'))
+    {
+      console.log(selectedSupervisorObj);
+      this.userService.changeSupervisor(this.user.id, selectedSupervisorObj.id);
+    }
 
   }
+
+
+
   updateUser (obj){
         
-      console.log(obj);
-       this.userService.update(this.user.id,this.user).subscribe((r)=>{
+       this.userService.update(this.user.id,this.user).subscribe((r)=>{ 
 
+         this.location.replaceState("/user/"+r.employeeid);
+         this.user.id = r.employeeid;
+         this.user.employeeid = r.employeeid;
 
-      }) 
+        }) 
   
   
   }

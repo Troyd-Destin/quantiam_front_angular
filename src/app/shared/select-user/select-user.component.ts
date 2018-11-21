@@ -13,11 +13,13 @@ export class SelectUserComponent implements OnInit {
   allItems:any = [];
   showActive:boolean = true;
   showInactive:boolean = false;
-  
+  virtualScroll:boolean = true;
+
   //Inputs 
   @Input() selectedValue:any = null; // default value, object or ID
   @Input() multiple:any = false; // multi version
   @Input() selectableGroup:any = false; // multi version
+  @Input() placeholder:string = 'Select Somebody'; // multi version
  
   //Outputs
   @Output() change = new EventEmitter<any>();
@@ -27,14 +29,51 @@ export class SelectUserComponent implements OnInit {
 
   ngOnInit() {
 
-    this.selectUserService.list();
+    this.selectUserService.list(); // Make sure the service is initialized. 
     this.list$ = this.selectUserService.list$.subscribe((r)=>{
       
-          console.log(r);
-          this.allItems = r;
-         // if(r[0]) this.showItems();
-      
+         
+         this.allItems = r;
+       //   if(r[0]) this.showItems();
+          if(r[0])  this.showItems();
+         
+          
       })
+  }
+  
+  showItems()
+  {  
+    console.log(this.showActive,this.showInactive);
+  
+    if(this.showActive && !this.showInactive)
+      
+    this.items = this.allItems.filter((obj)=>{   
+  
+        return obj.active;      
+            
+      }); 
+      
+    if(!this.showActive && this.showInactive)
+      
+    this.items = this.allItems.filter((obj)=>{   
+  
+        return !obj.active;      
+            
+      }); 
+   
+    
+   if(!this.showActive && !this.showInactive) this.items = [];      
+   if(this.showActive && this.showInactive)this.items = this.allItems;
+  }
+
+  onChange(event)
+  {
+     this.change.emit(event);  
+  }
+  
+  ngOnDestroy()
+  {
+   if(this.list$) this.list$.unsubscribe();
   }
 
 }
