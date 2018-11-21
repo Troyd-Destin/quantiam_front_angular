@@ -64,14 +64,13 @@ export class UserService  {
      };
 
 
-    this.http.post<any>(environment.apiUrl+`${this.endpoint}/move`,params)
+    return this.http.post<any>(environment.apiUrl+`${this.endpoint}/move`,params)
     .pipe(          
-         map( res => res), // return results without transformation     
-     )
-     .subscribe(
-       (r) => {         	
-        this.notification.success('Updated','User supervisor changed.',{showProgressBar:false,timeOut:3000,clickToClose: true});
-         }
+         map( (r) => {
+
+          this.notification.success('Updated','User supervisor changed.',{showProgressBar:false,timeOut:3000,clickToClose: true});
+          return r;
+         }), // return results without transformation     
      );
 
   }

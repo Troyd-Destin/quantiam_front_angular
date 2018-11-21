@@ -93,7 +93,12 @@ export class UserViewComponent implements OnInit {
     if( confirm('are you sure?'))
     {
       console.log(selectedSupervisorObj);
-      this.userService.changeSupervisor(this.user.id, selectedSupervisorObj.id);
+      this.userService.changeSupervisor(this.user.id, selectedSupervisorObj.id).subscribe((r)=>{
+
+
+          this.user = r;
+
+      });
     }
 
   }
