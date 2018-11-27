@@ -1,6 +1,6 @@
 import { environment } from '../../../environments/environment';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute  } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable,of } from 'rxjs';
@@ -27,6 +27,7 @@ export class AuthService {
     public jwtHelper: JwtHelperService, 
     public user: UserService, 
     public notification: NotificationsService,
+    private route: ActivatedRoute
    ) { }
   
   
@@ -68,13 +69,16 @@ export class AuthService {
   
   }
   
-  isLoggedIn()
+  isLoggedIn(token = null)
   {
-    const token = localStorage.getItem('token');
-    // Check whether the token is expired and return
-    // true or false  console.log(this.jwtHelper.isTokenExpired(token));
    
+    if(!token || token.length == 0) token = localStorage.getItem('token');  
+
+    try{
+
     return !this.jwtHelper.isTokenExpired(token);
+    }
+    catch(e){ return false;}
   }
   
   logout()

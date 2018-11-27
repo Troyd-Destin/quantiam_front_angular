@@ -1,6 +1,8 @@
 import { environment } from '../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
+
+import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap, delay,shareReplay, publishReplay,refCount } from 'rxjs/operators';
 import { Observable,of, BehaviorSubject,throwError } from 'rxjs'
@@ -21,13 +23,13 @@ export class UserService  {
   private last_id: string; 
 
 
-  constructor(public jwtHelper: JwtHelperService,public http: HttpClient, public notification: NotificationsService ) { 
-    
-  
-    
-    
-    }
-	
+  constructor(public router: Router,public jwtHelper: JwtHelperService, public http: HttpClient, public notification: NotificationsService) {
+
+
+
+
+  }
+
 	
 	    
   getUser(id :string)
@@ -149,6 +151,11 @@ export class UserService  {
      
      
      const token = this.jwtHelper.decodeToken(localStorage.getItem('token'));
+
+     try{
+
+
+     
      let id = token.employeeID;
          
     return this.http.get<authedUser$>(environment.apiUrl+`${this.endpoint}/${id}`).pipe(
@@ -160,6 +167,13 @@ export class UserService  {
           }
          ),
         );
+
+      }catch(e)
+      {
+        this.notification.error('Error','You aren\'t logged in!',{timeOut:4000,clickToClose: true});
+        this.router.navigate(['auth']);
+
+      }
   }
   
   public fetchAuthUserObj ()

@@ -18,16 +18,18 @@ export class AuthComponent implements OnInit {
 
   ngOnInit() {
 	  
-	  try{ this.ws = this.scale_websocket.connect(); }catch(e) {}
-	  
-	
-	  if(this.ws) this._ws.subscribe((x)=>{
+	  try{ 
+      
+      this.ws = this.scale_websocket.connect(); 	  
+    	 this._ws.subscribe((x)=>{
 		  
-		  
-				console.log(x);
-				//if token  login(null,null, rfid);
-		  
-		  })
+        
+          console.log(x);
+          //if token  login(null,null, rfid);
+        
+        })
+        
+    }catch(e) {}
   }
   
   login(username,password,rfid)

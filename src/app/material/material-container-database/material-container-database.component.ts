@@ -1,7 +1,6 @@
 import {  AfterViewInit,  Component,  OnInit,  ViewChild} from '@angular/core';
 import {  HttpClient,  HttpResponse} from '@angular/common/http';
 import { Router } from '@angular/router';
-import { DataTableDirective} from 'angular-datatables';
 
 import {  MaterialLotContainerDatatableService} from '../services/material-lot-container-datatable.service';
 import { MaterialLotContainerService } from '../../services/material-lot-container/material-lot-container.service';

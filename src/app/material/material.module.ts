@@ -9,7 +9,7 @@ import { WebsocketService } from '../services/websocket/websocket.service';
 
 import { AgGridModule } from 'ag-grid-angular';
 import { Select2Module } from 'ng2-select2';
-import { DataTablesModule } from 'angular-datatables';
+//import { DataTablesModule } from 'angular-datatables';
 
 import { SharedModule } from '../shared/shared.module';
 import { MaterialDesignModule } from '../material-design/material-design.module';
@@ -33,7 +33,7 @@ import { AggridActiveComponent } from './aggrid-active/aggrid-active.component';
   	SharedModule,
   	MaterialDesignModule,
     MaterialRoutingModule,
-  	DataTablesModule,	  
+  	//DataTablesModule,	  
     Select2Module,
     AgGridModule.withComponents([AggridActiveParentComponent]),
   ],

@@ -15,7 +15,7 @@ LicenseManager.setLicenseKey("Evaluation_License_Valid_Until__16_September_2018_
 
 
 import { HttpClientModule,HTTP_INTERCEPTORS} from '@angular/common/http';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+//import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { JwtModule  } from '@auth0/angular-jwt';
 //
 import { NgModule } from '@angular/core';
@@ -43,6 +43,7 @@ import { Observable} from 'rxjs';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
 import { CoreModule } from './core/core.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 const routes: Routes = [
   {
@@ -110,6 +111,7 @@ const routes: Routes = [
     MatOptionModule,
     MatSelectModule,
     MatSnackBarModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     AuthService, 

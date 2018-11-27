@@ -14,18 +14,41 @@ export class AuthGuardService implements CanLoad{
     }
    canLoad(route: Route): boolean {
   
-      if(this.auth.isLoggedIn())
+      var queryString = window.location.search;
+      var token = decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent('token').replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));  
+     // console.log(token, token.length);
+      if(token.length == 0)
       {
-       
-        return true;
-      }
-      else { 
+
+        if(this.auth.isLoggedIn())
+        {
+        
+          return true;
+        }
+        else { 
+            
+        //  sessionStorage.setItem('lastRouteUrl',this.router.url);
+          this.router.navigate(['auth']);
           
-      //  sessionStorage.setItem('lastRouteUrl',this.router.url);
-        this.router.navigate(['auth']);
+        }
         
       }
-    	return false;
+      else
+      {
+
+         if(this.auth.isLoggedIn(token)){ 
+
+            localStorage.setItem('token',token);
+           return true; 
+          
+          }
+         else{ this.router.navigate(['auth']); }
+
+      }
+      
+      return false;
   }
+
+
 }
 //

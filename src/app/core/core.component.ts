@@ -175,7 +175,7 @@ export class CoreComponent implements OnInit {
   
    ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
-	this._ws.unsubscribe();
+	   if(this._ws) this._ws.unsubscribe();
   }
   
   
