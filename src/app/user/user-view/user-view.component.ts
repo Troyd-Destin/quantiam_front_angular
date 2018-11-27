@@ -33,6 +33,11 @@ export class UserViewComponent implements OnInit {
   renderUser: boolean = false;
   authedUser: any;
 
+
+  private gridApi;
+  private gridColumnApi;
+
+
   constructor(
   private fb: FormBuilder,
   private userService: UserService,
@@ -162,6 +167,43 @@ export class UserViewComponent implements OnInit {
 
     }
   }
+
+
+  onGridReady(params)
+  {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+	
+	
+    setTimeout(()=>{  this.gridApi.sizeColumnsToFit();},200);
+           
+    
+      
+    
+  }
+
+  
+  private rtoColumnDefs = [
+   
+    {headerName: 'Year', field: 'year',   },
+    {headerName: 'Vacation', field: 'vacation',   },
+    {headerName: 'PTO', field: 'pto',   },
+    {headerName: 'PPL', field: 'ppl', hide:true,  },
+    {headerName: 'Updated', field: 'updated_at',   },
+  
+  ];
+
+  private rtoDefaultColDef = { 
+    
+  // maxWidth:120,
+    cellStyle: function (params) {
+      return {
+        cursor: 'pointer',
+      }
+    },
+
+  };
+
   
   ngOnDestroy()
   {

@@ -199,11 +199,12 @@
 			
 				<nav mat-tab-nav-bar class="borderless rounded-nav-borders">
 					<a mat-tab-link (click)="selectedTable = 'supervisors';" [class.mat-tab-link-active]="selectedTable == 'supervisors'"> Supervisors </a>
+					<a mat-tab-link (click)="selectedTable = 'rto'" [class.mat-tab-link-active]="selectedTable == 'rto'"> RTO Allotment </a>
 					<a mat-tab-link (click)="selectedTable = 'permissions'" [class.mat-tab-link-active]="selectedTable == 'permissions'"> Permissions </a>
 					<a mat-tab-link (click)="selectedTable = 'machines'" [class.mat-tab-link-active]="selectedTable == 'machines'"> Machines </a>
 					<a mat-tab-link (click)="selectedTable = 'rfid'" [class.mat-tab-link-active]="selectedTable == 'rfid'"> Key Cards </a>
 					
-					<a mat-tab-link (click)="selectedTable = 'rto'" [class.mat-tab-link-active]="selectedTable == 'rto'"> RTO Allotment </a>
+					
 					<a mat-tab-link (click)="selectedTable = 'compensation'" [class.mat-tab-link-active]="selectedTable == 'compensation'"> Compensation </a>
 				
 				</nav>
@@ -355,7 +356,26 @@
 					
 				<div   [class.hidden]="selectedTable != 'rto'"  fxLayout="column"> 
 
-						<h3> Rto Allotments here </h3>
+						<ag-grid-angular  
+					
+						#rto_agrid
+						style="width: calc(100%); height:350px; margin-top:10px;" 
+						class="ag-theme-material"
+						[showToolPanel]="false"
+						[rowData]="user.rto_allotment" 
+						[columnDefs]="rtoColumnDefs"
+						[enableSorting]="true"
+						[enableFilter]="true"	
+						(gridReady)="onGridReady($event)"
+					
+						[enableColResize]="true"
+						[enableRangeSelection]="true"
+						[toolPanelSuppressSideButtons] = "true"
+						[defaultColDef]="rtoDefaultColDef"
+						
+						>
+					</ag-grid-angular>
+					  
 
 
 				</div>
