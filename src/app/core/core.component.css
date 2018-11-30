@@ -53,6 +53,12 @@
     border-radius: 20px;
 }
 
+router-outlet ~ * {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+  }
+  
 
 .app-sidenav-over {
     position: relative;

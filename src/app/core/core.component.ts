@@ -8,6 +8,9 @@ import { UserService } from '../services/user/user.service';
 import { catchError, map, tap, delay } from 'rxjs/operators';
 
 
+import { fadeAnimation } from '../animations';
+
+
 import { WebsocketService } from '../services/websocket/websocket.service'; 
 import { SettingsService } from '../services/settings/settings.service'; 
 
@@ -25,6 +28,7 @@ interface webSocketMessages {
       MediaMatcher,
       UserService,
   ],
+  animations: [fadeAnimation] // register the animation
 })
 
 
@@ -101,6 +105,11 @@ export class CoreComponent implements OnInit {
       //this.user.getUser
   }
   
+  prepareRoute(outlet) {
+    return true;
+  }
+
+
   adminCheck()
   {
 	let adminPermissionArray = [27,28,5,6,7,8,9]; // permission which allow you to see the admin side menu

@@ -23,6 +23,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
   private components:any;
   private columnDefs;
+  private statusBar:any;
   private defaultColDef;
   private rowModelType;
   private cacheBlockSize;
@@ -82,8 +83,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         field:"lot_name",
         headerName:"Lot",
         width: 90,
-      },
-    
+      },    
       {
         width: 90,
         field:"size"
@@ -139,8 +139,6 @@ export class MaterialContainerDatabaseComponent implements OnInit {
        
 
       },
-
-
     ];
 
  //   this.components = { datePicker: getDatePicker() };
@@ -154,6 +152,18 @@ export class MaterialContainerDatabaseComponent implements OnInit {
       },
 
     }
+
+    this.statusBar = {
+      statusPanels: [
+        {
+          statusPanel: "agTotalRowCountComponent",
+          align: "left"
+        },
+        { statusPanel: "agFilteredRowCountComponent" },
+        { statusPanel: "agSelectedRowCountComponent" },
+        { statusPanel: "agAggregationComponent" }
+      ]
+    };
 
     //this.rowModelType = "serverSide";
     //this.cacheBlockSize = 10;
@@ -222,7 +232,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
     this.containerAggridService.Database$.subscribe((r) => {
       this.rowData = r;
-      //setTimeout(()=>{  this.gridApi.sizeColumnsToFit();},300);
+      setTimeout(()=>{  this.gridApi.sizeColumnsToFit();},300);
     })
   }
 

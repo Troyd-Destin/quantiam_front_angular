@@ -114,6 +114,24 @@ export class UserService  {
 	  
  }
   
+  updateRtoAllotment(id,obj)
+  {
+    return this.http.put<any>(environment.apiUrl+`/rto/allocation/${id}`,obj).pipe(
+      tap( r => {
+        
+        }), 
+      map( res => {
+      
+      
+         this.notification.success('Updated','We changed that for you.',{showProgressBar:false,timeOut:3000,clickToClose: true});
+        
+        return res; 
+        
+      })
+    );
+
+  }
+
  public update(id,obj)
  {
 

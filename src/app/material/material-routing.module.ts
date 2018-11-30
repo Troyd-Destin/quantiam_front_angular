@@ -8,42 +8,46 @@ import { MaterialContainerDatabaseComponent } from './material-container-databas
 import { MaterialContainerViewComponent } from './material-container-view/material-container-view.component';
 import { MaterialComponent } from './material.component';
 
-const routes: Routes = [ 
+const routes: Routes = [
   {
-    path:'',
+    path: '',
     component: MaterialIndexComponent,
-     // redirectTo: '/database',
-      children:[
-        
-		 {
-          path:'container/database',
-          component: MaterialContainerDatabaseComponent,
-         }, 
-		 {
-          path:'container/:id',
-          component: MaterialContainerViewComponent,
-          pathMatch: 'full',
-         },
-		 {
-          path:'database',
-          component: MaterialDatabaseComponent,
-         },
-         {
-          path:'create',
-          component: MaterialCreationDialogComponent
-        
-        },
-        {
-		  //name: 'material_view',
-          path:':id',
-          component: MaterialViewComponent,
-          pathMatch: 'full'
-        },
-        
-  
-  
-        
-      ]
+   // data: {name:"MaterialIndex"},
+    // redirectTo: '/database',
+    children: [
+
+      {
+        path: 'container/database',
+        pathMatch: 'full',
+        component: MaterialContainerDatabaseComponent,
+        data: {name:"MaterialContainerDatabase"}
+      },
+      {
+        path: 'container/:id',
+        component: MaterialContainerViewComponent,
+        pathMatch: 'full',
+        data: {name:"MaterialContainerView"}
+      },
+      {
+        path: 'database',
+        component: MaterialDatabaseComponent,
+      },
+      {
+        path: 'create',
+        component: MaterialCreationDialogComponent
+
+      },
+      {
+        //name: 'material_view',
+        path: ':id',
+        component: MaterialViewComponent,
+        pathMatch: 'full'
+      },
+
+
+
+
+    ]
   },];
 
 @NgModule({

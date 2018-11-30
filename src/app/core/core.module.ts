@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WebsocketService } from '../services/websocket/websocket.service'; 
 
+
 //window.websocketService = new WebsocketService(); //initialize websocket here for some reason
 
 
@@ -25,7 +26,7 @@ import { CoreComponent } from './core.component';
     CommonModule,
     CoreRoutingModule,	
 	MaterialDesignModule,
-	Select2Module
+	Select2Module,
   ],
   exports:[
 	RouterModule,

@@ -15,35 +15,25 @@ LicenseManager.setLicenseKey("Evaluation_License_Valid_Until__16_September_2018_
 
 
 import { HttpClientModule,HTTP_INTERCEPTORS} from '@angular/common/http';
-//import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { JwtModule  } from '@auth0/angular-jwt';
-//
 import { NgModule } from '@angular/core';
-import {
-	MatButtonModule, MatCheckboxModule,MatDatepickerModule,
-	MatInputModule,MatNativeDateModule,MatCardModule,MatSidenavModule,
-	MatToolbarModule,MatTabsModule,MatGridListModule,MatListModule,MatIconModule,MatSnackBarModule,
-  MatExpansionModule,MatDividerModule,MatFormFieldModule, MatOptionModule, MatSelectModule } from '@angular/material';
-
-import { NgHttpLoaderModule } from 'ng-http-loader/ng-http-loader.module';
- import { SimpleNotificationsModule } from 'angular2-notifications';
+import { NgHttpLoaderModule } from 'ng-http-loader';
+import { SimpleNotificationsModule } from 'angular2-notifications';
  
   
-  import { WebsocketService } from './services/websocket/websocket.service'; 
+import { WebsocketService } from './services/websocket/websocket.service'; 
 
   
-import { Routes, RouterModule } from '@angular/router';
-import { Observable} from 'rxjs';
+import { Routes, RouterModule,RouteReuseStrategy  } from '@angular/router';
+import { CustomReuseStrategy } from './reuse-strategy';
 
-//
-//import { CoreModule } from './core/core.module';
-//
-//
+
 
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
 import { CoreModule } from './core/core.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { MaterialDesignModule } from './material-design/material-design.module';
 
 const routes: Routes = [
   {
@@ -74,7 +64,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,   
     HttpClientModule,
-    NgHttpLoaderModule,
+    NgHttpLoaderModule.forRoot(),
     SimpleNotificationsModule.forRoot(),   
     JwtModule.forRoot({
       
@@ -90,27 +80,7 @@ const routes: Routes = [
       }), 
     
   
-   
-    //Angular Material Modules 
-    MatButtonModule,
-		MatCheckboxModule,//
-		MatDatepickerModule,
-		MatFormFieldModule,
-		MatInputModule,
-		MatNativeDateModule,
-		MatCardModule,
-		MatSidenavModule,
-		MatToolbarModule,
-		MatTabsModule,
-		MatDividerModule,		
-		MatGridListModule,
-		MatIconModule,
-		MatListModule,
-		MatExpansionModule,
-    MatFormFieldModule,
-    MatOptionModule,
-    MatSelectModule,
-    MatSnackBarModule,
+    MaterialDesignModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
@@ -119,7 +89,10 @@ const routes: Routes = [
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
-    },WebsocketService],
+    },
+    WebsocketService,
+    {provide: RouteReuseStrategy, useClass: CustomReuseStrategy}
+  ],
   exports: [],
   bootstrap: [AppComponent]
 })

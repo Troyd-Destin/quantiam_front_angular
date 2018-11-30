@@ -8,6 +8,9 @@ import { FormsModule } from '@angular/forms';
 import { WebsocketService } from '../services/websocket/websocket.service'; 
 
 import { AgGridModule } from 'ag-grid-angular';
+import'ag-grid-enterprise'; 
+
+
 import { Select2Module } from 'ng2-select2';
 //import { DataTablesModule } from 'angular-datatables';
 

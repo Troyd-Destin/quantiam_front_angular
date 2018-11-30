@@ -9,6 +9,8 @@ import {
   MatCheckboxModule,  
   MatExpansionModule,
   MatDialogModule,
+  MatDatepickerModule,
+  MatFormFieldModule,
   MatGridListModule,
   MatIconModule,
   MatInputModule,
@@ -29,9 +31,9 @@ import {
   MatToolbarModule,
   MatTooltipModule,
   MatSidenavModule,
-  MatDatepickerModule,
   MatTableModule,
   MatSortModule,
+  MatNativeDateModule,
   
 
   
@@ -56,6 +58,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatChipsModule,
     MatCheckboxModule,
     MatDialogModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
     MatGridListModule,
     MatIconModule,
     MatInputModule,
@@ -74,7 +78,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatTreeModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatDatepickerModule,
     MatExpansionModule,
     FlexLayoutModule,
     FormsModule,
@@ -82,6 +85,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatPaginatorModule,
     MatStepperModule,
     MatSortModule,
+    MatNativeDateModule,
   ],
   exports:[
     MatAutocompleteModule,
@@ -91,6 +95,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatChipsModule,
     MatCheckboxModule,
     MatDialogModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
     MatGridListModule,
     MatIconModule,
     MatInputModule,
@@ -117,6 +123,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatPaginatorModule,
     MatStepperModule,
     MatSortModule,
+    MatNativeDateModule,
   ],
   declarations: []
 })

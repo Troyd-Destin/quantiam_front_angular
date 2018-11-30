@@ -2,6 +2,8 @@ import { Component, OnInit,ViewChild } from '@angular/core';
 import { UserService } from '../../services/user/user.service';
 import { ActivatedRoute } from '@angular/router';
 import {Location} from '@angular/common';
+import { environment } from '../../../environments/environment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import {MatPaginator, MatTableDataSource,MatSort} from '@angular/material';
 
@@ -33,6 +35,7 @@ export class UserViewComponent implements OnInit {
   renderUser: boolean = false;
   authedUser: any;
 
+  private cellOldValue: any;
 
   private gridApi;
   private gridColumnApi;
@@ -42,7 +45,8 @@ export class UserViewComponent implements OnInit {
   private fb: FormBuilder,
   private userService: UserService,
   private route: ActivatedRoute,
-  private location: Location
+  private location: Location,
+  public http: HttpClient,
  ) { 
 
   this.renderUser = false;
@@ -89,6 +93,9 @@ export class UserViewComponent implements OnInit {
       
       
       });
+
+
+      this.permissionChanges();
    
   }
 
@@ -169,25 +176,36 @@ export class UserViewComponent implements OnInit {
   }
 
 
-  onGridReady(params)
+  onRtoGridReady(params)
   {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-	
-	
-    setTimeout(()=>{  this.gridApi.sizeColumnsToFit();},200);
-           
-    
-      
-    
+	  setTimeout(()=>{  this.gridApi.sizeColumnsToFit();},200);
+        
   }
 
+  
+  onRtoCellEditingStarted(event) {
+    console.log(event);
+    this.cellOldValue = event.value;
+  }
+
+  
+  onRtoCellEditingStopped(event) {
+
+      var params = {};
+    if(this.cellOldValue != event.value)
+    {
+      params[event.colDef.field] = event.value;
+      this.userService.updateRtoAllotment(event.data.entry_id,params).subscribe();
+    }
+  }
   
   private rtoColumnDefs = [
    
     {headerName: 'Year', field: 'year',   },
-    {headerName: 'Vacation', field: 'vacation',   },
-    {headerName: 'PTO', field: 'pto',   },
+    {headerName: 'Vacation', field: 'vacation', editable: false,   },
+    {headerName: 'PTO', field: 'pto',  editable: false,   },
     {headerName: 'PPL', field: 'ppl', hide:true,  },
     {headerName: 'Updated', field: 'updated_at',   },
   
@@ -205,6 +223,22 @@ export class UserViewComponent implements OnInit {
   };
 
   
+  permissionChanges(){
+
+
+    console.log('permission pass');
+    if(this.userService.hasPermission(37))
+    {
+
+     // this.rtoColumnDefs[1].type = "numericColumn";
+      this.rtoColumnDefs[1].editable = true; 
+
+    // this.rtoColumnDefs[2].type = "numericColumn";
+      this.rtoColumnDefs[2].editable = true;
+    }
+  }
+  
+
   ngOnDestroy()
   {
     if(this.user$) this.user$.unsubscribe();
