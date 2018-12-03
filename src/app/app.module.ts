@@ -49,6 +49,10 @@ const routes: Routes = [
 ];
 
 
+export function gettoken (){
+  return localStorage.getItem('token');
+  };
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,11 +72,8 @@ const routes: Routes = [
     SimpleNotificationsModule.forRoot(),   
     JwtModule.forRoot({
       
-         config:{
-         
-         tokenGetter: () => {
-          return localStorage.getItem('token');
-          },
+         config:{         
+         tokenGetter: gettoken,
           whitelistedDomains: [environment.apiUrl],
           blacklistedRoutes: [environment.apiUrl+'/auth']
         } 

@@ -15,10 +15,11 @@ const routes: Routes = [
     path:'',
     component: UserIndexComponent,
     data: {name:"userIndex"},
-     // redirectTo: '/database',
+    //redirectTo: '/database',
       children:[        
          {
               path:'database',
+              pathMatch: 'full',
               component: UserDatabaseComponent,
               data: {name:"userDatabase"},
          }, 
