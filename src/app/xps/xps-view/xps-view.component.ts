@@ -51,7 +51,7 @@ export class XpsViewComponent implements OnInit {
     
     this.xpsService.get(this.id); 
 
-    this.xpsRun$ = this.xpsService.xpsRun$.subscribe(r=> { 
+    this.xpsRun$ = this.xpsService.xpsRun$.subscribe(r => { 
       
       this.xpsRun = r;
        this.rowData = r.analyses;
@@ -112,7 +112,7 @@ export class XpsViewComponent implements OnInit {
   
   getAnalysisData(analysisObject:any)
   {
-     this.http.get<any>(environment.apiUrl+'/xps/run/analysis/'+analysisObject.id+'/data').pipe(
+     this.http.get<any>(environment.apiUrl+'/xps/run/analysis/'+analysisObject.id + '/data').pipe(
         tap( r => {                    
                     
                     }), //set id to be last_id
@@ -141,7 +141,7 @@ export class XpsViewComponent implements OnInit {
               let newSeries:any = {};
               
               newSeries.data = r;
-              newSeries.name = 'Element: '+analysisObject.element+' || '+filename;
+              newSeries.name = 'Element: '+analysisObject.element+' || ' + filename;
               newSeries.turboThreshold = 5000;
           
              this.chart.removeSeries(0);
@@ -195,31 +195,31 @@ export class XpsViewComponent implements OnInit {
   }
 
     
-    
+
   onGridReady(params)
   {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    setTimeout(()=>{  this.gridApi.sizeColumnsToFit();},400);
+    setTimeout(() => {  this.gridApi.sizeColumnsToFit(); }, 400);
    //this.autoSizeAll();
-    
+
   }
-  
+
   autoSizeAll() {
     var allColumnIds = [];
-    this.gridColumnApi.getAllColumns().forEach(function(column,i) {
-    
+    this.gridColumnApi.getAllColumns().forEach(function(column, i) {
+
        allColumnIds.push(column.colId);
     });
     this.gridColumnApi.autoSizeColumns(allColumnIds);
   }
-  
-    
+
+
   ngOnDestroy()
   {
-    if(this.xpsRun$ ) this.xpsRun$.unsubscribe();
-  
-    
+    if (this.xpsRun$ ) this.xpsRun$.unsubscribe();
+
+
   }
 
 }
