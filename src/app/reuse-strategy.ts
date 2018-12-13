@@ -38,7 +38,7 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
   
     //Return true if we have a stored route object for the next route
     shouldAttach(route: ActivatedRouteSnapshot): boolean {
-
+    console.log('test', this.storedRouteHandles.has(route.data["name"]));
     if(route.data.hasOwnProperty('name')){
         return this.storedRouteHandles.has(route.data["name"]);
         }

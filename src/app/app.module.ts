@@ -10,21 +10,20 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
-import {LicenseManager} from "ag-grid-enterprise/main";
-LicenseManager.setLicenseKey("Evaluation_License_Valid_Until__16_September_2018__MTUzNzA1MjQwMDAwMA==b7ecc78983c1bf33b5eb3682cc62cfaa");
+import {LicenseManager} from 'ag-grid-enterprise/main';
+// tslint:disable-next-line:max-line-length
+LicenseManager.setLicenseKey('Evaluation_License_Not_For_Production_Valid_Until3_February_2019__MTU0OTE1MjAwMDAwMA==4219b0917c51680a5c4bde17186c5c08');
 
 
-import { HttpClientModule,HTTP_INTERCEPTORS} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { JwtModule  } from '@auth0/angular-jwt';
 import { NgModule } from '@angular/core';
 import { NgHttpLoaderModule } from 'ng-http-loader';
 import { SimpleNotificationsModule } from 'angular2-notifications';
- 
-  
-import { WebsocketService } from './services/websocket/websocket.service'; 
 
-  
-import { Routes, RouterModule,RouteReuseStrategy  } from '@angular/router';
+
+import { WebsocketService } from './services/websocket/websocket.service';
+import { Routes, RouterModule, RouteReuseStrategy  } from '@angular/router';
 import { CustomReuseStrategy } from './reuse-strategy';
 
 
@@ -38,54 +37,52 @@ import { MaterialDesignModule } from './material-design/material-design.module';
 const routes: Routes = [
   {
     path: 'auth',
-    component: AuthComponent
+    component: AuthComponent,
+    data: {name:"Auth"},
   },
   {
     path: '',
     loadChildren: './core/core.module#CoreModule',
     canLoad: [AuthGuardService],
-  },  
+  },
 
 ];
 
 
-export function gettoken (){
+export function gettoken () {
   return localStorage.getItem('token');
-  };
+  }
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
-    
-    
-        
   ],
   imports: [
     RouterModule.forRoot(routes),
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    ReactiveFormsModule,   
+    ReactiveFormsModule,
     HttpClientModule,
     NgHttpLoaderModule.forRoot(),
-    SimpleNotificationsModule.forRoot(),   
+    SimpleNotificationsModule.forRoot(),
     JwtModule.forRoot({
-      
-         config:{         
+
+         config: {
          tokenGetter: gettoken,
           whitelistedDomains: [environment.apiUrl],
-          blacklistedRoutes: [environment.apiUrl+'/auth']
-        } 
-      
-      }), 
-    
-  
+          blacklistedRoutes: [environment.apiUrl + '/auth']
+        }
+
+      }),
+
+
     MaterialDesignModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
-    AuthService, 
+    AuthService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

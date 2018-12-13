@@ -4,7 +4,7 @@ import { environment } from '../../../environments/environment';
 import { XpsService } from '../../services/xps/xps.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup }   from '@angular/forms';
-import { Chart } from 'angular-highcharts';
+//import { Chart } from 'angular-highcharts';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap, delay,shareReplay, publishReplay,refCount } from 'rxjs/operators';
 
@@ -70,29 +70,29 @@ export class XpsViewComponent implements OnInit {
   
   chartBuilder(){
   
-   this.chart = new Chart({
-    chart: {
-      type: 'line',
-      backgroundColor:'rgba(255, 255, 255, 0.0)'
-    },
-    title: {
-      text: 'XPS Data'
-    },
-    xAxis:{
-      title:{
-        text:'Energy (eV)',      
-      }    
-    },
-    yAxis:{
-      title:{
-        text:'Counts',      
-      }    
-    },
-    credits: {
-      enabled: false
-    },
-    series: []
-  });
+  //  this.chart = new Chart({
+  //   chart: {
+  //     type: 'line',
+  //     backgroundColor:'rgba(255, 255, 255, 0.0)'
+  //   },
+  //   title: {
+  //     text: 'XPS Data'
+  //   },
+  //   xAxis:{
+  //     title:{
+  //       text:'Energy (eV)',      
+  //     }    
+  //   },
+  //   yAxis:{
+  //     title:{
+  //       text:'Counts',      
+  //     }    
+  //   },
+  //   credits: {
+  //     enabled: false
+  //   },
+  //   series: []
+  // });
   
   }
   
