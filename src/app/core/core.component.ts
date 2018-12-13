@@ -1,12 +1,14 @@
 
-import { Component,ChangeDetectorRef,OnInit } from '@angular/core';
+import { Component,ChangeDetectorRef,OnInit,AfterViewInit  } from '@angular/core';
 import {Location} from '@angular/common';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MediaMatcher} from '@angular/cdk/layout';
 import { AuthService } from '../services/auth/auth.service';
 import { UserService } from '../services/user/user.service';
 import { catchError, map, tap, delay } from 'rxjs/operators';
-
+import { 
+  Router,  NavigationCancel,   NavigationEnd, NavigationStart
+} from '@angular/router';
 
 import { fadeAnimation } from '../animations';
 
@@ -45,6 +47,7 @@ export class CoreComponent implements OnInit {
   selectedScanner;
   scannerList = [];
   scannerSelect2Options={"theme":"classic"};
+  loading;
  
   
   webSocketMessages: webSocketMessages;
@@ -69,10 +72,11 @@ export class CoreComponent implements OnInit {
 		private auth: AuthService,
 		private websocketService: WebsocketService,
 		private settings: SettingsService,
-		private _location: Location
+    private _location: Location,
+    private router: Router
 	) {
 	  
-	  
+    this.loading = true;
 	
 	
 	this.getScanner();
@@ -91,6 +95,7 @@ export class CoreComponent implements OnInit {
      // get user data and store in user Variable
       this.userService.getAuthedUser().subscribe(res=>{
         
+      
 		   this.userTitle = res.title; 
 		   this.userName = res.name; 
 		   this.user = res;
@@ -172,12 +177,31 @@ export class CoreComponent implements OnInit {
         this._location.forward();
     }
   
-  ngOnInit() {
+    ngOnInit() {
   
   
-	//this.websocketService.connect();
+  //this.websocketService.connect();
+  
+      this.loading = false;
 			
-	this._scannerEvents = this.websocketService.scannerEvents.subscribe((data)=>{})
+      this._scannerEvents = this.websocketService.scannerEvents.subscribe((data)=>{})
+      
+      this.router.events
+            .subscribe((event) => {
+
+               
+                if(event instanceof NavigationStart) {
+                    this.loading = true;
+                   
+                }
+                else if (
+                   
+                    event instanceof NavigationCancel ||
+                    event instanceof NavigationEnd
+                    ) {
+                             setTimeout((x)=>{  this.loading = false; },500);
+                        }
+            });
 
     
   }

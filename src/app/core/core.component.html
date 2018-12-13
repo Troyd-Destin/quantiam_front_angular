@@ -2,7 +2,7 @@
   <mat-toolbar class="app-header" color="primary">
 	
 		 <mat-toolbar-row>
-			<button mat-button style="font-size: 14px;padding-left: 10px;text-align:left">Quantiam Technologies Inc.</button>
+			<button mat-button style="font-size: 14px;padding-left: 10px;text-align:left" routerLink="/home" >Quantiam Technologies Inc.</button>
 			<span class="header-spacer"></span>
 			<!-- <mat-icon class="example-icon">favorite</mat-icon>
 			<mat-icon class="example-icon">delete</mat-icon> -->
@@ -46,7 +46,7 @@
 						[fixedInViewport]="mobileQuery.matches" [fixedTopGap]="options.value.top"
 						[fixedBottomGap]="options.value.bottom"
 			>
-			
+<!-- 			
 			<div id="small_navigation" style="margin: 0px 0px 10px 0px;" fxLayout="row" fxLayoutAlign="center center">
 				<button (click)="backClicked()" mat-button style="min-width:60px;"> 
 					<mat-icon>arrow_back</mat-icon> 
@@ -56,7 +56,7 @@
 					<mat-icon>arrow_forward</mat-icon> 
 					
 				</button>
-			</div>
+			</div> -->
 					<mat-accordion class="side-panel" multi="true">
 						<mat-expansion-panel expanded="true" *ngIf="isAdmin">
 						  <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
@@ -70,7 +70,7 @@
 										<button routerLink="/material" mat-button>Home</button>
 								</mat-list-item> -->
 								 <mat-list-item *ngIf="userService.hasPermission(27)"> 
-									 <button routerLink="/user/database"  routerLinkActive="mat-list-item-button-active" mat-button  > Users </button>
+									 <button routerLink="/user"  routerLinkActive="mat-list-item-button-active" mat-button  > Users </button>
 								</mat-list-item>
 								 <mat-list-item style="display:none"> 
 									 <button routerLinkActive="mat-list-item-button-active" mat-button> Groups </button>
@@ -132,7 +132,7 @@
 									</mat-list-item>  
 
 										 <mat-list-item  > 
-										 <button routerLink="/material/container/database" routerLinkActive="mat-list-item-button-active" mat-button> Materials </button>
+										 <button routerLink="/material" routerLinkActive="mat-list-item-button-active" mat-button> Materials </button>
 									</mat-list-item> 
 
 								
@@ -300,9 +300,17 @@
 				
 			<mat-sidenav-content  class="app-content" >
 
-				<div >
-					<router-outlet  #c="outlet"></router-outlet>
+
+				<div style="height:15px;">
+					<div *ngIf="loading"  >
+						
+						<mat-progress-bar mode="buffer" style="margin-bottom:5px;" ></mat-progress-bar>
+					
+				
+					</div>
 				</div>
+				<router-outlet   #c="outlet"></router-outlet>
+			
 
 			</mat-sidenav-content>
 	

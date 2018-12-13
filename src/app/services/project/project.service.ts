@@ -28,7 +28,7 @@ export class ProjectService {
   list() {
    //  console.log(id,this.last_id);
         
-        console.log('thing');
+     //   console.log('thing');
         
         if(!this.listFetched)
         {

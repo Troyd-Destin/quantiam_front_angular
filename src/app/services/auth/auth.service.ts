@@ -52,8 +52,8 @@ export class AuthService {
       return this.http.post<Authentication>(environment.apiUrl + '/auth', params).subscribe(
 
           response => {
-            console.log(response);
-            if (response.token)
+          //  console.log(response);
+            if(response.token)
               {
 
                this.token_auth(response.token);

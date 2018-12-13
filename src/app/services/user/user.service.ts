@@ -154,10 +154,7 @@ export class UserService  {
   
   public getAuthedUser() {
   
-     if(localStorage.getItem('authUser') === null){
-     
-       
-     }
+     if(localStorage.getItem('authUser') === null){  }
   
   
      if(this.authedUser$) // If no specific user is asked for, provide the logged in user. 

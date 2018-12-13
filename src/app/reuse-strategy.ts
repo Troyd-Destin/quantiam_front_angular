@@ -1,66 +1,33 @@
-/**
- * reuse-strategy.ts
- * by corbfon 1/6/17
- */
-
-import { ActivatedRouteSnapshot, RouteReuseStrategy, DetachedRouteHandle } from '@angular/router';
-
-/** Interface for object which can store both: 
- * An ActivatedRouteSnapshot, which is useful for determining whether or not you should attach a route (see this.shouldAttach)
- * A DetachedRouteHandle, which is offered up by this.retrieve, in the case that you do want to attach the stored route
- */
+import {ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy} from '@angular/router';
 
 export class CustomReuseStrategy implements RouteReuseStrategy {
-    
-    routesToCache: string[] = ["userView","userDatabase","userIndex"];
 
+  routesToCache: string[] = ["userDatabase","userView","xpsDatabase"];
+  storedRouteHandles = new Map<string, DetachedRouteHandle>();
 
-    storedRouteHandles = new Map<string, DetachedRouteHandle>();
-  
-    // Decides if the route should be stored
-    shouldDetach(route: ActivatedRouteSnapshot): boolean {
-       //return this.routesToCache.indexOf(route.data["name"]) > -1;
-      if(route.data.hasOwnProperty('name'))   return true;
-     
-      // return false;
-       //  return true; //store all routes that occur
-    }
-  
-    //Store the information for the route we're destructing
-    store(route: ActivatedRouteSnapshot, handle: DetachedRouteHandle): void {
+  // Decides if the route should be stored
+  shouldDetach(route: ActivatedRouteSnapshot): boolean {
+     return this.routesToCache.indexOf(route.data["key"]) > -1;
+  }
 
-        console.log('store',route.data["name"],this.storedRouteHandles);
-       
-        if(route.data.hasOwnProperty('name')){
-                     this.storedRouteHandles.set(route.data["name"], handle);
-        }
-    }
-  
-    //Return true if we have a stored route object for the next route
-    shouldAttach(route: ActivatedRouteSnapshot): boolean {
-    console.log('test', this.storedRouteHandles.has(route.data["name"]));
-    if(route.data.hasOwnProperty('name')){
-        return this.storedRouteHandles.has(route.data["name"]);
-        }
-        return false;
-    }
-  
-    //If we returned true in shouldAttach(), now return the actual route data for restoration
-    retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle {
-        console.log('retrieve',this.storedRouteHandles,route.data["name"]);
-      
-                return this.storedRouteHandles.get(route.data["name"]);
-       
-    }
-  
-    //Reuse the route if we're going to and from the same route
-    shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
+  //Store the information for the route we're destructing
+  store(route: ActivatedRouteSnapshot, handle: DetachedRouteHandle): void {
+     this.storedRouteHandles.set(route.data["key"], handle);
+  }
 
-   // console.log('should reuse',future,curr);
-      
-            return future.data["name"] === curr.data["name"];
-       
-    }
-  
-    
+  //Return true if we have a stored route object for the next route
+  shouldAttach(route: ActivatedRouteSnapshot): boolean {
+     return this.storedRouteHandles.has(route.data["key"]);
+  }
+
+  //If we returned true in shouldAttach(), now return the actual route data for restoration
+  retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle {
+     return this.storedRouteHandles.get(route.data["key"]);
+  }
+
+  //Reuse the route if we're going to and from the same route
+  shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
+     return future.routeConfig === curr.routeConfig;
+  }
+
 }

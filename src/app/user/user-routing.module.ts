@@ -14,20 +14,22 @@ const routes: Routes = [
   {
     path:'',
     component: UserIndexComponent,
-    data: {name:"userIndex"},
-    //redirectTo: '/database',
+   // data: { reuse: true },
+  //  pathMatch: 'full',
+   //redirectTo: 'database',
       children:[        
          {
               path:'database',
-              pathMatch: 'full',
+              data: { key: 'userDatabase' }, 
               component: UserDatabaseComponent,
-              data: {name:"userDatabase"},
+            //  data: { reuse: true },
+ 
          }, 
          {		 
               path:':id',
               component: UserViewComponent,
               pathMatch: 'full',
-              data: {name:"userView"},
+              data: { key: 'userView' }, 
               children:[
                 {
                   path:'permissions',

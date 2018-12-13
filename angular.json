@@ -20,7 +20,8 @@
               "src/assets",
               "src/favicon.ico",
               "src/web.config",
-              "src/manifest.json"
+              "src/manifest.json",
+              "src/CHANGELOG.md"
             ],
             "styles": [
               "src/styles.css",
@@ -38,7 +39,8 @@
               "node_modules/datatables.net/js/jquery.dataTables.js",
               "node_modules/select2/dist/js/select2.full.js",
               "node_modules/moment/min/moment.min.js",
-              "node_modules/hammerjs/hammer.min.js"
+              "node_modules/hammerjs/hammer.min.js",
+              "node_modules/marked/lib/marked.js"
             ]
           },
           "configurations": {

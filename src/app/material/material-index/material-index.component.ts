@@ -3,7 +3,7 @@ import {MatDialog, MatDialogConfig,MatDialogRef} from "@angular/material";
 import { MaterialCreationDialogComponent } from '../material-creation-dialog/material-creation-dialog.component';
 import { MaterialService } from '../../services/material/material.service';
 import { MaterialLotContainerService } from '../../services/material-lot-container/material-lot-container.service';
-
+import { Router  } from '@angular/router';
 import { Subject } from 'rxjs';
 
 
@@ -24,7 +24,7 @@ export class MaterialIndexComponent implements OnInit {
   
   
   
-  constructor(private dialog: MatDialog, private materialService: MaterialService, private materialLotContainerService: MaterialLotContainerService) { }
+  constructor(private dialog: MatDialog, private materialService: MaterialService, private materialLotContainerService: MaterialLotContainerService,public router: Router) { }
 
   ngOnInit() {
 
@@ -41,8 +41,9 @@ export class MaterialIndexComponent implements OnInit {
         if(typeof res !== 'undefined')  this.selectedContainerId = res.id;
        })
       
-      //Lot Subscriber code hee
-      
+      //Default Nav Pane
+      this.router.navigate(['material/container/database']);
+
       
       
       //Scanner thingy here

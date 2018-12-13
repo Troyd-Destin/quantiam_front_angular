@@ -1,0 +1,21 @@
+markdown ::ng-deep{
+
+    font-family: Roboto,sans-serif;
+}
+
+markdown ::ng-deep p {
+    margin-left: 30px;
+    box-sizing: border-box;
+    line-height: 1.5;   
+    font-weight: 400;
+    color: rgba(0,0,0,.87);
+    font-size: 13px;
+}
+
+markdown ::ng-deep h4 {
+    margin-left: 10px;
+}
+
+markdown ::ng-deep h3 {
+    margin-top: 40px;
+}

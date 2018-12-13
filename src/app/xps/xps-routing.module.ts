@@ -14,7 +14,8 @@ const routes: Routes = [
 		
 		{
 			path:'database',
-			component: XpsDatabaseComponent,
+      component: XpsDatabaseComponent,
+      data: { key: 'xpsDatabase' }, 
 		},
 		{		 
               path:'run/:id',

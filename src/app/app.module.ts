@@ -38,11 +38,12 @@ const routes: Routes = [
   {
     path: 'auth',
     component: AuthComponent,
-    data: {name: 'Auth'},
+    data: {key: 'Auth'},
   },
   {
     path: '',
     loadChildren: './core/core.module#CoreModule',
+   // pathMatch: 'prefix',
     canLoad: [AuthGuardService],
   },
 
