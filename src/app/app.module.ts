@@ -38,7 +38,7 @@ const routes: Routes = [
   {
     path: 'auth',
     component: AuthComponent,
-    data: {name:"Auth"},
+    data: {name: 'Auth'},
   },
   {
     path: '',

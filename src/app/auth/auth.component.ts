@@ -1,48 +1,46 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth/auth.service';
-import { SgxScaleWebsocketService } from '../services/sgx-scale-websocket/sgx-scale-websocket.service'; 
+import { SgxScaleWebsocketService } from '../services/sgx-scale-websocket/sgx-scale-websocket.service';
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
-  providers:[AuthService],
+  providers: [AuthService],
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit {
 
    hidePassword = true;
-   ws:any;
-   _ws:any;
+   ws: any;
+   _ws: any;
 
   constructor(private auth: AuthService, private scale_websocket: SgxScaleWebsocketService) { }
 
   ngOnInit() {
-	  
-	  try{ 
-      
-      this.ws = this.scale_websocket.connect(); 	  
-    	 this._ws.subscribe((x)=>{
-		  
-        
+
+	  try {
+
+      this.ws = this.scale_websocket.connect();
+    	 this._ws.subscribe((x) => {
+
+
           console.log(x);
-          //if token  login(null,null, rfid);
-        
-        })
-        
-    }catch(e) {}
+          // if token  login(null,null, rfid);
+
+        });
+
+    } catch (e) {}
   }
-  
-  login(username,password,rfid)
-  {
-    //console.log(username,password);
-    this.auth.login(username,password,null);
+
+  login(username, password, rfid) {
+    // console.log(username,password);
+    this.auth.login(username, password, null);
   }
-  
-  
-  ngOnDestroy()
-  {
-     if(this._ws) this._ws.unsubscribe(); 
+
+
+  ngOnDestroy() {
+     if (this._ws) { this._ws.unsubscribe(); }
   }
-  
+
 
 }
