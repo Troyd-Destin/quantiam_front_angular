@@ -81,14 +81,29 @@ padding-right:12px !important;
 .mat-input-element:disabled {
     color: rgba(0, 0, 0, 0.65) !important;
 }
+
+
 .mat-tab-link
 {
 	height: 35px !important;
     padding: 0 12px !important;
     min-width: 100px !important;
 	font-size: 13px !important;
-/* 	border-radius: 25px;	 */
+	margin-right: 5px !important;
+	/* border-top-left-radius: 10px;	 
+	border-top-right-radius: 10px;	 */
 }
+.mat-tab-link:hover
+{
+	background-color: #d0cfcf60;
+}
+
+.mat-tab-group.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus, .mat-tab-group.mat-primary .mat-tab-link:not(.mat-tab-disabled):focus, .mat-tab-nav-bar.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus, .mat-tab-nav-bar.mat-primary .mat-tab-link:not(.mat-tab-disabled):focus {
+	background-color: rgba(197, 202, 233, 0);
+	
+}
+
+
 
 .rounded-nav-borders a{
 
@@ -100,8 +115,10 @@ padding-right:12px !important;
 {
 	color: #104e7b;
     font-weight: bold;
-    font-size: 14px !important;
-	background-color: #d0cfcf60;
+	font-size: 14px !important;
+	opacity: 1 !important;
+	border-bottom: 2px solid #005da0;
+	/* background-color: #d0cfcf60; */
 }
 
 .mat-list-item-button-active
@@ -287,6 +304,7 @@ padding-right:12px !important;
 	
 	padding: 0px !important;
 	box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+
 }
 
 .quantiam-mat-card mat-card-content{
@@ -307,6 +325,8 @@ padding-right:12px !important;
     padding: 6px;
     font-size: 12px;
 	margin-bottom: 5px;
+	border-top-right-radius: 5px;
+	border-top-left-radius: 5px;
 }
 
 .quantiam-mat-card table {

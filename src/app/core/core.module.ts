@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MarkdownModule } from 'ngx-markdown';
 import { CoreRoutingModule } from './core-routing.module';
 
+import { NgHttpLoaderModule } from 'ng-http-loader';
 import { Select2Module } from 'ng2-select2';
 import { MaterialDesignModule } from '../material-design/material-design.module';
 import { HttpClientModule, HttpClient,HTTP_INTERCEPTORS} from '@angular/common/http';
@@ -23,6 +24,8 @@ import { TokenInterceptor } from '../auth/token.interceptor';
 	Select2Module,
 	MarkdownModule.forRoot({ loader: HttpClient }),
 	HttpClientModule,
+	
+    NgHttpLoaderModule.forRoot(),
   ],
   exports:[
 		RouterModule,

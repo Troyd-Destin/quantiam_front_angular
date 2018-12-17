@@ -18,7 +18,6 @@ LicenseManager.setLicenseKey('Evaluation_License_Not_For_Production_Valid_Until3
 import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { JwtModule  } from '@auth0/angular-jwt';
 import { NgModule } from '@angular/core';
-import { NgHttpLoaderModule } from 'ng-http-loader';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 
 
@@ -66,7 +65,6 @@ export function gettoken () {
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgHttpLoaderModule.forRoot(),
     SimpleNotificationsModule.forRoot(),
     JwtModule.forRoot({
 

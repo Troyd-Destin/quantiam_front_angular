@@ -1,5 +1,10 @@
 
-  <mat-toolbar class="app-header" color="primary">
+ <ng-http-loader 
+ [filteredUrlPatterns]="['.*filterSpinner.*']"
+ 
+ ></ng-http-loader> 
+ 
+	<mat-toolbar class="app-header" color="primary">
 	
 		 <mat-toolbar-row>
 			<button mat-button style="font-size: 14px;padding-left: 10px;text-align:left" routerLink="/home" >Quantiam Technologies Inc.</button>
@@ -13,16 +18,21 @@
 			  </mat-select>
 			</mat-form-field> -->
 			
-			<select2									
+			<select2 *ngIf="initializeScanner"									
 					 (valueChanged)="updateScanner($event)"
 					cssImport ="true"
-			><option disabled></option>
-				<option
-					*ngFor="let scanner of scannerList" 
-					[value]="scanner.id"
-					[attr.selected]="selectedScanner.id==scanner.id ? true : null"
-					>{{scanner.text}}</option>
+					style="margin-bottom: 2px;"
+				><option disabled></option>
+					<option
+						*ngFor="let scanner of scannerList" 
+						[value]="scanner.id"
+						[attr.selected]="selectedScanner.id==scanner.id ? true : null"
+						>{{scanner.text}}</option>
 			</select2>
+			<button (click)="initializeScanner = !initializeScanner" mat-icon-button >
+				<mat-icon  matTooltip="Select a handheld scanner.">track_changes</mat-icon>
+			  </button>
+			
 						
 			<button mat-button class='name-title-box' *ngIf="userLoaded" routerLink="/user/{{user.id}}">
 				<p  class='name'> {{userName}} </p>
@@ -34,6 +44,12 @@
 		
 	</mat-toolbar>
 
+	<div class="top-progress-bar-wrapper">	
+			
+			<mat-progress-bar *ngIf="loading" mode="buffer"  ></mat-progress-bar>		
+	
+		
+	</div>
 					
   <mat-sidenav-container class="app-container" [style.marginTop.px]="options.value.top">
 
@@ -301,14 +317,7 @@
 			<mat-sidenav-content  class="app-content" >
 
 
-				<div style="height:15px;">
-					<div *ngIf="loading"  >
-						
-						<mat-progress-bar mode="buffer" style="margin-bottom:5px;" ></mat-progress-bar>
-					
 				
-					</div>
-				</div>
 				<router-outlet   #c="outlet"></router-outlet>
 			
 
