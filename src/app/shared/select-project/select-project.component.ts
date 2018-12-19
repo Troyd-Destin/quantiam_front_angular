@@ -1,4 +1,4 @@
-import { Component, OnInit,Input,EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { ProjectService } from '../../services/project/project.service';
 
 @Component({
@@ -6,76 +6,75 @@ import { ProjectService } from '../../services/project/project.service';
   templateUrl: './select-project.component.html',
   styleUrls: ['./select-project.component.css']
 })
-export class SelectProjectComponent implements OnInit {
+export class SelectProjectComponent implements OnInit, OnDestroy {
 
-  list$:any;
-  items:any = [];
-  allItems:any = [];
-  showActive:boolean = true;
-  showInactive:boolean = false;
-  virtualScroll:boolean = true;
- 
- 
-  //Inputs 
-  @Input() selectedValue:any = null; // default value, object or ID
-  @Input() multiple:any = false; // multi version
-  @Input() selectableGroup:any = false; // multi version
- 
-  //Outputs
+  list$: any;
+  items: any = [];
+  allItems: any = [];
+  showActive = true;
+  showInactive = false;
+  virtualScroll = true;
+
+
+  // Inputs
+  @Input() selectedValue: any = null; // default value, object or ID
+  @Input() multiple: any = false; // multi version
+  @Input() selectableGroup: any = false; // multi version
+
+  // Outputs
   @Output() change = new EventEmitter<any>();
- 
-  constructor(private projectService:ProjectService) { }
+
+  constructor(private projectService: ProjectService) { }
 
   ngOnInit() {
-  
-    //retrieve from project service
-    //this.items = ['true', 'Two', 3,'test'];    
-  
+
+    // retrieve from project service
+    // this.items = ['true', 'Two', 3,'test'];
+
     this.projectService.list();
-    this.list$ = this.projectService.list$.subscribe((r)=>{
-      
+    this.list$ = this.projectService.list$.subscribe((r) => {
+
       console.log(r);
           this.allItems = r;
-          if(r[0]) this.showItems();
-      
-      })
-  
+          if (r[0]) { this.showItems(); }
+
+      });
+
   }
 
-  showItems()
-  {     
-    console.log(this.showActive,this.showInactive);
-  
-    if(this.showActive && !this.showInactive)
-      
-    this.items = this.allItems.filter((obj)=>{   
-  
-        return obj.active;      
-            
-      }); 
-      
-    if(!this.showActive && this.showInactive)
-      
-    this.items = this.allItems.filter((obj)=>{   
-  
-        return !obj.active;      
-            
-      }); 
-   
-    
-   if(!this.showActive && !this.showInactive) this.items = [];      
-   if(this.showActive && this.showInactive)this.items = this.allItems;
-      
+  showItems() {
+    console.log(this.showActive, this.showInactive);
+
+    if (this.showActive && !this.showInactive) {
+
+    this.items = this.allItems.filter((obj) => {
+
+        return obj.active;
+
+      });
+    }
+
+    if (!this.showActive && this.showInactive) {
+
+    this.items = this.allItems.filter((obj) => {
+
+        return !obj.active;
+
+      });
+    }
+
+
+   if (!this.showActive && !this.showInactive) { this.items = []; }
+   if (this.showActive && this.showInactive) {this.items = this.allItems; }
+
   }
-  
- 
-  onChange(event)
-  {
-     this.change.emit(event);  
+
+
+  onChange(event) {
+     this.change.emit(event);
   }
-  
-  ngOnDestroy()
-  {
+
+  ngOnDestroy() {
     this.list$ .unsubscribe();
   }
 }

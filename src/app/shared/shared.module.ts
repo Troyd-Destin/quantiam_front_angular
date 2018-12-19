@@ -23,35 +23,43 @@ import { Select2UserComponent } from './select2-user/select2-user.component';
 import { Select2MaterialLotContainerComponent } from './select2-material-lot-container/select2-material-lot-container.component';
 
 import { SelectProjectComponent } from './select-project/select-project.component';
-import { SelectMaterialLotContainerComponent } from './select-material-lot-container/select-material-lot-container.component';
 import { SelectUserComponent } from './select-user/select-user.component';
+import { SelectExperimentComponent } from './select-experiment/select-experiment.component';
+import { SelectMaterialContainerComponent } from './select-material-container/select-material-container.component';
 
 @NgModule({
   imports: [
     CommonModule,
     Select2Module,
-	NgSelectModule,
-	FormsModule,
-	FlexLayoutModule,
-	   MatIconModule,
-	   MatCardModule,
-	   MatButtonModule,
-	    MatCheckboxModule,
+    NgSelectModule,
+    FormsModule,
+    FlexLayoutModule,
+    MatIconModule,
+    MatCardModule,
+    MatButtonModule,
+    MatCheckboxModule,
   ],
   declarations: [
     SelectProjectComponent,
     Select2MaterialComponent,
-     Select2MaterialLotComponent,
-      Select2LocationComponent,
-       Select2MaterialSupplierComponent, Select2UserComponent, Select2MaterialLotContainerComponent, SelectMaterialLotContainerComponent, SelectUserComponent],
+    Select2MaterialLotComponent,
+    Select2LocationComponent,
+    Select2MaterialSupplierComponent,
+    Select2UserComponent,
+    Select2MaterialLotContainerComponent,
+    SelectUserComponent,
+    SelectExperimentComponent,
+    SelectMaterialContainerComponent],
   exports: [
     Select2MaterialComponent,
     Select2MaterialLotComponent,
-	Select2MaterialSupplierComponent,
-	Select2LocationComponent,
-	Select2UserComponent,
-  SelectProjectComponent,
-  SelectUserComponent,
+    Select2MaterialSupplierComponent,
+    Select2LocationComponent,
+    Select2UserComponent,
+    SelectProjectComponent,
+    SelectUserComponent,
+    SelectExperimentComponent,
+    SelectMaterialContainerComponent
 
   ],
   schemas: [NO_ERRORS_SCHEMA]

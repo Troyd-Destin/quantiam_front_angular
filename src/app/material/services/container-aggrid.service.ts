@@ -10,7 +10,7 @@ import { NotificationsService } from 'angular2-notifications';
 })
 export class ContainerAggridService {
 
-  private endpoint = '/material/lot/container';
+  private endpoint = '/material/lot/container/ag-grid';
   private modelName = 'Container';
 
   public _DatabaseSource = new BehaviorSubject({});
