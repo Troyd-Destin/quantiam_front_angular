@@ -8,7 +8,7 @@ import {  ContainerAggridService } from '../services/container-aggrid.service';
 import { LocationService } from '../../services/location/location.service';
 import {  environment} from '../../../environments/environment';
 
-import { AggridActiveParentComponent } from '../aggrid-active-parent/aggrid-active-parent.component'
+import { AggridActiveParentComponent } from '../aggrid-active-parent/aggrid-active-parent.component';
 
 @Component({
   selector: 'app-material-container-database',
@@ -19,11 +19,11 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
   private gridApi;
   private gridColumnApi;
-  private rowData: any = [{},{}];
+  private rowData: any = [{}, {}];
 
-  private components:any;
+  private components: any;
   private columnDefs;
-  private statusBar:any;
+  private statusBar: any;
   private defaultColDef;
   private rowModelType;
   private cacheBlockSize;
@@ -35,170 +35,169 @@ export class MaterialContainerDatabaseComponent implements OnInit {
   private frameworkComponents;
   private context;
 
-  private locationList:any =[];
-  private locationListObj:any[];
+  private locationList: any = [];
+  private locationListObj: any[];
 
   private navigateMode = true;
   private editMode = true;
-  private editableContainerCellFields = ['location','purchase_order','qcid','container_name','container_number'];
-  
+  private editableContainerCellFields = ['location', 'purchase_order', 'qcid', 'container_name', 'container_number'];
+
 
   constructor(private http: HttpClient, public router: Router, public containerAggridService: ContainerAggridService,	private locationService: LocationService, private materialLotContainerService: MaterialLotContainerService ) {
 
   this.locationList = [];
 
   this.columnDefs = [{
-        field: "container_id",
+        field: 'container_id',
         width: 100,
-        hide:true, 
-        headerName: 'ID',    
-         
+        hide: true,
+        headerName: 'ID',
+
       },
       {
         width: 80,
-        field:"qcid",
-        headerName:"QCID",
+        field: 'qcid',
+        headerName: 'QCID',
       },
       {
         width: 250,
-        field:"material",
+        field: 'material',
         cellStyle: function (params) {
-        
-          return {  
+
+          return {
             'font-size': '12px',
             'font-weight': 600,
             cursor: 'pointer',
-          }
+          };
         },
       },
       {
         width: 150,
-        field:"grade"
+        field: 'grade'
       },
       {
         width: 100,
-        field:"supplier"
+        field: 'supplier'
       },
       {
-        field:"lot_name",
-        headerName:"Lot",
+        field: 'lot_name',
+        headerName: 'Lot',
         width: 90,
-      },    
-      {
-        width: 90,
-        field:"size"
       },
       {
         width: 90,
-        field:"catalog"
+        field: 'size'
       },
       {
         width: 90,
-        field:"cas",
+        field: 'catalog'
       },
       {
         width: 90,
-        field:"purchase_order",
-        headerName:"PO #",
+        field: 'cas',
+      },
+      {
+        width: 90,
+        field: 'purchase_order',
+        headerName: 'PO #',
       },
       {
         width: 150,
-        field:"container_name",
-        headerName:"Container Name",
+        field: 'container_name',
+        headerName: 'Container Name',
       },
       {
         width: 80,
-        field:"container_number",
-        headerName:"#",
+        field: 'container_number',
+        headerName: '#',
       },
       {
         width: 120,
-        field:"location",
+        field: 'location',
         cellEditorParams: {
           values: this.locationList,
         },
-        cellEditor: "agRichSelectCellEditor",
+        cellEditor: 'agRichSelectCellEditor',
       },
-      
+
       {
         width: 120,
-        field:"container_received",
-        headerName:"Received",
+        field: 'container_received',
+        headerName: 'Received',
      //   cellEditor: "datePicker",
       },
       {
-        field:"updated_at",
-        hide:true, 
-        headerName:"Updated"
+        field: 'updated_at',
+        hide: true,
+        headerName: 'Updated'
       },
       {
-        field:"active",
-        width:80,
-        headerName:"Active",
-        //cellRenderer: function(data){ return '<button mat-button> Test </button>';},
-       
+        field: 'active',
+        width: 80,
+        headerName: 'Active',
+        // cellRenderer: function(data){ return '<button mat-button> Test </button>';},
+
 
       },
     ];
 
  //   this.components = { datePicker: getDatePicker() };
 
-    this.defaultColDef = { 
+    this.defaultColDef = {
 
       cellStyle: function (params) {
         return {
           cursor: 'pointer',
-        }
+        };
       },
 
-    }
+    };
 
     this.statusBar = {
       statusPanels: [
         {
-          statusPanel: "agTotalRowCountComponent",
-          align: "left"
+          statusPanel: 'agTotalRowCountComponent',
+          align: 'left'
         },
-        { statusPanel: "agFilteredRowCountComponent" },
-        { statusPanel: "agSelectedRowCountComponent" },
-        { statusPanel: "agAggregationComponent" }
+        { statusPanel: 'agFilteredRowCountComponent' },
+        { statusPanel: 'agSelectedRowCountComponent' },
+        { statusPanel: 'agAggregationComponent' }
       ]
     };
 
-    //this.rowModelType = "serverSide";
-    //this.cacheBlockSize = 10;
-    //this.maxBlocksInCache = 2;
+    // this.rowModelType = "serverSide";
+    // this.cacheBlockSize = 10;
+    // this.maxBlocksInCache = 2;
     this.getRowNodeId = function (item) {
       return item.id;
     };
-    
+
     this.context = { componentParent: this };
     this.frameworkComponents = {
-      "aggridActiveParentComponent": AggridActiveParentComponent,
+      'aggridActiveParentComponent': AggridActiveParentComponent,
     };
 
-     
-	
+
+
   }
-  
+
   ngOnInit() {
-    
+
 
     this.containerAggridService.getDatabase({});
     this.locationService.getList();
-    this.locationService.list$.subscribe((r)=>{	
-      
+    this.locationService.list$.subscribe((r) => {
+
        // console.log(r);
-        if(r[0])
-        {
+        if (r[0]) {
           this.locationListObj = r;
           r.forEach((obj) => {
 
             this.locationList.push(obj.name);
 
-          })
+          });
         }
-        
+
     });
 
 
@@ -219,7 +218,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
 
   daysSunshineRenderer() {
-   
+
     return '<b> Test</b>';
 }
 
@@ -232,13 +231,12 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
     this.containerAggridService.Database$.subscribe((r) => {
       this.rowData = r;
-      setTimeout(()=>{  this.gridApi.sizeColumnsToFit();},300);
-    })
+      setTimeout(() => {  this.gridApi.sizeColumnsToFit(); }, 300);
+    });
   }
 
-  sizeColumnsToFit()
-  {
-    setTimeout(()=>{  this.gridApi.sizeColumnsToFit();},300);
+  sizeColumnsToFit() {
+    setTimeout(() => {  this.gridApi.sizeColumnsToFit(); }, 300);
   }
 
   onCellEditingStarted(event) {
@@ -246,66 +244,66 @@ export class MaterialContainerDatabaseComponent implements OnInit {
     this.cellOldValue = event.value;
   }
 
-  
+
   onCellEditingStopped(event) {
 
-    //event.data.id
+    // event.data.id
 
-    //alert('Doesn\'t save to server yet');
-    if (this.cellOldValue != event.value) {
+    // alert('Doesn\'t save to server yet');
+    if (this.cellOldValue !== event.value) {
       console.log(event);
       let params: any = {};
       params[event.column.colId] = event.value;
-      
-    
 
-      if(event.column.colId == 'location'){ 
 
-          var locationObj = this.locationListObj.find((location)=>{
 
-              return event.value == location.name;
+      if (event.column.colId === 'location') {
+
+          const locationObj = this.locationListObj.find((location) => {
+
+              return event.value === location.name;
 
           });
 
           console.log(locationObj);
-          params = {'location_id': locationObj.id};          
-        
-        
+          params = {'location_id': locationObj.id};
+
+
         }
-        console.log('Updated',params,event.data);
-          this.materialLotContainerService.update(params,event.data.container_id).subscribe((r)=>{
+        console.log('Updated', params, event.data);
+          this.materialLotContainerService.update(params, event.data.container_id).subscribe((r) => {
 
 
 
-      })
+      });
 
 
     }
   }
 
-  
-  toggleCellsEditable(){
+
+  toggleCellsEditable() {
 
       this.navigateMode = !this.navigateMode;
-      var editable = false;
-      var color = "rgba(242, 250, 255,0);"
+      let editable = false;
+      let color = 'rgba(242, 250, 255,0);';
 
-      if(!this.navigateMode){
-         editable = true;    
-        color = "rgb(242, 250, 255);";
+      if (!this.navigateMode) {
+         editable = true;
+        color = 'rgb(242, 250, 255);';
         }
-      
+
         this.columnDefs.forEach((obj) => {
-          
-          if(this.editableContainerCellFields.includes(obj.field)){
+
+          if (this.editableContainerCellFields.includes(obj.field)) {
                  obj.editable = editable;
                  obj.cellStyle = function (params) {
                   return {
                     cursor: 'pointer',
                     'background-color':  color,
-                  }
-                }
-            }  
+                  };
+                };
+            }
         });
 
 
@@ -315,18 +313,16 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         this.gridApi.sizeColumnsToFit();
     }
 
-  onRowDoubleClicked(event)
-  {
-    if(this.navigateMode) this.router.navigate(['/material/container/'+event.data.container_id]);       
+  onRowDoubleClicked(event) {
+    if (this.navigateMode) { this.router.navigate(['/material/container/' + event.data.container_id]); }
     return;
   }
 
-  onFilterChanged()
-  {
+  onFilterChanged() {
     this.gridApi.setQuickFilter(this.searchBarValue);
   }
 
-  ngOnDestroy() {  }
+  //ngOnDestroy() {  }
 
 }
 

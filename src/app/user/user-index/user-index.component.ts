@@ -8,7 +8,7 @@ import { Router  } from '@angular/router';
 })
 export class UserIndexComponent implements OnInit {
 
-  constructor( public router: Router,) { }
+  constructor( public router: Router, ) { }
 
   ngOnInit() {
 

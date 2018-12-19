@@ -49,6 +49,12 @@ const routes: Routes = [
 				//pathMatch: 'prefix',
 
 			},
+			{
+				path:'sgx',
+				loadChildren: '../sgx/sgx.module#SgxModule',
+				//pathMatch: 'prefix',
+
+			},
 		]
 	},
  

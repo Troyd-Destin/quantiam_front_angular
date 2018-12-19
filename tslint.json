@@ -20,17 +20,14 @@
       true,
       "rxjs/Rx"
     ],
-    "import-spacing": true,
-    "indent": [
-      true,
-      "spaces"
-    ],
+    "import-spacing": true,   
     "interface-over-type-literal": true,
     "label-position": true,
     "max-line-length": [
       true,
-      140
+      300
     ],
+    "indent": [false],
     "member-access": false,
     "member-ordering": [
       true,

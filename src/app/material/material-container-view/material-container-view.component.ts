@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MaterialLotContainerService } from '../../services/material-lot-container/material-lot-container.service';
 import { MaterialLotService } from '../../services/material-lot/material-lot.service';
 import { MaterialService } from '../../services/material/material.service';
@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './material-container-view.component.html',
   styleUrls: ['./material-container-view.component.css']
 })
-export class MaterialContainerViewComponent implements OnInit {
+export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 
   _container = null;
   container: any;
@@ -21,206 +21,197 @@ export class MaterialContainerViewComponent implements OnInit {
   editContainer = false;
   test_selector = null;
   newLotCreated = false;
-  scannerNavigation:any;
+  scannerNavigation: any;
   fetched = false;
-  
-  
-  locationList:any;
+
+
+  locationList: any;
 
   constructor(
 	private materialLotCotainerService: MaterialLotContainerService,
-	private materialService: MaterialService, 
-	private materialLotService: MaterialLotService, 
-	private materialSupplierService: MaterialSupplierService, 
+	private materialService: MaterialService,
+	private materialLotService: MaterialLotService,
+	private materialSupplierService: MaterialSupplierService,
 	private route: ActivatedRoute,
-	private locationService: LocationService, 
-	
+	private locationService: LocationService,
+
 	) { }
 
   ngOnInit() {
-  
-      let id  = this.route.snapshot.params.id;  //obtain ID from route   
-	 
-      this.materialLotCotainerService.getMaterialLotContainer(id); 
+
+      let id  = this.route.snapshot.params.id;  // obtain ID from route
+
+      this.materialLotCotainerService.getMaterialLotContainer(id);
 
       this.route.params.subscribe(val => {
-		 
-        if(id != val.id){
+
+        if (id !== val.id) {
           id = val.id;
            this.materialLotCotainerService.getMaterialLotContainer(id);
-		   
-		  
+
+
         }
-      }); 
-	  
-	  this.route.queryParams.subscribe((p:any)=>{
-	  
-			
+      });
+
+	  this.route.queryParams.subscribe((p: any) => {
+
+
 			  this.scannerNavigation = p['scannerNavigation'];
-			
+
 	  });
-	  
-      this._container = this.materialLotCotainerService.materialLotContainer$.subscribe(res=> { //subscribe to the material service for updates
-     
+
+      this._container = this.materialLotCotainerService.materialLotContainer$.subscribe(res => { // subscribe to the material service for updates
+
 		 console.log(res);
 		this.fetched = true;
-        if(typeof res !== 'undefined') {
+        if (typeof res !== 'undefined') {
 			this.container = res;
-			
-			if(this.scannerNavigation && this.container.id && !this.container.active) this.materialLotCotainerService.update({active:1},this.container.id).subscribe((r)=>{ this.container.active = true;});
-			
-			
-			//console.log(moment(this.container.container_opened).format("YYYY-MM-DDTHH:mm:ss.SSS")+'Z');
-			
-			//Need to find a better way of translating this
-			if(this.container.container_received) this.container.container_received = moment(this.container.container_received).format("YYYY-MM-DDTHH:mm:ss.SSS")+'Z';
-			if(this.container.container_opened) this.container.container_opened = moment(this.container.container_opened).format("YYYY-MM-DDTHH:mm:ss.SSS")+'Z';
-			
-			
-			
+
+			if (this.scannerNavigation && this.container.id && !this.container.active) { this.materialLotCotainerService.update({active: 1}, this.container.id).subscribe((r) => { this.container.active = true; }); }
+
+
+			// console.log(moment(this.container.container_opened).format("YYYY-MM-DDTHH:mm:ss.SSS")+'Z');
+
+			// Need to find a better way of translating this
+			if (this.container.container_received) { this.container.container_received = moment(this.container.container_received).format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z'; }
+			if (this.container.container_opened) { this.container.container_opened = moment(this.container.container_opened).format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z'; }
+
+
+
 			  this.editMaterial = false;
 			  this.editLot = false;
 			  this.editContainer = false;
 		}
-	  }, (error:any)=>{  
+	  }, (error: any) => {
 	  console.log('test');
 	  this.fetched = false;
 		this.container = {};
-	  
+
 	  });
-	
-	
+
+
 		this.locationService.getList();
 		this.fetchLocationList();
-	
+
 	}
-  
-  ngOnDestroy()
-  {
-    this._container.unsubscribe(); 
+
+  ngOnDestroy() {
+    this._container.unsubscribe();
   }
-	
-	fetchLocationList()
-	{
-		this.locationService.list$.subscribe((r)=>{
+
+	fetchLocationList() {
+		this.locationService.list$.subscribe((r) => {
 
 			console.log(this.locationList);
-		
-				
+
+
 				this.locationList = r;
-			
-		
-			
+
+
+
 
 		});
 
-		
+
 	}
 
-  updateContainerField(field,specific_field){
-		
-        var params = {};
-        if(specific_field) {
+  updateContainerField(field, specific_field) {
+
+        const params = {};
+        if (specific_field) {
 			params[specific_field] = field;
-		
-		}else{ params[field.name] =  field.value; }
-        this.materialLotCotainerService.update(params).subscribe((r)=>{console.log(r)});      
+
+		} else { params[field.name] =  field.value; }
+        this.materialLotCotainerService.update(params).subscribe((r) => {console.log(r)});
   }
-  
-  changeContainerStatus()
-  {
-		var params = {};
+
+  changeContainerStatus() {
+		const params = {};
         params['active'] =  this.container.active;
-        this.materialLotCotainerService.update(params).subscribe();  
+        this.materialLotCotainerService.update(params).subscribe();
   }
-  
-  updateMaterial(field){
-	   
-    let params = {};
+
+  updateMaterial(field) {
+
+    const params = {};
     params[field.name] =  field.value;
 	params['supplier'] = true;
-    this.materialService.updateMaterial(params,this.container.lot.material.id).subscribe((r)=>{  this.container.lot.material = r;   });
-  
+    this.materialService.updateMaterial(params, this.container.lot.material.id).subscribe((r) => {  this.container.lot.material = r;   });
+
   }
-  
-  changedLot(obj)
-  {
-	let lot_obj = obj.data[0];
-	
+
+  changedLot(obj) {
+	const lot_obj = obj.data[0];
+
 	console.log(lot_obj);
-	if(lot_obj.isNew)
-		{
-				//trigger some sort of confirm popup
-				if(window.confirm("Are you sure you want to create '"+lot_obj.text+"' ?")) {
-						
-						let params = {'lot_name':lot_obj.text,'material_id':this.container.lot.material.id};
+	if (lot_obj.isNew) {
+				// trigger some sort of confirm popup
+				if (window.confirm('Are you sure you want to create \'' + lot_obj.text + '\' ?')) {
+
+						const params = {'lot_name': lot_obj.text, 'material_id': this.container.lot.material.id};
 						this.createMaterialLot(params);
-						
+
 					  }
-			
+
 			return;
 		}
-		
-	let payload = {'lot_id':lot_obj.id,'lot':true};
+
+	const payload = {'lot_id': lot_obj.id, 'lot': true};
 	console.log(payload);
 	this.materialLotCotainerService.update(payload).subscribe();
-		
-  
+
+
   }
-  
-  createMaterialLot(obj)
-  {
-	
-	this.materialLotService.create(obj).subscribe((r)=>{
-		
-			
-			this.newLotCreated = true;		
-			let payload = {'lot_id':r.id,'lot':true};
+
+  createMaterialLot(obj) {
+
+	this.materialLotService.create(obj).subscribe((r) => {
+
+
+			this.newLotCreated = true;
+			const payload = {'lot_id': r.id, 'lot': true};
 			this.materialLotCotainerService.update(payload).subscribe();
-		
-			
+
+
 		});
-	
+
   }
-  
-  changedSupplier(obj)
-  {
-	let supplier_obj = obj.data[0];
-	
+
+  changedSupplier(obj) {
+	const supplier_obj = obj.data[0];
+
 	console.log(supplier_obj);
-	if(supplier_obj.isNew)
-		{
-				//trigger some sort of confirm popup
-				if(window.confirm("Are you sure you want to create '"+supplier_obj.text+"' ?")) {
-						
-						let params = {'supplier_name':supplier_obj.text};
+	if (supplier_obj.isNew) {
+				// trigger some sort of confirm popup
+				if (window.confirm('Are you sure you want to create \'' + supplier_obj.text + '\' ?')) {
+
+						const params = {'supplier_name': supplier_obj.text};
 						this.createMaterialSupplier(params);
-						
+
 					  }
-			
+
 			return;
 		}
-		
-	let payload = {'supplier_id':supplier_obj.id,'supplier':true};
-	 this.materialService.updateMaterial(payload,this.container.lot.material.id).subscribe((r)=>{  this.container.lot.material = r;   });
-  
-  
+
+	const payload = {'supplier_id': supplier_obj.id, 'supplier': true};
+	 this.materialService.updateMaterial(payload, this.container.lot.material.id).subscribe((r) => {  this.container.lot.material = r;   });
+
+
   }
-  
-  createMaterialSupplier(obj)
-  {
+
+  createMaterialSupplier(obj) {
 	console.log(obj);
-	this.materialSupplierService.create(obj).subscribe((r)=>{
-		
-			console.log(r);	
-			let payload = {'supplier_id':r.id,'supplier':true};
-			this.materialService.updateMaterial(payload,this.container.lot.material.id).subscribe((r)=>{  this.container.lot.material = r;   });
-		
-			
+	this.materialSupplierService.create(obj).subscribe((r) => {
+
+			console.log(r);
+			const payload = {'supplier_id': r.id, 'supplier': true};
+			this.materialService.updateMaterial(payload, this.container.lot.material.id).subscribe((r) => {  this.container.lot.material = r;   });
+
+
 		});
-	
+
   }
-  
-  
-  
+
+
+
 }

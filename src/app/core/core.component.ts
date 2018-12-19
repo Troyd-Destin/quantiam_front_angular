@@ -1,5 +1,5 @@
 
-import { Component, ChangeDetectorRef, OnInit, AfterViewInit  } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit, AfterViewInit, OnDestroy  } from '@angular/core';
 import {Location} from '@angular/common';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MediaMatcher} from '@angular/cdk/layout';
@@ -17,7 +17,7 @@ import { WebsocketService } from '../services/websocket/websocket.service';
 import { SettingsService } from '../services/settings/settings.service';
 
 
-interface webSocketMessages {
+interface WebSocketMessages {
 
 }
 
@@ -34,7 +34,7 @@ interface webSocketMessages {
 })
 
 
-export class CoreComponent implements OnInit {
+export class CoreComponent implements OnInit, OnDestroy {
 
 
 
@@ -51,7 +51,7 @@ export class CoreComponent implements OnInit {
   loading;
 
 
-  webSocketMessages: webSocketMessages;
+  webSocketMessages: WebSocketMessages;
   lastWebSocketMessage;
   _ws;
   _wsk;
@@ -117,10 +117,10 @@ export class CoreComponent implements OnInit {
 
 
   adminCheck() {
-	let adminPermissionArray = [27, 28, 5, 6, 7, 8, 9]; // permission which allow you to see the admin side menu
+	const adminPermissionArray = [27, 28, 5, 6, 7, 8, 9]; // permission which allow you to see the admin side menu
 
 
-	for (var i = 0; i < adminPermissionArray.length; i++) {
+	for (let i = 0; i < adminPermissionArray.length; i++) {
 
 
 			if (this.userService.hasPermission(adminPermissionArray[i])) {
@@ -154,7 +154,7 @@ export class CoreComponent implements OnInit {
 
   getScanner() {
 	this.scannerList = this.websocketService.selectableScanners; // set the selectable list of scanners.
-	let savedScanner = this.settings.get('selectedScanner');
+	const savedScanner = this.settings.get('selectedScanner');
 	console.log(savedScanner);
 	if (savedScanner && savedScanner.id) {
 		this.selectedScanner = this.settings.get('selectedScanner');
@@ -178,7 +178,7 @@ export class CoreComponent implements OnInit {
 
       this.loading = false;
 
-      this._scannerEvents = this.websocketService.scannerEvents.subscribe((data) => {})
+      this._scannerEvents = this.websocketService.scannerEvents.subscribe((data) => {});
 
       this.router.events
             .subscribe((event) => {

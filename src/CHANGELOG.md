@@ -1,12 +1,11 @@
 ### 0.12.0 December 2018
 
-#### General 
-
+#### General
    **[Tweak]**  When the application is "thinking", a loading bar will be displayed at the top of the screen. 
-   **[Tweak]**  The select scanner box is now hidden by default, but can be toggled with the target button by the user's name. 
-   **[Tweak]**  Styling improvements for the navigation bar. 
-	
 
+   **[Tweak]**  The select scanner box is now hidden by default, but can be toggled with the target button by the user's name. 
+
+   **[Tweak]**  Styling improvements for module navigation bars. 
 
 ### 0.11.0 November 2018
 

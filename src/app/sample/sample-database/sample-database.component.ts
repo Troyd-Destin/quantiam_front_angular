@@ -4,6 +4,10 @@ import {  Router } from '@angular/router';
 import {  SampleService } from '../../services/sample/sample.service';
 
 
+import { SampleCreationDialogComponent } from '../sample-creation-dialog/sample-creation-dialog.component';
+
+import {MatDialog} from '@angular/material';
+
 @Component({
   selector: 'app-sample-database',
   templateUrl: './sample-database.component.html',
@@ -32,16 +36,17 @@ export class SampleDatabaseComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private sampleService: SampleService,
+    public dialog: MatDialog
 
   ) {
     this.columnDefs = [{
-        field: "id",
+        field: 'id',
         width: 100,
         headerName: 'ID',
         cellStyle: function (params) {
           return {
             cursor: 'pointer'
-          }
+          };
         },
         editable: false,
       },
@@ -73,26 +78,26 @@ export class SampleDatabaseComponent implements OnInit {
         cellStyle: function (params) {
           return {
             cursor: 'pointer'
-          }
+          };
         },
         valueGetter: function aPlusBValueGetter(params) {
 
-          if (params.data.creator) return params.data.creator.name;
+          if (params.data.creator) { return params.data.creator.name; }
           return '';
 
         }
       },
       {
-        field: "created_at",
+        field: 'created_at',
         editable: false,
         cellStyle: function (params) {
           return {
             cursor: 'pointer'
-          }
+          };
         },
       },
       {
-        field: "created_at",
+        field: 'created_at',
         headerName: 'Delete',
         editable: false,
         width: 130,
@@ -102,7 +107,7 @@ export class SampleDatabaseComponent implements OnInit {
         cellStyle: function (params) {
           return {
             cursor: 'pointer'
-          }
+          };
         },
         cellRenderer: function (params) {
           return '<button mat-button class="mat-button mat-warn" style="color:red;">Delete</button>';
@@ -123,7 +128,7 @@ export class SampleDatabaseComponent implements OnInit {
     };
 
 
-    this.rowModelType = "serverSide";
+    this.rowModelType = 'serverSide';
     this.cacheBlockSize = 10;
     this.maxBlocksInCache = 2;
     this.getRowNodeId = function (item) {
@@ -141,24 +146,23 @@ export class SampleDatabaseComponent implements OnInit {
     this.sampleService.sampleDatabase$.subscribe((r) => {
 
       this.rowData = r;
+      setTimeout(() => {  this.gridApi.sizeColumnsToFit(); }, 300);
 
-
-    })
+    });
   }
 
 
-  testChange(event)
-  {
+  testChange(event) {
     console.log(event);
   }
 
   onCellDoubleClicked(event) {
-    //console.log(event);
-    if (event.column.colId == 'id') this.router.navigate(['/sample/' + event.data.id]);
-    if (event.column.colId == 'created_at') this.router.navigate(['/sample/' + event.data.id]);
-    if (event.column.colId == 'creator') this.router.navigate(['/sample/' + event.data.id]);
-    if (event.column.colId == 'containers') this.router.navigate(['/sample/' + event.data.id]);
-    if (event.column.colId == 'created_by') this.router.navigate(['/sample/' + event.data.id]);
+    // console.log(event);
+    if (event.column.colId === 'id') { this.router.navigate(['/sample/' + event.data.id]); }
+    if (event.column.colId === 'created_at') { this.router.navigate(['/sample/' + event.data.id]); }
+    if (event.column.colId === 'creator') { this.router.navigate(['/sample/' + event.data.id]); }
+    if (event.column.colId === 'containers') { this.router.navigate(['/sample/' + event.data.id]); }
+    if (event.column.colId === 'created_by') { this.router.navigate(['/sample/' + event.data.id]); }
 
 
   }
@@ -171,7 +175,7 @@ export class SampleDatabaseComponent implements OnInit {
 
   deleteSample(params) {
 
-    if (confirm("Are you sure to delete this sample?")) {
+    if (confirm('Are you sure to delete this sample?')) {
       this.sampleService.delete(params.data.id).subscribe((r) => {
         this.rowData.splice(params.rowIndex, 1);
         this.gridApi.setRowData(this.rowData);
@@ -179,14 +183,14 @@ export class SampleDatabaseComponent implements OnInit {
 
       });
     }
-    //alert('test');
+    // alert('test');
   }
 
   onCellEditingStopped(event) {
 
-    if (this.cellOldValue != event.value) {
+    if (this.cellOldValue !== event.value) {
       console.log(event);
-      let params: any = {};
+      const params: any = {};
       params[event.column.colId] = event.value;
       this.sampleService.update(event.data.id, params).subscribe((r) => {
 
@@ -195,10 +199,10 @@ export class SampleDatabaseComponent implements OnInit {
   }
 
 
-  makeCellsEditable(){
+  makeCellsEditable() {
 
 
-    
+
   }
 
   onAddRow() {
@@ -206,7 +210,7 @@ export class SampleDatabaseComponent implements OnInit {
     this.sampleService.create({}).subscribe((r) => {
       this.rowData.splice(0, 0, r);
       this.gridApi.setRowData(this.rowData);
-      //	this.gridApi.updateRowData({ add: [r] });
+      // 	this.gridApi.updateRowData({ add: [r] });
 
 
     });
@@ -214,6 +218,24 @@ export class SampleDatabaseComponent implements OnInit {
 
 
   }
+
+
+  openAddSampleDialog(): void {
+    const dialogRef = this.dialog.open(SampleCreationDialogComponent, {
+      height: '80%',
+      width: '80%',
+    // disableClose: true,
+      autoFocus: true,
+    // data: {name: this.name, animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+
+    });
+  }
+
+
 
   ngOnInit() {
 
@@ -223,11 +245,5 @@ export class SampleDatabaseComponent implements OnInit {
   }
 
 
-  ngOnDestroy()
-
-  {
-
-
-  }
 
 }

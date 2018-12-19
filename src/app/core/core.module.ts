@@ -6,9 +6,9 @@ import { CoreRoutingModule } from './core-routing.module';
 import { NgHttpLoaderModule } from 'ng-http-loader';
 import { Select2Module } from 'ng2-select2';
 import { MaterialDesignModule } from '../material-design/material-design.module';
-import { HttpClientModule, HttpClient,HTTP_INTERCEPTORS} from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
-; 
+
 
 import { HeaderComponent } from './header/header.component';
 import { CoreComponent } from './core.component';
@@ -19,29 +19,29 @@ import { TokenInterceptor } from '../auth/token.interceptor';
 @NgModule({
   imports: [
 	CommonModule,
-	CoreRoutingModule,	
+	CoreRoutingModule,
 	MaterialDesignModule,
 	Select2Module,
 	MarkdownModule.forRoot({ loader: HttpClient }),
 	HttpClientModule,
-	
+
     NgHttpLoaderModule.forRoot(),
   ],
-  exports:[
+  exports: [
 		RouterModule,
 		HeaderComponent,
   ],
   declarations: [
-		HeaderComponent,	
-		CoreComponent, 
+		HeaderComponent,
+		CoreComponent,
 		PatchNotesComponent
 	],
-	bootstrap:[CoreComponent],
-	
-	providers:[{
+	bootstrap: [CoreComponent],
+
+	providers: [{
 		provide: HTTP_INTERCEPTORS,
 		useClass: TokenInterceptor,
 		multi: true
-	  },]
+	  }, ]
 })
 export class CoreModule { }
