@@ -5,59 +5,59 @@ import { PatchNotesComponent } from './patch-notes/patch-notes.component';
 
 const routes: Routes = [
 
-	{ 
-		path:'',
+	{
+		path: '',
 		component: CoreComponent,
-		children:[				
+		children: [
 			{
-				path:'',
+				path: '',
 				redirectTo: 'home',
 			},
 			{
-				path:'home',
+				path: 'home',
 				component: PatchNotesComponent,
-				
+
 			},
 			{
 				path: 'material',
 				loadChildren: '../material/material.module#MaterialModule',
-				//pathMatch: 'prefix',
+				// pathMatch: 'prefix',
 			},
 			{
 				path: 'sample',
 				loadChildren: '../sample/sample.module#SampleModule',
-			//	pathMatch: 'prefix',
+			// 	pathMatch: 'prefix',
 			},
 			{
 				path: 'user',
 				loadChildren: '../user/user.module#UserModule',
-			//	pathMatch: 'prefix',
+			// 	pathMatch: 'prefix',
 			},
 			{
 				path: 'xps',
 				loadChildren: '../xps/xps.module#XpsModule',
-			//	pathMatch: 'prefix',
+			// 	pathMatch: 'prefix',
 			},
 			{
 				path: 'tools',
 				loadChildren: '../tools/tools.module#ToolsModule',
-				//pathMatch: 'prefix',
+				// pathMatch: 'prefix',
 			},
 			{
-				path:'timesheet',
+				path: 'timesheet',
 				loadChildren: '../timesheet/timesheet.module#TimesheetModule',
-				//pathMatch: 'prefix',
+				// pathMatch: 'prefix',
 
 			},
 			{
-				path:'sgx',
+				path: 'sgx',
 				loadChildren: '../sgx/sgx.module#SgxModule',
-				//pathMatch: 'prefix',
+				// pathMatch: 'prefix',
 
 			},
 		]
 	},
- 
+
 
 ];
 

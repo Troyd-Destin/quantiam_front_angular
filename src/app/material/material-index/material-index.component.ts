@@ -51,8 +51,7 @@ export class MaterialIndexComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnDestroy()
-  {
+  ngOnDestroy() {
     this._material.unsubscribe();
     this._container.unsubscribe();
 

@@ -1,4 +1,4 @@
-import {  Component,  OnInit,OnDestroy} from '@angular/core';
+import {  Component,  OnInit, OnDestroy} from '@angular/core';
 import {  HttpClient} from '@angular/common/http';
 import {  Router } from '@angular/router';
 import {  SampleService } from '../../services/sample/sample.service';
@@ -13,7 +13,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
   templateUrl: './sgx-database.component.html',
   styleUrls: ['./sgx-database.component.css']
 })
-export class SgxDatabaseComponent implements OnInit,OnDestroy {
+export class SgxDatabaseComponent implements OnInit, OnDestroy {
 
 
 private gridApi;

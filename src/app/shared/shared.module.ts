@@ -1,18 +1,18 @@
-import { NgModule,NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgSelectModule } from '@ng-select/ng-select'; 
+import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 
 
-import {FlexLayoutModule} from "@angular/flex-layout";
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 import {
   MatIconModule,
   MatButtonModule,
   MatCardModule,
    MatCheckboxModule,
-    
-}  from '@angular/material';
+
+} from '@angular/material';
 
 import { Select2Module } from 'ng2-select2';
 import { Select2MaterialComponent } from './select2-material/select2-material.component';
@@ -44,7 +44,7 @@ import { SelectUserComponent } from './select-user/select-user.component';
      Select2MaterialLotComponent,
       Select2LocationComponent,
        Select2MaterialSupplierComponent, Select2UserComponent, Select2MaterialLotContainerComponent, SelectMaterialLotContainerComponent, SelectUserComponent],
-  exports:[
+  exports: [
     Select2MaterialComponent,
     Select2MaterialLotComponent,
 	Select2MaterialSupplierComponent,
@@ -52,8 +52,8 @@ import { SelectUserComponent } from './select-user/select-user.component';
 	Select2UserComponent,
   SelectProjectComponent,
   SelectUserComponent,
-    
+
   ],
-  schemas:[NO_ERRORS_SCHEMA]
+  schemas: [NO_ERRORS_SCHEMA]
 })
 export class SharedModule { }

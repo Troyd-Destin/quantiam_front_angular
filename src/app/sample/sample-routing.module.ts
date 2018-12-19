@@ -9,35 +9,35 @@ import { SgxScaleAuthComponent } from './sgx-scale-auth/sgx-scale-auth.component
 
 
 const routes: Routes = [
-  
+
   {
-    path:'',
+    path: '',
     component: SampleIndexComponent,
      // redirectTo: '/database',
-      children:[
+      children: [
          {
-          path:'database',
+          path: 'database',
           component: SampleDatabaseComponent,
          },
-      
+
         {
-          path:'sgx-scale-auth',
+          path: 'sgx-scale-auth',
           component: SgxScaleAuthComponent,
-  
+
         },
         {
-          path:':id',
+          path: ':id',
           component: SampleViewComponent,
-  
+
         },
-  
-  
-        
+
+
+
       ]
   },
- 
-  
-  
+
+
+
  ];
 
 @NgModule({

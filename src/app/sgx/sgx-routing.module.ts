@@ -5,7 +5,7 @@ import { SgxIndexComponent } from './sgx-index/sgx-index.component';
 import { SgxDatabaseComponent } from './sgx-database/sgx-database.component';
 import { SgxCreationDialogComponent } from './sgx-creation-dialog/sgx-creation-dialog.component';
 
-const routes: Routes = [ 
+const routes: Routes = [
   {
     path: '',
     component: SgxIndexComponent,
@@ -14,7 +14,7 @@ const routes: Routes = [
         path: 'database',
         pathMatch: 'full',
         component: SgxDatabaseComponent,
-        data: {name:"SgxDatabaseComponent"}
+        data: {name: 'SgxDatabaseComponent'}
       },
     ]
   }

@@ -6,7 +6,7 @@ import {
   MatButtonModule,
   MatButtonToggleModule,
   MatCardModule,
-  MatCheckboxModule,  
+  MatCheckboxModule,
   MatExpansionModule,
   MatDialogModule,
   MatDatepickerModule,
@@ -34,17 +34,17 @@ import {
   MatTableModule,
   MatSortModule,
   MatNativeDateModule,
-  
 
-  
-}  from '@angular/material';
+
+
+} from '@angular/material';
 
 
 
 
 import {MatChipsModule} from '@angular/material/chips';
 
-import {FlexLayoutModule} from "@angular/flex-layout";
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -87,7 +87,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatSortModule,
     MatNativeDateModule,
   ],
-  exports:[
+  exports: [
     MatAutocompleteModule,
     MatButtonModule,
     MatButtonToggleModule,

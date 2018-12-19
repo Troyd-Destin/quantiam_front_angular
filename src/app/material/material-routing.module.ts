@@ -12,21 +12,19 @@ const routes: Routes = [
   {
     path: '',
     component: MaterialIndexComponent,
-   // data: {name:"MaterialIndex"},
-    // redirectTo: '/database',
     children: [
 
       {
         path: 'container/database',
         pathMatch: 'full',
         component: MaterialContainerDatabaseComponent,
-        data: {name:"MaterialContainerDatabase"}
+        data: {name: 'MaterialContainerDatabase'}
       },
       {
         path: 'container/:id',
         component: MaterialContainerViewComponent,
         pathMatch: 'full',
-        data: {name:"MaterialContainerView"}
+        data: {name: 'MaterialContainerView'}
       },
       {
         path: 'database',
@@ -38,7 +36,7 @@ const routes: Routes = [
 
       },
       {
-        //name: 'material_view',
+        // name: 'material_view',
         path: ':id',
         component: MaterialViewComponent,
         pathMatch: 'full'
@@ -48,7 +46,7 @@ const routes: Routes = [
 
 
     ]
-  },];
+  }, ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

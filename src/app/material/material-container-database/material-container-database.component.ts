@@ -322,7 +322,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
     this.gridApi.setQuickFilter(this.searchBarValue);
   }
 
-  //ngOnDestroy() {  }
+  // ngOnDestroy() {  }
 
 }
 

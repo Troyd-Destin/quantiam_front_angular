@@ -12,7 +12,7 @@ export class SampleIndexComponent implements OnInit {
 
   ngOnInit() {
   }
-  
-  
+
+
 
 }

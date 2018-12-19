@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild,OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { UserService } from '../../services/user/user.service';
 import { ActivatedRoute } from '@angular/router';
 import {Location} from '@angular/common';
@@ -14,7 +14,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   templateUrl: './user-view.component.html',
   styleUrls: ['./user-view.component.css']
 })
-export class UserViewComponent implements OnInit,OnDestroy {
+export class UserViewComponent implements OnInit, OnDestroy {
 
 
   constructor(

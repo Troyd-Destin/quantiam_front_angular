@@ -122,7 +122,7 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 			params[specific_field] = field;
 
 		} else { params[field.name] =  field.value; }
-        this.materialLotCotainerService.update(params).subscribe((r) => {console.log(r)});
+        this.materialLotCotainerService.update(params).subscribe((r) => {console.log(r); });
   }
 
   changeContainerStatus() {
@@ -205,7 +205,7 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 
 			console.log(r);
 			const payload = {'supplier_id': r.id, 'supplier': true};
-			this.materialService.updateMaterial(payload, this.container.lot.material.id).subscribe((r) => {  this.container.lot.material = r;   });
+			this.materialService.updateMaterial(payload, this.container.lot.material.id).subscribe((r2) => {  this.container.lot.material = r2;   });
 
 
 		});
