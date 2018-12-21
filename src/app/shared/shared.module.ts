@@ -26,6 +26,7 @@ import { SelectProjectComponent } from './select-project/select-project.componen
 import { SelectUserComponent } from './select-user/select-user.component';
 import { SelectExperimentComponent } from './select-experiment/select-experiment.component';
 import { SelectMaterialContainerComponent } from './select-material-container/select-material-container.component';
+import { SelectSampleComponent } from './select-sample/select-sample.component';
 
 @NgModule({
   imports: [
@@ -49,7 +50,8 @@ import { SelectMaterialContainerComponent } from './select-material-container/se
     Select2MaterialLotContainerComponent,
     SelectUserComponent,
     SelectExperimentComponent,
-    SelectMaterialContainerComponent],
+    SelectMaterialContainerComponent,
+    SelectSampleComponent],
   exports: [
     Select2MaterialComponent,
     Select2MaterialLotComponent,
@@ -59,7 +61,8 @@ import { SelectMaterialContainerComponent } from './select-material-container/se
     SelectProjectComponent,
     SelectUserComponent,
     SelectExperimentComponent,
-    SelectMaterialContainerComponent
+    SelectMaterialContainerComponent,
+    SelectSampleComponent
 
   ],
   schemas: [NO_ERRORS_SCHEMA]

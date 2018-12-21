@@ -409,22 +409,32 @@ padding-right:12px !important;
 /**** ng-select **/
 
 .ng-dropdown-panel {
-    min-width: 100% !important;
+	/* width: auto !important; */
+	min-width: 100% !important;
 	width: inherit !important;
 }
 
 .ng-dropdown-panel .ng-dropdown-panel-items .ng-option
 {
 	padding: inherit !important;
-	padding-left: 20px !important;
-	
+	padding-left: 20px !important; 
+	white-space: normal !important;
 }
 
 .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder {
     top: inherit !important; 
 	padding-bottom: 5px;
-    padding-left: inherit !important; 
+	padding-left: inherit !important; 
 	
 }
 
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option{
+	white-space: normal !important;
 
+}
+
+.ng-dropdown-panel .scrollable-content{
+
+	width: inherit !important;
+
+}

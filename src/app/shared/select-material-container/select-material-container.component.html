@@ -1,3 +1,72 @@
-<p>
-  select-material-container works!
-</p>
+
+<ng-select 
+
+  [items]="itemsBuffer"
+  [loading]="loading"
+  
+	[multiple]="multiple"
+  [placeholder]="placeholder"
+ 
+  (change)="onChange($event)"
+  (add)="onAdd($event)"
+  (remove)="onRemove($event)"
+  (scroll)="onScroll($event)"
+  (scrollToEnd)="onScrollToEnd()"
+  [(ngModel)]="selectedValue"	
+  [typeahead]="_people3input"
+  [searchFn]="customSearchFn"
+
+>
+<!-- scroll-host & scrollable-content  -->
+
+<ng-template ng-label-tmp let-item="item">
+    {{item.qcid || item.identifier}} {{item.lot.material.name}} {{item.lot.material.grade}}
+ </ng-template>
+
+<ng-template ng-header-tmp>
+    <small class="form-text text-muted">Loaded {{itemsBuffer.length}} of {{totalResults}}</small>
+</ng-template>
+
+
+<ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm" >
+  <div fxLayout="row" fxLayoutAlign="center center"  fxLayoutGap="10px">
+    <div fxLayout="row" class="dropdown-options"  fxLayoutAlign="start center" fxFlex >
+    
+
+      <div style="width:80px; font-size: 10px;" >{{item.qcid || item.identifier}}</div>
+
+       <div style="width:250px; margin-right:5px;" fxLayout="column"  [ngOptionHighlight]="search"><b>{{item.lot.material.name}}</b>        
+        <i class="grade_text" >
+            {{item.lot.material.grade}}
+        </i>
+      </div>
+      <div style="width:100px;"  >
+          {{item.lot.lot_name}}
+        </div>
+      <div style="width:120px;" >
+          {{item.lot.material.supplier.supplier_name}}
+        </div>
+
+      <div style="width:100px;">
+        {{item.size}}
+      </div>
+
+      <div style="width:100px;">
+          {{item.location.name}}
+        </div> 
+    
+      
+    </div>
+    <div>
+      <a *ngIf="item.active" mat-button  color="primary"   > Active </a>
+      <a *ngIf="!item.active" mat-button  color="warn"   > Inactive </a>
+    </div>
+  </div> 
+
+
+  
+    
+</ng-template>
+
+
+</ng-select>

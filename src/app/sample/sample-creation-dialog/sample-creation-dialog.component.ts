@@ -32,9 +32,12 @@ export class SampleCreationDialogComponent implements OnInit, OnDestroy {
   private gridColumnApi;
   private cellOldValue;
 
+  private selectedExperiment = { has_materials: false, id: null};
+
 
 
   private ColumnDefs = [
+    {headerName: 'ID', field: 'id',  maxWidth: 80,  },
     {
       headerName: 'Chemical',
       maxWidth: 250,
@@ -124,5 +127,21 @@ export class SampleCreationDialogComponent implements OnInit, OnDestroy {
 
     onCellEditingStopped(event) {
 
+    }
+
+    materialContainerChanged(event)
+    {
+      if(event.id)
+      {
+      this.selectedContainers.push(event);
+      this.gridApi.setRowData(this.selectedContainers);
+      }
+    }
+
+    experimentChanged(event) {
+
+      console.log(event);
+      this.selectedExperiment = event;
+//     
     }
 }

@@ -46,7 +46,7 @@ export class SelectExperimentComponent implements OnInit {
 
   }
 
-  onChange() {}
+  onChange(event) { this.change.emit(event); }
   onAdd() {}
   onRemove() {}
 
