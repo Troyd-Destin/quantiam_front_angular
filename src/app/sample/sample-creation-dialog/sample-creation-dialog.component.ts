@@ -129,10 +129,8 @@ export class SampleCreationDialogComponent implements OnInit, OnDestroy {
 
     }
 
-    materialContainerChanged(event)
-    {
-      if(event.id)
-      {
+    materialContainerChanged(event) {
+      if (event.id) {
       this.selectedContainers.push(event);
       this.gridApi.setRowData(this.selectedContainers);
       }
@@ -142,6 +140,6 @@ export class SampleCreationDialogComponent implements OnInit, OnDestroy {
 
       console.log(event);
       this.selectedExperiment = event;
-//     
+//
     }
 }
