@@ -22,11 +22,38 @@ export class TgaPeakSelectionToolComponent implements OnInit {
   renderChart = false;
   Highcharts = Highcharts;
   chartOptions = {
+    chart:{
+
+      zoomeType: 'xy',
+    },
     series: [],
     title:{
       text: '',
+    },
+    yAxis:[
+      {
+      title:{
+        text: 'd(%) / d(c)'
+      }
+    },
+    {
+      title:{
+        text: 'Weight Percent'
+      },
+      opposite: true,
+    },
+    // {
+    //   title:{
+    //     text: 'Mass'
+    //   }
+    // }
+  ],
+  xAxis:[
+    {
+     // min: 100,
+     // max: 1100,
     }
-
+  ]
 
   };
 
@@ -92,25 +119,60 @@ export class TgaPeakSelectionToolComponent implements OnInit {
 
         console.log(step);
 
+          /// Derivative 
+          let seriesObj = {
 
-          this.TgaRun.steps[i].type = 'spline';
-          this.TgaRun.steps[i].events = {};
+            name: 'd(%) / d(C)',
+            type: 'spline',
+            yAxis: 0,
+            turboThreshold: 0,
+            data: [],
+            events: {
+              click: (x) => {
       
-          this.TgaRun.steps[i].turboThreshold = 0;
+              this.createTgaRunPeak(x.point);
+            }
+           }
+          };
+          
+          let wtPercent = {
+
+            name: 'Weight Percent',
+            type: 'spline',
+            yAxis: 1,
+            data: [],
+            turboThreshold: 0,
+            events: {
+              click: (x) => {
+      
+              this.createTgaRunPeak(x.point);
+            }
+           }
+          };
+        
 
           this.TgaRun.steps[i].data.forEach((point) => {
       
-            point.x = parseFloat(point.temperature);
-            point.y = parseFloat(point['Smoothed']);
+            let newPoint = {x: null, y: null};
+            let newPoint2 = {x: null, y: null};
+
+            newPoint.x = parseFloat(point.temperature);
+            newPoint.y = parseFloat(point['Smoothed']);
+
+            seriesObj.data.push(newPoint);
+
+            newPoint2.x = parseFloat(point.temperature);
+            newPoint2.y = parseFloat(point.weight_percent);
+
+            wtPercent.data.push(newPoint2);
       
           });
-      
-          this.TgaRun.steps[i].events.click = (x) => {
-      
-            this.createTgaRunPeak(x.point);
-          };
-    
-          this.chartOptions.series.push(this.TgaRun.steps[i]);
+
+          this.chartOptions.series.push(wtPercent);
+          this.chartOptions.series.push(seriesObj);
+
+
+          //
       }
 
     })
