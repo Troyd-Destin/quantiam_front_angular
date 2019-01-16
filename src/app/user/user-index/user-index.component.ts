@@ -12,7 +12,7 @@ export class UserIndexComponent implements OnInit {
 
   ngOnInit() {
 
-    this.router.navigate(['user/database']);
+   // this.router.navigate(['user/database']);
 
   }
 

@@ -17,13 +17,6 @@
 	bindValue="id"
 	bindLabel="name"
 >   
-  <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm" >
-      <div fxLayout="row"  fxLayoutAlign="start center"  >
-
-        <div   [ngOptionHighlight]="search"> <b>{{item.abbrev}} </b></div> 
-        <div style="width:250px; font-size:12px; margin-left:10px" [ngOptionHighlight]="search">{{item.name}}</div>        
-      </div>
-  </ng-template>
   
 </ng-select>
 

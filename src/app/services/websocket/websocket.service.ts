@@ -111,6 +111,7 @@ export class WebsocketService {
 				this.ws.onmessage = (e) => {
 				// console.log(e);
 					const r = JSON.parse(e.data);
+					console.log(r);
 					observer.next(r);
 				};
 
@@ -144,7 +145,7 @@ export class WebsocketService {
 				this.ws.onmessage = (e) => {
 					const r = JSON.parse(e.data);
 				   try {  // Redirect user to specific screen based on scan event.
-						// console.log(r);
+						
 						const scannerResponse = r;
 						if (scannerResponse.type === 'Scanner') {
 

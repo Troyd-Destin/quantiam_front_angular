@@ -1,0 +1,36 @@
+
+<div *ngIf="TgaRun?.filename">
+
+
+  <div fxLayout="row" fxLayoutGap="10px">
+      <mat-form-field>
+          <mat-select placeholder="TGA File" [(ngModel)]="selectedFile" (selectionChange)="changeSelectedFile($event)" >
+            <mat-option *ngFor="let file of TgaFileList" [value]="file">
+              {{file.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+     
+    <button mat-button *ngIf="selectedFileIndex != 0" (click)="previousRun()">Previous</button>
+    <button mat-button *ngIf="selectedFileIndex < TgaFileList.length"(click)="nextRun()">Next</button>
+
+      
+    
+
+  </div>
+
+    <highcharts-chart *ngIf="renderChart"
+      [Highcharts]="Highcharts"
+      [options]="chartOptions"
+      [callbackFunction]="chartRender()"
+
+      style="width: 100%; height: 400px; display: block;"
+    ></highcharts-chart>
+
+    <div *ngIf="TgaRun.peaks[0]">
+        <h3> Peaks </h3> 
+        <div  fxLayout="row" fxLayoutGap="10px">
+          <button *ngFor="let peak of TgaRun.peaks" mat-button (click)="deleteTgaRunPeak(peak)">{{peak.temperature}}</button>
+        </div>
+  </div>
+</div>

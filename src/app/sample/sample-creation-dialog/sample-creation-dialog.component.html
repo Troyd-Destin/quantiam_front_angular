@@ -1,61 +1,83 @@
+<div class="fixActionRow">
+<h2 mat-dialog-title> Sample Creation Dialog</h2>
 
-<h2> Sample Creation Dialog </h2>
-<div id="" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+<div fxLayout="column" fxLayoutGap="20px">
 
-		<app-select-experiment
+	<div id="" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
 
-			style="min-width:250px;"
-			(change)="experimentChanged($event)"
-	></app-select-experiment>
+			<app-select-experiment
 
-	
-		<mat-form-field *ngIf="selectedExperiment.id">
-			<mat-select 
-			required
-			#SampleType
-			placeholder="Sample Type"  
-			[(ngModel)]="selected_type"
-			>
-
-				<mat-option *ngFor="let item of sampleTypeList">{{item}}</mat-option>
-			</mat-select>
-
-		
-		</mat-form-field>
-		<h3 *ngIf="selectedExperiment.id"> SGX ID - 006</h3> 
-</div>
-
-
-
-<div *ngIf="selectedExperiment.has_materials" id="addMaterialContainers" fxLayout="column" fxLayoutAlign="start start">
-
-	<div fxLayout="row" fxLayoutAlign="start center">
-			<app-select-material-container
-
-			style="min-width:400px;"
-			(change)="materialContainerChanged($event)"
-		></app-select-material-container>
+				style="min-width:250px;"
+				(change)="experimentChanged($event)"
+		></app-select-experiment>
 	</div>
-	
+	<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
 
-<ag-grid-angular  
-					
+			
+
+			<mat-form-field *ngIf="selectedExperiment.id" style="width:100px;" >
+					<input matInput placeholder="Sample ID" [(ngModel)]="newSample.experiment_sample">
+				</mat-form-field>
+
+			<mat-form-field *ngIf="selectedExperiment.id" style="width:250px;">
+				<input matInput placeholder="Sample Name" [(ngModel)]="newSample.name">
+			</mat-form-field>
+
+			<mat-form-field *ngIf="selectedExperiment.id">
+					<mat-select
+					required
+					#SampleType
+					placeholder="Sample Type"
+					[(ngModel)]="selected_type"
+					>
+	
+						<mat-option *ngFor="let item of sampleTypeList">{{item}}</mat-option>
+					</mat-select>
+	
+	
+				</mat-form-field>
+
+			
+	</div>
+
+	<div   *ngIf="selectedExperiment.has_materials" id="addMaterialContainers" fxLayout="column" fxLayoutAlign="start start">
+			<div fxLayout="row" fxLayoutAlign="start center" *ngIf="selectedExperiment.has_materials" fxLayoutGap="20px">
+					<app-select-material-container
+					placeholder="Add container to sample. "
+					style="min-width:400px;"
+					(change)="materialContainerChanged($event)"
+				></app-select-material-container>
+
+				<mat-checkbox  [(ngModel)]="weighAfterScanning"> Weigh Immediatly </mat-checkbox>
+			</div>
+				<ag-grid-angular
+
 						#rto_agrid
-						style="width: calc(100%); height:500px;margin-top:10px;" 
+						style="width: calc(100%); height:500px;margin-top:10px;"
 						class="ag-theme-material"
-					
-						[rowData]="selectedContainers" 
+
+						[rowData]="selectedContainers"
 						[columnDefs]="ColumnDefs"
 						[enableSorting]="true"
-						[enableFilter]="true"	
+						[enableFilter]="true"
 						(gridReady)="onGridReady($event)"
 						(cellEditingStopped)="onCellEditingStopped($event)"
-    				(cellEditingStarted)="onCellEditingStarted($event)"
+						(cellEditingStarted)="onCellEditingStarted($event)"
+						(rowClicked)="selectRow($event)"
 						[statusBar]="false"
 						[enableColResize]="true"
-						[enableRangeSelection]="true"						
+						[enableRangeSelection]="true"
 						[defaultColDef]="DefaultColDef"
-						
+
 						>
 					</ag-grid-angular>
 				</div>
+</div>
+	<div class="spacer"></div>
+	<div mat-dialog-actions >
+		<button mat-button (click)="saveSample()"> Save </button>
+		<button mat-button (click)="saveSample()"> Start Weighing Process </button>
+
+		<button mat-button [mat-dialog-close]="" cdkFocusInitial> Close </button>
+	</div>
+</div>

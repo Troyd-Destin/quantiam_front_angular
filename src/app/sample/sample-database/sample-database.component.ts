@@ -222,7 +222,7 @@ export class SampleDatabaseComponent implements OnInit {
 
   openAddSampleDialog(): void {
     const dialogRef = this.dialog.open(SampleCreationDialogComponent, {
-      height: '80%',
+      height: '90%',
       width: '80%',
     // disableClose: true,
       autoFocus: true,

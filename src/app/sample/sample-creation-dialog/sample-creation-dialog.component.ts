@@ -5,10 +5,21 @@ import { MaterialLotContainerService } from '../../services/material-lot-contain
 import { MaterialService } from '../../services/material/material.service';
 
 import { WebsocketService } from '../../services/websocket/websocket.service';
+import { materialize } from 'rxjs/operators';
+import { InternalNgModuleRef } from '@angular/core/src/linker/ng_module_factory';
+
+import { NotificationsService } from 'angular2-notifications';
 
 export interface DialogData {
   animal: string;
   name: string;
+}
+
+export interface Sample {
+
+  name: string;
+  experiment: number;
+  sample_experiment_type: number;
 }
 
 
@@ -17,23 +28,39 @@ export interface DialogData {
   templateUrl: './sample-creation-dialog.component.html',
   styleUrls: ['./sample-creation-dialog.component.css']
 })
+
+
+
 export class SampleCreationDialogComponent implements OnInit, OnDestroy {
+
+  constructor(
+    public dialogRef: MatDialogRef<SampleCreationDialogComponent>,
+    private websocket: WebsocketService,
+    private materialLotContainer: MaterialLotContainerService,
+    private material: MaterialService,
+    private notification: NotificationsService,
+    ) {}
+
+
 
   scannedObj: any;
   selectedContainers = [];
   _ws: any;
   allowedScannerPrefixes = ['QCID', 'SGX'];
-
   private sampleTypeList = ['5 % H2 Treatment (furnace)', 'Sintered Pellet', 'Carbon Impregnation', 'Post Cracking', 'Pellet Reduction', 'Carbon Physical Mixture'];
+  private newSample = { 'name': null, 'experiment': null, 'sample_experiment_type': null, 'experiment_sample': null };
+  private selectedExperiment = { has_materials: false, id: null, abbrev: null, next_sample: null };
 
   private selected_type;
-
   private gridApi;
   private gridColumnApi;
   private cellOldValue;
+  private randomNumber;
+  private selectedRowObj;
 
-  private selectedExperiment = { has_materials: false, id: null};
-
+  // Toggles
+  private weighAfterScanning = true;
+  private listenToSelectedScale;
 
 
   private ColumnDefs = [
@@ -52,10 +79,30 @@ export class SampleCreationDialogComponent implements OnInit, OnDestroy {
       return event.data.amount_ordered + ' ' + event.data.denomination;
 
     } },
-    {headerName: 'Formula Weight', field: 'lot.material.formula_weight', editable: true},
-    {headerName: 'Mols', editable: true, field: 'mols', type: 'numericColumn'  },
-    {headerName: 'Calculated', editable: true, field: 'calculated', type: 'numericColumn'  },
-    {headerName: 'Actual', editable: true,  field: 'actual', type: 'numericColumn' },
+    {headerName: 'Formula Weight (g/mol)', field: 'lot.material.formula_weight', editable: true},
+    {headerName: 'Mols (mol)', editable: true, field: 'mols', type: 'numericColumn'  },
+    {headerName: 'Mass (g)', editable: true, field: 'mass', type: 'numericColumn'  },
+   /* {headerName: 'Actual', editable: false,  field: 'actual', cellRenderer: function(params){ 
+
+     // console.log(params);
+      const USL = params.data.mass + 0.1;
+      const LSL = params.data.mass - 0.1;
+
+      if(params.value > USL || params.value < LSL ) return '<button type="button" class="btn btn-danger">'+params.value+' g</button>';
+
+     // return '<button type="button" class="btn btn-success" onclick="unSelectRow()">'+params.value+'</button>';
+     //console.log(this);
+      return '<div class="input-group mb-3">\
+      <input type="text" class="form-control" placeholder="Scale Value" aria-label="" aria-describedby="basic-addon2" value="'+params.value+'">\
+      <div class="input-group-append">\
+        <span class="input-group-text" id="basic-addon2">SGX</span>\
+      </div>\
+     </div>';
+
+
+    }},*/
+    {headerName: 'Measured', editable: true,  field: 'actual',type: 'numericColumn'},
+
   ];
 
   private DefaultColDef = {
@@ -70,19 +117,17 @@ export class SampleCreationDialogComponent implements OnInit, OnDestroy {
 
   };
 
-  constructor(
-    public dialogRef: MatDialogRef<SampleCreationDialogComponent>,
-    private websocket: WebsocketService,
-    private materialLotContainer: MaterialLotContainerService,
-    private material: MaterialService,
-    ) {}
-
-
-
+ 
 
     ngOnInit() {
 
       this.websocket.redirectOnScan = false;
+
+      setInterval((x)=>{
+
+        this.updateSelectedRowScaleValue();
+      
+      },200)
 
 
       // subscribe to scanner events
@@ -92,9 +137,9 @@ export class SampleCreationDialogComponent implements OnInit, OnDestroy {
               console.log(r.data);
               this.materialLotContainer.fetch(r.data).subscribe((container: any) => {
 
-                this.selectedContainers.push(container);
-                this.gridApi.setRowData(this.selectedContainers);
-                console.log(container, this.selectedContainers);
+              
+                this.addContainerToTable(container);
+               
               });
       });
 
@@ -127,12 +172,31 @@ export class SampleCreationDialogComponent implements OnInit, OnDestroy {
 
     onCellEditingStopped(event) {
 
+
+      if(event.column.colId === 'lot.material.formula_weight')
+      {
+        const params = {'formula_weight': event.data.lot.material.formula_weight};
+        this.material.updateMaterial(params,event.data.lot.material.id).subscribe();
+
+      }
+
+      if (event.column.colId === 'mass')
+      {
+        event.data.mols =  event.data.mass / event.data.lot.material.formula_weight;
+        event.node.setData(event.data);
+
+      }
+      if (event.column.colId === 'mols') {
+
+            event.data.mass = event.data.mols * event.data.lot.material.formula_weight;
+            event.node.setData(event.data);
+      }
+
     }
 
     materialContainerChanged(event) {
       if (event.id) {
-      this.selectedContainers.push(event);
-      this.gridApi.setRowData(this.selectedContainers);
+        this.addContainerToTable(event);
       }
     }
 
@@ -140,6 +204,49 @@ export class SampleCreationDialogComponent implements OnInit, OnDestroy {
 
       console.log(event);
       this.selectedExperiment = event;
+      this.newSample.experiment_sample = this.selectedExperiment.abbrev+'-'+this.selectedExperiment.next_sample;
+
 //
+    }
+
+    selectRow(event)
+    {
+      this.selectedRowObj = event;
+    }
+    unSelectRow()
+    {
+      this.selectedRowObj = null;
+    }
+
+    updateSelectedRowScaleValue()
+    {
+      if(this.selectedRowObj)
+      {
+       this.selectedRowObj.data.actual = Math.random();
+       this.selectedRowObj.node.setData(this.selectedRowObj.data);
+      }
+    }
+
+    addContainerToTable(container)
+    {
+      const testPresence = this.selectedContainers.find(function(obj, index){ //search containers that have the same ID
+        return container.id == obj.id;
+      });
+
+      if(!testPresence)
+      {
+        container.mols = 1;
+        container.rowId = container.id;
+        this.selectedContainers.push(container);
+        this.gridApi.setRowData(this.selectedContainers);
+      } else
+      {
+        this.notification.error('Error', 'Container is already in the list.', {timeOut: 4000, showProgressBar: false, clickToClose: true});
+      }
+
+      console.log(this.gridApi);
+
+      //get row ID for container and set as selected
+      if(this.weighAfterScanning){}
     }
 }

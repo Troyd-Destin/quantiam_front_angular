@@ -16,11 +16,11 @@
 					
 						<p *ngIf="!selectedMaterial.id"> or </p>
 				
-				<button mat-button  (click)="createMaterialAttrs()" *ngIf="!selectedMaterial.id"> Create Material </button>
+				<button mat-raised-button  (click)="createMaterialAttrs()" *ngIf="!selectedMaterial.id"> Create Material </button>
 				
 			</div>
 			<div fxLayoutGap="5px" fxLayout="row">
-				<button mat-button  class="mat-raised-button" (click)="selectingMaterialAttrs()" *ngIf="creatingMaterial" fxFlex="20"> Select Material Instead </button>
+				<button mat-raised-button  (click)="selectingMaterialAttrs()" *ngIf="creatingMaterial" fxFlex="20"> Select Material Instead </button>
 			</div>
 			<div *ngIf="newMaterial || selectedMaterial.id" fxLayout="column"  fxLayoutGap="10px" >
 			

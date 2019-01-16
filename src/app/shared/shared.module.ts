@@ -27,6 +27,7 @@ import { SelectUserComponent } from './select-user/select-user.component';
 import { SelectExperimentComponent } from './select-experiment/select-experiment.component';
 import { SelectMaterialContainerComponent } from './select-material-container/select-material-container.component';
 import { SelectSampleComponent } from './select-sample/select-sample.component';
+import { SelectExperimentTypeComponent } from './select-experiment-type/select-experiment-type.component';
 
 @NgModule({
   imports: [
@@ -51,7 +52,8 @@ import { SelectSampleComponent } from './select-sample/select-sample.component';
     SelectUserComponent,
     SelectExperimentComponent,
     SelectMaterialContainerComponent,
-    SelectSampleComponent],
+    SelectSampleComponent,
+    SelectExperimentTypeComponent],
   exports: [
     Select2MaterialComponent,
     Select2MaterialLotComponent,

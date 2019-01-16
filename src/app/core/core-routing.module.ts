@@ -39,6 +39,11 @@ const routes: Routes = [
 			// 	pathMatch: 'prefix',
 			},
 			{
+				path: 'tga',
+				loadChildren: '../tga/tga.module#TgaModule',
+			// 	pathMatch: 'prefix',
+			},
+			{
 				path: 'tools',
 				loadChildren: '../tools/tools.module#ToolsModule',
 				// pathMatch: 'prefix',

@@ -148,19 +148,17 @@ export class CoreComponent implements OnInit, OnDestroy {
 	this.settings.set('selectedScanner', this.selectedScanner);
 	this.websocketService.selectedScanner = this.selectedScanner;
 
-
-
   }
 
   getScanner() {
-	this.scannerList = this.websocketService.selectableScanners; // set the selectable list of scanners.
-	const savedScanner = this.settings.get('selectedScanner');
-	console.log(savedScanner);
-	if (savedScanner && savedScanner.id) {
-		this.selectedScanner = this.settings.get('selectedScanner');
-	} else {
-		this.selectedScanner = this.websocketService.selectableScanners[0];
-	}
+    this.scannerList = this.websocketService.selectableScanners; // set the selectable list of scanners.
+    const savedScanner = this.settings.get('selectedScanner');
+    console.log(savedScanner);
+    if (savedScanner && savedScanner.id) {
+      this.selectedScanner = this.settings.get('selectedScanner');
+    } else {
+      this.selectedScanner = this.websocketService.selectableScanners[0];
+    }
 
   }
 
@@ -178,25 +176,30 @@ export class CoreComponent implements OnInit, OnDestroy {
 
       this.loading = false;
 
-      this._scannerEvents = this.websocketService.scannerEvents.subscribe((data) => {});
+}
 
-      this.router.events
-            .subscribe((event) => {
+  connectScannerService()
+  {
+    if(this.initializeScanner)
+    {
+    this._scannerEvents = this.websocketService.scannerEvents.subscribe((data) => {});
 
-
-                if (event instanceof NavigationStart) {
-                    this.loading = true;
-
-                } else if (
-
-                    event instanceof NavigationCancel ||
-                    event instanceof NavigationEnd
-                    ) {
-                             setTimeout((x) => {  this.loading = false; }, 500);
-                        }
-            });
+    this.router.events
+          .subscribe((event) => {
 
 
+              if (event instanceof NavigationStart) {
+                  this.loading = true;
+
+              } else if (
+
+                  event instanceof NavigationCancel ||
+                  event instanceof NavigationEnd
+                  ) {
+                           setTimeout((x) => {  this.loading = false; }, 500);
+                      }
+          });
+        }
   }
 
    ngOnDestroy(): void {

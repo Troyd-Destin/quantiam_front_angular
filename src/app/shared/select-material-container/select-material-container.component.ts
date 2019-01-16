@@ -1,5 +1,5 @@
 import { environment } from '../../../environments/environment';
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, ElementRef  } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { catchError, map, tap, delay, debounceTime, distinctUntilChanged, switchMap, shareReplay, publishReplay, refCount } from 'rxjs/operators';
 import { Subject, Observable, of, concat, BehaviorSubject } from 'rxjs';
@@ -11,12 +11,12 @@ import { Subject, Observable, of, concat, BehaviorSubject } from 'rxjs';
 })
 export class SelectMaterialContainerComponent implements OnInit {
 
- 
+
   selectedPersons = [{ name: 'Karyn Wright' }, { name: 'Other' }];
 
   public _people3input = new BehaviorSubject({});
   public people3$: Observable<any> = this._people3input.asObservable();
-  
+
 
     // Inputs
   @Input() selectedValue: any = null; // default value, object or ID
@@ -32,9 +32,10 @@ export class SelectMaterialContainerComponent implements OnInit {
 
   items = [];
   itemsBuffer;
-  bufferSize = 50;
+  dropdownWidth = 900; // in pixels
+  bufferSize = 75;
   virtualScroll = true;
-  numberOfItemsFromEndBeforeFetchingMore = 25;
+  numberOfItemsFromEndBeforeFetchingMore = 40;
   totalResults;
   loading = false;
   page = 1;
@@ -42,15 +43,15 @@ export class SelectMaterialContainerComponent implements OnInit {
   showActive = true;
   showInactive = false;
 
-  constructor(public http: HttpClient, ) {}
-  
-            
+  constructor(public http: HttpClient, private _elementRef: ElementRef) {}
+
+
 
   ngOnInit() {
 
     this.loadItems();
 
-    this._people3input.next(this.selectedPersons);
+    //this._people3input.next(this.selectedPersons);
   }
 
   onChange(event) { this.change.emit(event); }
@@ -58,13 +59,17 @@ export class SelectMaterialContainerComponent implements OnInit {
   onRemove() { }
 
   test(event){
-    
+
     return of([{name:'thing'}]);
     console.log(event);
   }
 
   loadItems()
   {
+
+
+    //use a service
+    
     const params  = new HttpParams().set('page', this.page.toString());
 
     this.http.get<any>(environment.apiUrl + `${this.endpoint}`, { 'params': params } )
@@ -96,22 +101,16 @@ export class SelectMaterialContainerComponent implements OnInit {
     // console.log(term,item);
     term = term.toLocaleLowerCase();
 
-
-    // if(typeof lastname !== "undefined") item.qcid
-
     return item.lot.material.name.toLocaleLowerCase().indexOf(term) > -1
+    || item.lot.lot_name.toLocaleLowerCase().indexOf(term) > -1
     || item.identifier.toLocaleLowerCase().indexOf(term) > -1;
-
-
-    // || item.lot.lot_name.toLocaleLowerCase().indexOf(term) > -1
-    // || item.lot.material.grade.toLocaleLowerCase().indexOf(term) > -1
-    //
-    // || item.qcid.toLocaleLowerCase().indexOf(term) > -1 ;
 
 }
 
 
   private fetchMore() {
+
+      //use a service as well
 
     this.loading = true;
     this.page = this.page + 1;
@@ -128,7 +127,19 @@ export class SelectMaterialContainerComponent implements OnInit {
   }
 
 
-   
+  private onOpen(){
+
+  setTimeout((x)=>{ 
+    
+    const dropdown = document.querySelector('.total-padding');
+    dropdown.setAttribute('style','width:'+this.dropdownWidth+'px !important;height: 1800px;'); //this changes the dropdown to be as wide as it's contents
+    //dropdown.setAttribute('style',''); //workaround 
+
+  }, 100);
+
+  }
+
+
 
 
 }

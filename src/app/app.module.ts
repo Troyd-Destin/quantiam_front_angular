@@ -10,6 +10,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
+import { HighchartsChartModule } from 'highcharts-angular';
+
 import {LicenseManager} from 'ag-grid-enterprise/main';
 // tslint:disable-next-line:max-line-length
 LicenseManager.setLicenseKey('Evaluation_License_Not_For_Production_Valid_Until3_February_2019__MTU0OTE1MjAwMDAwMA==4219b0917c51680a5c4bde17186c5c08');
@@ -78,6 +80,7 @@ export function gettoken () {
 
 
     MaterialDesignModule,
+    HighchartsChartModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [

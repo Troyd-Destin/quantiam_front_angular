@@ -29,7 +29,7 @@
 						[attr.selected]="selectedScanner.id==scanner.id ? true : null"
 						>{{scanner.text}}</option>
 			</select2>
-			<button (click)="initializeScanner = !initializeScanner" mat-icon-button >
+			<button (click)="initializeScanner = !initializeScanner; connectScannerService()" mat-icon-button >
 				<mat-icon  matTooltip="Select a handheld scanner.">track_changes</mat-icon>
 			  </button>
 			
@@ -272,6 +272,9 @@
 								
 							  </mat-expansion-panel-header>
 								<mat-list>
+								<mat-list-item  > 
+										<button routerLink="/tga/database" routerLinkActive="mat-list-item-button-active" mat-button> TGA </button>
+								</mat-list-item>
 								<mat-list-item  > 
 										 <button routerLink="/xps/database" routerLinkActive="mat-list-item-button-active" mat-button> XPS </button>
 								</mat-list-item>

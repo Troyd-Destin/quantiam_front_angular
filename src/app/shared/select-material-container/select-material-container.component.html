@@ -1,6 +1,8 @@
 
 <ng-select 
 
+  
+
   [items]="itemsBuffer"
   [loading]="loading"
   
@@ -12,8 +14,12 @@
   (remove)="onRemove($event)"
   (scroll)="onScroll($event)"
   (scrollToEnd)="onScrollToEnd()"
+  (open)="onOpen()"
+
+  [virtualScroll]="true"
+
   [(ngModel)]="selectedValue"	
-  [typeahead]="_people3input"
+  
   [searchFn]="customSearchFn"
 
 >
@@ -28,7 +34,7 @@
 </ng-template>
 
 
-<ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm" >
+<ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm" style="width:1000px !important;">
   <div fxLayout="row" fxLayoutAlign="center center"  fxLayoutGap="10px">
     <div fxLayout="row" class="dropdown-options"  fxLayoutAlign="start center" fxFlex >
     
@@ -40,16 +46,21 @@
             {{item.lot.material.grade}}
         </i>
       </div>
-      <div style="width:100px;"  >
+      <div style="width:100px;" [ngOptionHighlight]="search" >
           {{item.lot.lot_name}}
         </div>
       <div style="width:120px;" >
           {{item.lot.material.supplier.supplier_name}}
         </div>
 
-      <div style="width:100px;">
+      <div style="width:70px;">
         {{item.size}}
       </div>
+
+      <div style="width:80px;">
+        {{item.purchase_order}}
+      </div>
+      
 
       <div style="width:100px;">
           {{item.location.name}}

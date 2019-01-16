@@ -49,24 +49,7 @@ export class AuthService {
 
       var params = {username: username, pass: pass, rfid: rfid};
       console.log(params);
-      return this.http.post<Authentication>(environment.apiUrl + '/auth', params).subscribe(
-
-          response => {
-          //  console.log(response);
-            if(response.token)
-              {
-
-               this.token_auth(response.token);
-
-              }
-              this.notification.success('Authenticated','Seems good.',{timeOut:4000,showProgressBar:false,clickToClose: true});
-          },
-          error => {
-            this.notification.error('Error', 'Authentication Failure', {timeOut: 4000, showProgressBar: true, clickToClose: true});
-            console.log('there was an error');
-          },
-      );
-
+      return this.http.post<Authentication>(environment.apiUrl + '/auth', params);
   }
 
   isLoggedIn(token = null)

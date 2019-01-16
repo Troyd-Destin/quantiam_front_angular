@@ -1,4 +1,11 @@
-### 0.12.0 December 2018
+### 19.1.0
+
+#### TGA
+
+   **[Feature]** TGA Peak Tool for SGX analysis added   
+
+
+### 18.12.0
 
 #### General
    **[Tweak]**  When the application is "thinking", a loading bar will be displayed at the top of the screen. 
@@ -7,7 +14,7 @@
 
    **[Tweak]**  Styling improvements for module navigation bars. 
 
-### 0.11.0 November 2018
+### 18.11.0
 
 #### Angular 
    **[Upgrade]** Updated from Angular 7.0 to 7.1  
