@@ -8,17 +8,17 @@ import { XpsViewComponent } from './xps-view/xps-view.component';
 
 const routes: Routes = [
 {
-    path:'',
+    path: '',
     component: XpsIndexComponent,
-	children:[
-		
+	children: [
+
 		{
-			path:'database',
+			path: 'database',
       component: XpsDatabaseComponent,
-      data: { key: 'xpsDatabase' }, 
+      data: { key: 'xpsDatabase' },
 		},
-		{		 
-              path:'run/:id',
+		{
+              path: 'run/:id',
               component: XpsViewComponent,
               pathMatch: 'full'
 		}

@@ -12,44 +12,44 @@ import { UserDatabaseComponent } from './user-database/user-database.component';
 
 const routes: Routes = [
   {
-    path:'',
+    path: '',
     component: UserIndexComponent,
    // data: { reuse: true },
   //  pathMatch: 'full',
-   //redirectTo: 'database',
-      children:[        
+   // redirectTo: 'database',
+      children: [
          {
-              path:'database',
-              data: { key: 'userDatabase' }, 
+              path: 'database',
+              data: { key: 'userDatabase' },
               component: UserDatabaseComponent,
             //  data: { reuse: true },
- 
-         }, 
-         {		 
-              path:':id',
+
+         },
+         {
+              path: ':id',
               component: UserViewComponent,
               pathMatch: 'full',
-              data: { key: 'userView' }, 
-              children:[
+              data: { key: 'userView' },
+              children: [
                 {
-                  path:'permissions',
+                  path: 'permissions',
                   component: UserViewPermissionsComponent
-                }, 
+                },
                 {
-                  path:'machines',
+                  path: 'machines',
                   component: UserViewMachinesComponent
                 },
                 {
-                  path:'keycard',
+                  path: 'keycard',
                   component: UserViewKeycardComponent
-                },   
-                
-        ] 
-       },     
-        
+                },
+
+        ]
+       },
+
       ]
   },
-  
+
   ];
 
 @NgModule({
