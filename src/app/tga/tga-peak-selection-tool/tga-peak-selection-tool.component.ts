@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
-import * as SG from 'savitzky-golay';
+//import * as SG from '../../../assets/js/savitzky-golay';
 
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -26,7 +26,7 @@ export class TgaPeakSelectionToolComponent implements OnInit {
   chartOptions = {
     chart:{
 
-      zoomeType: 'xy',
+      zoomType: 'xy',
     },
     series: [],
     title:{
@@ -70,6 +70,8 @@ export class TgaPeakSelectionToolComponent implements OnInit {
   ngOnInit() {
 
     this.fetchFileList();
+  //  console.log(Object.getOwnPropertyNames(SG));
+   //// console.log(module.exports);
    
   }
 
