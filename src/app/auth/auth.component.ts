@@ -22,18 +22,23 @@ export class AuthComponent implements OnInit {
 
   ngOnInit() {
 
-	  try {
+	  // try {
 
-      this.ws = this.scale_websocket.connect();
-    	 this._ws.subscribe((x) => {
+    //   this.ws = this.scale_websocket.connect();
+    // 	 this._ws.subscribe((x) => {
 
 
-          console.log(x);
-          // if token  login(null,null, rfid);
+    //       console.log(x);
+    //       // if token  login(null,null, rfid);
 
-        });
+    //     });
 
-    } catch (e) {}
+    // } catch (e) {}
+
+
+
+
+
   }
 
   login(username, password, rfid) {
@@ -45,7 +50,7 @@ export class AuthComponent implements OnInit {
 
     this.auth.login(username, password, null).subscribe((response) => {
       this.loginHappening = false;
-      //  console.log(response);
+        console.log(response);
         if (response.token) {
 
            this.auth.token_auth(response.token);
@@ -54,8 +59,8 @@ export class AuthComponent implements OnInit {
           this.notification.success('Authenticated', 'Seems good.', {timeOut: 4000, showProgressBar: false, clickToClose: true});
       },
       error => {
-        this.notification.error('Error', 'Authentication Failure', {timeOut: 4000, showProgressBar: false, clickToClose: true});
-        console.log('there was an error');
+        this.notification.error('Unauthorized', 'Your credentials are incorrect.', {timeOut: 4000, showProgressBar: false, clickToClose: true});
+       
         this.loginHappening = false;
       },
   );

@@ -51,14 +51,15 @@ export class TokenInterceptor implements HttpInterceptor {
 
   private handleAuthError(err: HttpErrorResponse): Observable<any> {
     //handle your auth error or rethrow
-    if (err.status === 401) {
+    if (err.status === 401 && this.router.url !== '/auth') {
       // navigate /delete cookies or whatever
    
-      this.notification.error('Error', 'Authentication Failure', {timeOut: 4000, showProgressBar: false, clickToClose: true});
+      this.notification.error('Unauthorized', 'Your session has expired.', {timeOut: 4000, showProgressBar: false, clickToClose: true});
       console.log('handled error ' + err.status);
       this.router.navigate(['/auth']);
       // if you've caught / handled the error, you don't want to rethrow it unless you also want downstream consumers to have to handle it as well.
-      return of(err.message);
+      //return of(err.message);
+      //throw err;
     }
     throw err;
   }

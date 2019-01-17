@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
+import * as SG from 'savitzky-golay';
 
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -17,6 +18,7 @@ export class TgaPeakSelectionToolComponent implements OnInit {
   selectedFileIndex = 1;
   selectedFile;
   TgaRun;
+  updateFlag;
 
   firstRunLoaded = false;
   renderChart = false;
@@ -50,6 +52,7 @@ export class TgaPeakSelectionToolComponent implements OnInit {
   ],
   xAxis:[
     {
+      plotLines: [],
      // min: 100,
      // max: 1100,
     }
@@ -104,7 +107,7 @@ export class TgaPeakSelectionToolComponent implements OnInit {
 
   updateHighchartObj() {
 
-    this.renderChart = false;
+    //this.renderChart = false;
     this.chartOptions.series = [];
 
     this.chartOptions.title.text = this.TgaRun.Procedure.comments;
@@ -157,7 +160,7 @@ export class TgaPeakSelectionToolComponent implements OnInit {
             let newPoint2 = {x: null, y: null};
 
             newPoint.x = parseFloat(point.temperature);
-            newPoint.y = parseFloat(point['Smoothed']);
+            newPoint.y = parseFloat(point['% / C']);
 
             seriesObj.data.push(newPoint);
 
@@ -177,15 +180,21 @@ export class TgaPeakSelectionToolComponent implements OnInit {
 
     })
 
-    
+    if(this.TgaRun.peaks[0])
+    {
+      this.TgaRun.peaks.forEach((peak,index)=>{
+        let plotline = {
+          value: peak.temperature,
+        };
+        this.chartOptions.xAxis[0].plotLines.push(plotline);
+      })
+    }
 
-
-
-   
+    this.updateFlag = true;
+    this.renderChart = true;
 
     console.log(this.chartOptions);
 
-    setTimeout((x) => { this.renderChart = true; }, 200);
   }
 
   createTgaRunPeak(obj) {
@@ -206,6 +215,14 @@ export class TgaPeakSelectionToolComponent implements OnInit {
             console.log(obj);
             this.TgaRun.peaks.push(obj);
             this.notification.success('Created', 'Seems good.', {timeOut: 2000, showProgressBar: false, clickToClose: true});
+
+            let plotline = {
+              value: peak.temperature,
+            };
+
+            this.chartOptions.xAxis[0].plotLines.push(plotline);
+            this.updateFlag = true;
+
         });
   }
 
@@ -214,13 +231,26 @@ export class TgaPeakSelectionToolComponent implements OnInit {
     console.log(peak);
     this.http.delete<any>(environment.apiUrl + `/tga/peak/derivative/weight-temperature/`+peak.id+'?filterSpinner')
     .subscribe((r) => {
+                let testPeak = false;
                this.TgaRun.peaks.forEach((peak2,index)=>{
                 if(peak.id == peak2.id)
                 {
                    this.TgaRun.peaks.splice(index,1);
                   this.notification.success('We did it.', 'The peak was destroyed.', {timeOut: 2000, showProgressBar: false, clickToClose: true});
+                  testPeak = true;
                 }
               });
+              if (testPeak){
+              this.chartOptions.xAxis[0].plotLines.forEach((plotline,index)=>{
+
+                if(plotline.value === peak.temperature)
+                {
+                  this.chartOptions.xAxis[0].plotLines.splice(index,1);
+
+                }
+              })
+              this.updateFlag = true;
+            }
         });
   }
 
