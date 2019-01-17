@@ -255,7 +255,7 @@ export class TgaPeakSelectionToolComponent implements OnInit {
     this.sgOptions = {
 
       polynomial: 2,
-      windowSize: 25,
+      windowSize: 45,
       derivative: 1,
       pad: 'post',
       padValue: 'replicate',
