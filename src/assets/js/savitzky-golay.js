@@ -1,1 +1,4861 @@
-!function(t,r){"object"==typeof exports&&"object"==typeof module?module.exports=r():"function"==typeof define&&define.amd?define([],r):"object"==typeof exports?exports.SavitzkyGolay=r():t.SavitzkyGolay=r()}(window,function(){return function(t){var r={};function e(s){if(r[s])return r[s].exports;var o=r[s]={i:s,l:!1,exports:{}};return t[s].call(o.exports,o,o.exports,e),o.l=!0,o.exports}return e.m=t,e.c=r,e.d=function(t,r,s){e.o(t,r)||Object.defineProperty(t,r,{enumerable:!0,get:s})},e.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},e.t=function(t,r){if(1&r&&(t=e(t)),8&r)return t;if(4&r&&"object"==typeof t&&t&&t.__esModule)return t;var s=Object.create(null);if(e.r(s),Object.defineProperty(s,"default",{enumerable:!0,value:t}),2&r&&"string"!=typeof t)for(var o in t)e.d(s,o,function(r){return t[r]}.bind(null,o));return s},e.n=function(t){var r=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(r,"a",r),r},e.o=function(t,r){return Object.prototype.hasOwnProperty.call(t,r)},e.p="/assets/",e(e.s=2)}([function(t,r,e){"use strict";const s=Object.prototype.toString;t.exports=function(t){return s.call(t).endsWith("Array]")}},function(t,r,e){"use strict";var s=Object.prototype.hasOwnProperty,o=Object.prototype.toString,i=Object.defineProperty,n=Object.getOwnPropertyDescriptor,a=function(t){return"function"==typeof Array.isArray?Array.isArray(t):"[object Array]"===o.call(t)},h=function(t){if(!t||"[object Object]"!==o.call(t))return!1;var r,e=s.call(t,"constructor"),i=t.constructor&&t.constructor.prototype&&s.call(t.constructor.prototype,"isPrototypeOf");if(t.constructor&&!e&&!i)return!1;for(r in t);return void 0===r||s.call(t,r)},u=function(t,r){i&&"__proto__"===r.name?i(t,r.name,{enumerable:!0,configurable:!0,value:r.newValue,writable:!0}):t[r.name]=r.newValue},l=function(t,r){if("__proto__"===r){if(!s.call(t,r))return;if(n)return n(t,r).value}return t[r]};t.exports=function t(){var r,e,s,o,i,n,f=arguments[0],c=1,m=arguments.length,w=!1;for("boolean"==typeof f&&(w=f,f=arguments[1]||{},c=2),(null==f||"object"!=typeof f&&"function"!=typeof f)&&(f={});c<m;++c)if(null!=(r=arguments[c]))for(e in r)s=l(f,e),f!==(o=l(r,e))&&(w&&o&&(h(o)||(i=a(o)))?(i?(i=!1,n=s&&a(s)?s:[]):n=s&&h(s)?s:{},u(f,{name:e,newValue:t(w,n,o)})):void 0!==o&&u(f,{name:e,newValue:o}));return f}},function(t,r,e){"use strict";var s=e(4),o=s.Matrix,i=s.inverse,n=e(3),a=e(1),h={windowSize:5,derivative:1,polynomial:2,pad:"none",padValue:"replicate"};t.exports=function(t,r,e){if((e=a({},h,e)).windowSize%2==0||e.windowSize<5||!Number.isInteger(e.windowSize))throw new RangeError("Invalid window size (should be odd and at least 5 integer number)");if(e.derivative<0||!Number.isInteger(e.derivative))throw new RangeError("Derivative should be a positive integer");if(e.polynomial<1||!Number.isInteger(e.polynomial))throw new RangeError("Polynomial should be a positive integer");var s,u,l=Math.floor(e.windowSize/2);"pre"===e.pad&&(t=n(t,{size:l,value:e.padValue}));var f=new Array(t.length-2*l);if(5!==e.windowSize||2!==e.polynomial||1!==e.derivative&&2!==e.derivative){for(var c=o.ones(e.windowSize,e.polynomial+1),m=-(e.windowSize-1)/2,w=0;w<c.length;w++)for(var g=0;g<c[w].length;g++)m+1===0&&0===g||(c[w][g]=Math.pow(m+w,g));var v=c.transposeView();s=(s=i(v.mmul(c)).mmul(v))[e.derivative],u=1}else 1===e.derivative?(s=[-2,-1,0,1,2],u=10):(s=[2,-1,-2,-1,2],u=7);for(var d=u*Math.pow(r,e.derivative),p=l;p<t.length-l;p++){for(var b=0,x=0;x<s.length;x++)b+=s[x]*t[x+p-l]/d;f[p-l]=b}return"post"===e.pad&&(f=n(f,{size:l,value:e.padValue})),f}},function(t,r,e){"use strict";var s=e(1),o={size:1,value:0};t.exports=function(t,r){if(r=s({},o,r),Array.isArray(t))return Array.isArray(t[0])?function(t,r){throw t.length,t[0].length,void 0===r.size[0]&&(r.size=[r.size,r.size,r.size,r.size]),new Error("matrix not supported yet, sorry")}(t,r):function(t,r){var e=t.length;"number"==typeof r.size&&(r.size=[r.size,r.size]);var s,o,i=e+r.size[0]+r.size[1];if(r.output){if(r.output.length!==i)throw new RangeError("Wrong output size");s=r.output}else s=new Array(i);if("circular"===r.value)for(o=0;o<i;o++)o<r.size[0]?s[o]=t[(e-r.size[0]%e+o)%e]:o<r.size[0]+e?s[o]=t[o-r.size[0]]:s[o]=t[(o-r.size[0])%e];else if("replicate"===r.value)for(o=0;o<i;o++)o<r.size[0]?s[o]=t[0]:o<r.size[0]+e?s[o]=t[o-r.size[0]]:s[o]=t[e-1];else if("symmetric"===r.value){if(r.size[0]>e||r.size[1]>e)throw new RangeError("expanded value should not be bigger than the data length");for(o=0;o<i;o++)o<r.size[0]?s[o]=t[r.size[0]-1-o]:o<r.size[0]+e?s[o]=t[o-r.size[0]]:s[o]=t[2*e+r.size[0]-o-1]}else for(o=0;o<i;o++)o<r.size[0]?s[o]=r.value:o<r.size[0]+e?s[o]=t[o-r.size[0]]:s[o]=r.value;return s}(t,r);throw new TypeError("data should be an array")}},function(t,r,e){"use strict";e.r(r);var s=e(0),o=e.n(s);var i=function(t){if(!o()(t))throw new TypeError("input must be an array");if(0===t.length)throw new TypeError("input must not be empty");for(var r=t[0],e=1;e<t.length;e++)t[e]>r&&(r=t[e]);return r};var n=function(t){if(!o()(t))throw new TypeError("input must be an array");if(0===t.length)throw new TypeError("input must not be empty");for(var r=t[0],e=1;e<t.length;e++)t[e]<r&&(r=t[e]);return r};var a=function(t){var r,e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};if(!o()(t))throw new TypeError("input must be an array");if(0===t.length)throw new TypeError("input must not be empty");if(void 0!==e.output){if(!o()(e.output))throw new TypeError("output option must be an array if specified");r=e.output}else r=new Array(t.length);var s=n(t),a=i(t);if(s===a)throw new RangeError("minimum and maximum input values are equal. Cannot rescale a constant array");var h=e.min,u=void 0===h?e.autoMinMax?s:0:h,l=e.max,f=void 0===l?e.autoMinMax?a:1:l;if(u>=f)throw new RangeError("min option must be smaller than max option");for(var c=(f-u)/(a-s),m=0;m<t.length;m++)r[m]=(t[m]-s)*c+u;return r};class h{constructor(t){var r,e,s,o,i,n,a,h,u,l=(t=N.checkMatrix(t)).clone(),f=l.rows,c=l.columns,m=new Array(f),w=1;for(r=0;r<f;r++)m[r]=r;for(h=new Array(f),e=0;e<c;e++){for(r=0;r<f;r++)h[r]=l.get(r,e);for(r=0;r<f;r++){for(u=Math.min(r,e),i=0,s=0;s<u;s++)i+=l.get(r,s)*h[s];h[r]-=i,l.set(r,e,h[r])}for(o=e,r=e+1;r<f;r++)Math.abs(h[r])>Math.abs(h[o])&&(o=r);if(o!==e){for(s=0;s<c;s++)n=l.get(o,s),l.set(o,s,l.get(e,s)),l.set(e,s,n);a=m[o],m[o]=m[e],m[e]=a,w=-w}if(e<f&&0!==l.get(e,e))for(r=e+1;r<f;r++)l.set(r,e,l.get(r,e)/l.get(e,e))}this.LU=l,this.pivotVector=m,this.pivotSign=w}isSingular(){for(var t=this.LU,r=t.columns,e=0;e<r;e++)if(0===t[e][e])return!0;return!1}solve(t){t=C.checkMatrix(t);var r=this.LU;if(r.rows!==t.rows)throw new Error("Invalid matrix dimensions");if(this.isSingular())throw new Error("LU matrix is singular");var e,s,o,i=t.columns,n=t.subMatrixRow(this.pivotVector,0,i-1),a=r.columns;for(o=0;o<a;o++)for(e=o+1;e<a;e++)for(s=0;s<i;s++)n[e][s]-=n[o][s]*r[e][o];for(o=a-1;o>=0;o--){for(s=0;s<i;s++)n[o][s]/=r[o][o];for(e=0;e<o;e++)for(s=0;s<i;s++)n[e][s]-=n[o][s]*r[e][o]}return n}get determinant(){var t=this.LU;if(!t.isSquare())throw new Error("Matrix must be square");for(var r=this.pivotSign,e=t.columns,s=0;s<e;s++)r*=t[s][s];return r}get lowerTriangularMatrix(){for(var t=this.LU,r=t.rows,e=t.columns,s=new C(r,e),o=0;o<r;o++)for(var i=0;i<e;i++)s[o][i]=o>i?t[o][i]:o===i?1:0;return s}get upperTriangularMatrix(){for(var t=this.LU,r=t.rows,e=t.columns,s=new C(r,e),o=0;o<r;o++)for(var i=0;i<e;i++)s[o][i]=o<=i?t[o][i]:0;return s}get pivotPermutationVector(){return this.pivotVector.slice()}}function u(t,r){var e=0;return Math.abs(t)>Math.abs(r)?(e=r/t,Math.abs(t)*Math.sqrt(1+e*e)):0!==r?(e=t/r,Math.abs(r)*Math.sqrt(1+e*e)):0}function l(t,r,e){for(var s=new Array(t),o=0;o<t;o++){s[o]=new Array(r);for(var i=0;i<r;i++)s[o][i]=e}return s}class f{constructor(t,r={}){var e=(t=N.checkMatrix(t)).rows,s=t.columns;const{computeLeftSingularVectors:o=!0,computeRightSingularVectors:i=!0,autoTranspose:n=!1}=r;var a,h=Boolean(o),f=Boolean(i),c=!1;if(e<s)if(n){e=(a=t.transpose()).rows,s=a.columns,c=!0;var m=h;h=f,f=m}else a=t.clone(),console.warn("Computing SVD on a matrix with more columns than rows. Consider enabling autoTranspose");else a=t.clone();var w=Math.min(e,s),g=Math.min(e+1,s),v=new Array(g),d=l(e,w,0),p=l(s,s,0),b=new Array(s),x=new Array(e),M=new Array(g);for(let t=0;t<g;t++)M[t]=t;var y=Math.min(e-1,s),S=Math.max(0,Math.min(s-2,e)),R=Math.max(y,S);for(let t=0;t<R;t++){if(t<y){v[t]=0;for(let r=t;r<e;r++)v[t]=u(v[t],a[r][t]);if(0!==v[t]){a[t][t]<0&&(v[t]=-v[t]);for(let r=t;r<e;r++)a[r][t]/=v[t];a[t][t]+=1}v[t]=-v[t]}for(let r=t+1;r<s;r++){if(t<y&&0!==v[t]){let s=0;for(let o=t;o<e;o++)s+=a[o][t]*a[o][r];s=-s/a[t][t];for(let o=t;o<e;o++)a[o][r]+=s*a[o][t]}b[r]=a[t][r]}if(h&&t<y)for(let r=t;r<e;r++)d[r][t]=a[r][t];if(t<S){b[t]=0;for(let r=t+1;r<s;r++)b[t]=u(b[t],b[r]);if(0!==b[t]){b[t+1]<0&&(b[t]=0-b[t]);for(let r=t+1;r<s;r++)b[r]/=b[t];b[t+1]+=1}if(b[t]=-b[t],t+1<e&&0!==b[t]){for(let r=t+1;r<e;r++)x[r]=0;for(let r=t+1;r<e;r++)for(let e=t+1;e<s;e++)x[r]+=b[e]*a[r][e];for(let r=t+1;r<s;r++){let s=-b[r]/b[t+1];for(let o=t+1;o<e;o++)a[o][r]+=s*x[o]}}if(f)for(let r=t+1;r<s;r++)p[r][t]=b[r]}}let E=Math.min(s,e+1);if(y<s&&(v[y]=a[y][y]),e<E&&(v[E-1]=0),S+1<E&&(b[S]=a[S][E-1]),b[E-1]=0,h){for(let t=y;t<w;t++){for(let r=0;r<e;r++)d[r][t]=0;d[t][t]=1}for(let t=y-1;t>=0;t--)if(0!==v[t]){for(let r=t+1;r<w;r++){let s=0;for(let o=t;o<e;o++)s+=d[o][t]*d[o][r];s=-s/d[t][t];for(let o=t;o<e;o++)d[o][r]+=s*d[o][t]}for(let r=t;r<e;r++)d[r][t]=-d[r][t];d[t][t]=1+d[t][t];for(let r=0;r<t-1;r++)d[r][t]=0}else{for(let r=0;r<e;r++)d[r][t]=0;d[t][t]=1}}if(f)for(let t=s-1;t>=0;t--){if(t<S&&0!==b[t])for(let r=t+1;r<s;r++){let e=0;for(let o=t+1;o<s;o++)e+=p[o][t]*p[o][r];e=-e/p[t+1][t];for(let o=t+1;o<s;o++)p[o][r]+=e*p[o][t]}for(let r=0;r<s;r++)p[r][t]=0;p[t][t]=1}for(var V=E-1,A=Number.EPSILON;E>0;){let t,r;for(t=E-2;t>=-1&&-1!==t;t--){const r=Number.MIN_VALUE+A*Math.abs(v[t]+Math.abs(v[t+1]));if(Math.abs(b[t])<=r||Number.isNaN(b[t])){b[t]=0;break}}if(t===E-2)r=4;else{let e;for(e=E-1;e>=t&&e!==t;e--){let r=(e!==E?Math.abs(b[e]):0)+(e!==t+1?Math.abs(b[e-1]):0);if(Math.abs(v[e])<=A*r){v[e]=0;break}}e===t?r=3:e===E-1?r=1:(r=2,t=e)}switch(t++,r){case 1:{let r=b[E-2];b[E-2]=0;for(let e=E-2;e>=t;e--){let o=u(v[e],r),i=v[e]/o,n=r/o;if(v[e]=o,e!==t&&(r=-n*b[e-1],b[e-1]=i*b[e-1]),f)for(let t=0;t<s;t++)o=i*p[t][e]+n*p[t][E-1],p[t][E-1]=-n*p[t][e]+i*p[t][E-1],p[t][e]=o}break}case 2:{let r=b[t-1];b[t-1]=0;for(let s=t;s<E;s++){let o=u(v[s],r),i=v[s]/o,n=r/o;if(v[s]=o,r=-n*b[s],b[s]=i*b[s],h)for(let r=0;r<e;r++)o=i*d[r][s]+n*d[r][t-1],d[r][t-1]=-n*d[r][s]+i*d[r][t-1],d[r][s]=o}break}case 3:{const r=Math.max(Math.abs(v[E-1]),Math.abs(v[E-2]),Math.abs(b[E-2]),Math.abs(v[t]),Math.abs(b[t])),o=v[E-1]/r,i=v[E-2]/r,n=b[E-2]/r,a=v[t]/r,l=b[t]/r,c=((i+o)*(i-o)+n*n)/2,m=o*n*(o*n);let w=0;0===c&&0===m||(w=m/(c+(w=c<0?0-Math.sqrt(c*c+m):Math.sqrt(c*c+m))));let g=(a+o)*(a-o)+w,x=a*l;for(let r=t;r<E-1;r++){let o=u(g,x);0===o&&(o=Number.MIN_VALUE);let i=g/o,n=x/o;if(r!==t&&(b[r-1]=o),g=i*v[r]+n*b[r],b[r]=i*b[r]-n*v[r],x=n*v[r+1],v[r+1]=i*v[r+1],f)for(let t=0;t<s;t++)o=i*p[t][r]+n*p[t][r+1],p[t][r+1]=-n*p[t][r]+i*p[t][r+1],p[t][r]=o;if(0===(o=u(g,x))&&(o=Number.MIN_VALUE),i=g/o,n=x/o,v[r]=o,g=i*b[r]+n*v[r+1],v[r+1]=-n*b[r]+i*v[r+1],x=n*b[r+1],b[r+1]=i*b[r+1],h&&r<e-1)for(let t=0;t<e;t++)o=i*d[t][r]+n*d[t][r+1],d[t][r+1]=-n*d[t][r]+i*d[t][r+1],d[t][r]=o}b[E-2]=g,1;break}case 4:if(v[t]<=0&&(v[t]=v[t]<0?-v[t]:0,f))for(let r=0;r<=V;r++)p[r][t]=-p[r][t];for(;t<V&&!(v[t]>=v[t+1]);){let r=v[t];if(v[t]=v[t+1],v[t+1]=r,f&&t<s-1)for(let e=0;e<s;e++)r=p[e][t+1],p[e][t+1]=p[e][t],p[e][t]=r;if(h&&t<e-1)for(let s=0;s<e;s++)r=d[s][t+1],d[s][t+1]=d[s][t],d[s][t]=r;t++}0,E--}}if(c){var z=p;p=d,d=z}this.m=e,this.n=s,this.s=v,this.U=d,this.V=p}solve(t){var r=t,e=this.threshold,s=this.s.length,o=C.zeros(s,s);for(let t=0;t<s;t++)Math.abs(this.s[t])<=e?o[t][t]=0:o[t][t]=1/this.s[t];var i=this.U,n=this.rightSingularVectors,a=n.mmul(o),h=n.rows,u=i.length,l=C.zeros(h,u);for(let t=0;t<h;t++)for(let r=0;r<u;r++){let e=0;for(let o=0;o<s;o++)e+=a[t][o]*i[r][o];l[t][r]=e}return l.mmul(r)}solveForDiagonal(t){return this.solve(C.diag(t))}inverse(){var t=this.V,r=this.threshold,e=t.length,s=t[0].length,o=new C(e,this.s.length);for(let i=0;i<e;i++)for(let e=0;e<s;e++)Math.abs(this.s[e])>r?o[i][e]=t[i][e]/this.s[e]:o[i][e]=0;var i=this.U,n=i.length,a=i[0].length,h=new C(e,n);for(let t=0;t<e;t++)for(let r=0;r<n;r++){let e=0;for(let s=0;s<a;s++)e+=o[t][s]*i[r][s];h[t][r]=e}return h}get condition(){return this.s[0]/this.s[Math.min(this.m,this.n)-1]}get norm2(){return this.s[0]}get rank(){for(var t=Math.max(this.m,this.n)*this.s[0]*Number.EPSILON,r=0,e=this.s,s=0,o=e.length;s<o;s++)e[s]>t&&r++;return r}get diagonal(){return this.s}get threshold(){return Number.EPSILON/2*Math.max(this.m,this.n)*this.s[0]}get leftSingularVectors(){return C.isMatrix(this.U)||(this.U=new C(this.U)),this.U}get rightSingularVectors(){return C.isMatrix(this.V)||(this.V=new C(this.V)),this.V}get diagonalMatrix(){return C.diag(this.s)}}function c(t,r,e){var s=e?t.rows:t.rows-1;if(r<0||r>s)throw new RangeError("Row index out of range")}function m(t,r,e){var s=e?t.columns:t.columns-1;if(r<0||r>s)throw new RangeError("Column index out of range")}function w(t,r){if(r.to1DArray&&(r=r.to1DArray()),r.length!==t.columns)throw new RangeError("vector size must be the same as the number of columns");return r}function g(t,r){if(r.to1DArray&&(r=r.to1DArray()),r.length!==t.rows)throw new RangeError("vector size must be the same as the number of rows");return r}function v(t,r,e){return{row:d(t,r),column:p(t,e)}}function d(t,r){if("object"!=typeof r)throw new TypeError("unexpected type for row indices");if(r.some(r=>r<0||r>=t.rows))throw new RangeError("row indices are out of range");return Array.isArray(r)||(r=Array.from(r)),r}function p(t,r){if("object"!=typeof r)throw new TypeError("unexpected type for column indices");if(r.some(r=>r<0||r>=t.columns))throw new RangeError("column indices are out of range");return Array.isArray(r)||(r=Array.from(r)),r}function b(t,r,e,s,o){if(5!==arguments.length)throw new RangeError("expected 4 arguments");if(x("startRow",r),x("endRow",e),x("startColumn",s),x("endColumn",o),r>e||s>o||r<0||r>=t.rows||e<0||e>=t.rows||s<0||s>=t.columns||o<0||o>=t.columns)throw new RangeError("Submatrix indices are out of range")}function x(t,r){if("number"!=typeof r)throw new TypeError(`${t} must be a number`)}class M extends(k()){constructor(t,r,e){super(),this.matrix=t,this.rows=r,this.columns=e}static get[Symbol.species](){return C}}class y extends M{constructor(t){super(t,t.columns,t.rows)}set(t,r,e){return this.matrix.set(r,t,e),this}get(t,r){return this.matrix.get(r,t)}}class S extends M{constructor(t,r){super(t,1,t.columns),this.row=r}set(t,r,e){return this.matrix.set(this.row,r,e),this}get(t,r){return this.matrix.get(this.row,r)}}class R extends M{constructor(t,r,e,s,o){b(t,r,e,s,o),super(t,e-r+1,o-s+1),this.startRow=r,this.startColumn=s}set(t,r,e){return this.matrix.set(this.startRow+t,this.startColumn+r,e),this}get(t,r){return this.matrix.get(this.startRow+t,this.startColumn+r)}}class E extends M{constructor(t,r,e){var s=v(t,r,e);super(t,s.row.length,s.column.length),this.rowIndices=s.row,this.columnIndices=s.column}set(t,r,e){return this.matrix.set(this.rowIndices[t],this.columnIndices[r],e),this}get(t,r){return this.matrix.get(this.rowIndices[t],this.columnIndices[r])}}class V extends M{constructor(t,r){super(t,(r=d(t,r)).length,t.columns),this.rowIndices=r}set(t,r,e){return this.matrix.set(this.rowIndices[t],r,e),this}get(t,r){return this.matrix.get(this.rowIndices[t],r)}}class A extends M{constructor(t,r){r=p(t,r),super(t,t.rows,r.length),this.columnIndices=r}set(t,r,e){return this.matrix.set(t,this.columnIndices[r],e),this}get(t,r){return this.matrix.get(t,this.columnIndices[r])}}class z extends M{constructor(t,r){super(t,t.rows,1),this.column=r}set(t,r,e){return this.matrix.set(t,this.column,e),this}get(t){return this.matrix.get(t,this.column)}}class j extends M{constructor(t){super(t,t.rows,t.columns)}set(t,r,e){return this.matrix.set(this.rows-t-1,r,e),this}get(t,r){return this.matrix.get(this.rows-t-1,r)}}class I extends M{constructor(t){super(t,t.rows,t.columns)}set(t,r,e){return this.matrix.set(t,this.columns-r-1,e),this}get(t,r){return this.matrix.get(t,this.columns-r-1)}}function k(t){void 0===t&&(t=Object);class r extends t{static get[Symbol.species](){return this}static from1DArray(t,r,e){if(t*r!==e.length)throw new RangeError("Data length does not match given dimensions");for(var s=new this(t,r),o=0;o<t;o++)for(var i=0;i<r;i++)s.set(o,i,e[o*r+i]);return s}static rowVector(t){for(var r=new this(1,t.length),e=0;e<t.length;e++)r.set(0,e,t[e]);return r}static columnVector(t){for(var r=new this(t.length,1),e=0;e<t.length;e++)r.set(e,0,t[e]);return r}static empty(t,r){return new this(t,r)}static zeros(t,r){return this.empty(t,r).fill(0)}static ones(t,r){return this.empty(t,r).fill(1)}static rand(t,r,e){void 0===e&&(e=Math.random);for(var s=this.empty(t,r),o=0;o<t;o++)for(var i=0;i<r;i++)s.set(o,i,e());return s}static randInt(t,r,e,s){void 0===e&&(e=1e3),void 0===s&&(s=Math.random);for(var o=this.empty(t,r),i=0;i<t;i++)for(var n=0;n<r;n++){var a=Math.floor(s()*e);o.set(i,n,a)}return o}static eye(t,r,e){void 0===r&&(r=t),void 0===e&&(e=1);for(var s=Math.min(t,r),o=this.zeros(t,r),i=0;i<s;i++)o.set(i,i,e);return o}static diag(t,r,e){var s=t.length;void 0===r&&(r=s),void 0===e&&(e=r);for(var o=Math.min(s,r,e),i=this.zeros(r,e),n=0;n<o;n++)i.set(n,n,t[n]);return i}static min(t,r){t=this.checkMatrix(t),r=this.checkMatrix(r);for(var e=t.rows,s=t.columns,o=new this(e,s),i=0;i<e;i++)for(var n=0;n<s;n++)o.set(i,n,Math.min(t.get(i,n),r.get(i,n)));return o}static max(t,r){t=this.checkMatrix(t),r=this.checkMatrix(r);for(var e=t.rows,s=t.columns,o=new this(e,s),i=0;i<e;i++)for(var n=0;n<s;n++)o.set(i,n,Math.max(t.get(i,n),r.get(i,n)));return o}static checkMatrix(t){return r.isMatrix(t)?t:new this(t)}static isMatrix(t){return null!=t&&"Matrix"===t.klass}get size(){return this.rows*this.columns}apply(t){if("function"!=typeof t)throw new TypeError("callback must be a function");for(var r=this.rows,e=this.columns,s=0;s<r;s++)for(var o=0;o<e;o++)t.call(this,s,o);return this}to1DArray(){for(var t=new Array(this.size),r=0;r<this.rows;r++)for(var e=0;e<this.columns;e++)t[r*this.columns+e]=this.get(r,e);return t}to2DArray(){for(var t=new Array(this.rows),r=0;r<this.rows;r++){t[r]=new Array(this.columns);for(var e=0;e<this.columns;e++)t[r][e]=this.get(r,e)}return t}isRowVector(){return 1===this.rows}isColumnVector(){return 1===this.columns}isVector(){return 1===this.rows||1===this.columns}isSquare(){return this.rows===this.columns}isSymmetric(){if(this.isSquare()){for(var t=0;t<this.rows;t++)for(var r=0;r<=t;r++)if(this.get(t,r)!==this.get(r,t))return!1;return!0}return!1}set(t,r,e){throw new Error("set method is unimplemented")}get(t,r){throw new Error("get method is unimplemented")}repeat(t,r){t=t||1,r=r||1;for(var e=new this.constructor[Symbol.species](this.rows*t,this.columns*r),s=0;s<t;s++)for(var o=0;o<r;o++)e.setSubMatrix(this,this.rows*s,this.columns*o);return e}fill(t){for(var r=0;r<this.rows;r++)for(var e=0;e<this.columns;e++)this.set(r,e,t);return this}neg(){return this.mulS(-1)}getRow(t){c(this,t);for(var r=new Array(this.columns),e=0;e<this.columns;e++)r[e]=this.get(t,e);return r}getRowVector(t){return this.constructor.rowVector(this.getRow(t))}setRow(t,r){c(this,t),r=w(this,r);for(var e=0;e<this.columns;e++)this.set(t,e,r[e]);return this}swapRows(t,r){c(this,t),c(this,r);for(var e=0;e<this.columns;e++){var s=this.get(t,e);this.set(t,e,this.get(r,e)),this.set(r,e,s)}return this}getColumn(t){m(this,t);for(var r=new Array(this.rows),e=0;e<this.rows;e++)r[e]=this.get(e,t);return r}getColumnVector(t){return this.constructor.columnVector(this.getColumn(t))}setColumn(t,r){m(this,t),r=g(this,r);for(var e=0;e<this.rows;e++)this.set(e,t,r[e]);return this}swapColumns(t,r){m(this,t),m(this,r);for(var e=0;e<this.rows;e++){var s=this.get(e,t);this.set(e,t,this.get(e,r)),this.set(e,r,s)}return this}addRowVector(t){t=w(this,t);for(var r=0;r<this.rows;r++)for(var e=0;e<this.columns;e++)this.set(r,e,this.get(r,e)+t[e]);return this}subRowVector(t){t=w(this,t);for(var r=0;r<this.rows;r++)for(var e=0;e<this.columns;e++)this.set(r,e,this.get(r,e)-t[e]);return this}mulRowVector(t){t=w(this,t);for(var r=0;r<this.rows;r++)for(var e=0;e<this.columns;e++)this.set(r,e,this.get(r,e)*t[e]);return this}divRowVector(t){t=w(this,t);for(var r=0;r<this.rows;r++)for(var e=0;e<this.columns;e++)this.set(r,e,this.get(r,e)/t[e]);return this}addColumnVector(t){t=g(this,t);for(var r=0;r<this.rows;r++)for(var e=0;e<this.columns;e++)this.set(r,e,this.get(r,e)+t[r]);return this}subColumnVector(t){t=g(this,t);for(var r=0;r<this.rows;r++)for(var e=0;e<this.columns;e++)this.set(r,e,this.get(r,e)-t[r]);return this}mulColumnVector(t){t=g(this,t);for(var r=0;r<this.rows;r++)for(var e=0;e<this.columns;e++)this.set(r,e,this.get(r,e)*t[r]);return this}divColumnVector(t){t=g(this,t);for(var r=0;r<this.rows;r++)for(var e=0;e<this.columns;e++)this.set(r,e,this.get(r,e)/t[r]);return this}mulRow(t,r){c(this,t);for(var e=0;e<this.columns;e++)this.set(t,e,this.get(t,e)*r);return this}mulColumn(t,r){m(this,t);for(var e=0;e<this.rows;e++)this.set(e,t,this.get(e,t)*r);return this}max(){for(var t=this.get(0,0),r=0;r<this.rows;r++)for(var e=0;e<this.columns;e++)this.get(r,e)>t&&(t=this.get(r,e));return t}maxIndex(){for(var t=this.get(0,0),r=[0,0],e=0;e<this.rows;e++)for(var s=0;s<this.columns;s++)this.get(e,s)>t&&(t=this.get(e,s),r[0]=e,r[1]=s);return r}min(){for(var t=this.get(0,0),r=0;r<this.rows;r++)for(var e=0;e<this.columns;e++)this.get(r,e)<t&&(t=this.get(r,e));return t}minIndex(){for(var t=this.get(0,0),r=[0,0],e=0;e<this.rows;e++)for(var s=0;s<this.columns;s++)this.get(e,s)<t&&(t=this.get(e,s),r[0]=e,r[1]=s);return r}maxRow(t){c(this,t);for(var r=this.get(t,0),e=1;e<this.columns;e++)this.get(t,e)>r&&(r=this.get(t,e));return r}maxRowIndex(t){c(this,t);for(var r=this.get(t,0),e=[t,0],s=1;s<this.columns;s++)this.get(t,s)>r&&(r=this.get(t,s),e[1]=s);return e}minRow(t){c(this,t);for(var r=this.get(t,0),e=1;e<this.columns;e++)this.get(t,e)<r&&(r=this.get(t,e));return r}minRowIndex(t){c(this,t);for(var r=this.get(t,0),e=[t,0],s=1;s<this.columns;s++)this.get(t,s)<r&&(r=this.get(t,s),e[1]=s);return e}maxColumn(t){m(this,t);for(var r=this.get(0,t),e=1;e<this.rows;e++)this.get(e,t)>r&&(r=this.get(e,t));return r}maxColumnIndex(t){m(this,t);for(var r=this.get(0,t),e=[0,t],s=1;s<this.rows;s++)this.get(s,t)>r&&(r=this.get(s,t),e[0]=s);return e}minColumn(t){m(this,t);for(var r=this.get(0,t),e=1;e<this.rows;e++)this.get(e,t)<r&&(r=this.get(e,t));return r}minColumnIndex(t){m(this,t);for(var r=this.get(0,t),e=[0,t],s=1;s<this.rows;s++)this.get(s,t)<r&&(r=this.get(s,t),e[0]=s);return e}diag(){for(var t=Math.min(this.rows,this.columns),r=new Array(t),e=0;e<t;e++)r[e]=this.get(e,e);return r}sum(t){switch(t){case"row":return function(t){for(var r=C.zeros(t.rows,1),e=0;e<t.rows;++e)for(var s=0;s<t.columns;++s)r.set(e,0,r.get(e,0)+t.get(e,s));return r}(this);case"column":return function(t){for(var r=C.zeros(1,t.columns),e=0;e<t.rows;++e)for(var s=0;s<t.columns;++s)r.set(0,s,r.get(0,s)+t.get(e,s));return r}(this);default:return function(t){for(var r=0,e=0;e<t.rows;e++)for(var s=0;s<t.columns;s++)r+=t.get(e,s);return r}(this)}}mean(){return this.sum()/this.size}prod(){for(var t=1,r=0;r<this.rows;r++)for(var e=0;e<this.columns;e++)t*=this.get(r,e);return t}norm(t="frobenius"){var r=0;if("max"===t)return this.max();if("frobenius"===t){for(var e=0;e<this.rows;e++)for(var s=0;s<this.columns;s++)r+=this.get(e,s)*this.get(e,s);return Math.sqrt(r)}throw new RangeError(`unknown norm type: ${t}`)}cumulativeSum(){for(var t=0,r=0;r<this.rows;r++)for(var e=0;e<this.columns;e++)t+=this.get(r,e),this.set(r,e,t);return this}dot(t){r.isMatrix(t)&&(t=t.to1DArray());var e=this.to1DArray();if(e.length!==t.length)throw new RangeError("vectors do not have the same size");for(var s=0,o=0;o<e.length;o++)s+=e[o]*t[o];return s}mmul(t){t=this.constructor.checkMatrix(t),this.columns!==t.rows&&console.warn("Number of columns of left matrix are not equal to number of rows of right matrix.");for(var r=this.rows,e=this.columns,s=t.columns,o=new this.constructor[Symbol.species](r,s),i=new Array(e),n=0;n<s;n++){for(var a=0;a<e;a++)i[a]=t.get(a,n);for(var h=0;h<r;h++){var u=0;for(a=0;a<e;a++)u+=this.get(h,a)*i[a];o.set(h,n,u)}}return o}strassen2x2(t){var r=new this.constructor[Symbol.species](2,2);const e=this.get(0,0),s=t.get(0,0),o=this.get(0,1),i=t.get(0,1),n=this.get(1,0),a=t.get(1,0),h=this.get(1,1),u=t.get(1,1),l=(e+h)*(s+u),f=(n+h)*s,c=e*(i-u),m=h*(a-s),w=(e+o)*u,g=l+m-w+(o-h)*(a+u),v=c+w,d=f+m,p=l-f+c+(n-e)*(s+i);return r.set(0,0,g),r.set(0,1,v),r.set(1,0,d),r.set(1,1,p),r}strassen3x3(t){var r=new this.constructor[Symbol.species](3,3);const e=this.get(0,0),s=this.get(0,1),o=this.get(0,2),i=this.get(1,0),n=this.get(1,1),a=this.get(1,2),h=this.get(2,0),u=this.get(2,1),l=this.get(2,2),f=t.get(0,0),c=t.get(0,1),m=t.get(0,2),w=t.get(1,0),g=t.get(1,1),v=t.get(1,2),d=t.get(2,0),p=t.get(2,1),b=t.get(2,2),x=(e-i)*(-c+g),M=(-e+i+n)*(f-c+g),y=(i+n)*(-f+c),S=e*f,R=(-e+h+u)*(f-m+v),E=(-e+h)*(m-v),V=(h+u)*(-f+m),A=(-o+u+l)*(g+d-p),z=(o-l)*(g-p),j=o*d,I=(u+l)*(-d+p),k=(-o+n+a)*(v+d-b),C=(o-a)*(v-b),D=(n+a)*(-d+b),N=S+j+s*w,q=(e+s+o-i-n-u-l)*g+M+y+S+A+j+I,O=S+R+V+(e+s+o-n-a-h-u)*v+j+k+D,T=x+n*(-f+c+w-g-v-d+b)+M+S+j+k+C,L=x+M+y+S+a*p,P=j+k+C+D+i*m,_=S+R+E+u*(-f+m+w-g-v-d+p)+A+z+j,U=A+z+j+I+h*c,$=S+R+E+V+l*b;return r.set(0,0,N),r.set(0,1,q),r.set(0,2,O),r.set(1,0,T),r.set(1,1,L),r.set(1,2,P),r.set(2,0,_),r.set(2,1,U),r.set(2,2,$),r}mmulStrassen(t){var e=this.clone(),s=e.rows,o=e.columns,i=t.rows,n=t.columns;function a(t,e,s){var o=t.rows,i=t.columns;if(o===e&&i===s)return t;var n=r.zeros(e,s);return n=n.setSubMatrix(t,0,0)}o!==i&&console.warn(`Multiplying ${s} x ${o} and ${i} x ${n} matrix: dimensions do not match.`);var h=Math.max(s,i),u=Math.max(o,n);return function t(e,s,o,i){if(o<=512||i<=512)return e.mmul(s);o%2==1&&i%2==1?(e=a(e,o+1,i+1),s=a(s,o+1,i+1)):o%2==1?(e=a(e,o+1,i),s=a(s,o+1,i)):i%2==1&&(e=a(e,o,i+1),s=a(s,o,i+1));var n=parseInt(e.rows/2,10),h=parseInt(e.columns/2,10),u=e.subMatrix(0,n-1,0,h-1),l=s.subMatrix(0,n-1,0,h-1),f=e.subMatrix(0,n-1,h,e.columns-1),c=s.subMatrix(0,n-1,h,s.columns-1),m=e.subMatrix(n,e.rows-1,0,h-1),w=s.subMatrix(n,s.rows-1,0,h-1),g=e.subMatrix(n,e.rows-1,h,e.columns-1),v=s.subMatrix(n,s.rows-1,h,s.columns-1),d=t(r.add(u,g),r.add(l,v),n,h),p=t(r.add(m,g),l,n,h),b=t(u,r.sub(c,v),n,h),x=t(g,r.sub(w,l),n,h),M=t(r.add(u,f),v,n,h),y=t(r.sub(m,u),r.add(l,c),n,h),S=t(r.sub(f,g),r.add(w,v),n,h),R=r.add(d,x);R.sub(M),R.add(S);var E=r.add(b,M),V=r.add(p,x),A=r.sub(d,p);A.add(b),A.add(y);var z=r.zeros(2*R.rows,2*R.columns);return(z=(z=(z=(z=z.setSubMatrix(R,0,0)).setSubMatrix(E,R.rows,0)).setSubMatrix(V,0,R.columns)).setSubMatrix(A,R.rows,R.columns)).subMatrix(0,o-1,0,i-1)}(e=a(e,h,u),t=a(t,h,u),h,u)}scaleRows(t,r){if((t=void 0===t?0:t)>=(r=void 0===r?1:r))throw new RangeError("min should be strictly smaller than max");for(var e=this.constructor.empty(this.rows,this.columns),s=0;s<this.rows;s++){var o=a(this.getRow(s),{min:t,max:r});e.setRow(s,o)}return e}scaleColumns(t,r){if((t=void 0===t?0:t)>=(r=void 0===r?1:r))throw new RangeError("min should be strictly smaller than max");for(var e=this.constructor.empty(this.rows,this.columns),s=0;s<this.columns;s++){var o=a(this.getColumn(s),{min:t,max:r});e.setColumn(s,o)}return e}kroneckerProduct(t){t=this.constructor.checkMatrix(t);for(var r=this.rows,e=this.columns,s=t.rows,o=t.columns,i=new this.constructor[Symbol.species](r*s,e*o),n=0;n<r;n++)for(var a=0;a<e;a++)for(var h=0;h<s;h++)for(var u=0;u<o;u++)i[s*n+h][o*a+u]=this.get(n,a)*t.get(h,u);return i}transpose(){for(var t=new this.constructor[Symbol.species](this.columns,this.rows),r=0;r<this.rows;r++)for(var e=0;e<this.columns;e++)t.set(e,r,this.get(r,e));return t}sortRows(t){void 0===t&&(t=e);for(var r=0;r<this.rows;r++)this.setRow(r,this.getRow(r).sort(t));return this}sortColumns(t){void 0===t&&(t=e);for(var r=0;r<this.columns;r++)this.setColumn(r,this.getColumn(r).sort(t));return this}subMatrix(t,r,e,s){b(this,t,r,e,s);for(var o=new this.constructor[Symbol.species](r-t+1,s-e+1),i=t;i<=r;i++)for(var n=e;n<=s;n++)o[i-t][n-e]=this.get(i,n);return o}subMatrixRow(t,r,e){if(void 0===r&&(r=0),void 0===e&&(e=this.columns-1),r>e||r<0||r>=this.columns||e<0||e>=this.columns)throw new RangeError("Argument out of range");for(var s=new this.constructor[Symbol.species](t.length,e-r+1),o=0;o<t.length;o++)for(var i=r;i<=e;i++){if(t[o]<0||t[o]>=this.rows)throw new RangeError(`Row index out of range: ${t[o]}`);s.set(o,i-r,this.get(t[o],i))}return s}subMatrixColumn(t,r,e){if(void 0===r&&(r=0),void 0===e&&(e=this.rows-1),r>e||r<0||r>=this.rows||e<0||e>=this.rows)throw new RangeError("Argument out of range");for(var s=new this.constructor[Symbol.species](e-r+1,t.length),o=0;o<t.length;o++)for(var i=r;i<=e;i++){if(t[o]<0||t[o]>=this.columns)throw new RangeError(`Column index out of range: ${t[o]}`);s.set(i-r,o,this.get(i,t[o]))}return s}setSubMatrix(t,r,e){b(this,r,r+(t=this.constructor.checkMatrix(t)).rows-1,e,e+t.columns-1);for(var s=0;s<t.rows;s++)for(var o=0;o<t.columns;o++)this[r+s][e+o]=t.get(s,o);return this}selection(t,r){for(var e=v(this,t,r),s=new this.constructor[Symbol.species](t.length,r.length),o=0;o<e.row.length;o++)for(var i=e.row[o],n=0;n<e.column.length;n++){var a=e.column[n];s[o][n]=this.get(i,a)}return s}trace(){for(var t=Math.min(this.rows,this.columns),r=0,e=0;e<t;e++)r+=this.get(e,e);return r}transposeView(){return new y(this)}rowView(t){return c(this,t),new S(this,t)}columnView(t){return m(this,t),new z(this,t)}flipRowView(){return new j(this)}flipColumnView(){return new I(this)}subMatrixView(t,r,e,s){return new R(this,t,r,e,s)}selectionView(t,r){return new E(this,t,r)}rowSelectionView(t){return new V(this,t)}columnSelectionView(t){return new A(this,t)}det(){var t,r,e,s,o,i;if(this.isSquare())return 2===this.columns?(t=this.get(0,0),r=this.get(0,1),e=this.get(1,0),t*this.get(1,1)-r*e):3===this.columns?(s=this.selectionView([1,2],[1,2]),o=this.selectionView([1,2],[0,2]),i=this.selectionView([1,2],[0,1]),t=this.get(0,0),r=this.get(0,1),e=this.get(0,2),t*s.det()-r*o.det()+e*i.det()):new h(this).determinant;throw Error("Determinant can only be calculated for a square matrix.")}pseudoInverse(t){void 0===t&&(t=Number.EPSILON);for(var r=new f(this,{autoTranspose:!0}),e=r.leftSingularVectors,s=r.rightSingularVectors,o=r.diagonal,i=0;i<o.length;i++)Math.abs(o[i])>t?o[i]=1/o[i]:o[i]=0;return o=this.constructor[Symbol.species].diag(o),s.mmul(o.mmul(e.transposeView()))}clone(){for(var t=new this.constructor[Symbol.species](this.rows,this.columns),r=0;r<this.rows;r++)for(var e=0;e<this.columns;e++)t.set(r,e,this.get(r,e));return t}}function e(t,r){return t-r}r.prototype.klass="Matrix",r.random=r.rand,r.diagonal=r.diag,r.prototype.diagonal=r.prototype.diag,r.identity=r.eye,r.prototype.negate=r.prototype.neg,r.prototype.tensorProduct=r.prototype.kroneckerProduct,r.prototype.determinant=r.prototype.det;var s,o="\n(function %name%(matrix, %args%) {\n    var newMatrix = new this[Symbol.species](matrix);\n    return newMatrix.%name%(%args%);\n})\n",i=eval;for(var n of[["+","add"],["-","sub","subtract"],["*","mul","multiply"],["/","div","divide"],["%","mod","modulus"],["&","and"],["|","or"],["^","xor"],["<<","leftShift"],[">>","signPropagatingRightShift"],[">>>","rightShift","zeroFillRightShift"]]){var u=i(Q("\n(function %name%(value) {\n    if (typeof value === 'number') return this.%name%S(value);\n    return this.%name%M(value);\n})\n",{name:n[1],op:n[0]})),l=i(Q("\n(function %name%S(value) {\n    for (var i = 0; i < this.rows; i++) {\n        for (var j = 0; j < this.columns; j++) {\n            this.set(i, j, this.get(i, j) %op% value);\n        }\n    }\n    return this;\n})\n",{name:`${n[1]}S`,op:n[0]})),d=i(Q("\n(function %name%M(matrix) {\n    matrix = this.constructor.checkMatrix(matrix);\n    if (this.rows !== matrix.rows ||\n        this.columns !== matrix.columns) {\n        throw new RangeError('Matrices dimensions must be equal');\n    }\n    for (var i = 0; i < this.rows; i++) {\n        for (var j = 0; j < this.columns; j++) {\n            this.set(i, j, this.get(i, j) %op% matrix.get(i, j));\n        }\n    }\n    return this;\n})\n",{name:`${n[1]}M`,op:n[0]})),p=i(Q("\n(function %name%(matrix, value) {\n    var newMatrix = new this[Symbol.species](matrix);\n    return newMatrix.%name%(value);\n})\n",{name:n[1]}));for(s=1;s<n.length;s++)r.prototype[n[s]]=u,r.prototype[`${n[s]}S`]=l,r.prototype[`${n[s]}M`]=d,r[n[s]]=p}var x=[["~","not"]];for(var M of(["abs","acos","acosh","asin","asinh","atan","atanh","cbrt","ceil","clz32","cos","cosh","exp","expm1","floor","fround","log","log1p","log10","log2","round","sign","sin","sinh","sqrt","tan","tanh","trunc"].forEach(function(t){x.push([`Math.${t}`,t])}),x)){var k=i(Q("\n(function %name%() {\n    for (var i = 0; i < this.rows; i++) {\n        for (var j = 0; j < this.columns; j++) {\n            this.set(i, j, %method%(this.get(i, j)));\n        }\n    }\n    return this;\n})\n",{name:M[1],method:M[0]})),D=i(Q("\n(function %name%(matrix) {\n    var newMatrix = new this[Symbol.species](matrix);\n    return newMatrix.%name%();\n})\n",{name:M[1]}));for(s=1;s<M.length;s++)r.prototype[M[s]]=k,r[M[s]]=D}for(var N of[["Math.pow",1,"pow"]]){var q="arg0";for(s=1;s<N[1];s++)q+=`, arg${s}`;if(1!==N[1]){var O=i(Q("\n(function %name%(%args%) {\n    for (var i = 0; i < this.rows; i++) {\n        for (var j = 0; j < this.columns; j++) {\n            this.set(i, j, %method%(this.get(i, j), %args%));\n        }\n    }\n    return this;\n})\n",{name:N[2],method:N[0],args:q})),T=i(Q(o,{name:N[2],args:q}));for(s=2;s<N.length;s++)r.prototype[N[s]]=O,r[N[s]]=T}else{var L={name:N[2],args:q,method:N[0]},P=i(Q("\n(function %name%(value) {\n    if (typeof value === 'number') return this.%name%S(value);\n    return this.%name%M(value);\n})\n",L)),_=i(Q("\n(function %name%S(value) {\n    for (var i = 0; i < this.rows; i++) {\n        for (var j = 0; j < this.columns; j++) {\n            this.set(i, j, %method%(this.get(i, j), value));\n        }\n    }\n    return this;\n})\n",L)),U=i(Q("\n(function %name%M(matrix) {\n    matrix = this.constructor.checkMatrix(matrix);\n    if (this.rows !== matrix.rows ||\n        this.columns !== matrix.columns) {\n        throw new RangeError('Matrices dimensions must be equal');\n    }\n    for (var i = 0; i < this.rows; i++) {\n        for (var j = 0; j < this.columns; j++) {\n            this.set(i, j, %method%(this.get(i, j), matrix.get(i, j)));\n        }\n    }\n    return this;\n})\n",L)),$=i(Q("\n(function %name%(matrix, %args%) {\n    var newMatrix = new this[Symbol.species](matrix);\n    return newMatrix.%name%(%args%);\n})\n",L));for(s=2;s<N.length;s++)r.prototype[N[s]]=P,r.prototype[`${N[s]}M`]=U,r.prototype[`${N[s]}S`]=_,r[N[s]]=$}}function Q(t,r){for(var e in r)t=t.replace(new RegExp(`%${e}%`,"g"),r[e]);return t}return r}class C extends(k(Array)){constructor(t,r){var e;if(1===arguments.length&&"number"==typeof t)return new Array(t);if(C.isMatrix(t))return t.clone();if(Number.isInteger(t)&&t>0){if(super(t),!(Number.isInteger(r)&&r>0))throw new TypeError("nColumns must be a positive integer");for(e=0;e<t;e++)this[e]=new Array(r)}else{if(!Array.isArray(t))throw new TypeError("First argument must be a positive number or an array");{const s=t;if(t=s.length,"number"!=typeof(r=s[0].length)||0===r)throw new TypeError("Data must be a 2D array with at least one element");for(super(t),e=0;e<t;e++){if(s[e].length!==r)throw new RangeError("Inconsistent array dimensions");this[e]=[].concat(s[e])}}}return this.rows=t,this.columns=r,this}set(t,r,e){return this[t][r]=e,this}get(t,r){return this[t][r]}removeRow(t){if(c(this,t),1===this.rows)throw new RangeError("A matrix cannot have less than one row");return this.splice(t,1),this.rows-=1,this}addRow(t,r){return void 0===r&&(r=t,t=this.rows),c(this,t,!0),r=w(this,r),this.splice(t,0,r),this.rows+=1,this}removeColumn(t){if(m(this,t),1===this.columns)throw new RangeError("A matrix cannot have less than one column");for(var r=0;r<this.rows;r++)this[r].splice(t,1);return this.columns-=1,this}addColumn(t,r){void 0===r&&(r=t,t=this.columns),m(this,t,!0),r=g(this,r);for(var e=0;e<this.rows;e++)this[e].splice(t,0,r[e]);return this.columns+=1,this}}class D extends(k()){constructor(t,r={}){const{rows:e=1}=r;if(t.length%e!=0)throw new Error("the data length is not divisible by the number of rows");super(),this.rows=e,this.columns=t.length/e,this.data=t}set(t,r,e){var s=this._calculateIndex(t,r);return this.data[s]=e,this}get(t,r){var e=this._calculateIndex(t,r);return this.data[e]}_calculateIndex(t,r){return t*this.columns+r}static get[Symbol.species](){return C}}class N extends(k()){constructor(t){super(),this.data=t,this.rows=t.length,this.columns=t[0].length}set(t,r,e){return this.data[t][r]=e,this}get(t,r){return this.data[t][r]}static get[Symbol.species](){return C}}function q(t,r){if(Array.isArray(t))return t[0]&&Array.isArray(t[0])?new N(t):new D(t,r);throw new Error("the argument is not an array")}class O{constructor(t){var r,e,s,o,i=(t=N.checkMatrix(t)).clone(),n=t.rows,a=t.columns,h=new Array(a);for(s=0;s<a;s++){var l=0;for(r=s;r<n;r++)l=u(l,i.get(r,s));if(0!==l){for(i.get(s,s)<0&&(l=-l),r=s;r<n;r++)i.set(r,s,i.get(r,s)/l);for(i.set(s,s,i.get(s,s)+1),e=s+1;e<a;e++){for(o=0,r=s;r<n;r++)o+=i.get(r,s)*i.get(r,e);for(o=-o/i.get(s,s),r=s;r<n;r++)i.set(r,e,i.get(r,e)+o*i.get(r,s))}}h[s]=-l}this.QR=i,this.Rdiag=h}solve(t){t=C.checkMatrix(t);var r=this.QR,e=r.rows;if(t.rows!==e)throw new Error("Matrix row dimensions must agree");if(!this.isFullRank())throw new Error("Matrix is rank deficient");var s,o,i,n,a=t.columns,h=t.clone(),u=r.columns;for(i=0;i<u;i++)for(o=0;o<a;o++){for(n=0,s=i;s<e;s++)n+=r[s][i]*h[s][o];for(n=-n/r[i][i],s=i;s<e;s++)h[s][o]+=n*r[s][i]}for(i=u-1;i>=0;i--){for(o=0;o<a;o++)h[i][o]/=this.Rdiag[i];for(s=0;s<i;s++)for(o=0;o<a;o++)h[s][o]-=h[i][o]*r[s][i]}return h.subMatrix(0,u-1,0,a-1)}isFullRank(){for(var t=this.QR.columns,r=0;r<t;r++)if(0===this.Rdiag[r])return!1;return!0}get upperTriangularMatrix(){var t,r,e=this.QR,s=e.columns,o=new C(s,s);for(t=0;t<s;t++)for(r=0;r<s;r++)o[t][r]=t<r?e[t][r]:t===r?this.Rdiag[t]:0;return o}get orthogonalMatrix(){var t,r,e,s,o=this.QR,i=o.rows,n=o.columns,a=new C(i,n);for(e=n-1;e>=0;e--){for(t=0;t<i;t++)a[t][e]=0;for(a[e][e]=1,r=e;r<n;r++)if(0!==o[e][e]){for(s=0,t=e;t<i;t++)s+=o[t][e]*a[t][r];for(s=-s/o[e][e],t=e;t<i;t++)a[t][r]+=s*o[t][e]}}return a}}function T(t,r=!1){return t=N.checkMatrix(t),r?new f(t).inverse():L(t,C.eye(t.rows))}function L(t,r,e=!1){return t=N.checkMatrix(t),r=N.checkMatrix(r),e?new f(t).solve(r):t.isSquare()?new h(t).solve(r):new O(t).solve(r)}function P(t,r){for(var e=[],s=0;s<t;s++)s!==r&&e.push(s);return e}function _(t,r,e,s=1e-9,o=1e-9){if(t>o)return new Array(r.rows+1).fill(0);for(var i=r.addRow(e,[0]),n=0;n<i.rows;n++)Math.abs(i.get(n,0))<s&&i.set(n,0,0);return i.to1DArray()}function U(t,r={}){const{thresholdValue:e=1e-9,thresholdError:s=1e-9}=r;for(var o=t.rows,n=new C(o,o),a=0;a<o;a++){var h=C.columnVector(t.getRow(a)),u=t.subMatrixRow(P(o,a)).transposeView(),l=new f(u).solve(h),c=i(C.sub(h,u.mmul(l)).abs().to1DArray());n.setRow(a,_(c,l,a,e,s))}return n}class ${constructor(t,r={}){const{assumeSymmetric:e=!1}=r;if(!(t=N.checkMatrix(t)).isSquare())throw new Error("Matrix is not a square matrix");var s,o,i=t.columns,n=l(i,i,0),a=new Array(i),h=new Array(i),f=t;if(!!e||t.isSymmetric()){for(s=0;s<i;s++)for(o=0;o<i;o++)n[s][o]=f.get(s,o);!function(t,r,e,s){var o,i,n,a,h,u,l,f;for(h=0;h<t;h++)e[h]=s[t-1][h];for(a=t-1;a>0;a--){for(f=0,n=0,u=0;u<a;u++)f+=Math.abs(e[u]);if(0===f)for(r[a]=e[a-1],h=0;h<a;h++)e[h]=s[a-1][h],s[a][h]=0,s[h][a]=0;else{for(u=0;u<a;u++)e[u]/=f,n+=e[u]*e[u];for(o=e[a-1],i=Math.sqrt(n),o>0&&(i=-i),r[a]=f*i,n-=o*i,e[a-1]=o-i,h=0;h<a;h++)r[h]=0;for(h=0;h<a;h++){for(o=e[h],s[h][a]=o,i=r[h]+s[h][h]*o,u=h+1;u<=a-1;u++)i+=s[u][h]*e[u],r[u]+=s[u][h]*o;r[h]=i}for(o=0,h=0;h<a;h++)r[h]/=n,o+=r[h]*e[h];for(l=o/(n+n),h=0;h<a;h++)r[h]-=l*e[h];for(h=0;h<a;h++){for(o=e[h],i=r[h],u=h;u<=a-1;u++)s[u][h]-=o*r[u]+i*e[u];e[h]=s[a-1][h],s[a][h]=0}}e[a]=n}for(a=0;a<t-1;a++){if(s[t-1][a]=s[a][a],s[a][a]=1,0!==(n=e[a+1])){for(u=0;u<=a;u++)e[u]=s[u][a+1]/n;for(h=0;h<=a;h++){for(i=0,u=0;u<=a;u++)i+=s[u][a+1]*s[u][h];for(u=0;u<=a;u++)s[u][h]-=i*e[u]}}for(u=0;u<=a;u++)s[u][a+1]=0}for(h=0;h<t;h++)e[h]=s[t-1][h],s[t-1][h]=0;s[t-1][t-1]=1,r[0]=0}(i,h,a,n),function(t,r,e,s){var o,i,n,a,h,l,f,c,m,w,g,v,d,p,b,x;for(n=1;n<t;n++)r[n-1]=r[n];r[t-1]=0;var M=0,y=0,S=Number.EPSILON;for(l=0;l<t;l++){for(y=Math.max(y,Math.abs(e[l])+Math.abs(r[l])),f=l;f<t&&!(Math.abs(r[f])<=S*y);)f++;if(f>l){0;do{for(1,o=e[l],c=(e[l+1]-o)/(2*r[l]),m=u(c,1),c<0&&(m=-m),e[l]=r[l]/(c+m),e[l+1]=r[l]*(c+m),w=e[l+1],i=o-e[l],n=l+2;n<t;n++)e[n]-=i;for(M+=i,c=e[f],v=g=1,d=g,p=r[l+1],b=0,x=0,n=f-1;n>=l;n--)for(d=v,v=g,x=b,o=g*r[n],i=g*c,m=u(c,r[n]),r[n+1]=b*m,b=r[n]/m,c=(g=c/m)*e[n]-b*o,e[n+1]=i+b*(g*o+b*e[n]),h=0;h<t;h++)i=s[h][n+1],s[h][n+1]=b*s[h][n]+g*i,s[h][n]=g*s[h][n]-b*i;c=-b*x*d*p*r[l]/w,r[l]=b*c,e[l]=g*c}while(Math.abs(r[l])>S*y)}e[l]=e[l]+M,r[l]=0}for(n=0;n<t-1;n++){for(h=n,c=e[n],a=n+1;a<t;a++)e[a]<c&&(h=a,c=e[a]);if(h!==n)for(e[h]=e[n],e[n]=c,a=0;a<t;a++)c=s[a][n],s[a][n]=s[a][h],s[a][h]=c}}(i,h,a,n)}else{var c=l(i,i,0),m=new Array(i);for(o=0;o<i;o++)for(s=0;s<i;s++)c[s][o]=f.get(s,o);!function(t,r,e,s){var o,i,n,a,h,u,l,f=t-1;for(u=1;u<=f-1;u++){for(l=0,a=u;a<=f;a++)l+=Math.abs(r[a][u-1]);if(0!==l){for(n=0,a=f;a>=u;a--)e[a]=r[a][u-1]/l,n+=e[a]*e[a];for(i=Math.sqrt(n),e[u]>0&&(i=-i),n-=e[u]*i,e[u]=e[u]-i,h=u;h<t;h++){for(o=0,a=f;a>=u;a--)o+=e[a]*r[a][h];for(o/=n,a=u;a<=f;a++)r[a][h]-=o*e[a]}for(a=0;a<=f;a++){for(o=0,h=f;h>=u;h--)o+=e[h]*r[a][h];for(o/=n,h=u;h<=f;h++)r[a][h]-=o*e[h]}e[u]=l*e[u],r[u][u-1]=l*i}}for(a=0;a<t;a++)for(h=0;h<t;h++)s[a][h]=a===h?1:0;for(u=f-1;u>=1;u--)if(0!==r[u][u-1]){for(a=u+1;a<=f;a++)e[a]=r[a][u-1];for(h=u;h<=f;h++){for(i=0,a=u;a<=f;a++)i+=e[a]*s[a][h];for(i=i/e[u]/r[u][u-1],a=u;a<=f;a++)s[a][h]+=i*e[a]}}}(i,c,m,n),function(t,r,e,s,o){var i,n,a,h,u,l,f,c,m,w,g,v,d,p,b,x=t-1,M=t-1,y=Number.EPSILON,S=0,R=0,E=0,V=0,A=0,z=0,j=0,I=0;for(i=0;i<t;i++)for((i<0||i>M)&&(e[i]=o[i][i],r[i]=0),n=Math.max(i-1,0);n<t;n++)R+=Math.abs(o[i][n]);for(;x>=0;){for(h=x;h>0&&(0===(z=Math.abs(o[h-1][h-1])+Math.abs(o[h][h]))&&(z=R),!(Math.abs(o[h][h-1])<y*z));)h--;if(h===x)o[x][x]=o[x][x]+S,e[x]=o[x][x],r[x]=0,x--,I=0;else if(h===x-1){if(f=o[x][x-1]*o[x-1][x],E=(o[x-1][x-1]-o[x][x])/2,V=E*E+f,j=Math.sqrt(Math.abs(V)),o[x][x]=o[x][x]+S,o[x-1][x-1]=o[x-1][x-1]+S,c=o[x][x],V>=0){for(j=E>=0?E+j:E-j,e[x-1]=c+j,e[x]=e[x-1],0!==j&&(e[x]=c-f/j),r[x-1]=0,r[x]=0,c=o[x][x-1],z=Math.abs(c)+Math.abs(j),E=c/z,V=j/z,A=Math.sqrt(E*E+V*V),E/=A,V/=A,n=x-1;n<t;n++)j=o[x-1][n],o[x-1][n]=V*j+E*o[x][n],o[x][n]=V*o[x][n]-E*j;for(i=0;i<=x;i++)j=o[i][x-1],o[i][x-1]=V*j+E*o[i][x],o[i][x]=V*o[i][x]-E*j;for(i=0;i<=M;i++)j=s[i][x-1],s[i][x-1]=V*j+E*s[i][x],s[i][x]=V*s[i][x]-E*j}else e[x-1]=c+E,e[x]=c+E,r[x-1]=j,r[x]=-j;x-=2,I=0}else{if(c=o[x][x],m=0,f=0,h<x&&(m=o[x-1][x-1],f=o[x][x-1]*o[x-1][x]),10===I){for(S+=c,i=0;i<=x;i++)o[i][i]-=c;z=Math.abs(o[x][x-1])+Math.abs(o[x-1][x-2]),c=m=.75*z,f=-.4375*z*z}if(30===I&&(z=(z=(m-c)/2)*z+f)>0){for(z=Math.sqrt(z),m<c&&(z=-z),z=c-f/((m-c)/2+z),i=0;i<=x;i++)o[i][i]-=z;S+=z,c=m=f=.964}for(I+=1,u=x-2;u>=h&&(j=o[u][u],E=((A=c-j)*(z=m-j)-f)/o[u+1][u]+o[u][u+1],V=o[u+1][u+1]-j-A-z,A=o[u+2][u+1],z=Math.abs(E)+Math.abs(V)+Math.abs(A),E/=z,V/=z,A/=z,u!==h)&&!(Math.abs(o[u][u-1])*(Math.abs(V)+Math.abs(A))<y*(Math.abs(E)*(Math.abs(o[u-1][u-1])+Math.abs(j)+Math.abs(o[u+1][u+1]))));)u--;for(i=u+2;i<=x;i++)o[i][i-2]=0,i>u+2&&(o[i][i-3]=0);for(a=u;a<=x-1&&(p=a!==x-1,a!==u&&(E=o[a][a-1],V=o[a+1][a-1],A=p?o[a+2][a-1]:0,0!==(c=Math.abs(E)+Math.abs(V)+Math.abs(A))&&(E/=c,V/=c,A/=c)),0!==c);a++)if(z=Math.sqrt(E*E+V*V+A*A),E<0&&(z=-z),0!==z){for(a!==u?o[a][a-1]=-z*c:h!==u&&(o[a][a-1]=-o[a][a-1]),c=(E+=z)/z,m=V/z,j=A/z,V/=E,A/=E,n=a;n<t;n++)E=o[a][n]+V*o[a+1][n],p&&(E+=A*o[a+2][n],o[a+2][n]=o[a+2][n]-E*j),o[a][n]=o[a][n]-E*c,o[a+1][n]=o[a+1][n]-E*m;for(i=0;i<=Math.min(x,a+3);i++)E=c*o[i][a]+m*o[i][a+1],p&&(E+=j*o[i][a+2],o[i][a+2]=o[i][a+2]-E*A),o[i][a]=o[i][a]-E,o[i][a+1]=o[i][a+1]-E*V;for(i=0;i<=M;i++)E=c*s[i][a]+m*s[i][a+1],p&&(E+=j*s[i][a+2],s[i][a+2]=s[i][a+2]-E*A),s[i][a]=s[i][a]-E,s[i][a+1]=s[i][a+1]-E*V}}}if(0===R)return;for(x=t-1;x>=0;x--)if(E=e[x],0===(V=r[x]))for(h=x,o[x][x]=1,i=x-1;i>=0;i--){for(f=o[i][i]-E,A=0,n=h;n<=x;n++)A+=o[i][n]*o[n][x];if(r[i]<0)j=f,z=A;else if(h=i,0===r[i]?o[i][x]=0!==f?-A/f:-A/(y*R):(c=o[i][i+1],m=o[i+1][i],V=(e[i]-E)*(e[i]-E)+r[i]*r[i],l=(c*z-j*A)/V,o[i][x]=l,o[i+1][x]=Math.abs(c)>Math.abs(j)?(-A-f*l)/c:(-z-m*l)/j),l=Math.abs(o[i][x]),y*l*l>1)for(n=i;n<=x;n++)o[n][x]=o[n][x]/l}else if(V<0)for(h=x-1,Math.abs(o[x][x-1])>Math.abs(o[x-1][x])?(o[x-1][x-1]=V/o[x][x-1],o[x-1][x]=-(o[x][x]-E)/o[x][x-1]):(b=Q(0,-o[x-1][x],o[x-1][x-1]-E,V),o[x-1][x-1]=b[0],o[x-1][x]=b[1]),o[x][x-1]=0,o[x][x]=1,i=x-2;i>=0;i--){for(w=0,g=0,n=h;n<=x;n++)w+=o[i][n]*o[n][x-1],g+=o[i][n]*o[n][x];if(f=o[i][i]-E,r[i]<0)j=f,A=w,z=g;else if(h=i,0===r[i]?(b=Q(-w,-g,f,V),o[i][x-1]=b[0],o[i][x]=b[1]):(c=o[i][i+1],m=o[i+1][i],v=(e[i]-E)*(e[i]-E)+r[i]*r[i]-V*V,d=2*(e[i]-E)*V,0===v&&0===d&&(v=y*R*(Math.abs(f)+Math.abs(V)+Math.abs(c)+Math.abs(m)+Math.abs(j))),b=Q(c*A-j*w+V*g,c*z-j*g-V*w,v,d),o[i][x-1]=b[0],o[i][x]=b[1],Math.abs(c)>Math.abs(j)+Math.abs(V)?(o[i+1][x-1]=(-w-f*o[i][x-1]+V*o[i][x])/c,o[i+1][x]=(-g-f*o[i][x]-V*o[i][x-1])/c):(b=Q(-A-m*o[i][x-1],-z-m*o[i][x],j,V),o[i+1][x-1]=b[0],o[i+1][x]=b[1])),l=Math.max(Math.abs(o[i][x-1]),Math.abs(o[i][x])),y*l*l>1)for(n=i;n<=x;n++)o[n][x-1]=o[n][x-1]/l,o[n][x]=o[n][x]/l}for(i=0;i<t;i++)if(i<0||i>M)for(n=i;n<t;n++)s[i][n]=o[i][n];for(n=t-1;n>=0;n--)for(i=0;i<=M;i++){for(j=0,a=0;a<=Math.min(n,M);a++)j+=s[i][a]*o[a][n];s[i][n]=j}}(i,h,a,n,c)}this.n=i,this.e=h,this.d=a,this.V=n}get realEigenvalues(){return this.d}get imaginaryEigenvalues(){return this.e}get eigenvectorMatrix(){return C.isMatrix(this.V)||(this.V=new C(this.V)),this.V}get diagonalMatrix(){var t,r,e=this.n,s=this.e,o=this.d,i=new C(e,e);for(t=0;t<e;t++){for(r=0;r<e;r++)i[t][r]=0;i[t][t]=o[t],s[t]>0?i[t][t+1]=s[t]:s[t]<0&&(i[t][t-1]=s[t])}return i}}function Q(t,r,e,s){var o,i;return Math.abs(e)>Math.abs(s)?[(t+(o=s/e)*r)/(i=e+o*s),(r-o*t)/i]:[((o=e/s)*t+r)/(i=s+o*e),(o*r-t)/i]}class F{constructor(t){if(!(t=N.checkMatrix(t)).isSymmetric())throw new Error("Matrix is not symmetric");var r,e,s,o=t,i=o.rows,n=new C(i,i),a=!0;for(e=0;e<i;e++){var h=n[e],u=0;for(s=0;s<e;s++){var l=n[s],f=0;for(r=0;r<s;r++)f+=l[r]*h[r];h[s]=f=(o.get(e,s)-f)/n[s][s],u+=f*f}for(a&=(u=o.get(e,e)-u)>0,n[e][e]=Math.sqrt(Math.max(u,0)),s=e+1;s<i;s++)n[e][s]=0}if(!a)throw new Error("Matrix is not positive definite");this.L=n}solve(t){t=N.checkMatrix(t);var r=this.L,e=r.rows;if(t.rows!==e)throw new Error("Matrix dimensions do not match");var s,o,i,n=t.columns,a=t.clone();for(i=0;i<e;i++)for(o=0;o<n;o++){for(s=0;s<i;s++)a[i][o]-=a[s][o]*r[i][s];a[i][o]/=r[i][i]}for(i=e-1;i>=0;i--)for(o=0;o<n;o++){for(s=i+1;s<e;s++)a[i][o]-=a[s][o]*r[s][i];a[i][o]/=r[i][i]}return a}get lowerTriangularMatrix(){return this.L}}e.d(r,"default",function(){return C}),e.d(r,"Matrix",function(){return C}),e.d(r,"abstractMatrix",function(){return k}),e.d(r,"wrap",function(){return q}),e.d(r,"WrapperMatrix2D",function(){return N}),e.d(r,"WrapperMatrix1D",function(){return D}),e.d(r,"solve",function(){return L}),e.d(r,"inverse",function(){return T}),e.d(r,"linearDependencies",function(){return U}),e.d(r,"SingularValueDecomposition",function(){return f}),e.d(r,"SVD",function(){return f}),e.d(r,"EigenvalueDecomposition",function(){return $}),e.d(r,"EVD",function(){return $}),e.d(r,"CholeskyDecomposition",function(){return F}),e.d(r,"CHO",function(){return F}),e.d(r,"LuDecomposition",function(){return h}),e.d(r,"LU",function(){return h}),e.d(r,"QrDecomposition",function(){return O}),e.d(r,"QR",function(){return O})}])});
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+const SavitzkyGolay = require('ml-savitzky-golay');
+module.exports = {SavitzkyGolay: SavitzkyGolay};
+
+
+
+},{"ml-savitzky-golay":9}],2:[function(require,module,exports){
+'use strict';
+
+var hasOwn = Object.prototype.hasOwnProperty;
+var toStr = Object.prototype.toString;
+var defineProperty = Object.defineProperty;
+var gOPD = Object.getOwnPropertyDescriptor;
+
+var isArray = function isArray(arr) {
+	if (typeof Array.isArray === 'function') {
+		return Array.isArray(arr);
+	}
+
+	return toStr.call(arr) === '[object Array]';
+};
+
+var isPlainObject = function isPlainObject(obj) {
+	if (!obj || toStr.call(obj) !== '[object Object]') {
+		return false;
+	}
+
+	var hasOwnConstructor = hasOwn.call(obj, 'constructor');
+	var hasIsPrototypeOf = obj.constructor && obj.constructor.prototype && hasOwn.call(obj.constructor.prototype, 'isPrototypeOf');
+	// Not own constructor property must be Object
+	if (obj.constructor && !hasOwnConstructor && !hasIsPrototypeOf) {
+		return false;
+	}
+
+	// Own properties are enumerated firstly, so to speed up,
+	// if last one is own, then all properties are own.
+	var key;
+	for (key in obj) { /**/ }
+
+	return typeof key === 'undefined' || hasOwn.call(obj, key);
+};
+
+// If name is '__proto__', and Object.defineProperty is available, define __proto__ as an own property on target
+var setProperty = function setProperty(target, options) {
+	if (defineProperty && options.name === '__proto__') {
+		defineProperty(target, options.name, {
+			enumerable: true,
+			configurable: true,
+			value: options.newValue,
+			writable: true
+		});
+	} else {
+		target[options.name] = options.newValue;
+	}
+};
+
+// Return undefined instead of __proto__ if '__proto__' is not an own property
+var getProperty = function getProperty(obj, name) {
+	if (name === '__proto__') {
+		if (!hasOwn.call(obj, name)) {
+			return void 0;
+		} else if (gOPD) {
+			// In early versions of node, obj['__proto__'] is buggy when obj has
+			// __proto__ as an own property. Object.getOwnPropertyDescriptor() works.
+			return gOPD(obj, name).value;
+		}
+	}
+
+	return obj[name];
+};
+
+module.exports = function extend() {
+	var options, name, src, copy, copyIsArray, clone;
+	var target = arguments[0];
+	var i = 1;
+	var length = arguments.length;
+	var deep = false;
+
+	// Handle a deep copy situation
+	if (typeof target === 'boolean') {
+		deep = target;
+		target = arguments[1] || {};
+		// skip the boolean and the target
+		i = 2;
+	}
+	if (target == null || (typeof target !== 'object' && typeof target !== 'function')) {
+		target = {};
+	}
+
+	for (; i < length; ++i) {
+		options = arguments[i];
+		// Only deal with non-null/undefined values
+		if (options != null) {
+			// Extend the base object
+			for (name in options) {
+				src = getProperty(target, name);
+				copy = getProperty(options, name);
+
+				// Prevent never-ending loop
+				if (target !== copy) {
+					// Recurse if we're merging plain objects or arrays
+					if (deep && copy && (isPlainObject(copy) || (copyIsArray = isArray(copy)))) {
+						if (copyIsArray) {
+							copyIsArray = false;
+							clone = src && isArray(src) ? src : [];
+						} else {
+							clone = src && isPlainObject(src) ? src : {};
+						}
+
+						// Never move original objects, clone them
+						setProperty(target, { name: name, newValue: extend(deep, clone, copy) });
+
+					// Don't bring in undefined values
+					} else if (typeof copy !== 'undefined') {
+						setProperty(target, { name: name, newValue: copy });
+					}
+				}
+			}
+		}
+	}
+
+	// Return the modified object
+	return target;
+};
+
+},{}],3:[function(require,module,exports){
+'use strict';
+
+const toString = Object.prototype.toString;
+
+function isAnyArray(object) {
+  return toString.call(object).endsWith('Array]');
+}
+
+module.exports = isAnyArray;
+
+},{}],4:[function(require,module,exports){
+'use strict';
+
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var isArray = _interopDefault(require('is-any-array'));
+
+/**
+ * Computes the maximum of the given values
+ * @param {Array<number>} input
+ * @return {number}
+ */
+function max(input) {
+  if (!isArray(input)) {
+    throw new TypeError('input must be an array');
+  }
+
+  if (input.length === 0) {
+    throw new TypeError('input must not be empty');
+  }
+
+  var max = input[0];
+  for (var i = 1; i < input.length; i++) {
+    if (input[i] > max) max = input[i];
+  }
+  return max;
+}
+
+module.exports = max;
+
+},{"is-any-array":3}],5:[function(require,module,exports){
+'use strict';
+
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var isArray = _interopDefault(require('is-any-array'));
+
+/**
+ * Computes the minimum of the given values
+ * @param {Array<number>} input
+ * @return {number}
+ */
+function min(input) {
+  if (!isArray(input)) {
+    throw new TypeError('input must be an array');
+  }
+
+  if (input.length === 0) {
+    throw new TypeError('input must not be empty');
+  }
+
+  var min = input[0];
+  for (var i = 1; i < input.length; i++) {
+    if (input[i] < min) min = input[i];
+  }
+  return min;
+}
+
+module.exports = min;
+
+},{"is-any-array":3}],6:[function(require,module,exports){
+'use strict';
+
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var max = _interopDefault(require('ml-array-max'));
+var min = _interopDefault(require('ml-array-min'));
+var isArray = _interopDefault(require('is-any-array'));
+
+function rescale(input, options = {}) {
+  if (!isArray(input)) {
+    throw new TypeError('input must be an array');
+  } else if (input.length === 0) {
+    throw new TypeError('input must not be empty');
+  }
+
+  let output;
+  if (options.output !== undefined) {
+    if (!isArray(options.output)) {
+      throw new TypeError('output option must be an array if specified');
+    }
+    output = options.output;
+  } else {
+    output = new Array(input.length);
+  }
+
+  const currentMin = min(input);
+  const currentMax = max(input);
+
+  if (currentMin === currentMax) {
+    throw new RangeError(
+      'minimum and maximum input values are equal. Cannot rescale a constant array'
+    );
+  }
+
+  const {
+    min: minValue = options.autoMinMax ? currentMin : 0,
+    max: maxValue = options.autoMinMax ? currentMax : 1
+  } = options;
+
+  if (minValue >= maxValue) {
+    throw new RangeError('min option must be smaller than max option');
+  }
+
+  const factor = (maxValue - minValue) / (currentMax - currentMin);
+  for (var i = 0; i < input.length; i++) {
+    output[i] = (input[i] - currentMin) * factor + minValue;
+  }
+
+  return output;
+}
+
+module.exports = rescale;
+
+},{"is-any-array":3,"ml-array-max":4,"ml-array-min":5}],7:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var rescale = _interopDefault(require('ml-array-rescale'));
+var max = _interopDefault(require('ml-array-max'));
+
+/**
+ * @class LuDecomposition
+ * @link https://github.com/lutzroeder/Mapack/blob/master/Source/LuDecomposition.cs
+ * @param {Matrix} matrix
+ */
+class LuDecomposition$$1 {
+  constructor(matrix) {
+    matrix = WrapperMatrix2D.checkMatrix(matrix);
+
+    var lu = matrix.clone();
+    var rows = lu.rows;
+    var columns = lu.columns;
+    var pivotVector = new Array(rows);
+    var pivotSign = 1;
+    var i, j, k, p, s, t, v;
+    var LUcolj, kmax;
+
+    for (i = 0; i < rows; i++) {
+      pivotVector[i] = i;
+    }
+
+    LUcolj = new Array(rows);
+
+    for (j = 0; j < columns; j++) {
+      for (i = 0; i < rows; i++) {
+        LUcolj[i] = lu.get(i, j);
+      }
+
+      for (i = 0; i < rows; i++) {
+        kmax = Math.min(i, j);
+        s = 0;
+        for (k = 0; k < kmax; k++) {
+          s += lu.get(i, k) * LUcolj[k];
+        }
+        LUcolj[i] -= s;
+        lu.set(i, j, LUcolj[i]);
+      }
+
+      p = j;
+      for (i = j + 1; i < rows; i++) {
+        if (Math.abs(LUcolj[i]) > Math.abs(LUcolj[p])) {
+          p = i;
+        }
+      }
+
+      if (p !== j) {
+        for (k = 0; k < columns; k++) {
+          t = lu.get(p, k);
+          lu.set(p, k, lu.get(j, k));
+          lu.set(j, k, t);
+        }
+
+        v = pivotVector[p];
+        pivotVector[p] = pivotVector[j];
+        pivotVector[j] = v;
+
+        pivotSign = -pivotSign;
+      }
+
+      if (j < rows && lu.get(j, j) !== 0) {
+        for (i = j + 1; i < rows; i++) {
+          lu.set(i, j, lu.get(i, j) / lu.get(j, j));
+        }
+      }
+    }
+
+    this.LU = lu;
+    this.pivotVector = pivotVector;
+    this.pivotSign = pivotSign;
+  }
+
+  /**
+   *
+   * @return {boolean}
+   */
+  isSingular() {
+    var data = this.LU;
+    var col = data.columns;
+    for (var j = 0; j < col; j++) {
+      if (data[j][j] === 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   *
+   * @param {Matrix} value
+   * @return {Matrix}
+   */
+  solve(value) {
+    value = Matrix.checkMatrix(value);
+
+    var lu = this.LU;
+    var rows = lu.rows;
+
+    if (rows !== value.rows) {
+      throw new Error('Invalid matrix dimensions');
+    }
+    if (this.isSingular()) {
+      throw new Error('LU matrix is singular');
+    }
+
+    var count = value.columns;
+    var X = value.subMatrixRow(this.pivotVector, 0, count - 1);
+    var columns = lu.columns;
+    var i, j, k;
+
+    for (k = 0; k < columns; k++) {
+      for (i = k + 1; i < columns; i++) {
+        for (j = 0; j < count; j++) {
+          X[i][j] -= X[k][j] * lu[i][k];
+        }
+      }
+    }
+    for (k = columns - 1; k >= 0; k--) {
+      for (j = 0; j < count; j++) {
+        X[k][j] /= lu[k][k];
+      }
+      for (i = 0; i < k; i++) {
+        for (j = 0; j < count; j++) {
+          X[i][j] -= X[k][j] * lu[i][k];
+        }
+      }
+    }
+    return X;
+  }
+
+  /**
+   *
+   * @return {number}
+   */
+  get determinant() {
+    var data = this.LU;
+    if (!data.isSquare()) {
+      throw new Error('Matrix must be square');
+    }
+    var determinant = this.pivotSign;
+    var col = data.columns;
+    for (var j = 0; j < col; j++) {
+      determinant *= data[j][j];
+    }
+    return determinant;
+  }
+
+  /**
+   *
+   * @return {Matrix}
+   */
+  get lowerTriangularMatrix() {
+    var data = this.LU;
+    var rows = data.rows;
+    var columns = data.columns;
+    var X = new Matrix(rows, columns);
+    for (var i = 0; i < rows; i++) {
+      for (var j = 0; j < columns; j++) {
+        if (i > j) {
+          X[i][j] = data[i][j];
+        } else if (i === j) {
+          X[i][j] = 1;
+        } else {
+          X[i][j] = 0;
+        }
+      }
+    }
+    return X;
+  }
+
+  /**
+   *
+   * @return {Matrix}
+   */
+  get upperTriangularMatrix() {
+    var data = this.LU;
+    var rows = data.rows;
+    var columns = data.columns;
+    var X = new Matrix(rows, columns);
+    for (var i = 0; i < rows; i++) {
+      for (var j = 0; j < columns; j++) {
+        if (i <= j) {
+          X[i][j] = data[i][j];
+        } else {
+          X[i][j] = 0;
+        }
+      }
+    }
+    return X;
+  }
+
+  /**
+   *
+   * @return {Array<number>}
+   */
+  get pivotPermutationVector() {
+    return this.pivotVector.slice();
+  }
+}
+
+function hypotenuse(a, b) {
+  var r = 0;
+  if (Math.abs(a) > Math.abs(b)) {
+    r = b / a;
+    return Math.abs(a) * Math.sqrt(1 + r * r);
+  }
+  if (b !== 0) {
+    r = a / b;
+    return Math.abs(b) * Math.sqrt(1 + r * r);
+  }
+  return 0;
+}
+
+function getFilled2DArray(rows, columns, value) {
+  var array = new Array(rows);
+  for (var i = 0; i < rows; i++) {
+    array[i] = new Array(columns);
+    for (var j = 0; j < columns; j++) {
+      array[i][j] = value;
+    }
+  }
+  return array;
+}
+
+/**
+ * @class SingularValueDecomposition
+ * @see https://github.com/accord-net/framework/blob/development/Sources/Accord.Math/Decompositions/SingularValueDecomposition.cs
+ * @param {Matrix} value
+ * @param {object} [options]
+ * @param {boolean} [options.computeLeftSingularVectors=true]
+ * @param {boolean} [options.computeRightSingularVectors=true]
+ * @param {boolean} [options.autoTranspose=false]
+ */
+class SingularValueDecomposition$$1 {
+  constructor(value, options = {}) {
+    value = WrapperMatrix2D.checkMatrix(value);
+
+    var m = value.rows;
+    var n = value.columns;
+
+    const {
+      computeLeftSingularVectors = true,
+      computeRightSingularVectors = true,
+      autoTranspose = false
+    } = options;
+
+    var wantu = Boolean(computeLeftSingularVectors);
+    var wantv = Boolean(computeRightSingularVectors);
+
+    var swapped = false;
+    var a;
+    if (m < n) {
+      if (!autoTranspose) {
+        a = value.clone();
+        // eslint-disable-next-line no-console
+        console.warn(
+          'Computing SVD on a matrix with more columns than rows. Consider enabling autoTranspose'
+        );
+      } else {
+        a = value.transpose();
+        m = a.rows;
+        n = a.columns;
+        swapped = true;
+        var aux = wantu;
+        wantu = wantv;
+        wantv = aux;
+      }
+    } else {
+      a = value.clone();
+    }
+
+    var nu = Math.min(m, n);
+    var ni = Math.min(m + 1, n);
+    var s = new Array(ni);
+    var U = getFilled2DArray(m, nu, 0);
+    var V = getFilled2DArray(n, n, 0);
+
+    var e = new Array(n);
+    var work = new Array(m);
+
+    var si = new Array(ni);
+    for (let i = 0; i < ni; i++) si[i] = i;
+
+    var nct = Math.min(m - 1, n);
+    var nrt = Math.max(0, Math.min(n - 2, m));
+    var mrc = Math.max(nct, nrt);
+
+    for (let k = 0; k < mrc; k++) {
+      if (k < nct) {
+        s[k] = 0;
+        for (let i = k; i < m; i++) {
+          s[k] = hypotenuse(s[k], a[i][k]);
+        }
+        if (s[k] !== 0) {
+          if (a[k][k] < 0) {
+            s[k] = -s[k];
+          }
+          for (let i = k; i < m; i++) {
+            a[i][k] /= s[k];
+          }
+          a[k][k] += 1;
+        }
+        s[k] = -s[k];
+      }
+
+      for (let j = k + 1; j < n; j++) {
+        if (k < nct && s[k] !== 0) {
+          let t = 0;
+          for (let i = k; i < m; i++) {
+            t += a[i][k] * a[i][j];
+          }
+          t = -t / a[k][k];
+          for (let i = k; i < m; i++) {
+            a[i][j] += t * a[i][k];
+          }
+        }
+        e[j] = a[k][j];
+      }
+
+      if (wantu && k < nct) {
+        for (let i = k; i < m; i++) {
+          U[i][k] = a[i][k];
+        }
+      }
+
+      if (k < nrt) {
+        e[k] = 0;
+        for (let i = k + 1; i < n; i++) {
+          e[k] = hypotenuse(e[k], e[i]);
+        }
+        if (e[k] !== 0) {
+          if (e[k + 1] < 0) {
+            e[k] = 0 - e[k];
+          }
+          for (let i = k + 1; i < n; i++) {
+            e[i] /= e[k];
+          }
+          e[k + 1] += 1;
+        }
+        e[k] = -e[k];
+        if (k + 1 < m && e[k] !== 0) {
+          for (let i = k + 1; i < m; i++) {
+            work[i] = 0;
+          }
+          for (let i = k + 1; i < m; i++) {
+            for (let j = k + 1; j < n; j++) {
+              work[i] += e[j] * a[i][j];
+            }
+          }
+          for (let j = k + 1; j < n; j++) {
+            let t = -e[j] / e[k + 1];
+            for (let i = k + 1; i < m; i++) {
+              a[i][j] += t * work[i];
+            }
+          }
+        }
+        if (wantv) {
+          for (let i = k + 1; i < n; i++) {
+            V[i][k] = e[i];
+          }
+        }
+      }
+    }
+
+    let p = Math.min(n, m + 1);
+    if (nct < n) {
+      s[nct] = a[nct][nct];
+    }
+    if (m < p) {
+      s[p - 1] = 0;
+    }
+    if (nrt + 1 < p) {
+      e[nrt] = a[nrt][p - 1];
+    }
+    e[p - 1] = 0;
+
+    if (wantu) {
+      for (let j = nct; j < nu; j++) {
+        for (let i = 0; i < m; i++) {
+          U[i][j] = 0;
+        }
+        U[j][j] = 1;
+      }
+      for (let k = nct - 1; k >= 0; k--) {
+        if (s[k] !== 0) {
+          for (let j = k + 1; j < nu; j++) {
+            let t = 0;
+            for (let i = k; i < m; i++) {
+              t += U[i][k] * U[i][j];
+            }
+            t = -t / U[k][k];
+            for (let i = k; i < m; i++) {
+              U[i][j] += t * U[i][k];
+            }
+          }
+          for (let i = k; i < m; i++) {
+            U[i][k] = -U[i][k];
+          }
+          U[k][k] = 1 + U[k][k];
+          for (let i = 0; i < k - 1; i++) {
+            U[i][k] = 0;
+          }
+        } else {
+          for (let i = 0; i < m; i++) {
+            U[i][k] = 0;
+          }
+          U[k][k] = 1;
+        }
+      }
+    }
+
+    if (wantv) {
+      for (let k = n - 1; k >= 0; k--) {
+        if (k < nrt && e[k] !== 0) {
+          for (let j = k + 1; j < n; j++) {
+            let t = 0;
+            for (let i = k + 1; i < n; i++) {
+              t += V[i][k] * V[i][j];
+            }
+            t = -t / V[k + 1][k];
+            for (let i = k + 1; i < n; i++) {
+              V[i][j] += t * V[i][k];
+            }
+          }
+        }
+        for (let i = 0; i < n; i++) {
+          V[i][k] = 0;
+        }
+        V[k][k] = 1;
+      }
+    }
+
+    var pp = p - 1;
+    var eps = Number.EPSILON;
+    while (p > 0) {
+      let k, kase;
+      for (k = p - 2; k >= -1; k--) {
+        if (k === -1) {
+          break;
+        }
+        const alpha =
+          Number.MIN_VALUE + eps * Math.abs(s[k] + Math.abs(s[k + 1]));
+        if (Math.abs(e[k]) <= alpha || Number.isNaN(e[k])) {
+          e[k] = 0;
+          break;
+        }
+      }
+      if (k === p - 2) {
+        kase = 4;
+      } else {
+        let ks;
+        for (ks = p - 1; ks >= k; ks--) {
+          if (ks === k) {
+            break;
+          }
+          let t =
+            (ks !== p ? Math.abs(e[ks]) : 0) +
+            (ks !== k + 1 ? Math.abs(e[ks - 1]) : 0);
+          if (Math.abs(s[ks]) <= eps * t) {
+            s[ks] = 0;
+            break;
+          }
+        }
+        if (ks === k) {
+          kase = 3;
+        } else if (ks === p - 1) {
+          kase = 1;
+        } else {
+          kase = 2;
+          k = ks;
+        }
+      }
+
+      k++;
+
+      switch (kase) {
+        case 1: {
+          let f = e[p - 2];
+          e[p - 2] = 0;
+          for (let j = p - 2; j >= k; j--) {
+            let t = hypotenuse(s[j], f);
+            let cs = s[j] / t;
+            let sn = f / t;
+            s[j] = t;
+            if (j !== k) {
+              f = -sn * e[j - 1];
+              e[j - 1] = cs * e[j - 1];
+            }
+            if (wantv) {
+              for (let i = 0; i < n; i++) {
+                t = cs * V[i][j] + sn * V[i][p - 1];
+                V[i][p - 1] = -sn * V[i][j] + cs * V[i][p - 1];
+                V[i][j] = t;
+              }
+            }
+          }
+          break;
+        }
+        case 2: {
+          let f = e[k - 1];
+          e[k - 1] = 0;
+          for (let j = k; j < p; j++) {
+            let t = hypotenuse(s[j], f);
+            let cs = s[j] / t;
+            let sn = f / t;
+            s[j] = t;
+            f = -sn * e[j];
+            e[j] = cs * e[j];
+            if (wantu) {
+              for (let i = 0; i < m; i++) {
+                t = cs * U[i][j] + sn * U[i][k - 1];
+                U[i][k - 1] = -sn * U[i][j] + cs * U[i][k - 1];
+                U[i][j] = t;
+              }
+            }
+          }
+          break;
+        }
+        case 3: {
+          const scale = Math.max(
+            Math.abs(s[p - 1]),
+            Math.abs(s[p - 2]),
+            Math.abs(e[p - 2]),
+            Math.abs(s[k]),
+            Math.abs(e[k])
+          );
+          const sp = s[p - 1] / scale;
+          const spm1 = s[p - 2] / scale;
+          const epm1 = e[p - 2] / scale;
+          const sk = s[k] / scale;
+          const ek = e[k] / scale;
+          const b = ((spm1 + sp) * (spm1 - sp) + epm1 * epm1) / 2;
+          const c = sp * epm1 * (sp * epm1);
+          let shift = 0;
+          if (b !== 0 || c !== 0) {
+            if (b < 0) {
+              shift = 0 - Math.sqrt(b * b + c);
+            } else {
+              shift = Math.sqrt(b * b + c);
+            }
+            shift = c / (b + shift);
+          }
+          let f = (sk + sp) * (sk - sp) + shift;
+          let g = sk * ek;
+          for (let j = k; j < p - 1; j++) {
+            let t = hypotenuse(f, g);
+            if (t === 0) t = Number.MIN_VALUE;
+            let cs = f / t;
+            let sn = g / t;
+            if (j !== k) {
+              e[j - 1] = t;
+            }
+            f = cs * s[j] + sn * e[j];
+            e[j] = cs * e[j] - sn * s[j];
+            g = sn * s[j + 1];
+            s[j + 1] = cs * s[j + 1];
+            if (wantv) {
+              for (let i = 0; i < n; i++) {
+                t = cs * V[i][j] + sn * V[i][j + 1];
+                V[i][j + 1] = -sn * V[i][j] + cs * V[i][j + 1];
+                V[i][j] = t;
+              }
+            }
+            t = hypotenuse(f, g);
+            if (t === 0) t = Number.MIN_VALUE;
+            cs = f / t;
+            sn = g / t;
+            s[j] = t;
+            f = cs * e[j] + sn * s[j + 1];
+            s[j + 1] = -sn * e[j] + cs * s[j + 1];
+            g = sn * e[j + 1];
+            e[j + 1] = cs * e[j + 1];
+            if (wantu && j < m - 1) {
+              for (let i = 0; i < m; i++) {
+                t = cs * U[i][j] + sn * U[i][j + 1];
+                U[i][j + 1] = -sn * U[i][j] + cs * U[i][j + 1];
+                U[i][j] = t;
+              }
+            }
+          }
+          e[p - 2] = f;
+          break;
+        }
+        case 4: {
+          if (s[k] <= 0) {
+            s[k] = s[k] < 0 ? -s[k] : 0;
+            if (wantv) {
+              for (let i = 0; i <= pp; i++) {
+                V[i][k] = -V[i][k];
+              }
+            }
+          }
+          while (k < pp) {
+            if (s[k] >= s[k + 1]) {
+              break;
+            }
+            let t = s[k];
+            s[k] = s[k + 1];
+            s[k + 1] = t;
+            if (wantv && k < n - 1) {
+              for (let i = 0; i < n; i++) {
+                t = V[i][k + 1];
+                V[i][k + 1] = V[i][k];
+                V[i][k] = t;
+              }
+            }
+            if (wantu && k < m - 1) {
+              for (let i = 0; i < m; i++) {
+                t = U[i][k + 1];
+                U[i][k + 1] = U[i][k];
+                U[i][k] = t;
+              }
+            }
+            k++;
+          }
+          p--;
+          break;
+        }
+        // no default
+      }
+    }
+
+    if (swapped) {
+      var tmp = V;
+      V = U;
+      U = tmp;
+    }
+
+    this.m = m;
+    this.n = n;
+    this.s = s;
+    this.U = U;
+    this.V = V;
+  }
+
+  /**
+   * Solve a problem of least square (Ax=b) by using the SVD. Useful when A is singular. When A is not singular, it would be better to use qr.solve(value).
+   * Example : We search to approximate x, with A matrix shape m*n, x vector size n, b vector size m (m > n). We will use :
+   * var svd = SingularValueDecomposition(A);
+   * var x = svd.solve(b);
+   * @param {Matrix} value - Matrix 1D which is the vector b (in the equation Ax = b)
+   * @return {Matrix} - The vector x
+   */
+  solve(value) {
+    var Y = value;
+    var e = this.threshold;
+    var scols = this.s.length;
+    var Ls = Matrix.zeros(scols, scols);
+
+    for (let i = 0; i < scols; i++) {
+      if (Math.abs(this.s[i]) <= e) {
+        Ls[i][i] = 0;
+      } else {
+        Ls[i][i] = 1 / this.s[i];
+      }
+    }
+
+    var U = this.U;
+    var V = this.rightSingularVectors;
+
+    var VL = V.mmul(Ls);
+    var vrows = V.rows;
+    var urows = U.length;
+    var VLU = Matrix.zeros(vrows, urows);
+
+    for (let i = 0; i < vrows; i++) {
+      for (let j = 0; j < urows; j++) {
+        let sum = 0;
+        for (let k = 0; k < scols; k++) {
+          sum += VL[i][k] * U[j][k];
+        }
+        VLU[i][j] = sum;
+      }
+    }
+
+    return VLU.mmul(Y);
+  }
+
+  /**
+   *
+   * @param {Array<number>} value
+   * @return {Matrix}
+   */
+  solveForDiagonal(value) {
+    return this.solve(Matrix.diag(value));
+  }
+
+  /**
+   * Get the inverse of the matrix. We compute the inverse of a matrix using SVD when this matrix is singular or ill-conditioned. Example :
+   * var svd = SingularValueDecomposition(A);
+   * var inverseA = svd.inverse();
+   * @return {Matrix} - The approximation of the inverse of the matrix
+   */
+  inverse() {
+    var V = this.V;
+    var e = this.threshold;
+    var vrows = V.length;
+    var vcols = V[0].length;
+    var X = new Matrix(vrows, this.s.length);
+
+    for (let i = 0; i < vrows; i++) {
+      for (let j = 0; j < vcols; j++) {
+        if (Math.abs(this.s[j]) > e) {
+          X[i][j] = V[i][j] / this.s[j];
+        } else {
+          X[i][j] = 0;
+        }
+      }
+    }
+
+    var U = this.U;
+
+    var urows = U.length;
+    var ucols = U[0].length;
+    var Y = new Matrix(vrows, urows);
+
+    for (let i = 0; i < vrows; i++) {
+      for (let j = 0; j < urows; j++) {
+        let sum = 0;
+        for (let k = 0; k < ucols; k++) {
+          sum += X[i][k] * U[j][k];
+        }
+        Y[i][j] = sum;
+      }
+    }
+
+    return Y;
+  }
+
+  /**
+   *
+   * @return {number}
+   */
+  get condition() {
+    return this.s[0] / this.s[Math.min(this.m, this.n) - 1];
+  }
+
+  /**
+   *
+   * @return {number}
+   */
+  get norm2() {
+    return this.s[0];
+  }
+
+  /**
+   *
+   * @return {number}
+   */
+  get rank() {
+    var tol = Math.max(this.m, this.n) * this.s[0] * Number.EPSILON;
+    var r = 0;
+    var s = this.s;
+    for (var i = 0, ii = s.length; i < ii; i++) {
+      if (s[i] > tol) {
+        r++;
+      }
+    }
+    return r;
+  }
+
+  /**
+   *
+   * @return {Array<number>}
+   */
+  get diagonal() {
+    return this.s;
+  }
+
+  /**
+   *
+   * @return {number}
+   */
+  get threshold() {
+    return Number.EPSILON / 2 * Math.max(this.m, this.n) * this.s[0];
+  }
+
+  /**
+   *
+   * @return {Matrix}
+   */
+  get leftSingularVectors() {
+    if (!Matrix.isMatrix(this.U)) {
+      this.U = new Matrix(this.U);
+    }
+    return this.U;
+  }
+
+  /**
+   *
+   * @return {Matrix}
+   */
+  get rightSingularVectors() {
+    if (!Matrix.isMatrix(this.V)) {
+      this.V = new Matrix(this.V);
+    }
+    return this.V;
+  }
+
+  /**
+   *
+   * @return {Matrix}
+   */
+  get diagonalMatrix() {
+    return Matrix.diag(this.s);
+  }
+}
+
+/**
+ * @private
+ * Check that a row index is not out of bounds
+ * @param {Matrix} matrix
+ * @param {number} index
+ * @param {boolean} [outer]
+ */
+function checkRowIndex(matrix, index, outer) {
+  var max$$1 = outer ? matrix.rows : matrix.rows - 1;
+  if (index < 0 || index > max$$1) {
+    throw new RangeError('Row index out of range');
+  }
+}
+
+/**
+ * @private
+ * Check that a column index is not out of bounds
+ * @param {Matrix} matrix
+ * @param {number} index
+ * @param {boolean} [outer]
+ */
+function checkColumnIndex(matrix, index, outer) {
+  var max$$1 = outer ? matrix.columns : matrix.columns - 1;
+  if (index < 0 || index > max$$1) {
+    throw new RangeError('Column index out of range');
+  }
+}
+
+/**
+ * @private
+ * Check that the provided vector is an array with the right length
+ * @param {Matrix} matrix
+ * @param {Array|Matrix} vector
+ * @return {Array}
+ * @throws {RangeError}
+ */
+function checkRowVector(matrix, vector) {
+  if (vector.to1DArray) {
+    vector = vector.to1DArray();
+  }
+  if (vector.length !== matrix.columns) {
+    throw new RangeError(
+      'vector size must be the same as the number of columns'
+    );
+  }
+  return vector;
+}
+
+/**
+ * @private
+ * Check that the provided vector is an array with the right length
+ * @param {Matrix} matrix
+ * @param {Array|Matrix} vector
+ * @return {Array}
+ * @throws {RangeError}
+ */
+function checkColumnVector(matrix, vector) {
+  if (vector.to1DArray) {
+    vector = vector.to1DArray();
+  }
+  if (vector.length !== matrix.rows) {
+    throw new RangeError('vector size must be the same as the number of rows');
+  }
+  return vector;
+}
+
+function checkIndices(matrix, rowIndices, columnIndices) {
+  return {
+    row: checkRowIndices(matrix, rowIndices),
+    column: checkColumnIndices(matrix, columnIndices)
+  };
+}
+
+function checkRowIndices(matrix, rowIndices) {
+  if (typeof rowIndices !== 'object') {
+    throw new TypeError('unexpected type for row indices');
+  }
+
+  var rowOut = rowIndices.some((r) => {
+    return r < 0 || r >= matrix.rows;
+  });
+
+  if (rowOut) {
+    throw new RangeError('row indices are out of range');
+  }
+
+  if (!Array.isArray(rowIndices)) rowIndices = Array.from(rowIndices);
+
+  return rowIndices;
+}
+
+function checkColumnIndices(matrix, columnIndices) {
+  if (typeof columnIndices !== 'object') {
+    throw new TypeError('unexpected type for column indices');
+  }
+
+  var columnOut = columnIndices.some((c) => {
+    return c < 0 || c >= matrix.columns;
+  });
+
+  if (columnOut) {
+    throw new RangeError('column indices are out of range');
+  }
+  if (!Array.isArray(columnIndices)) columnIndices = Array.from(columnIndices);
+
+  return columnIndices;
+}
+
+function checkRange(matrix, startRow, endRow, startColumn, endColumn) {
+  if (arguments.length !== 5) {
+    throw new RangeError('expected 4 arguments');
+  }
+  checkNumber('startRow', startRow);
+  checkNumber('endRow', endRow);
+  checkNumber('startColumn', startColumn);
+  checkNumber('endColumn', endColumn);
+  if (
+    startRow > endRow ||
+    startColumn > endColumn ||
+    startRow < 0 ||
+    startRow >= matrix.rows ||
+    endRow < 0 ||
+    endRow >= matrix.rows ||
+    startColumn < 0 ||
+    startColumn >= matrix.columns ||
+    endColumn < 0 ||
+    endColumn >= matrix.columns
+  ) {
+    throw new RangeError('Submatrix indices are out of range');
+  }
+}
+
+function sumByRow(matrix) {
+  var sum = Matrix.zeros(matrix.rows, 1);
+  for (var i = 0; i < matrix.rows; ++i) {
+    for (var j = 0; j < matrix.columns; ++j) {
+      sum.set(i, 0, sum.get(i, 0) + matrix.get(i, j));
+    }
+  }
+  return sum;
+}
+
+function sumByColumn(matrix) {
+  var sum = Matrix.zeros(1, matrix.columns);
+  for (var i = 0; i < matrix.rows; ++i) {
+    for (var j = 0; j < matrix.columns; ++j) {
+      sum.set(0, j, sum.get(0, j) + matrix.get(i, j));
+    }
+  }
+  return sum;
+}
+
+function sumAll(matrix) {
+  var v = 0;
+  for (var i = 0; i < matrix.rows; i++) {
+    for (var j = 0; j < matrix.columns; j++) {
+      v += matrix.get(i, j);
+    }
+  }
+  return v;
+}
+
+function checkNumber(name, value) {
+  if (typeof value !== 'number') {
+    throw new TypeError(`${name} must be a number`);
+  }
+}
+
+class BaseView extends AbstractMatrix() {
+  constructor(matrix, rows, columns) {
+    super();
+    this.matrix = matrix;
+    this.rows = rows;
+    this.columns = columns;
+  }
+
+  static get [Symbol.species]() {
+    return Matrix;
+  }
+}
+
+class MatrixTransposeView extends BaseView {
+  constructor(matrix) {
+    super(matrix, matrix.columns, matrix.rows);
+  }
+
+  set(rowIndex, columnIndex, value) {
+    this.matrix.set(columnIndex, rowIndex, value);
+    return this;
+  }
+
+  get(rowIndex, columnIndex) {
+    return this.matrix.get(columnIndex, rowIndex);
+  }
+}
+
+class MatrixRowView extends BaseView {
+  constructor(matrix, row) {
+    super(matrix, 1, matrix.columns);
+    this.row = row;
+  }
+
+  set(rowIndex, columnIndex, value) {
+    this.matrix.set(this.row, columnIndex, value);
+    return this;
+  }
+
+  get(rowIndex, columnIndex) {
+    return this.matrix.get(this.row, columnIndex);
+  }
+}
+
+class MatrixSubView extends BaseView {
+  constructor(matrix, startRow, endRow, startColumn, endColumn) {
+    checkRange(matrix, startRow, endRow, startColumn, endColumn);
+    super(matrix, endRow - startRow + 1, endColumn - startColumn + 1);
+    this.startRow = startRow;
+    this.startColumn = startColumn;
+  }
+
+  set(rowIndex, columnIndex, value) {
+    this.matrix.set(
+      this.startRow + rowIndex,
+      this.startColumn + columnIndex,
+      value
+    );
+    return this;
+  }
+
+  get(rowIndex, columnIndex) {
+    return this.matrix.get(
+      this.startRow + rowIndex,
+      this.startColumn + columnIndex
+    );
+  }
+}
+
+class MatrixSelectionView extends BaseView {
+  constructor(matrix, rowIndices, columnIndices) {
+    var indices = checkIndices(matrix, rowIndices, columnIndices);
+    super(matrix, indices.row.length, indices.column.length);
+    this.rowIndices = indices.row;
+    this.columnIndices = indices.column;
+  }
+
+  set(rowIndex, columnIndex, value) {
+    this.matrix.set(
+      this.rowIndices[rowIndex],
+      this.columnIndices[columnIndex],
+      value
+    );
+    return this;
+  }
+
+  get(rowIndex, columnIndex) {
+    return this.matrix.get(
+      this.rowIndices[rowIndex],
+      this.columnIndices[columnIndex]
+    );
+  }
+}
+
+class MatrixRowSelectionView extends BaseView {
+  constructor(matrix, rowIndices) {
+    rowIndices = checkRowIndices(matrix, rowIndices);
+    super(matrix, rowIndices.length, matrix.columns);
+    this.rowIndices = rowIndices;
+  }
+
+  set(rowIndex, columnIndex, value) {
+    this.matrix.set(this.rowIndices[rowIndex], columnIndex, value);
+    return this;
+  }
+
+  get(rowIndex, columnIndex) {
+    return this.matrix.get(this.rowIndices[rowIndex], columnIndex);
+  }
+}
+
+class MatrixColumnSelectionView extends BaseView {
+  constructor(matrix, columnIndices) {
+    columnIndices = checkColumnIndices(matrix, columnIndices);
+    super(matrix, matrix.rows, columnIndices.length);
+    this.columnIndices = columnIndices;
+  }
+
+  set(rowIndex, columnIndex, value) {
+    this.matrix.set(rowIndex, this.columnIndices[columnIndex], value);
+    return this;
+  }
+
+  get(rowIndex, columnIndex) {
+    return this.matrix.get(rowIndex, this.columnIndices[columnIndex]);
+  }
+}
+
+class MatrixColumnView extends BaseView {
+  constructor(matrix, column) {
+    super(matrix, matrix.rows, 1);
+    this.column = column;
+  }
+
+  set(rowIndex, columnIndex, value) {
+    this.matrix.set(rowIndex, this.column, value);
+    return this;
+  }
+
+  get(rowIndex) {
+    return this.matrix.get(rowIndex, this.column);
+  }
+}
+
+class MatrixFlipRowView extends BaseView {
+  constructor(matrix) {
+    super(matrix, matrix.rows, matrix.columns);
+  }
+
+  set(rowIndex, columnIndex, value) {
+    this.matrix.set(this.rows - rowIndex - 1, columnIndex, value);
+    return this;
+  }
+
+  get(rowIndex, columnIndex) {
+    return this.matrix.get(this.rows - rowIndex - 1, columnIndex);
+  }
+}
+
+class MatrixFlipColumnView extends BaseView {
+  constructor(matrix) {
+    super(matrix, matrix.rows, matrix.columns);
+  }
+
+  set(rowIndex, columnIndex, value) {
+    this.matrix.set(rowIndex, this.columns - columnIndex - 1, value);
+    return this;
+  }
+
+  get(rowIndex, columnIndex) {
+    return this.matrix.get(rowIndex, this.columns - columnIndex - 1);
+  }
+}
+
+function AbstractMatrix(superCtor) {
+  if (superCtor === undefined) superCtor = Object;
+
+  /**
+   * Real matrix
+   * @class Matrix
+   * @param {number|Array|Matrix} nRows - Number of rows of the new matrix,
+   * 2D array containing the data or Matrix instance to clone
+   * @param {number} [nColumns] - Number of columns of the new matrix
+   */
+  class Matrix extends superCtor {
+    static get [Symbol.species]() {
+      return this;
+    }
+
+    /**
+     * Constructs a Matrix with the chosen dimensions from a 1D array
+     * @param {number} newRows - Number of rows
+     * @param {number} newColumns - Number of columns
+     * @param {Array} newData - A 1D array containing data for the matrix
+     * @return {Matrix} - The new matrix
+     */
+    static from1DArray(newRows, newColumns, newData) {
+      var length = newRows * newColumns;
+      if (length !== newData.length) {
+        throw new RangeError('Data length does not match given dimensions');
+      }
+      var newMatrix = new this(newRows, newColumns);
+      for (var row = 0; row < newRows; row++) {
+        for (var column = 0; column < newColumns; column++) {
+          newMatrix.set(row, column, newData[row * newColumns + column]);
+        }
+      }
+      return newMatrix;
+    }
+
+    /**
+         * Creates a row vector, a matrix with only one row.
+         * @param {Array} newData - A 1D array containing data for the vector
+         * @return {Matrix} - The new matrix
+         */
+    static rowVector(newData) {
+      var vector = new this(1, newData.length);
+      for (var i = 0; i < newData.length; i++) {
+        vector.set(0, i, newData[i]);
+      }
+      return vector;
+    }
+
+    /**
+         * Creates a column vector, a matrix with only one column.
+         * @param {Array} newData - A 1D array containing data for the vector
+         * @return {Matrix} - The new matrix
+         */
+    static columnVector(newData) {
+      var vector = new this(newData.length, 1);
+      for (var i = 0; i < newData.length; i++) {
+        vector.set(i, 0, newData[i]);
+      }
+      return vector;
+    }
+
+    /**
+         * Creates an empty matrix with the given dimensions. Values will be undefined. Same as using new Matrix(rows, columns).
+         * @param {number} rows - Number of rows
+         * @param {number} columns - Number of columns
+         * @return {Matrix} - The new matrix
+         */
+    static empty(rows, columns) {
+      return new this(rows, columns);
+    }
+
+    /**
+         * Creates a matrix with the given dimensions. Values will be set to zero.
+         * @param {number} rows - Number of rows
+         * @param {number} columns - Number of columns
+         * @return {Matrix} - The new matrix
+         */
+    static zeros(rows, columns) {
+      return this.empty(rows, columns).fill(0);
+    }
+
+    /**
+         * Creates a matrix with the given dimensions. Values will be set to one.
+         * @param {number} rows - Number of rows
+         * @param {number} columns - Number of columns
+         * @return {Matrix} - The new matrix
+         */
+    static ones(rows, columns) {
+      return this.empty(rows, columns).fill(1);
+    }
+
+    /**
+         * Creates a matrix with the given dimensions. Values will be randomly set.
+         * @param {number} rows - Number of rows
+         * @param {number} columns - Number of columns
+         * @param {function} [rng=Math.random] - Random number generator
+         * @return {Matrix} The new matrix
+         */
+    static rand(rows, columns, rng) {
+      if (rng === undefined) rng = Math.random;
+      var matrix = this.empty(rows, columns);
+      for (var i = 0; i < rows; i++) {
+        for (var j = 0; j < columns; j++) {
+          matrix.set(i, j, rng());
+        }
+      }
+      return matrix;
+    }
+
+    /**
+         * Creates a matrix with the given dimensions. Values will be random integers.
+         * @param {number} rows - Number of rows
+         * @param {number} columns - Number of columns
+         * @param {number} [maxValue=1000] - Maximum value
+         * @param {function} [rng=Math.random] - Random number generator
+         * @return {Matrix} The new matrix
+         */
+    static randInt(rows, columns, maxValue, rng) {
+      if (maxValue === undefined) maxValue = 1000;
+      if (rng === undefined) rng = Math.random;
+      var matrix = this.empty(rows, columns);
+      for (var i = 0; i < rows; i++) {
+        for (var j = 0; j < columns; j++) {
+          var value = Math.floor(rng() * maxValue);
+          matrix.set(i, j, value);
+        }
+      }
+      return matrix;
+    }
+
+    /**
+         * Creates an identity matrix with the given dimension. Values of the diagonal will be 1 and others will be 0.
+         * @param {number} rows - Number of rows
+         * @param {number} [columns=rows] - Number of columns
+         * @param {number} [value=1] - Value to fill the diagonal with
+         * @return {Matrix} - The new identity matrix
+         */
+    static eye(rows, columns, value) {
+      if (columns === undefined) columns = rows;
+      if (value === undefined) value = 1;
+      var min = Math.min(rows, columns);
+      var matrix = this.zeros(rows, columns);
+      for (var i = 0; i < min; i++) {
+        matrix.set(i, i, value);
+      }
+      return matrix;
+    }
+
+    /**
+         * Creates a diagonal matrix based on the given array.
+         * @param {Array} data - Array containing the data for the diagonal
+         * @param {number} [rows] - Number of rows (Default: data.length)
+         * @param {number} [columns] - Number of columns (Default: rows)
+         * @return {Matrix} - The new diagonal matrix
+         */
+    static diag(data, rows, columns) {
+      var l = data.length;
+      if (rows === undefined) rows = l;
+      if (columns === undefined) columns = rows;
+      var min = Math.min(l, rows, columns);
+      var matrix = this.zeros(rows, columns);
+      for (var i = 0; i < min; i++) {
+        matrix.set(i, i, data[i]);
+      }
+      return matrix;
+    }
+
+    /**
+         * Returns a matrix whose elements are the minimum between matrix1 and matrix2
+         * @param {Matrix} matrix1
+         * @param {Matrix} matrix2
+         * @return {Matrix}
+         */
+    static min(matrix1, matrix2) {
+      matrix1 = this.checkMatrix(matrix1);
+      matrix2 = this.checkMatrix(matrix2);
+      var rows = matrix1.rows;
+      var columns = matrix1.columns;
+      var result = new this(rows, columns);
+      for (var i = 0; i < rows; i++) {
+        for (var j = 0; j < columns; j++) {
+          result.set(i, j, Math.min(matrix1.get(i, j), matrix2.get(i, j)));
+        }
+      }
+      return result;
+    }
+
+    /**
+         * Returns a matrix whose elements are the maximum between matrix1 and matrix2
+         * @param {Matrix} matrix1
+         * @param {Matrix} matrix2
+         * @return {Matrix}
+         */
+    static max(matrix1, matrix2) {
+      matrix1 = this.checkMatrix(matrix1);
+      matrix2 = this.checkMatrix(matrix2);
+      var rows = matrix1.rows;
+      var columns = matrix1.columns;
+      var result = new this(rows, columns);
+      for (var i = 0; i < rows; i++) {
+        for (var j = 0; j < columns; j++) {
+          result.set(i, j, Math.max(matrix1.get(i, j), matrix2.get(i, j)));
+        }
+      }
+      return result;
+    }
+
+    /**
+         * Check that the provided value is a Matrix and tries to instantiate one if not
+         * @param {*} value - The value to check
+         * @return {Matrix}
+         */
+    static checkMatrix(value) {
+      return Matrix.isMatrix(value) ? value : new this(value);
+    }
+
+    /**
+         * Returns true if the argument is a Matrix, false otherwise
+         * @param {*} value - The value to check
+         * @return {boolean}
+         */
+    static isMatrix(value) {
+      return (value != null) && (value.klass === 'Matrix');
+    }
+
+    /**
+         * @prop {number} size - The number of elements in the matrix.
+         */
+    get size() {
+      return this.rows * this.columns;
+    }
+
+    /**
+         * Applies a callback for each element of the matrix. The function is called in the matrix (this) context.
+         * @param {function} callback - Function that will be called with two parameters : i (row) and j (column)
+         * @return {Matrix} this
+         */
+    apply(callback) {
+      if (typeof callback !== 'function') {
+        throw new TypeError('callback must be a function');
+      }
+      var ii = this.rows;
+      var jj = this.columns;
+      for (var i = 0; i < ii; i++) {
+        for (var j = 0; j < jj; j++) {
+          callback.call(this, i, j);
+        }
+      }
+      return this;
+    }
+
+    /**
+         * Returns a new 1D array filled row by row with the matrix values
+         * @return {Array}
+         */
+    to1DArray() {
+      var array = new Array(this.size);
+      for (var i = 0; i < this.rows; i++) {
+        for (var j = 0; j < this.columns; j++) {
+          array[i * this.columns + j] = this.get(i, j);
+        }
+      }
+      return array;
+    }
+
+    /**
+         * Returns a 2D array containing a copy of the data
+         * @return {Array}
+         */
+    to2DArray() {
+      var copy = new Array(this.rows);
+      for (var i = 0; i < this.rows; i++) {
+        copy[i] = new Array(this.columns);
+        for (var j = 0; j < this.columns; j++) {
+          copy[i][j] = this.get(i, j);
+        }
+      }
+      return copy;
+    }
+
+    /**
+         * @return {boolean} true if the matrix has one row
+         */
+    isRowVector() {
+      return this.rows === 1;
+    }
+
+    /**
+         * @return {boolean} true if the matrix has one column
+         */
+    isColumnVector() {
+      return this.columns === 1;
+    }
+
+    /**
+         * @return {boolean} true if the matrix has one row or one column
+         */
+    isVector() {
+      return (this.rows === 1) || (this.columns === 1);
+    }
+
+    /**
+         * @return {boolean} true if the matrix has the same number of rows and columns
+         */
+    isSquare() {
+      return this.rows === this.columns;
+    }
+
+    /**
+         * @return {boolean} true if the matrix is square and has the same values on both sides of the diagonal
+         */
+    isSymmetric() {
+      if (this.isSquare()) {
+        for (var i = 0; i < this.rows; i++) {
+          for (var j = 0; j <= i; j++) {
+            if (this.get(i, j) !== this.get(j, i)) {
+              return false;
+            }
+          }
+        }
+        return true;
+      }
+      return false;
+    }
+
+    /**
+         * Sets a given element of the matrix. mat.set(3,4,1) is equivalent to mat[3][4]=1
+         * @abstract
+         * @param {number} rowIndex - Index of the row
+         * @param {number} columnIndex - Index of the column
+         * @param {number} value - The new value for the element
+         * @return {Matrix} this
+         */
+    set(rowIndex, columnIndex, value) { // eslint-disable-line no-unused-vars
+      throw new Error('set method is unimplemented');
+    }
+
+    /**
+         * Returns the given element of the matrix. mat.get(3,4) is equivalent to matrix[3][4]
+         * @abstract
+         * @param {number} rowIndex - Index of the row
+         * @param {number} columnIndex - Index of the column
+         * @return {number}
+         */
+    get(rowIndex, columnIndex) { // eslint-disable-line no-unused-vars
+      throw new Error('get method is unimplemented');
+    }
+
+    /**
+         * Creates a new matrix that is a repetition of the current matrix. New matrix has rowRep times the number of
+         * rows of the matrix, and colRep times the number of columns of the matrix
+         * @param {number} rowRep - Number of times the rows should be repeated
+         * @param {number} colRep - Number of times the columns should be re
+         * @return {Matrix}
+         * @example
+         * var matrix = new Matrix([[1,2]]);
+         * matrix.repeat(2); // [[1,2],[1,2]]
+         */
+    repeat(rowRep, colRep) {
+      rowRep = rowRep || 1;
+      colRep = colRep || 1;
+      var matrix = new this.constructor[Symbol.species](this.rows * rowRep, this.columns * colRep);
+      for (var i = 0; i < rowRep; i++) {
+        for (var j = 0; j < colRep; j++) {
+          matrix.setSubMatrix(this, this.rows * i, this.columns * j);
+        }
+      }
+      return matrix;
+    }
+
+    /**
+         * Fills the matrix with a given value. All elements will be set to this value.
+         * @param {number} value - New value
+         * @return {Matrix} this
+         */
+    fill(value) {
+      for (var i = 0; i < this.rows; i++) {
+        for (var j = 0; j < this.columns; j++) {
+          this.set(i, j, value);
+        }
+      }
+      return this;
+    }
+
+    /**
+         * Negates the matrix. All elements will be multiplied by (-1)
+         * @return {Matrix} this
+         */
+    neg() {
+      return this.mulS(-1);
+    }
+
+    /**
+         * Returns a new array from the given row index
+         * @param {number} index - Row index
+         * @return {Array}
+         */
+    getRow(index) {
+      checkRowIndex(this, index);
+      var row = new Array(this.columns);
+      for (var i = 0; i < this.columns; i++) {
+        row[i] = this.get(index, i);
+      }
+      return row;
+    }
+
+    /**
+         * Returns a new row vector from the given row index
+         * @param {number} index - Row index
+         * @return {Matrix}
+         */
+    getRowVector(index) {
+      return this.constructor.rowVector(this.getRow(index));
+    }
+
+    /**
+         * Sets a row at the given index
+         * @param {number} index - Row index
+         * @param {Array|Matrix} array - Array or vector
+         * @return {Matrix} this
+         */
+    setRow(index, array) {
+      checkRowIndex(this, index);
+      array = checkRowVector(this, array);
+      for (var i = 0; i < this.columns; i++) {
+        this.set(index, i, array[i]);
+      }
+      return this;
+    }
+
+    /**
+         * Swaps two rows
+         * @param {number} row1 - First row index
+         * @param {number} row2 - Second row index
+         * @return {Matrix} this
+         */
+    swapRows(row1, row2) {
+      checkRowIndex(this, row1);
+      checkRowIndex(this, row2);
+      for (var i = 0; i < this.columns; i++) {
+        var temp = this.get(row1, i);
+        this.set(row1, i, this.get(row2, i));
+        this.set(row2, i, temp);
+      }
+      return this;
+    }
+
+    /**
+         * Returns a new array from the given column index
+         * @param {number} index - Column index
+         * @return {Array}
+         */
+    getColumn(index) {
+      checkColumnIndex(this, index);
+      var column = new Array(this.rows);
+      for (var i = 0; i < this.rows; i++) {
+        column[i] = this.get(i, index);
+      }
+      return column;
+    }
+
+    /**
+         * Returns a new column vector from the given column index
+         * @param {number} index - Column index
+         * @return {Matrix}
+         */
+    getColumnVector(index) {
+      return this.constructor.columnVector(this.getColumn(index));
+    }
+
+    /**
+         * Sets a column at the given index
+         * @param {number} index - Column index
+         * @param {Array|Matrix} array - Array or vector
+         * @return {Matrix} this
+         */
+    setColumn(index, array) {
+      checkColumnIndex(this, index);
+      array = checkColumnVector(this, array);
+      for (var i = 0; i < this.rows; i++) {
+        this.set(i, index, array[i]);
+      }
+      return this;
+    }
+
+    /**
+         * Swaps two columns
+         * @param {number} column1 - First column index
+         * @param {number} column2 - Second column index
+         * @return {Matrix} this
+         */
+    swapColumns(column1, column2) {
+      checkColumnIndex(this, column1);
+      checkColumnIndex(this, column2);
+      for (var i = 0; i < this.rows; i++) {
+        var temp = this.get(i, column1);
+        this.set(i, column1, this.get(i, column2));
+        this.set(i, column2, temp);
+      }
+      return this;
+    }
+
+    /**
+         * Adds the values of a vector to each row
+         * @param {Array|Matrix} vector - Array or vector
+         * @return {Matrix} this
+         */
+    addRowVector(vector) {
+      vector = checkRowVector(this, vector);
+      for (var i = 0; i < this.rows; i++) {
+        for (var j = 0; j < this.columns; j++) {
+          this.set(i, j, this.get(i, j) + vector[j]);
+        }
+      }
+      return this;
+    }
+
+    /**
+         * Subtracts the values of a vector from each row
+         * @param {Array|Matrix} vector - Array or vector
+         * @return {Matrix} this
+         */
+    subRowVector(vector) {
+      vector = checkRowVector(this, vector);
+      for (var i = 0; i < this.rows; i++) {
+        for (var j = 0; j < this.columns; j++) {
+          this.set(i, j, this.get(i, j) - vector[j]);
+        }
+      }
+      return this;
+    }
+
+    /**
+         * Multiplies the values of a vector with each row
+         * @param {Array|Matrix} vector - Array or vector
+         * @return {Matrix} this
+         */
+    mulRowVector(vector) {
+      vector = checkRowVector(this, vector);
+      for (var i = 0; i < this.rows; i++) {
+        for (var j = 0; j < this.columns; j++) {
+          this.set(i, j, this.get(i, j) * vector[j]);
+        }
+      }
+      return this;
+    }
+
+    /**
+         * Divides the values of each row by those of a vector
+         * @param {Array|Matrix} vector - Array or vector
+         * @return {Matrix} this
+         */
+    divRowVector(vector) {
+      vector = checkRowVector(this, vector);
+      for (var i = 0; i < this.rows; i++) {
+        for (var j = 0; j < this.columns; j++) {
+          this.set(i, j, this.get(i, j) / vector[j]);
+        }
+      }
+      return this;
+    }
+
+    /**
+         * Adds the values of a vector to each column
+         * @param {Array|Matrix} vector - Array or vector
+         * @return {Matrix} this
+         */
+    addColumnVector(vector) {
+      vector = checkColumnVector(this, vector);
+      for (var i = 0; i < this.rows; i++) {
+        for (var j = 0; j < this.columns; j++) {
+          this.set(i, j, this.get(i, j) + vector[i]);
+        }
+      }
+      return this;
+    }
+
+    /**
+         * Subtracts the values of a vector from each column
+         * @param {Array|Matrix} vector - Array or vector
+         * @return {Matrix} this
+         */
+    subColumnVector(vector) {
+      vector = checkColumnVector(this, vector);
+      for (var i = 0; i < this.rows; i++) {
+        for (var j = 0; j < this.columns; j++) {
+          this.set(i, j, this.get(i, j) - vector[i]);
+        }
+      }
+      return this;
+    }
+
+    /**
+         * Multiplies the values of a vector with each column
+         * @param {Array|Matrix} vector - Array or vector
+         * @return {Matrix} this
+         */
+    mulColumnVector(vector) {
+      vector = checkColumnVector(this, vector);
+      for (var i = 0; i < this.rows; i++) {
+        for (var j = 0; j < this.columns; j++) {
+          this.set(i, j, this.get(i, j) * vector[i]);
+        }
+      }
+      return this;
+    }
+
+    /**
+         * Divides the values of each column by those of a vector
+         * @param {Array|Matrix} vector - Array or vector
+         * @return {Matrix} this
+         */
+    divColumnVector(vector) {
+      vector = checkColumnVector(this, vector);
+      for (var i = 0; i < this.rows; i++) {
+        for (var j = 0; j < this.columns; j++) {
+          this.set(i, j, this.get(i, j) / vector[i]);
+        }
+      }
+      return this;
+    }
+
+    /**
+         * Multiplies the values of a row with a scalar
+         * @param {number} index - Row index
+         * @param {number} value
+         * @return {Matrix} this
+         */
+    mulRow(index, value) {
+      checkRowIndex(this, index);
+      for (var i = 0; i < this.columns; i++) {
+        this.set(index, i, this.get(index, i) * value);
+      }
+      return this;
+    }
+
+    /**
+         * Multiplies the values of a column with a scalar
+         * @param {number} index - Column index
+         * @param {number} value
+         * @return {Matrix} this
+         */
+    mulColumn(index, value) {
+      checkColumnIndex(this, index);
+      for (var i = 0; i < this.rows; i++) {
+        this.set(i, index, this.get(i, index) * value);
+      }
+      return this;
+    }
+
+    /**
+         * Returns the maximum value of the matrix
+         * @return {number}
+         */
+    max() {
+      var v = this.get(0, 0);
+      for (var i = 0; i < this.rows; i++) {
+        for (var j = 0; j < this.columns; j++) {
+          if (this.get(i, j) > v) {
+            v = this.get(i, j);
+          }
+        }
+      }
+      return v;
+    }
+
+    /**
+         * Returns the index of the maximum value
+         * @return {Array}
+         */
+    maxIndex() {
+      var v = this.get(0, 0);
+      var idx = [0, 0];
+      for (var i = 0; i < this.rows; i++) {
+        for (var j = 0; j < this.columns; j++) {
+          if (this.get(i, j) > v) {
+            v = this.get(i, j);
+            idx[0] = i;
+            idx[1] = j;
+          }
+        }
+      }
+      return idx;
+    }
+
+    /**
+         * Returns the minimum value of the matrix
+         * @return {number}
+         */
+    min() {
+      var v = this.get(0, 0);
+      for (var i = 0; i < this.rows; i++) {
+        for (var j = 0; j < this.columns; j++) {
+          if (this.get(i, j) < v) {
+            v = this.get(i, j);
+          }
+        }
+      }
+      return v;
+    }
+
+    /**
+         * Returns the index of the minimum value
+         * @return {Array}
+         */
+    minIndex() {
+      var v = this.get(0, 0);
+      var idx = [0, 0];
+      for (var i = 0; i < this.rows; i++) {
+        for (var j = 0; j < this.columns; j++) {
+          if (this.get(i, j) < v) {
+            v = this.get(i, j);
+            idx[0] = i;
+            idx[1] = j;
+          }
+        }
+      }
+      return idx;
+    }
+
+    /**
+         * Returns the maximum value of one row
+         * @param {number} row - Row index
+         * @return {number}
+         */
+    maxRow(row) {
+      checkRowIndex(this, row);
+      var v = this.get(row, 0);
+      for (var i = 1; i < this.columns; i++) {
+        if (this.get(row, i) > v) {
+          v = this.get(row, i);
+        }
+      }
+      return v;
+    }
+
+    /**
+         * Returns the index of the maximum value of one row
+         * @param {number} row - Row index
+         * @return {Array}
+         */
+    maxRowIndex(row) {
+      checkRowIndex(this, row);
+      var v = this.get(row, 0);
+      var idx = [row, 0];
+      for (var i = 1; i < this.columns; i++) {
+        if (this.get(row, i) > v) {
+          v = this.get(row, i);
+          idx[1] = i;
+        }
+      }
+      return idx;
+    }
+
+    /**
+         * Returns the minimum value of one row
+         * @param {number} row - Row index
+         * @return {number}
+         */
+    minRow(row) {
+      checkRowIndex(this, row);
+      var v = this.get(row, 0);
+      for (var i = 1; i < this.columns; i++) {
+        if (this.get(row, i) < v) {
+          v = this.get(row, i);
+        }
+      }
+      return v;
+    }
+
+    /**
+         * Returns the index of the maximum value of one row
+         * @param {number} row - Row index
+         * @return {Array}
+         */
+    minRowIndex(row) {
+      checkRowIndex(this, row);
+      var v = this.get(row, 0);
+      var idx = [row, 0];
+      for (var i = 1; i < this.columns; i++) {
+        if (this.get(row, i) < v) {
+          v = this.get(row, i);
+          idx[1] = i;
+        }
+      }
+      return idx;
+    }
+
+    /**
+         * Returns the maximum value of one column
+         * @param {number} column - Column index
+         * @return {number}
+         */
+    maxColumn(column) {
+      checkColumnIndex(this, column);
+      var v = this.get(0, column);
+      for (var i = 1; i < this.rows; i++) {
+        if (this.get(i, column) > v) {
+          v = this.get(i, column);
+        }
+      }
+      return v;
+    }
+
+    /**
+         * Returns the index of the maximum value of one column
+         * @param {number} column - Column index
+         * @return {Array}
+         */
+    maxColumnIndex(column) {
+      checkColumnIndex(this, column);
+      var v = this.get(0, column);
+      var idx = [0, column];
+      for (var i = 1; i < this.rows; i++) {
+        if (this.get(i, column) > v) {
+          v = this.get(i, column);
+          idx[0] = i;
+        }
+      }
+      return idx;
+    }
+
+    /**
+         * Returns the minimum value of one column
+         * @param {number} column - Column index
+         * @return {number}
+         */
+    minColumn(column) {
+      checkColumnIndex(this, column);
+      var v = this.get(0, column);
+      for (var i = 1; i < this.rows; i++) {
+        if (this.get(i, column) < v) {
+          v = this.get(i, column);
+        }
+      }
+      return v;
+    }
+
+    /**
+         * Returns the index of the minimum value of one column
+         * @param {number} column - Column index
+         * @return {Array}
+         */
+    minColumnIndex(column) {
+      checkColumnIndex(this, column);
+      var v = this.get(0, column);
+      var idx = [0, column];
+      for (var i = 1; i < this.rows; i++) {
+        if (this.get(i, column) < v) {
+          v = this.get(i, column);
+          idx[0] = i;
+        }
+      }
+      return idx;
+    }
+
+    /**
+         * Returns an array containing the diagonal values of the matrix
+         * @return {Array}
+         */
+    diag() {
+      var min = Math.min(this.rows, this.columns);
+      var diag = new Array(min);
+      for (var i = 0; i < min; i++) {
+        diag[i] = this.get(i, i);
+      }
+      return diag;
+    }
+
+    /**
+         * Returns the sum by the argument given, if no argument given,
+         * it returns the sum of all elements of the matrix.
+         * @param {string} by - sum by 'row' or 'column'.
+         * @return {Matrix|number}
+         */
+    sum(by) {
+      switch (by) {
+        case 'row':
+          return sumByRow(this);
+        case 'column':
+          return sumByColumn(this);
+        default:
+          return sumAll(this);
+      }
+    }
+
+    /**
+         * Returns the mean of all elements of the matrix
+         * @return {number}
+         */
+    mean() {
+      return this.sum() / this.size;
+    }
+
+    /**
+         * Returns the product of all elements of the matrix
+         * @return {number}
+         */
+    prod() {
+      var prod = 1;
+      for (var i = 0; i < this.rows; i++) {
+        for (var j = 0; j < this.columns; j++) {
+          prod *= this.get(i, j);
+        }
+      }
+      return prod;
+    }
+
+    /**
+         * Returns the norm of a matrix.
+         * @param {string} type - "frobenius" (default) or "max" return resp. the Frobenius norm and the max norm.
+         * @return {number}
+         */
+    norm(type = 'frobenius') {
+      var result = 0;
+      if (type === 'max') {
+        return this.max();
+      } else if (type === 'frobenius') {
+        for (var i = 0; i < this.rows; i++) {
+          for (var j = 0; j < this.columns; j++) {
+            result = result + this.get(i, j) * this.get(i, j);
+          }
+        }
+        return Math.sqrt(result);
+      } else {
+        throw new RangeError(`unknown norm type: ${type}`);
+      }
+    }
+
+    /**
+         * Computes the cumulative sum of the matrix elements (in place, row by row)
+         * @return {Matrix} this
+         */
+    cumulativeSum() {
+      var sum = 0;
+      for (var i = 0; i < this.rows; i++) {
+        for (var j = 0; j < this.columns; j++) {
+          sum += this.get(i, j);
+          this.set(i, j, sum);
+        }
+      }
+      return this;
+    }
+
+    /**
+         * Computes the dot (scalar) product between the matrix and another
+         * @param {Matrix} vector2 vector
+         * @return {number}
+         */
+    dot(vector2) {
+      if (Matrix.isMatrix(vector2)) vector2 = vector2.to1DArray();
+      var vector1 = this.to1DArray();
+      if (vector1.length !== vector2.length) {
+        throw new RangeError('vectors do not have the same size');
+      }
+      var dot = 0;
+      for (var i = 0; i < vector1.length; i++) {
+        dot += vector1[i] * vector2[i];
+      }
+      return dot;
+    }
+
+    /**
+         * Returns the matrix product between this and other
+         * @param {Matrix} other
+         * @return {Matrix}
+         */
+    mmul(other) {
+      other = this.constructor.checkMatrix(other);
+      if (this.columns !== other.rows) {
+        // eslint-disable-next-line no-console
+        console.warn('Number of columns of left matrix are not equal to number of rows of right matrix.');
+      }
+
+      var m = this.rows;
+      var n = this.columns;
+      var p = other.columns;
+
+      var result = new this.constructor[Symbol.species](m, p);
+
+      var Bcolj = new Array(n);
+      for (var j = 0; j < p; j++) {
+        for (var k = 0; k < n; k++) {
+          Bcolj[k] = other.get(k, j);
+        }
+
+        for (var i = 0; i < m; i++) {
+          var s = 0;
+          for (k = 0; k < n; k++) {
+            s += this.get(i, k) * Bcolj[k];
+          }
+
+          result.set(i, j, s);
+        }
+      }
+      return result;
+    }
+
+    strassen2x2(other) {
+      var result = new this.constructor[Symbol.species](2, 2);
+      const a11 = this.get(0, 0);
+      const b11 = other.get(0, 0);
+      const a12 = this.get(0, 1);
+      const b12 = other.get(0, 1);
+      const a21 = this.get(1, 0);
+      const b21 = other.get(1, 0);
+      const a22 = this.get(1, 1);
+      const b22 = other.get(1, 1);
+
+      // Compute intermediate values.
+      const m1 = (a11 + a22) * (b11 + b22);
+      const m2 = (a21 + a22) * b11;
+      const m3 = a11 * (b12 - b22);
+      const m4 = a22 * (b21 - b11);
+      const m5 = (a11 + a12) * b22;
+      const m6 = (a21 - a11) * (b11 + b12);
+      const m7 = (a12 - a22) * (b21 + b22);
+
+      // Combine intermediate values into the output.
+      const c00 = m1 + m4 - m5 + m7;
+      const c01 = m3 + m5;
+      const c10 = m2 + m4;
+      const c11 = m1 - m2 + m3 + m6;
+
+      result.set(0, 0, c00);
+      result.set(0, 1, c01);
+      result.set(1, 0, c10);
+      result.set(1, 1, c11);
+      return result;
+    }
+
+    strassen3x3(other) {
+      var result = new this.constructor[Symbol.species](3, 3);
+
+      const a00 = this.get(0, 0);
+      const a01 = this.get(0, 1);
+      const a02 = this.get(0, 2);
+      const a10 = this.get(1, 0);
+      const a11 = this.get(1, 1);
+      const a12 = this.get(1, 2);
+      const a20 = this.get(2, 0);
+      const a21 = this.get(2, 1);
+      const a22 = this.get(2, 2);
+
+      const b00 = other.get(0, 0);
+      const b01 = other.get(0, 1);
+      const b02 = other.get(0, 2);
+      const b10 = other.get(1, 0);
+      const b11 = other.get(1, 1);
+      const b12 = other.get(1, 2);
+      const b20 = other.get(2, 0);
+      const b21 = other.get(2, 1);
+      const b22 = other.get(2, 2);
+
+      const m1 = (a00 + a01 + a02 - a10 - a11 - a21 - a22) * b11;
+      const m2 = (a00 - a10) * (-b01 + b11);
+      const m3 = a11 * (-b00 + b01 + b10 - b11 - b12 - b20 + b22);
+      const m4 = (-a00 + a10 + a11) * (b00 - b01 + b11);
+      const m5 = (a10 + a11) * (-b00 + b01);
+      const m6 = a00 * b00;
+      const m7 = (-a00 + a20 + a21) * (b00 - b02 + b12);
+      const m8 = (-a00 + a20) * (b02 - b12);
+      const m9 = (a20 + a21) * (-b00 + b02);
+      const m10 = (a00 + a01 + a02 - a11 - a12 - a20 - a21) * b12;
+      const m11 = a21 * (-b00 + b02 + b10 - b11 - b12 - b20 + b21);
+      const m12 = (-a02 + a21 + a22) * (b11 + b20 - b21);
+      const m13 = (a02 - a22) * (b11 - b21);
+      const m14 = a02 * b20;
+      const m15 = (a21 + a22) * (-b20 + b21);
+      const m16 = (-a02 + a11 + a12) * (b12 + b20 - b22);
+      const m17 = (a02 - a12) * (b12 - b22);
+      const m18 = (a11 + a12) * (-b20 + b22);
+      const m19 = a01 * b10;
+      const m20 = a12 * b21;
+      const m21 = a10 * b02;
+      const m22 = a20 * b01;
+      const m23 = a22 * b22;
+
+      const c00 = m6 + m14 + m19;
+      const c01 = m1 + m4 + m5 + m6 + m12 + m14 + m15;
+      const c02 = m6 + m7 + m9 + m10 + m14 + m16 + m18;
+      const c10 = m2 + m3 + m4 + m6 + m14 + m16 + m17;
+      const c11 = m2 + m4 + m5 + m6 + m20;
+      const c12 = m14 + m16 + m17 + m18 + m21;
+      const c20 = m6 + m7 + m8 + m11 + m12 + m13 + m14;
+      const c21 = m12 + m13 + m14 + m15 + m22;
+      const c22 = m6 + m7 + m8 + m9 + m23;
+
+      result.set(0, 0, c00);
+      result.set(0, 1, c01);
+      result.set(0, 2, c02);
+      result.set(1, 0, c10);
+      result.set(1, 1, c11);
+      result.set(1, 2, c12);
+      result.set(2, 0, c20);
+      result.set(2, 1, c21);
+      result.set(2, 2, c22);
+      return result;
+    }
+
+    /**
+         * Returns the matrix product between x and y. More efficient than mmul(other) only when we multiply squared matrix and when the size of the matrix is > 1000.
+         * @param {Matrix} y
+         * @return {Matrix}
+         */
+    mmulStrassen(y) {
+      var x = this.clone();
+      var r1 = x.rows;
+      var c1 = x.columns;
+      var r2 = y.rows;
+      var c2 = y.columns;
+      if (c1 !== r2) {
+        // eslint-disable-next-line no-console
+        console.warn(`Multiplying ${r1} x ${c1} and ${r2} x ${c2} matrix: dimensions do not match.`);
+      }
+
+      // Put a matrix into the top left of a matrix of zeros.
+      // `rows` and `cols` are the dimensions of the output matrix.
+      function embed(mat, rows, cols) {
+        var r = mat.rows;
+        var c = mat.columns;
+        if ((r === rows) && (c === cols)) {
+          return mat;
+        } else {
+          var resultat = Matrix.zeros(rows, cols);
+          resultat = resultat.setSubMatrix(mat, 0, 0);
+          return resultat;
+        }
+      }
+
+
+      // Make sure both matrices are the same size.
+      // This is exclusively for simplicity:
+      // this algorithm can be implemented with matrices of different sizes.
+
+      var r = Math.max(r1, r2);
+      var c = Math.max(c1, c2);
+      x = embed(x, r, c);
+      y = embed(y, r, c);
+
+      // Our recursive multiplication function.
+      function blockMult(a, b, rows, cols) {
+        // For small matrices, resort to naive multiplication.
+        if (rows <= 512 || cols <= 512) {
+          return a.mmul(b); // a is equivalent to this
+        }
+
+        // Apply dynamic padding.
+        if ((rows % 2 === 1) && (cols % 2 === 1)) {
+          a = embed(a, rows + 1, cols + 1);
+          b = embed(b, rows + 1, cols + 1);
+        } else if (rows % 2 === 1) {
+          a = embed(a, rows + 1, cols);
+          b = embed(b, rows + 1, cols);
+        } else if (cols % 2 === 1) {
+          a = embed(a, rows, cols + 1);
+          b = embed(b, rows, cols + 1);
+        }
+
+        var halfRows = parseInt(a.rows / 2, 10);
+        var halfCols = parseInt(a.columns / 2, 10);
+        // Subdivide input matrices.
+        var a11 = a.subMatrix(0, halfRows - 1, 0, halfCols - 1);
+        var b11 = b.subMatrix(0, halfRows - 1, 0, halfCols - 1);
+
+        var a12 = a.subMatrix(0, halfRows - 1, halfCols, a.columns - 1);
+        var b12 = b.subMatrix(0, halfRows - 1, halfCols, b.columns - 1);
+
+        var a21 = a.subMatrix(halfRows, a.rows - 1, 0, halfCols - 1);
+        var b21 = b.subMatrix(halfRows, b.rows - 1, 0, halfCols - 1);
+
+        var a22 = a.subMatrix(halfRows, a.rows - 1, halfCols, a.columns - 1);
+        var b22 = b.subMatrix(halfRows, b.rows - 1, halfCols, b.columns - 1);
+
+        // Compute intermediate values.
+        var m1 = blockMult(Matrix.add(a11, a22), Matrix.add(b11, b22), halfRows, halfCols);
+        var m2 = blockMult(Matrix.add(a21, a22), b11, halfRows, halfCols);
+        var m3 = blockMult(a11, Matrix.sub(b12, b22), halfRows, halfCols);
+        var m4 = blockMult(a22, Matrix.sub(b21, b11), halfRows, halfCols);
+        var m5 = blockMult(Matrix.add(a11, a12), b22, halfRows, halfCols);
+        var m6 = blockMult(Matrix.sub(a21, a11), Matrix.add(b11, b12), halfRows, halfCols);
+        var m7 = blockMult(Matrix.sub(a12, a22), Matrix.add(b21, b22), halfRows, halfCols);
+
+        // Combine intermediate values into the output.
+        var c11 = Matrix.add(m1, m4);
+        c11.sub(m5);
+        c11.add(m7);
+        var c12 = Matrix.add(m3, m5);
+        var c21 = Matrix.add(m2, m4);
+        var c22 = Matrix.sub(m1, m2);
+        c22.add(m3);
+        c22.add(m6);
+
+        // Crop output to the desired size (undo dynamic padding).
+        var resultat = Matrix.zeros(2 * c11.rows, 2 * c11.columns);
+        resultat = resultat.setSubMatrix(c11, 0, 0);
+        resultat = resultat.setSubMatrix(c12, c11.rows, 0);
+        resultat = resultat.setSubMatrix(c21, 0, c11.columns);
+        resultat = resultat.setSubMatrix(c22, c11.rows, c11.columns);
+        return resultat.subMatrix(0, rows - 1, 0, cols - 1);
+      }
+      return blockMult(x, y, r, c);
+    }
+
+    /**
+         * Returns a row-by-row scaled matrix
+         * @param {number} [min=0] - Minimum scaled value
+         * @param {number} [max=1] - Maximum scaled value
+         * @return {Matrix} - The scaled matrix
+         */
+    scaleRows(min, max$$1) {
+      min = min === undefined ? 0 : min;
+      max$$1 = max$$1 === undefined ? 1 : max$$1;
+      if (min >= max$$1) {
+        throw new RangeError('min should be strictly smaller than max');
+      }
+      var newMatrix = this.constructor.empty(this.rows, this.columns);
+      for (var i = 0; i < this.rows; i++) {
+        var scaled = rescale(this.getRow(i), { min, max: max$$1 });
+        newMatrix.setRow(i, scaled);
+      }
+      return newMatrix;
+    }
+
+    /**
+         * Returns a new column-by-column scaled matrix
+         * @param {number} [min=0] - Minimum scaled value
+         * @param {number} [max=1] - Maximum scaled value
+         * @return {Matrix} - The new scaled matrix
+         * @example
+         * var matrix = new Matrix([[1,2],[-1,0]]);
+         * var scaledMatrix = matrix.scaleColumns(); // [[1,1],[0,0]]
+         */
+    scaleColumns(min, max$$1) {
+      min = min === undefined ? 0 : min;
+      max$$1 = max$$1 === undefined ? 1 : max$$1;
+      if (min >= max$$1) {
+        throw new RangeError('min should be strictly smaller than max');
+      }
+      var newMatrix = this.constructor.empty(this.rows, this.columns);
+      for (var i = 0; i < this.columns; i++) {
+        var scaled = rescale(this.getColumn(i), {
+          min: min,
+          max: max$$1
+        });
+        newMatrix.setColumn(i, scaled);
+      }
+      return newMatrix;
+    }
+
+
+    /**
+         * Returns the Kronecker product (also known as tensor product) between this and other
+         * See https://en.wikipedia.org/wiki/Kronecker_product
+         * @param {Matrix} other
+         * @return {Matrix}
+         */
+    kroneckerProduct(other) {
+      other = this.constructor.checkMatrix(other);
+
+      var m = this.rows;
+      var n = this.columns;
+      var p = other.rows;
+      var q = other.columns;
+
+      var result = new this.constructor[Symbol.species](m * p, n * q);
+      for (var i = 0; i < m; i++) {
+        for (var j = 0; j < n; j++) {
+          for (var k = 0; k < p; k++) {
+            for (var l = 0; l < q; l++) {
+              result[p * i + k][q * j + l] = this.get(i, j) * other.get(k, l);
+            }
+          }
+        }
+      }
+      return result;
+    }
+
+    /**
+         * Transposes the matrix and returns a new one containing the result
+         * @return {Matrix}
+         */
+    transpose() {
+      var result = new this.constructor[Symbol.species](this.columns, this.rows);
+      for (var i = 0; i < this.rows; i++) {
+        for (var j = 0; j < this.columns; j++) {
+          result.set(j, i, this.get(i, j));
+        }
+      }
+      return result;
+    }
+
+    /**
+         * Sorts the rows (in place)
+         * @param {function} compareFunction - usual Array.prototype.sort comparison function
+         * @return {Matrix} this
+         */
+    sortRows(compareFunction) {
+      if (compareFunction === undefined) compareFunction = compareNumbers;
+      for (var i = 0; i < this.rows; i++) {
+        this.setRow(i, this.getRow(i).sort(compareFunction));
+      }
+      return this;
+    }
+
+    /**
+         * Sorts the columns (in place)
+         * @param {function} compareFunction - usual Array.prototype.sort comparison function
+         * @return {Matrix} this
+         */
+    sortColumns(compareFunction) {
+      if (compareFunction === undefined) compareFunction = compareNumbers;
+      for (var i = 0; i < this.columns; i++) {
+        this.setColumn(i, this.getColumn(i).sort(compareFunction));
+      }
+      return this;
+    }
+
+    /**
+         * Returns a subset of the matrix
+         * @param {number} startRow - First row index
+         * @param {number} endRow - Last row index
+         * @param {number} startColumn - First column index
+         * @param {number} endColumn - Last column index
+         * @return {Matrix}
+         */
+    subMatrix(startRow, endRow, startColumn, endColumn) {
+      checkRange(this, startRow, endRow, startColumn, endColumn);
+      var newMatrix = new this.constructor[Symbol.species](endRow - startRow + 1, endColumn - startColumn + 1);
+      for (var i = startRow; i <= endRow; i++) {
+        for (var j = startColumn; j <= endColumn; j++) {
+          newMatrix[i - startRow][j - startColumn] = this.get(i, j);
+        }
+      }
+      return newMatrix;
+    }
+
+    /**
+         * Returns a subset of the matrix based on an array of row indices
+         * @param {Array} indices - Array containing the row indices
+         * @param {number} [startColumn = 0] - First column index
+         * @param {number} [endColumn = this.columns-1] - Last column index
+         * @return {Matrix}
+         */
+    subMatrixRow(indices, startColumn, endColumn) {
+      if (startColumn === undefined) startColumn = 0;
+      if (endColumn === undefined) endColumn = this.columns - 1;
+      if ((startColumn > endColumn) || (startColumn < 0) || (startColumn >= this.columns) || (endColumn < 0) || (endColumn >= this.columns)) {
+        throw new RangeError('Argument out of range');
+      }
+
+      var newMatrix = new this.constructor[Symbol.species](indices.length, endColumn - startColumn + 1);
+      for (var i = 0; i < indices.length; i++) {
+        for (var j = startColumn; j <= endColumn; j++) {
+          if (indices[i] < 0 || indices[i] >= this.rows) {
+            throw new RangeError(`Row index out of range: ${indices[i]}`);
+          }
+          newMatrix.set(i, j - startColumn, this.get(indices[i], j));
+        }
+      }
+      return newMatrix;
+    }
+
+    /**
+         * Returns a subset of the matrix based on an array of column indices
+         * @param {Array} indices - Array containing the column indices
+         * @param {number} [startRow = 0] - First row index
+         * @param {number} [endRow = this.rows-1] - Last row index
+         * @return {Matrix}
+         */
+    subMatrixColumn(indices, startRow, endRow) {
+      if (startRow === undefined) startRow = 0;
+      if (endRow === undefined) endRow = this.rows - 1;
+      if ((startRow > endRow) || (startRow < 0) || (startRow >= this.rows) || (endRow < 0) || (endRow >= this.rows)) {
+        throw new RangeError('Argument out of range');
+      }
+
+      var newMatrix = new this.constructor[Symbol.species](endRow - startRow + 1, indices.length);
+      for (var i = 0; i < indices.length; i++) {
+        for (var j = startRow; j <= endRow; j++) {
+          if (indices[i] < 0 || indices[i] >= this.columns) {
+            throw new RangeError(`Column index out of range: ${indices[i]}`);
+          }
+          newMatrix.set(j - startRow, i, this.get(j, indices[i]));
+        }
+      }
+      return newMatrix;
+    }
+
+    /**
+         * Set a part of the matrix to the given sub-matrix
+         * @param {Matrix|Array< Array >} matrix - The source matrix from which to extract values.
+         * @param {number} startRow - The index of the first row to set
+         * @param {number} startColumn - The index of the first column to set
+         * @return {Matrix}
+         */
+    setSubMatrix(matrix, startRow, startColumn) {
+      matrix = this.constructor.checkMatrix(matrix);
+      var endRow = startRow + matrix.rows - 1;
+      var endColumn = startColumn + matrix.columns - 1;
+      checkRange(this, startRow, endRow, startColumn, endColumn);
+      for (var i = 0; i < matrix.rows; i++) {
+        for (var j = 0; j < matrix.columns; j++) {
+          this[startRow + i][startColumn + j] = matrix.get(i, j);
+        }
+      }
+      return this;
+    }
+
+    /**
+         * Return a new matrix based on a selection of rows and columns
+         * @param {Array<number>} rowIndices - The row indices to select. Order matters and an index can be more than once.
+         * @param {Array<number>} columnIndices - The column indices to select. Order matters and an index can be use more than once.
+         * @return {Matrix} The new matrix
+         */
+    selection(rowIndices, columnIndices) {
+      var indices = checkIndices(this, rowIndices, columnIndices);
+      var newMatrix = new this.constructor[Symbol.species](rowIndices.length, columnIndices.length);
+      for (var i = 0; i < indices.row.length; i++) {
+        var rowIndex = indices.row[i];
+        for (var j = 0; j < indices.column.length; j++) {
+          var columnIndex = indices.column[j];
+          newMatrix[i][j] = this.get(rowIndex, columnIndex);
+        }
+      }
+      return newMatrix;
+    }
+
+    /**
+         * Returns the trace of the matrix (sum of the diagonal elements)
+         * @return {number}
+         */
+    trace() {
+      var min = Math.min(this.rows, this.columns);
+      var trace = 0;
+      for (var i = 0; i < min; i++) {
+        trace += this.get(i, i);
+      }
+      return trace;
+    }
+
+    /*
+         Matrix views
+         */
+
+    /**
+         * Returns a view of the transposition of the matrix
+         * @return {MatrixTransposeView}
+         */
+    transposeView() {
+      return new MatrixTransposeView(this);
+    }
+
+    /**
+         * Returns a view of the row vector with the given index
+         * @param {number} row - row index of the vector
+         * @return {MatrixRowView}
+         */
+    rowView(row) {
+      checkRowIndex(this, row);
+      return new MatrixRowView(this, row);
+    }
+
+    /**
+         * Returns a view of the column vector with the given index
+         * @param {number} column - column index of the vector
+         * @return {MatrixColumnView}
+         */
+    columnView(column) {
+      checkColumnIndex(this, column);
+      return new MatrixColumnView(this, column);
+    }
+
+    /**
+         * Returns a view of the matrix flipped in the row axis
+         * @return {MatrixFlipRowView}
+         */
+    flipRowView() {
+      return new MatrixFlipRowView(this);
+    }
+
+    /**
+         * Returns a view of the matrix flipped in the column axis
+         * @return {MatrixFlipColumnView}
+         */
+    flipColumnView() {
+      return new MatrixFlipColumnView(this);
+    }
+
+    /**
+         * Returns a view of a submatrix giving the index boundaries
+         * @param {number} startRow - first row index of the submatrix
+         * @param {number} endRow - last row index of the submatrix
+         * @param {number} startColumn - first column index of the submatrix
+         * @param {number} endColumn - last column index of the submatrix
+         * @return {MatrixSubView}
+         */
+    subMatrixView(startRow, endRow, startColumn, endColumn) {
+      return new MatrixSubView(this, startRow, endRow, startColumn, endColumn);
+    }
+
+    /**
+         * Returns a view of the cross of the row indices and the column indices
+         * @example
+         * // resulting vector is [[2], [2]]
+         * var matrix = new Matrix([[1,2,3], [4,5,6]]).selectionView([0, 0], [1])
+         * @param {Array<number>} rowIndices
+         * @param {Array<number>} columnIndices
+         * @return {MatrixSelectionView}
+         */
+    selectionView(rowIndices, columnIndices) {
+      return new MatrixSelectionView(this, rowIndices, columnIndices);
+    }
+
+    /**
+         * Returns a view of the row indices
+         * @example
+         * // resulting vector is [[1,2,3], [1,2,3]]
+         * var matrix = new Matrix([[1,2,3], [4,5,6]]).rowSelectionView([0, 0])
+         * @param {Array<number>} rowIndices
+         * @return {MatrixRowSelectionView}
+         */
+    rowSelectionView(rowIndices) {
+      return new MatrixRowSelectionView(this, rowIndices);
+    }
+
+    /**
+         * Returns a view of the column indices
+         * @example
+         * // resulting vector is [[2, 2], [5, 5]]
+         * var matrix = new Matrix([[1,2,3], [4,5,6]]).columnSelectionView([1, 1])
+         * @param {Array<number>} columnIndices
+         * @return {MatrixColumnSelectionView}
+         */
+    columnSelectionView(columnIndices) {
+      return new MatrixColumnSelectionView(this, columnIndices);
+    }
+
+
+    /**
+        * Calculates and returns the determinant of a matrix as a Number
+        * @example
+        *   new Matrix([[1,2,3], [4,5,6]]).det()
+        * @return {number}
+        */
+    det() {
+      if (this.isSquare()) {
+        var a, b, c, d;
+        if (this.columns === 2) {
+          // 2 x 2 matrix
+          a = this.get(0, 0);
+          b = this.get(0, 1);
+          c = this.get(1, 0);
+          d = this.get(1, 1);
+
+          return a * d - (b * c);
+        } else if (this.columns === 3) {
+          // 3 x 3 matrix
+          var subMatrix0, subMatrix1, subMatrix2;
+          subMatrix0 = this.selectionView([1, 2], [1, 2]);
+          subMatrix1 = this.selectionView([1, 2], [0, 2]);
+          subMatrix2 = this.selectionView([1, 2], [0, 1]);
+          a = this.get(0, 0);
+          b = this.get(0, 1);
+          c = this.get(0, 2);
+
+          return a * subMatrix0.det() - b * subMatrix1.det() + c * subMatrix2.det();
+        } else {
+          // general purpose determinant using the LU decomposition
+          return new LuDecomposition$$1(this).determinant;
+        }
+      } else {
+        throw Error('Determinant can only be calculated for a square matrix.');
+      }
+    }
+
+    /**
+         * Returns inverse of a matrix if it exists or the pseudoinverse
+         * @param {number} threshold - threshold for taking inverse of singular values (default = 1e-15)
+         * @return {Matrix} the (pseudo)inverted matrix.
+         */
+    pseudoInverse(threshold) {
+      if (threshold === undefined) threshold = Number.EPSILON;
+      var svdSolution = new SingularValueDecomposition$$1(this, { autoTranspose: true });
+
+      var U = svdSolution.leftSingularVectors;
+      var V = svdSolution.rightSingularVectors;
+      var s = svdSolution.diagonal;
+
+      for (var i = 0; i < s.length; i++) {
+        if (Math.abs(s[i]) > threshold) {
+          s[i] = 1.0 / s[i];
+        } else {
+          s[i] = 0.0;
+        }
+      }
+
+      // convert list to diagonal
+      s = this.constructor[Symbol.species].diag(s);
+      return V.mmul(s.mmul(U.transposeView()));
+    }
+
+    /**
+         * Creates an exact and independent copy of the matrix
+         * @return {Matrix}
+         */
+    clone() {
+      var newMatrix = new this.constructor[Symbol.species](this.rows, this.columns);
+      for (var row = 0; row < this.rows; row++) {
+        for (var column = 0; column < this.columns; column++) {
+          newMatrix.set(row, column, this.get(row, column));
+        }
+      }
+      return newMatrix;
+    }
+  }
+
+  Matrix.prototype.klass = 'Matrix';
+
+  function compareNumbers(a, b) {
+    return a - b;
+  }
+
+  /*
+     Synonyms
+     */
+
+  Matrix.random = Matrix.rand;
+  Matrix.diagonal = Matrix.diag;
+  Matrix.prototype.diagonal = Matrix.prototype.diag;
+  Matrix.identity = Matrix.eye;
+  Matrix.prototype.negate = Matrix.prototype.neg;
+  Matrix.prototype.tensorProduct = Matrix.prototype.kroneckerProduct;
+  Matrix.prototype.determinant = Matrix.prototype.det;
+
+  /*
+     Add dynamically instance and static methods for mathematical operations
+     */
+
+  var inplaceOperator = `
+(function %name%(value) {
+    if (typeof value === 'number') return this.%name%S(value);
+    return this.%name%M(value);
+})
+`;
+
+  var inplaceOperatorScalar = `
+(function %name%S(value) {
+    for (var i = 0; i < this.rows; i++) {
+        for (var j = 0; j < this.columns; j++) {
+            this.set(i, j, this.get(i, j) %op% value);
+        }
+    }
+    return this;
+})
+`;
+
+  var inplaceOperatorMatrix = `
+(function %name%M(matrix) {
+    matrix = this.constructor.checkMatrix(matrix);
+    if (this.rows !== matrix.rows ||
+        this.columns !== matrix.columns) {
+        throw new RangeError('Matrices dimensions must be equal');
+    }
+    for (var i = 0; i < this.rows; i++) {
+        for (var j = 0; j < this.columns; j++) {
+            this.set(i, j, this.get(i, j) %op% matrix.get(i, j));
+        }
+    }
+    return this;
+})
+`;
+
+  var staticOperator = `
+(function %name%(matrix, value) {
+    var newMatrix = new this[Symbol.species](matrix);
+    return newMatrix.%name%(value);
+})
+`;
+
+  var inplaceMethod = `
+(function %name%() {
+    for (var i = 0; i < this.rows; i++) {
+        for (var j = 0; j < this.columns; j++) {
+            this.set(i, j, %method%(this.get(i, j)));
+        }
+    }
+    return this;
+})
+`;
+
+  var staticMethod = `
+(function %name%(matrix) {
+    var newMatrix = new this[Symbol.species](matrix);
+    return newMatrix.%name%();
+})
+`;
+
+  var inplaceMethodWithArgs = `
+(function %name%(%args%) {
+    for (var i = 0; i < this.rows; i++) {
+        for (var j = 0; j < this.columns; j++) {
+            this.set(i, j, %method%(this.get(i, j), %args%));
+        }
+    }
+    return this;
+})
+`;
+
+  var staticMethodWithArgs = `
+(function %name%(matrix, %args%) {
+    var newMatrix = new this[Symbol.species](matrix);
+    return newMatrix.%name%(%args%);
+})
+`;
+
+
+  var inplaceMethodWithOneArgScalar = `
+(function %name%S(value) {
+    for (var i = 0; i < this.rows; i++) {
+        for (var j = 0; j < this.columns; j++) {
+            this.set(i, j, %method%(this.get(i, j), value));
+        }
+    }
+    return this;
+})
+`;
+  var inplaceMethodWithOneArgMatrix = `
+(function %name%M(matrix) {
+    matrix = this.constructor.checkMatrix(matrix);
+    if (this.rows !== matrix.rows ||
+        this.columns !== matrix.columns) {
+        throw new RangeError('Matrices dimensions must be equal');
+    }
+    for (var i = 0; i < this.rows; i++) {
+        for (var j = 0; j < this.columns; j++) {
+            this.set(i, j, %method%(this.get(i, j), matrix.get(i, j)));
+        }
+    }
+    return this;
+})
+`;
+
+  var inplaceMethodWithOneArg = `
+(function %name%(value) {
+    if (typeof value === 'number') return this.%name%S(value);
+    return this.%name%M(value);
+})
+`;
+
+  var staticMethodWithOneArg = staticMethodWithArgs;
+
+  var operators = [
+    // Arithmetic operators
+    ['+', 'add'],
+    ['-', 'sub', 'subtract'],
+    ['*', 'mul', 'multiply'],
+    ['/', 'div', 'divide'],
+    ['%', 'mod', 'modulus'],
+    // Bitwise operators
+    ['&', 'and'],
+    ['|', 'or'],
+    ['^', 'xor'],
+    ['<<', 'leftShift'],
+    ['>>', 'signPropagatingRightShift'],
+    ['>>>', 'rightShift', 'zeroFillRightShift']
+  ];
+
+  var i;
+  var eval2 = eval; // eslint-disable-line no-eval
+  for (var operator of operators) {
+    var inplaceOp = eval2(fillTemplateFunction(inplaceOperator, { name: operator[1], op: operator[0] }));
+    var inplaceOpS = eval2(fillTemplateFunction(inplaceOperatorScalar, { name: `${operator[1]}S`, op: operator[0] }));
+    var inplaceOpM = eval2(fillTemplateFunction(inplaceOperatorMatrix, { name: `${operator[1]}M`, op: operator[0] }));
+    var staticOp = eval2(fillTemplateFunction(staticOperator, { name: operator[1] }));
+    for (i = 1; i < operator.length; i++) {
+      Matrix.prototype[operator[i]] = inplaceOp;
+      Matrix.prototype[`${operator[i]}S`] = inplaceOpS;
+      Matrix.prototype[`${operator[i]}M`] = inplaceOpM;
+      Matrix[operator[i]] = staticOp;
+    }
+  }
+
+  var methods = [['~', 'not']];
+
+  [
+    'abs', 'acos', 'acosh', 'asin', 'asinh', 'atan', 'atanh', 'cbrt', 'ceil',
+    'clz32', 'cos', 'cosh', 'exp', 'expm1', 'floor', 'fround', 'log', 'log1p',
+    'log10', 'log2', 'round', 'sign', 'sin', 'sinh', 'sqrt', 'tan', 'tanh', 'trunc'
+  ].forEach(function (mathMethod) {
+    methods.push([`Math.${mathMethod}`, mathMethod]);
+  });
+
+  for (var method of methods) {
+    var inplaceMeth = eval2(fillTemplateFunction(inplaceMethod, { name: method[1], method: method[0] }));
+    var staticMeth = eval2(fillTemplateFunction(staticMethod, { name: method[1] }));
+    for (i = 1; i < method.length; i++) {
+      Matrix.prototype[method[i]] = inplaceMeth;
+      Matrix[method[i]] = staticMeth;
+    }
+  }
+
+  var methodsWithArgs = [['Math.pow', 1, 'pow']];
+
+  for (var methodWithArg of methodsWithArgs) {
+    var args = 'arg0';
+    for (i = 1; i < methodWithArg[1]; i++) {
+      args += `, arg${i}`;
+    }
+    if (methodWithArg[1] !== 1) {
+      var inplaceMethWithArgs = eval2(fillTemplateFunction(inplaceMethodWithArgs, {
+        name: methodWithArg[2],
+        method: methodWithArg[0],
+        args: args
+      }));
+      var staticMethWithArgs = eval2(fillTemplateFunction(staticMethodWithArgs, { name: methodWithArg[2], args: args }));
+      for (i = 2; i < methodWithArg.length; i++) {
+        Matrix.prototype[methodWithArg[i]] = inplaceMethWithArgs;
+        Matrix[methodWithArg[i]] = staticMethWithArgs;
+      }
+    } else {
+      var tmplVar = {
+        name: methodWithArg[2],
+        args: args,
+        method: methodWithArg[0]
+      };
+      var inplaceMethod2 = eval2(fillTemplateFunction(inplaceMethodWithOneArg, tmplVar));
+      var inplaceMethodS = eval2(fillTemplateFunction(inplaceMethodWithOneArgScalar, tmplVar));
+      var inplaceMethodM = eval2(fillTemplateFunction(inplaceMethodWithOneArgMatrix, tmplVar));
+      var staticMethod2 = eval2(fillTemplateFunction(staticMethodWithOneArg, tmplVar));
+      for (i = 2; i < methodWithArg.length; i++) {
+        Matrix.prototype[methodWithArg[i]] = inplaceMethod2;
+        Matrix.prototype[`${methodWithArg[i]}M`] = inplaceMethodM;
+        Matrix.prototype[`${methodWithArg[i]}S`] = inplaceMethodS;
+        Matrix[methodWithArg[i]] = staticMethod2;
+      }
+    }
+  }
+
+  function fillTemplateFunction(template, values) {
+    for (var value in values) {
+      template = template.replace(new RegExp(`%${value}%`, 'g'), values[value]);
+    }
+    return template;
+  }
+
+  return Matrix;
+}
+
+class Matrix extends AbstractMatrix(Array) {
+  constructor(nRows, nColumns) {
+    var i;
+    if (arguments.length === 1 && typeof nRows === 'number') {
+      return new Array(nRows);
+    }
+    if (Matrix.isMatrix(nRows)) {
+      return nRows.clone();
+    } else if (Number.isInteger(nRows) && nRows > 0) {
+      // Create an empty matrix
+      super(nRows);
+      if (Number.isInteger(nColumns) && nColumns > 0) {
+        for (i = 0; i < nRows; i++) {
+          this[i] = new Array(nColumns);
+        }
+      } else {
+        throw new TypeError('nColumns must be a positive integer');
+      }
+    } else if (Array.isArray(nRows)) {
+      // Copy the values from the 2D array
+      const matrix = nRows;
+      nRows = matrix.length;
+      nColumns = matrix[0].length;
+      if (typeof nColumns !== 'number' || nColumns === 0) {
+        throw new TypeError(
+          'Data must be a 2D array with at least one element'
+        );
+      }
+      super(nRows);
+      for (i = 0; i < nRows; i++) {
+        if (matrix[i].length !== nColumns) {
+          throw new RangeError('Inconsistent array dimensions');
+        }
+        this[i] = [].concat(matrix[i]);
+      }
+    } else {
+      throw new TypeError(
+        'First argument must be a positive number or an array'
+      );
+    }
+    this.rows = nRows;
+    this.columns = nColumns;
+    return this;
+  }
+
+  set(rowIndex, columnIndex, value) {
+    this[rowIndex][columnIndex] = value;
+    return this;
+  }
+
+  get(rowIndex, columnIndex) {
+    return this[rowIndex][columnIndex];
+  }
+
+  /**
+   * Removes a row from the given index
+   * @param {number} index - Row index
+   * @return {Matrix} this
+   */
+  removeRow(index) {
+    checkRowIndex(this, index);
+    if (this.rows === 1) {
+      throw new RangeError('A matrix cannot have less than one row');
+    }
+    this.splice(index, 1);
+    this.rows -= 1;
+    return this;
+  }
+
+  /**
+   * Adds a row at the given index
+   * @param {number} [index = this.rows] - Row index
+   * @param {Array|Matrix} array - Array or vector
+   * @return {Matrix} this
+   */
+  addRow(index, array) {
+    if (array === undefined) {
+      array = index;
+      index = this.rows;
+    }
+    checkRowIndex(this, index, true);
+    array = checkRowVector(this, array, true);
+    this.splice(index, 0, array);
+    this.rows += 1;
+    return this;
+  }
+
+  /**
+   * Removes a column from the given index
+   * @param {number} index - Column index
+   * @return {Matrix} this
+   */
+  removeColumn(index) {
+    checkColumnIndex(this, index);
+    if (this.columns === 1) {
+      throw new RangeError('A matrix cannot have less than one column');
+    }
+    for (var i = 0; i < this.rows; i++) {
+      this[i].splice(index, 1);
+    }
+    this.columns -= 1;
+    return this;
+  }
+
+  /**
+   * Adds a column at the given index
+   * @param {number} [index = this.columns] - Column index
+   * @param {Array|Matrix} array - Array or vector
+   * @return {Matrix} this
+   */
+  addColumn(index, array) {
+    if (typeof array === 'undefined') {
+      array = index;
+      index = this.columns;
+    }
+    checkColumnIndex(this, index, true);
+    array = checkColumnVector(this, array);
+    for (var i = 0; i < this.rows; i++) {
+      this[i].splice(index, 0, array[i]);
+    }
+    this.columns += 1;
+    return this;
+  }
+}
+
+class WrapperMatrix1D extends AbstractMatrix() {
+  /**
+   * @class WrapperMatrix1D
+   * @param {Array<number>} data
+   * @param {object} [options]
+   * @param {object} [options.rows = 1]
+   */
+  constructor(data, options = {}) {
+    const { rows = 1 } = options;
+
+    if (data.length % rows !== 0) {
+      throw new Error('the data length is not divisible by the number of rows');
+    }
+    super();
+    this.rows = rows;
+    this.columns = data.length / rows;
+    this.data = data;
+  }
+
+  set(rowIndex, columnIndex, value) {
+    var index = this._calculateIndex(rowIndex, columnIndex);
+    this.data[index] = value;
+    return this;
+  }
+
+  get(rowIndex, columnIndex) {
+    var index = this._calculateIndex(rowIndex, columnIndex);
+    return this.data[index];
+  }
+
+  _calculateIndex(row, column) {
+    return row * this.columns + column;
+  }
+
+  static get [Symbol.species]() {
+    return Matrix;
+  }
+}
+
+class WrapperMatrix2D extends AbstractMatrix() {
+  /**
+   * @class WrapperMatrix2D
+   * @param {Array<Array<number>>} data
+   */
+  constructor(data) {
+    super();
+    this.data = data;
+    this.rows = data.length;
+    this.columns = data[0].length;
+  }
+
+  set(rowIndex, columnIndex, value) {
+    this.data[rowIndex][columnIndex] = value;
+    return this;
+  }
+
+  get(rowIndex, columnIndex) {
+    return this.data[rowIndex][columnIndex];
+  }
+
+  static get [Symbol.species]() {
+    return Matrix;
+  }
+}
+
+/**
+ * @param {Array<Array<number>>|Array<number>} array
+ * @param {object} [options]
+ * @param {object} [options.rows = 1]
+ * @return {WrapperMatrix1D|WrapperMatrix2D}
+ */
+function wrap(array, options) {
+  if (Array.isArray(array)) {
+    if (array[0] && Array.isArray(array[0])) {
+      return new WrapperMatrix2D(array);
+    } else {
+      return new WrapperMatrix1D(array, options);
+    }
+  } else {
+    throw new Error('the argument is not an array');
+  }
+}
+
+/**
+ * @class QrDecomposition
+ * @link https://github.com/lutzroeder/Mapack/blob/master/Source/QrDecomposition.cs
+ * @param {Matrix} value
+ */
+class QrDecomposition$$1 {
+  constructor(value) {
+    value = WrapperMatrix2D.checkMatrix(value);
+
+    var qr = value.clone();
+    var m = value.rows;
+    var n = value.columns;
+    var rdiag = new Array(n);
+    var i, j, k, s;
+
+    for (k = 0; k < n; k++) {
+      var nrm = 0;
+      for (i = k; i < m; i++) {
+        nrm = hypotenuse(nrm, qr.get(i, k));
+      }
+      if (nrm !== 0) {
+        if (qr.get(k, k) < 0) {
+          nrm = -nrm;
+        }
+        for (i = k; i < m; i++) {
+          qr.set(i, k, qr.get(i, k) / nrm);
+        }
+        qr.set(k, k, qr.get(k, k) + 1);
+        for (j = k + 1; j < n; j++) {
+          s = 0;
+          for (i = k; i < m; i++) {
+            s += qr.get(i, k) * qr.get(i, j);
+          }
+          s = -s / qr.get(k, k);
+          for (i = k; i < m; i++) {
+            qr.set(i, j, qr.get(i, j) + s * qr.get(i, k));
+          }
+        }
+      }
+      rdiag[k] = -nrm;
+    }
+
+    this.QR = qr;
+    this.Rdiag = rdiag;
+  }
+
+  /**
+   * Solve a problem of least square (Ax=b) by using the QR decomposition. Useful when A is rectangular, but not working when A is singular.
+   * Example : We search to approximate x, with A matrix shape m*n, x vector size n, b vector size m (m > n). We will use :
+   * var qr = QrDecomposition(A);
+   * var x = qr.solve(b);
+   * @param {Matrix} value - Matrix 1D which is the vector b (in the equation Ax = b)
+   * @return {Matrix} - The vector x
+   */
+  solve(value) {
+    value = Matrix.checkMatrix(value);
+
+    var qr = this.QR;
+    var m = qr.rows;
+
+    if (value.rows !== m) {
+      throw new Error('Matrix row dimensions must agree');
+    }
+    if (!this.isFullRank()) {
+      throw new Error('Matrix is rank deficient');
+    }
+
+    var count = value.columns;
+    var X = value.clone();
+    var n = qr.columns;
+    var i, j, k, s;
+
+    for (k = 0; k < n; k++) {
+      for (j = 0; j < count; j++) {
+        s = 0;
+        for (i = k; i < m; i++) {
+          s += qr[i][k] * X[i][j];
+        }
+        s = -s / qr[k][k];
+        for (i = k; i < m; i++) {
+          X[i][j] += s * qr[i][k];
+        }
+      }
+    }
+    for (k = n - 1; k >= 0; k--) {
+      for (j = 0; j < count; j++) {
+        X[k][j] /= this.Rdiag[k];
+      }
+      for (i = 0; i < k; i++) {
+        for (j = 0; j < count; j++) {
+          X[i][j] -= X[k][j] * qr[i][k];
+        }
+      }
+    }
+
+    return X.subMatrix(0, n - 1, 0, count - 1);
+  }
+
+  /**
+   *
+   * @return {boolean}
+   */
+  isFullRank() {
+    var columns = this.QR.columns;
+    for (var i = 0; i < columns; i++) {
+      if (this.Rdiag[i] === 0) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
+   *
+   * @return {Matrix}
+   */
+  get upperTriangularMatrix() {
+    var qr = this.QR;
+    var n = qr.columns;
+    var X = new Matrix(n, n);
+    var i, j;
+    for (i = 0; i < n; i++) {
+      for (j = 0; j < n; j++) {
+        if (i < j) {
+          X[i][j] = qr[i][j];
+        } else if (i === j) {
+          X[i][j] = this.Rdiag[i];
+        } else {
+          X[i][j] = 0;
+        }
+      }
+    }
+    return X;
+  }
+
+  /**
+   *
+   * @return {Matrix}
+   */
+  get orthogonalMatrix() {
+    var qr = this.QR;
+    var rows = qr.rows;
+    var columns = qr.columns;
+    var X = new Matrix(rows, columns);
+    var i, j, k, s;
+
+    for (k = columns - 1; k >= 0; k--) {
+      for (i = 0; i < rows; i++) {
+        X[i][k] = 0;
+      }
+      X[k][k] = 1;
+      for (j = k; j < columns; j++) {
+        if (qr[k][k] !== 0) {
+          s = 0;
+          for (i = k; i < rows; i++) {
+            s += qr[i][k] * X[i][j];
+          }
+
+          s = -s / qr[k][k];
+
+          for (i = k; i < rows; i++) {
+            X[i][j] += s * qr[i][k];
+          }
+        }
+      }
+    }
+    return X;
+  }
+}
+
+/**
+ * Computes the inverse of a Matrix
+ * @param {Matrix} matrix
+ * @param {boolean} [useSVD=false]
+ * @return {Matrix}
+ */
+function inverse$$1(matrix, useSVD = false) {
+  matrix = WrapperMatrix2D.checkMatrix(matrix);
+  if (useSVD) {
+    return new SingularValueDecomposition$$1(matrix).inverse();
+  } else {
+    return solve$$1(matrix, Matrix.eye(matrix.rows));
+  }
+}
+
+/**
+ *
+ * @param {Matrix} leftHandSide
+ * @param {Matrix} rightHandSide
+ * @param {boolean} [useSVD = false]
+ * @return {Matrix}
+ */
+function solve$$1(leftHandSide, rightHandSide, useSVD = false) {
+  leftHandSide = WrapperMatrix2D.checkMatrix(leftHandSide);
+  rightHandSide = WrapperMatrix2D.checkMatrix(rightHandSide);
+  if (useSVD) {
+    return new SingularValueDecomposition$$1(leftHandSide).solve(rightHandSide);
+  } else {
+    return leftHandSide.isSquare()
+      ? new LuDecomposition$$1(leftHandSide).solve(rightHandSide)
+      : new QrDecomposition$$1(leftHandSide).solve(rightHandSide);
+  }
+}
+
+// function used by rowsDependencies
+function xrange(n, exception) {
+  var range = [];
+  for (var i = 0; i < n; i++) {
+    if (i !== exception) {
+      range.push(i);
+    }
+  }
+  return range;
+}
+
+// function used by rowsDependencies
+function dependenciesOneRow(
+  error,
+  matrix,
+  index,
+  thresholdValue = 10e-10,
+  thresholdError = 10e-10
+) {
+  if (error > thresholdError) {
+    return new Array(matrix.rows + 1).fill(0);
+  } else {
+    var returnArray = matrix.addRow(index, [0]);
+    for (var i = 0; i < returnArray.rows; i++) {
+      if (Math.abs(returnArray.get(i, 0)) < thresholdValue) {
+        returnArray.set(i, 0, 0);
+      }
+    }
+    return returnArray.to1DArray();
+  }
+}
+
+/**
+ * Creates a matrix which represents the dependencies between rows.
+ * If a row is a linear combination of others rows, the result will be a row with the coefficients of this combination.
+ * For example : for A = [[2, 0, 0, 1], [0, 1, 6, 0], [0, 3, 0, 1], [0, 0, 1, 0], [0, 1, 2, 0]], the result will be [[0, 0, 0, 0, 0], [0, 0, 0, 4, 1], [0, 0, 0, 0, 0], [0, 0.25, 0, 0, -0.25], [0, 1, 0, -4, 0]]
+ * @param {Matrix} matrix
+ * @param {Object} [options] includes thresholdValue and thresholdError.
+ * @param {number} [options.thresholdValue = 10e-10] If an absolute value is inferior to this threshold, it will equals zero.
+ * @param {number} [options.thresholdError = 10e-10] If the error is inferior to that threshold, the linear combination found is accepted and the row is dependent from other rows.
+ * @return {Matrix} the matrix which represents the dependencies between rows.
+ */
+
+function linearDependencies(matrix, options = {}) {
+  const { thresholdValue = 10e-10, thresholdError = 10e-10 } = options;
+
+  var n = matrix.rows;
+  var results = new Matrix(n, n);
+
+  for (var i = 0; i < n; i++) {
+    var b = Matrix.columnVector(matrix.getRow(i));
+    var Abis = matrix.subMatrixRow(xrange(n, i)).transposeView();
+    var svd = new SingularValueDecomposition$$1(Abis);
+    var x = svd.solve(b);
+    var error = max(
+      Matrix.sub(b, Abis.mmul(x))
+        .abs()
+        .to1DArray()
+    );
+    results.setRow(
+      i,
+      dependenciesOneRow(error, x, i, thresholdValue, thresholdError)
+    );
+  }
+  return results;
+}
+
+/**
+ * @class EigenvalueDecomposition
+ * @link https://github.com/lutzroeder/Mapack/blob/master/Source/EigenvalueDecomposition.cs
+ * @param {Matrix} matrix
+ * @param {object} [options]
+ * @param {boolean} [options.assumeSymmetric=false]
+ */
+class EigenvalueDecomposition$$1 {
+  constructor(matrix, options = {}) {
+    const { assumeSymmetric = false } = options;
+
+    matrix = WrapperMatrix2D.checkMatrix(matrix);
+    if (!matrix.isSquare()) {
+      throw new Error('Matrix is not a square matrix');
+    }
+
+    var n = matrix.columns;
+    var V = getFilled2DArray(n, n, 0);
+    var d = new Array(n);
+    var e = new Array(n);
+    var value = matrix;
+    var i, j;
+
+    var isSymmetric = false;
+    if (assumeSymmetric) {
+      isSymmetric = true;
+    } else {
+      isSymmetric = matrix.isSymmetric();
+    }
+
+    if (isSymmetric) {
+      for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+          V[i][j] = value.get(i, j);
+        }
+      }
+      tred2(n, e, d, V);
+      tql2(n, e, d, V);
+    } else {
+      var H = getFilled2DArray(n, n, 0);
+      var ort = new Array(n);
+      for (j = 0; j < n; j++) {
+        for (i = 0; i < n; i++) {
+          H[i][j] = value.get(i, j);
+        }
+      }
+      orthes(n, H, ort, V);
+      hqr2(n, e, d, V, H);
+    }
+
+    this.n = n;
+    this.e = e;
+    this.d = d;
+    this.V = V;
+  }
+
+  /**
+   *
+   * @return {Array<number>}
+   */
+  get realEigenvalues() {
+    return this.d;
+  }
+
+  /**
+   *
+   * @return {Array<number>}
+   */
+  get imaginaryEigenvalues() {
+    return this.e;
+  }
+
+  /**
+   *
+   * @return {Matrix}
+   */
+  get eigenvectorMatrix() {
+    if (!Matrix.isMatrix(this.V)) {
+      this.V = new Matrix(this.V);
+    }
+    return this.V;
+  }
+
+  /**
+   *
+   * @return {Matrix}
+   */
+  get diagonalMatrix() {
+    var n = this.n;
+    var e = this.e;
+    var d = this.d;
+    var X = new Matrix(n, n);
+    var i, j;
+    for (i = 0; i < n; i++) {
+      for (j = 0; j < n; j++) {
+        X[i][j] = 0;
+      }
+      X[i][i] = d[i];
+      if (e[i] > 0) {
+        X[i][i + 1] = e[i];
+      } else if (e[i] < 0) {
+        X[i][i - 1] = e[i];
+      }
+    }
+    return X;
+  }
+}
+
+function tred2(n, e, d, V) {
+  var f, g, h, i, j, k, hh, scale;
+
+  for (j = 0; j < n; j++) {
+    d[j] = V[n - 1][j];
+  }
+
+  for (i = n - 1; i > 0; i--) {
+    scale = 0;
+    h = 0;
+    for (k = 0; k < i; k++) {
+      scale = scale + Math.abs(d[k]);
+    }
+
+    if (scale === 0) {
+      e[i] = d[i - 1];
+      for (j = 0; j < i; j++) {
+        d[j] = V[i - 1][j];
+        V[i][j] = 0;
+        V[j][i] = 0;
+      }
+    } else {
+      for (k = 0; k < i; k++) {
+        d[k] /= scale;
+        h += d[k] * d[k];
+      }
+
+      f = d[i - 1];
+      g = Math.sqrt(h);
+      if (f > 0) {
+        g = -g;
+      }
+
+      e[i] = scale * g;
+      h = h - f * g;
+      d[i - 1] = f - g;
+      for (j = 0; j < i; j++) {
+        e[j] = 0;
+      }
+
+      for (j = 0; j < i; j++) {
+        f = d[j];
+        V[j][i] = f;
+        g = e[j] + V[j][j] * f;
+        for (k = j + 1; k <= i - 1; k++) {
+          g += V[k][j] * d[k];
+          e[k] += V[k][j] * f;
+        }
+        e[j] = g;
+      }
+
+      f = 0;
+      for (j = 0; j < i; j++) {
+        e[j] /= h;
+        f += e[j] * d[j];
+      }
+
+      hh = f / (h + h);
+      for (j = 0; j < i; j++) {
+        e[j] -= hh * d[j];
+      }
+
+      for (j = 0; j < i; j++) {
+        f = d[j];
+        g = e[j];
+        for (k = j; k <= i - 1; k++) {
+          V[k][j] -= f * e[k] + g * d[k];
+        }
+        d[j] = V[i - 1][j];
+        V[i][j] = 0;
+      }
+    }
+    d[i] = h;
+  }
+
+  for (i = 0; i < n - 1; i++) {
+    V[n - 1][i] = V[i][i];
+    V[i][i] = 1;
+    h = d[i + 1];
+    if (h !== 0) {
+      for (k = 0; k <= i; k++) {
+        d[k] = V[k][i + 1] / h;
+      }
+
+      for (j = 0; j <= i; j++) {
+        g = 0;
+        for (k = 0; k <= i; k++) {
+          g += V[k][i + 1] * V[k][j];
+        }
+        for (k = 0; k <= i; k++) {
+          V[k][j] -= g * d[k];
+        }
+      }
+    }
+
+    for (k = 0; k <= i; k++) {
+      V[k][i + 1] = 0;
+    }
+  }
+
+  for (j = 0; j < n; j++) {
+    d[j] = V[n - 1][j];
+    V[n - 1][j] = 0;
+  }
+
+  V[n - 1][n - 1] = 1;
+  e[0] = 0;
+}
+
+function tql2(n, e, d, V) {
+  var g, h, i, j, k, l, m, p, r, dl1, c, c2, c3, el1, s, s2;
+
+  for (i = 1; i < n; i++) {
+    e[i - 1] = e[i];
+  }
+
+  e[n - 1] = 0;
+
+  var f = 0;
+  var tst1 = 0;
+  var eps = Number.EPSILON;
+
+  for (l = 0; l < n; l++) {
+    tst1 = Math.max(tst1, Math.abs(d[l]) + Math.abs(e[l]));
+    m = l;
+    while (m < n) {
+      if (Math.abs(e[m]) <= eps * tst1) {
+        break;
+      }
+      m++;
+    }
+
+    if (m > l) {
+      do {
+
+        g = d[l];
+        p = (d[l + 1] - g) / (2 * e[l]);
+        r = hypotenuse(p, 1);
+        if (p < 0) {
+          r = -r;
+        }
+
+        d[l] = e[l] / (p + r);
+        d[l + 1] = e[l] * (p + r);
+        dl1 = d[l + 1];
+        h = g - d[l];
+        for (i = l + 2; i < n; i++) {
+          d[i] -= h;
+        }
+
+        f = f + h;
+
+        p = d[m];
+        c = 1;
+        c2 = c;
+        c3 = c;
+        el1 = e[l + 1];
+        s = 0;
+        s2 = 0;
+        for (i = m - 1; i >= l; i--) {
+          c3 = c2;
+          c2 = c;
+          s2 = s;
+          g = c * e[i];
+          h = c * p;
+          r = hypotenuse(p, e[i]);
+          e[i + 1] = s * r;
+          s = e[i] / r;
+          c = p / r;
+          p = c * d[i] - s * g;
+          d[i + 1] = h + s * (c * g + s * d[i]);
+
+          for (k = 0; k < n; k++) {
+            h = V[k][i + 1];
+            V[k][i + 1] = s * V[k][i] + c * h;
+            V[k][i] = c * V[k][i] - s * h;
+          }
+        }
+
+        p = -s * s2 * c3 * el1 * e[l] / dl1;
+        e[l] = s * p;
+        d[l] = c * p;
+      } while (Math.abs(e[l]) > eps * tst1);
+    }
+    d[l] = d[l] + f;
+    e[l] = 0;
+  }
+
+  for (i = 0; i < n - 1; i++) {
+    k = i;
+    p = d[i];
+    for (j = i + 1; j < n; j++) {
+      if (d[j] < p) {
+        k = j;
+        p = d[j];
+      }
+    }
+
+    if (k !== i) {
+      d[k] = d[i];
+      d[i] = p;
+      for (j = 0; j < n; j++) {
+        p = V[j][i];
+        V[j][i] = V[j][k];
+        V[j][k] = p;
+      }
+    }
+  }
+}
+
+function orthes(n, H, ort, V) {
+  var low = 0;
+  var high = n - 1;
+  var f, g, h, i, j, m;
+  var scale;
+
+  for (m = low + 1; m <= high - 1; m++) {
+    scale = 0;
+    for (i = m; i <= high; i++) {
+      scale = scale + Math.abs(H[i][m - 1]);
+    }
+
+    if (scale !== 0) {
+      h = 0;
+      for (i = high; i >= m; i--) {
+        ort[i] = H[i][m - 1] / scale;
+        h += ort[i] * ort[i];
+      }
+
+      g = Math.sqrt(h);
+      if (ort[m] > 0) {
+        g = -g;
+      }
+
+      h = h - ort[m] * g;
+      ort[m] = ort[m] - g;
+
+      for (j = m; j < n; j++) {
+        f = 0;
+        for (i = high; i >= m; i--) {
+          f += ort[i] * H[i][j];
+        }
+
+        f = f / h;
+        for (i = m; i <= high; i++) {
+          H[i][j] -= f * ort[i];
+        }
+      }
+
+      for (i = 0; i <= high; i++) {
+        f = 0;
+        for (j = high; j >= m; j--) {
+          f += ort[j] * H[i][j];
+        }
+
+        f = f / h;
+        for (j = m; j <= high; j++) {
+          H[i][j] -= f * ort[j];
+        }
+      }
+
+      ort[m] = scale * ort[m];
+      H[m][m - 1] = scale * g;
+    }
+  }
+
+  for (i = 0; i < n; i++) {
+    for (j = 0; j < n; j++) {
+      V[i][j] = i === j ? 1 : 0;
+    }
+  }
+
+  for (m = high - 1; m >= low + 1; m--) {
+    if (H[m][m - 1] !== 0) {
+      for (i = m + 1; i <= high; i++) {
+        ort[i] = H[i][m - 1];
+      }
+
+      for (j = m; j <= high; j++) {
+        g = 0;
+        for (i = m; i <= high; i++) {
+          g += ort[i] * V[i][j];
+        }
+
+        g = g / ort[m] / H[m][m - 1];
+        for (i = m; i <= high; i++) {
+          V[i][j] += g * ort[i];
+        }
+      }
+    }
+  }
+}
+
+function hqr2(nn, e, d, V, H) {
+  var n = nn - 1;
+  var low = 0;
+  var high = nn - 1;
+  var eps = Number.EPSILON;
+  var exshift = 0;
+  var norm = 0;
+  var p = 0;
+  var q = 0;
+  var r = 0;
+  var s = 0;
+  var z = 0;
+  var iter = 0;
+  var i, j, k, l, m, t, w, x, y;
+  var ra, sa, vr, vi;
+  var notlast, cdivres;
+
+  for (i = 0; i < nn; i++) {
+    if (i < low || i > high) {
+      d[i] = H[i][i];
+      e[i] = 0;
+    }
+
+    for (j = Math.max(i - 1, 0); j < nn; j++) {
+      norm = norm + Math.abs(H[i][j]);
+    }
+  }
+
+  while (n >= low) {
+    l = n;
+    while (l > low) {
+      s = Math.abs(H[l - 1][l - 1]) + Math.abs(H[l][l]);
+      if (s === 0) {
+        s = norm;
+      }
+      if (Math.abs(H[l][l - 1]) < eps * s) {
+        break;
+      }
+      l--;
+    }
+
+    if (l === n) {
+      H[n][n] = H[n][n] + exshift;
+      d[n] = H[n][n];
+      e[n] = 0;
+      n--;
+      iter = 0;
+    } else if (l === n - 1) {
+      w = H[n][n - 1] * H[n - 1][n];
+      p = (H[n - 1][n - 1] - H[n][n]) / 2;
+      q = p * p + w;
+      z = Math.sqrt(Math.abs(q));
+      H[n][n] = H[n][n] + exshift;
+      H[n - 1][n - 1] = H[n - 1][n - 1] + exshift;
+      x = H[n][n];
+
+      if (q >= 0) {
+        z = p >= 0 ? p + z : p - z;
+        d[n - 1] = x + z;
+        d[n] = d[n - 1];
+        if (z !== 0) {
+          d[n] = x - w / z;
+        }
+        e[n - 1] = 0;
+        e[n] = 0;
+        x = H[n][n - 1];
+        s = Math.abs(x) + Math.abs(z);
+        p = x / s;
+        q = z / s;
+        r = Math.sqrt(p * p + q * q);
+        p = p / r;
+        q = q / r;
+
+        for (j = n - 1; j < nn; j++) {
+          z = H[n - 1][j];
+          H[n - 1][j] = q * z + p * H[n][j];
+          H[n][j] = q * H[n][j] - p * z;
+        }
+
+        for (i = 0; i <= n; i++) {
+          z = H[i][n - 1];
+          H[i][n - 1] = q * z + p * H[i][n];
+          H[i][n] = q * H[i][n] - p * z;
+        }
+
+        for (i = low; i <= high; i++) {
+          z = V[i][n - 1];
+          V[i][n - 1] = q * z + p * V[i][n];
+          V[i][n] = q * V[i][n] - p * z;
+        }
+      } else {
+        d[n - 1] = x + p;
+        d[n] = x + p;
+        e[n - 1] = z;
+        e[n] = -z;
+      }
+
+      n = n - 2;
+      iter = 0;
+    } else {
+      x = H[n][n];
+      y = 0;
+      w = 0;
+      if (l < n) {
+        y = H[n - 1][n - 1];
+        w = H[n][n - 1] * H[n - 1][n];
+      }
+
+      if (iter === 10) {
+        exshift += x;
+        for (i = low; i <= n; i++) {
+          H[i][i] -= x;
+        }
+        s = Math.abs(H[n][n - 1]) + Math.abs(H[n - 1][n - 2]);
+        x = y = 0.75 * s;
+        w = -0.4375 * s * s;
+      }
+
+      if (iter === 30) {
+        s = (y - x) / 2;
+        s = s * s + w;
+        if (s > 0) {
+          s = Math.sqrt(s);
+          if (y < x) {
+            s = -s;
+          }
+          s = x - w / ((y - x) / 2 + s);
+          for (i = low; i <= n; i++) {
+            H[i][i] -= s;
+          }
+          exshift += s;
+          x = y = w = 0.964;
+        }
+      }
+
+      iter = iter + 1;
+
+      m = n - 2;
+      while (m >= l) {
+        z = H[m][m];
+        r = x - z;
+        s = y - z;
+        p = (r * s - w) / H[m + 1][m] + H[m][m + 1];
+        q = H[m + 1][m + 1] - z - r - s;
+        r = H[m + 2][m + 1];
+        s = Math.abs(p) + Math.abs(q) + Math.abs(r);
+        p = p / s;
+        q = q / s;
+        r = r / s;
+        if (m === l) {
+          break;
+        }
+        if (
+          Math.abs(H[m][m - 1]) * (Math.abs(q) + Math.abs(r)) <
+          eps *
+            (Math.abs(p) *
+              (Math.abs(H[m - 1][m - 1]) +
+                Math.abs(z) +
+                Math.abs(H[m + 1][m + 1])))
+        ) {
+          break;
+        }
+        m--;
+      }
+
+      for (i = m + 2; i <= n; i++) {
+        H[i][i - 2] = 0;
+        if (i > m + 2) {
+          H[i][i - 3] = 0;
+        }
+      }
+
+      for (k = m; k <= n - 1; k++) {
+        notlast = k !== n - 1;
+        if (k !== m) {
+          p = H[k][k - 1];
+          q = H[k + 1][k - 1];
+          r = notlast ? H[k + 2][k - 1] : 0;
+          x = Math.abs(p) + Math.abs(q) + Math.abs(r);
+          if (x !== 0) {
+            p = p / x;
+            q = q / x;
+            r = r / x;
+          }
+        }
+
+        if (x === 0) {
+          break;
+        }
+
+        s = Math.sqrt(p * p + q * q + r * r);
+        if (p < 0) {
+          s = -s;
+        }
+
+        if (s !== 0) {
+          if (k !== m) {
+            H[k][k - 1] = -s * x;
+          } else if (l !== m) {
+            H[k][k - 1] = -H[k][k - 1];
+          }
+
+          p = p + s;
+          x = p / s;
+          y = q / s;
+          z = r / s;
+          q = q / p;
+          r = r / p;
+
+          for (j = k; j < nn; j++) {
+            p = H[k][j] + q * H[k + 1][j];
+            if (notlast) {
+              p = p + r * H[k + 2][j];
+              H[k + 2][j] = H[k + 2][j] - p * z;
+            }
+
+            H[k][j] = H[k][j] - p * x;
+            H[k + 1][j] = H[k + 1][j] - p * y;
+          }
+
+          for (i = 0; i <= Math.min(n, k + 3); i++) {
+            p = x * H[i][k] + y * H[i][k + 1];
+            if (notlast) {
+              p = p + z * H[i][k + 2];
+              H[i][k + 2] = H[i][k + 2] - p * r;
+            }
+
+            H[i][k] = H[i][k] - p;
+            H[i][k + 1] = H[i][k + 1] - p * q;
+          }
+
+          for (i = low; i <= high; i++) {
+            p = x * V[i][k] + y * V[i][k + 1];
+            if (notlast) {
+              p = p + z * V[i][k + 2];
+              V[i][k + 2] = V[i][k + 2] - p * r;
+            }
+
+            V[i][k] = V[i][k] - p;
+            V[i][k + 1] = V[i][k + 1] - p * q;
+          }
+        }
+      }
+    }
+  }
+
+  if (norm === 0) {
+    return;
+  }
+
+  for (n = nn - 1; n >= 0; n--) {
+    p = d[n];
+    q = e[n];
+
+    if (q === 0) {
+      l = n;
+      H[n][n] = 1;
+      for (i = n - 1; i >= 0; i--) {
+        w = H[i][i] - p;
+        r = 0;
+        for (j = l; j <= n; j++) {
+          r = r + H[i][j] * H[j][n];
+        }
+
+        if (e[i] < 0) {
+          z = w;
+          s = r;
+        } else {
+          l = i;
+          if (e[i] === 0) {
+            H[i][n] = w !== 0 ? -r / w : -r / (eps * norm);
+          } else {
+            x = H[i][i + 1];
+            y = H[i + 1][i];
+            q = (d[i] - p) * (d[i] - p) + e[i] * e[i];
+            t = (x * s - z * r) / q;
+            H[i][n] = t;
+            H[i + 1][n] =
+              Math.abs(x) > Math.abs(z) ? (-r - w * t) / x : (-s - y * t) / z;
+          }
+
+          t = Math.abs(H[i][n]);
+          if (eps * t * t > 1) {
+            for (j = i; j <= n; j++) {
+              H[j][n] = H[j][n] / t;
+            }
+          }
+        }
+      }
+    } else if (q < 0) {
+      l = n - 1;
+
+      if (Math.abs(H[n][n - 1]) > Math.abs(H[n - 1][n])) {
+        H[n - 1][n - 1] = q / H[n][n - 1];
+        H[n - 1][n] = -(H[n][n] - p) / H[n][n - 1];
+      } else {
+        cdivres = cdiv(0, -H[n - 1][n], H[n - 1][n - 1] - p, q);
+        H[n - 1][n - 1] = cdivres[0];
+        H[n - 1][n] = cdivres[1];
+      }
+
+      H[n][n - 1] = 0;
+      H[n][n] = 1;
+      for (i = n - 2; i >= 0; i--) {
+        ra = 0;
+        sa = 0;
+        for (j = l; j <= n; j++) {
+          ra = ra + H[i][j] * H[j][n - 1];
+          sa = sa + H[i][j] * H[j][n];
+        }
+
+        w = H[i][i] - p;
+
+        if (e[i] < 0) {
+          z = w;
+          r = ra;
+          s = sa;
+        } else {
+          l = i;
+          if (e[i] === 0) {
+            cdivres = cdiv(-ra, -sa, w, q);
+            H[i][n - 1] = cdivres[0];
+            H[i][n] = cdivres[1];
+          } else {
+            x = H[i][i + 1];
+            y = H[i + 1][i];
+            vr = (d[i] - p) * (d[i] - p) + e[i] * e[i] - q * q;
+            vi = (d[i] - p) * 2 * q;
+            if (vr === 0 && vi === 0) {
+              vr =
+                eps *
+                norm *
+                (Math.abs(w) +
+                  Math.abs(q) +
+                  Math.abs(x) +
+                  Math.abs(y) +
+                  Math.abs(z));
+            }
+            cdivres = cdiv(
+              x * r - z * ra + q * sa,
+              x * s - z * sa - q * ra,
+              vr,
+              vi
+            );
+            H[i][n - 1] = cdivres[0];
+            H[i][n] = cdivres[1];
+            if (Math.abs(x) > Math.abs(z) + Math.abs(q)) {
+              H[i + 1][n - 1] = (-ra - w * H[i][n - 1] + q * H[i][n]) / x;
+              H[i + 1][n] = (-sa - w * H[i][n] - q * H[i][n - 1]) / x;
+            } else {
+              cdivres = cdiv(-r - y * H[i][n - 1], -s - y * H[i][n], z, q);
+              H[i + 1][n - 1] = cdivres[0];
+              H[i + 1][n] = cdivres[1];
+            }
+          }
+
+          t = Math.max(Math.abs(H[i][n - 1]), Math.abs(H[i][n]));
+          if (eps * t * t > 1) {
+            for (j = i; j <= n; j++) {
+              H[j][n - 1] = H[j][n - 1] / t;
+              H[j][n] = H[j][n] / t;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  for (i = 0; i < nn; i++) {
+    if (i < low || i > high) {
+      for (j = i; j < nn; j++) {
+        V[i][j] = H[i][j];
+      }
+    }
+  }
+
+  for (j = nn - 1; j >= low; j--) {
+    for (i = low; i <= high; i++) {
+      z = 0;
+      for (k = low; k <= Math.min(j, high); k++) {
+        z = z + V[i][k] * H[k][j];
+      }
+      V[i][j] = z;
+    }
+  }
+}
+
+function cdiv(xr, xi, yr, yi) {
+  var r, d;
+  if (Math.abs(yr) > Math.abs(yi)) {
+    r = yi / yr;
+    d = yr + r * yi;
+    return [(xr + r * xi) / d, (xi - r * xr) / d];
+  } else {
+    r = yr / yi;
+    d = yi + r * yr;
+    return [(r * xr + xi) / d, (r * xi - xr) / d];
+  }
+}
+
+/**
+ * @class CholeskyDecomposition
+ * @link https://github.com/lutzroeder/Mapack/blob/master/Source/CholeskyDecomposition.cs
+ * @param {Matrix} value
+ */
+class CholeskyDecomposition$$1 {
+  constructor(value) {
+    value = WrapperMatrix2D.checkMatrix(value);
+    if (!value.isSymmetric()) {
+      throw new Error('Matrix is not symmetric');
+    }
+
+    var a = value;
+    var dimension = a.rows;
+    var l = new Matrix(dimension, dimension);
+    var positiveDefinite = true;
+    var i, j, k;
+
+    for (j = 0; j < dimension; j++) {
+      var Lrowj = l[j];
+      var d = 0;
+      for (k = 0; k < j; k++) {
+        var Lrowk = l[k];
+        var s = 0;
+        for (i = 0; i < k; i++) {
+          s += Lrowk[i] * Lrowj[i];
+        }
+        Lrowj[k] = s = (a.get(j, k) - s) / l[k][k];
+        d = d + s * s;
+      }
+
+      d = a.get(j, j) - d;
+
+      positiveDefinite &= d > 0;
+      l[j][j] = Math.sqrt(Math.max(d, 0));
+      for (k = j + 1; k < dimension; k++) {
+        l[j][k] = 0;
+      }
+    }
+
+    if (!positiveDefinite) {
+      throw new Error('Matrix is not positive definite');
+    }
+
+    this.L = l;
+  }
+
+  /**
+   *
+   * @param {Matrix} value
+   * @return {Matrix}
+   */
+  solve(value) {
+    value = WrapperMatrix2D.checkMatrix(value);
+
+    var l = this.L;
+    var dimension = l.rows;
+
+    if (value.rows !== dimension) {
+      throw new Error('Matrix dimensions do not match');
+    }
+
+    var count = value.columns;
+    var B = value.clone();
+    var i, j, k;
+
+    for (k = 0; k < dimension; k++) {
+      for (j = 0; j < count; j++) {
+        for (i = 0; i < k; i++) {
+          B[k][j] -= B[i][j] * l[k][i];
+        }
+        B[k][j] /= l[k][k];
+      }
+    }
+
+    for (k = dimension - 1; k >= 0; k--) {
+      for (j = 0; j < count; j++) {
+        for (i = k + 1; i < dimension; i++) {
+          B[k][j] -= B[i][j] * l[i][k];
+        }
+        B[k][j] /= l[k][k];
+      }
+    }
+
+    return B;
+  }
+
+  /**
+   *
+   * @return {Matrix}
+   */
+  get lowerTriangularMatrix() {
+    return this.L;
+  }
+}
+
+exports.default = Matrix;
+exports.Matrix = Matrix;
+exports.abstractMatrix = AbstractMatrix;
+exports.wrap = wrap;
+exports.WrapperMatrix2D = WrapperMatrix2D;
+exports.WrapperMatrix1D = WrapperMatrix1D;
+exports.solve = solve$$1;
+exports.inverse = inverse$$1;
+exports.linearDependencies = linearDependencies;
+exports.SingularValueDecomposition = SingularValueDecomposition$$1;
+exports.SVD = SingularValueDecomposition$$1;
+exports.EigenvalueDecomposition = EigenvalueDecomposition$$1;
+exports.EVD = EigenvalueDecomposition$$1;
+exports.CholeskyDecomposition = CholeskyDecomposition$$1;
+exports.CHO = CholeskyDecomposition$$1;
+exports.LuDecomposition = LuDecomposition$$1;
+exports.LU = LuDecomposition$$1;
+exports.QrDecomposition = QrDecomposition$$1;
+exports.QR = QrDecomposition$$1;
+
+},{"ml-array-max":4,"ml-array-rescale":6}],8:[function(require,module,exports){
+'use strict';
+
+var extend = require('extend');
+
+var defaultOptions = {
+    size: 1,
+    value: 0
+};
+
+/**
+ * Case when the entry is an array
+ * @param data
+ * @param options
+ * @returns {Array}
+ */
+function arrayCase(data, options) {
+    var len = data.length;
+    if (typeof options.size === 'number')
+        options.size = [options.size, options.size];
+
+    var cond = len + options.size[0] + options.size[1];
+
+    var output;
+    if (options.output) {
+        if (options.output.length !== cond)
+            throw new RangeError('Wrong output size');
+        output = options.output;
+    }
+    else
+        output = new Array(cond);
+
+    var i;
+
+    // circular option
+    if (options.value === 'circular') {
+        for (i = 0; i < cond; i++) {
+            if (i < options.size[0])
+                output[i] = data[((len - (options.size[0] % len)) + i) % len];
+            else if (i < (options.size[0] + len))
+                output[i] = data[i - options.size[0]];
+            else
+                output[i] = data[(i - options.size[0]) % len];
+        }
+    }
+
+    // replicate option
+    else if (options.value === 'replicate') {
+        for (i = 0; i < cond; i++) {
+            if (i < options.size[0])
+                output[i] = data[0];
+            else if (i < (options.size[0] + len))
+                output[i] = data[i - options.size[0]];
+            else
+                output[i] = data[len - 1];
+        }
+    }
+
+    // symmetric option
+    else if (options.value === 'symmetric') {
+        if ((options.size[0] > len) || (options.size[1] > len))
+            throw new RangeError('expanded value should not be bigger than the data length');
+        for (i = 0; i < cond; i++) {
+            if (i < options.size[0])
+                output[i] = data[options.size[0] - 1 - i];
+            else if (i < (options.size[0] + len))
+                output[i] = data[i - options.size[0]];
+            else
+                output[i] = data[2*len + options.size[0] - i - 1];
+        }
+    }
+
+    // default option
+    else {
+        for (i = 0; i < cond; i++) {
+            if (i < options.size[0])
+                output[i] = options.value;
+            else if (i < (options.size[0] + len))
+                output[i] = data[i - options.size[0]];
+            else
+                output[i] = options.value;
+        }
+    }
+
+    return output;
+}
+
+/**
+ * Case when the entry is a matrix
+ * @param data
+ * @param options
+ * @returns {Array}
+ */
+function matrixCase(data, options) {
+    var row = data.length;
+    var col = data[0].length;
+    if (options.size[0] === undefined)
+        options.size = [options.size, options.size, options.size, options.size];
+    throw new Error('matrix not supported yet, sorry');
+}
+
+/**
+ * Pads and array
+ * @param {Array <number>} data
+ * @param {object} options
+ */
+function padArray (data, options) {
+    options = extend({}, defaultOptions, options);
+
+    if (Array.isArray(data)) {
+        if (Array.isArray(data[0]))
+            return matrixCase(data, options);
+        else
+            return arrayCase(data, options);
+    }
+    else
+        throw new TypeError('data should be an array');
+}
+
+module.exports = padArray;
+
+},{"extend":2}],9:[function(require,module,exports){
+'use strict';
+
+var matrixLib = require('ml-matrix');
+var Matrix = matrixLib.Matrix;
+var inverse = matrixLib.inverse;
+var padArray = require('ml-pad-array');
+var extend = require('extend');
+
+var defaultOptions = {
+    windowSize: 5,
+    derivative: 1,
+    polynomial: 2,
+    pad: 'none',
+    padValue: 'replicate'
+};
+
+/**
+ * Savitzky-Golay filter
+ * @param {Array <number>} data
+ * @param {number} h
+ * @param {Object} options
+ * @returns {Array}
+ */
+function SavitzkyGolay (data, h, options) {
+    options = extend({}, defaultOptions, options);
+    if ((options.windowSize % 2 === 0) || (options.windowSize < 5) || !(Number.isInteger(options.windowSize)))
+        throw new RangeError('Invalid window size (should be odd and at least 5 integer number)');
+    if ((options.derivative < 0) || !(Number.isInteger(options.derivative)))
+        throw new RangeError('Derivative should be a positive integer');
+    if ((options.polynomial < 1) || !(Number.isInteger(options.polynomial)))
+        throw new RangeError('Polynomial should be a positive integer');
+
+    var C, norm;
+    var step = Math.floor(options.windowSize / 2);
+
+    if (options.pad === 'pre') {
+        data = padArray(data, {size: step, value: options.padValue});
+    }
+
+    var ans =  new Array(data.length - 2*step);
+
+    if ((options.windowSize === 5) && (options.polynomial === 2) && ((options.derivative === 1) || (options.derivative === 2))) {
+        if (options.derivative === 1) {
+            C = [-2,-1,0,1,2];
+            norm = 10;
+        }
+        else {
+            C = [2, -1, -2, -1, 2];
+            norm = 7;
+        }
+    }
+    else {
+        var J = Matrix.ones(options.windowSize, options.polynomial + 1);
+        var inic = -(options.windowSize - 1) / 2;
+        for (var i = 0; i < J.length; i++) {
+            for (var j = 0; j < J[i].length; j++) {
+                if ((inic + 1 !== 0) || (j !== 0))
+                    J[i][j] = Math.pow((inic + i), j);
+            }
+        }
+        var Jtranspose = J.transposeView();
+        var Jinv = inverse(Jtranspose.mmul(J));
+        C = Jinv.mmul(Jtranspose);
+        C = C[options.derivative];
+        norm = 1;
+    }
+    var det = norm * Math.pow(h, options.derivative);
+    for (var k = step; k < (data.length - step); k++) {
+        var d = 0;
+        for (var l = 0; l < C.length; l++)
+            d += C[l] * data[l + k - step] / det;
+        ans[k - step] = d;
+    }
+
+    if (options.pad === 'post') {
+        ans = padArray(ans, {size: step, value: options.padValue});
+    }
+
+    return ans;
+}
+
+module.exports = SavitzkyGolay;
+
+},{"extend":2,"ml-matrix":7,"ml-pad-array":8}]},{},[1]);
