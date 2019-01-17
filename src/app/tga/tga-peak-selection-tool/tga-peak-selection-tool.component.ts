@@ -144,6 +144,7 @@ export class TgaPeakSelectionToolComponent implements OnInit {
 
             name: 'Weight Percent',
             type: 'spline',
+            dashStyle: 'DashDot',
             yAxis: 1,
             data: [],
             turboThreshold: 0,
