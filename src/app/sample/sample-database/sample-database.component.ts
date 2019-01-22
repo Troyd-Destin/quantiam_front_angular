@@ -149,7 +149,7 @@ export class SampleDatabaseComponent implements OnInit {
     this.sampleService.sampleDatabase$.subscribe((r) => {
 
 
-      if(r[0]) this.rowData = r;
+      if (r[0]) { this.rowData = r; }
       setTimeout(() => {  this.gridApi.sizeColumnsToFit(); }, 300);
 
     });

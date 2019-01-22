@@ -309,7 +309,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         });
 
 
-        console.log(this.locationList), this.columnDefs;
+      //  console.log(this.locationList), this.columnDefs;
 
         this.gridApi.setColumnDefs(this.columnDefs);
         this.gridApi.sizeColumnsToFit();
