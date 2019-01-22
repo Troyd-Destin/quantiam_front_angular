@@ -4,15 +4,15 @@
 <ag-grid-angular  fxFlex fxFlex.gt-lg="100"
     style="width: calc(100%); height:calc(80vh); margin-top:25px;" 
     class="ag-theme-material"
-	[showToolPanel]="false"
+    animateRows="true"
+
     [rowData]="rowData" 
-	[toolPanelSuppressSideButtons] = "true"
+	
     [columnDefs]="columnDefs"
-	[enableSorting]="true"
-    [enableFilter]="true"	
+	
     (gridReady)="onGridReady($event)"
 	(cellDoubleClicked)="onCellDoubleClicked($event)"
-	[enableColResize]="true"
+	
 	[enableRangeSelection]="true"
 	[pagination]="false"
     [paginationPageSize]="paginationPageSize"

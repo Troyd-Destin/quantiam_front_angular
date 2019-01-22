@@ -21,8 +21,8 @@ export class UserDatabaseComponent implements OnInit {
   
   
    private columnDefs = [
-        {headerName: '#', sort:'desc', field: 'employeeid', suppressMenu: true,
-        headerTooltip:"#",  filter:'agTextColumnFilter', maxWidth:120, },
+        {headerName: '#', sort:'desc', field: 'employeeid', 
+        headerTooltip:"#",  filter:'agTextColumnFilter', maxWidth:90, },
         {headerName: 'Firstname', field: 'firstname',   maxWidth:130, },
         {headerName: 'Lastname', field: 'lastname', maxWidth:130, },
         {headerName: 'Email', field: 'email',   },
@@ -32,6 +32,7 @@ export class UserDatabaseComponent implements OnInit {
         {headerName: 'Supervisor',field: 'employeeid', maxWidth:130, valueGetter: function aPlusBValueGetter(params) {
             return params.data.supervisor.name;
         },  },
+        {headerName: 'Ext.', field: 'extension',  maxWidth:100, },
         {headerName: 'Start Date', field: 'startdate',  },
         {headerName: 'Leave Date', field: 'leavedate',  },
     ];
@@ -39,6 +40,9 @@ export class UserDatabaseComponent implements OnInit {
     private defaultColDef = { 
       
      // maxWidth:120,
+      sorting:true,
+      suppressMenu: true,
+      sortable: true,
       cellStyle: function (params) {
         return {
           cursor: 'pointer',

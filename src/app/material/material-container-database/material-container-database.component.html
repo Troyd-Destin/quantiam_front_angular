@@ -45,13 +45,12 @@
         [columnDefs]="columnDefs"
         [statusBar]="statusBar"
         [defaultColDef]="defaultColDef"
-        [enableSorting]="true"
-        [enableFilter]="true"	
+        	
         (gridReady)="onGridReady($event)"
         (rowDoubleClicked)="onRowDoubleClicked($event)"
         (cellEditingStopped)="onCellEditingStopped($event)"
         (cellEditingStarted)="onCellEditingStarted($event)"
-        [enableColResize]="true"
+       
         [enableRangeSelection]="true"
         [pagination]="false"
         [components]="components"

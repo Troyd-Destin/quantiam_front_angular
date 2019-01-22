@@ -75,47 +75,47 @@ export class TgaPeakSelectionToolComponent implements OnInit {
 
   }
 
-  recalculateDerivative (){
-   
-    //this.sgOptions.windowSize = 5;
-    this.notification.info('Processing', 'Window Size: '+this.sgOptions.windowSize+', Polynomial: '+this.sgOptions.polynomial, {timeOut: 2000, showProgressBar: false, clickToClose: true});
-    
-    try{
+  recalculateDerivative () {
+
+    // this.sgOptions.windowSize = 5;
+    this.notification.info('Processing', 'Window Size: ' + this.sgOptions.windowSize + ', Polynomial: ' + this.sgOptions.polynomial, {timeOut: 2000, showProgressBar: false, clickToClose: true});
+
+    try {
       let xArray = [];
       let yArray = [];
-      //get data in question 
-      this.TgaRun.steps.forEach((step,index)=>{
+      // get data in question
+      this.TgaRun.steps.forEach((step, index) => {
 
         if (step.name === 'Ramp 20.00 °C/min to 1000.00 °C' || step.name === 'Ramp 50.00 °C/min to 1000.00 °C') {
 
-          step.data.forEach((point,i)=>{
+          step.data.forEach((point, i) => {
             xArray.push(point.temperature);
             yArray.push(point.weight_percent);
 
-          })
+          });
         }
 
       });
 
 
       // Smoothing
-      var options = {derivative: 0,pad:'post',padValue: 'replicate',};
+      const options = {derivative: 0, pad: 'post', padValue: 'replicate', };
                      xArray = SavitzkyGolay(xArray, 0, options);
                      yArray = SavitzkyGolay(yArray, 0, options);
 
-      //console.log(xArray,yArray);
+      // console.log(xArray,yArray);
 
-      var dX = SavitzkyGolay(xArray, 1, this.sgOptions);
-      var dY = SavitzkyGolay(yArray, 1, this.sgOptions);
+      const dX = SavitzkyGolay(xArray, 1, this.sgOptions);
+      const dY = SavitzkyGolay(yArray, 1, this.sgOptions);
 
-      var newData = [];
+      const newData = [];
 
-      this.chartOptions.series[1].data.forEach((o,i) => {
+      this.chartOptions.series[1].data.forEach((o, i) => {
 
         const point = {
-          y: dY[i]/dX[i],
+          y: dY[i] / dX[i],
           x: o.x,
-        }
+        };
         newData.push(point);
       //  console.log(o);
 
@@ -123,12 +123,9 @@ export class TgaPeakSelectionToolComponent implements OnInit {
 
       console.log( this.chartOptions);
       this.chartOptions.series[1].data = newData;
-      this.chartOptions.series[1].name = 'Test';
-      this.updateFlag = true; //update the graph
-    }catch(e)
-    {
+      this.updateFlag = true; // update the graph
+    } catch (e) {
       this.notification.error('Error', e, {timeOut: 4000, showProgressBar: false, clickToClose: true});
-   
 
     }
   }
@@ -166,7 +163,7 @@ export class TgaPeakSelectionToolComponent implements OnInit {
   }
 
   updateHighchartObj() {
-    
+
 
     // this.renderChart = false;
     this.chartOptions.series = [];
@@ -187,7 +184,7 @@ export class TgaPeakSelectionToolComponent implements OnInit {
           /// Derivative
           const seriesObj = {
 
-            name: 'd(%) / d(C)',
+            name: 'd(%) / d(C) - ' + this.TgaRun.filename,
             type: 'spline',
             yAxis: 0,
             turboThreshold: 0,
@@ -205,6 +202,7 @@ export class TgaPeakSelectionToolComponent implements OnInit {
             name: 'Weight Percent',
             type: 'spline',
             dashStyle: 'DashDot',
+            data_type: 'derivative',
             yAxis: 1,
             data: [],
             turboThreshold: 0,
@@ -255,7 +253,7 @@ export class TgaPeakSelectionToolComponent implements OnInit {
     this.sgOptions = {
 
       polynomial: 2,
-      windowSize: 45,
+      windowSize: 105,
       derivative: 1,
       pad: 'post',
       padValue: 'replicate',

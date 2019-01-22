@@ -178,10 +178,8 @@ export class CoreComponent implements OnInit, OnDestroy {
 
 }
 
-  connectScannerService()
-  {
-    if(this.initializeScanner)
-    {
+  connectScannerService() {
+    if (this.initializeScanner) {
     this._scannerEvents = this.websocketService.scannerEvents.subscribe((data) => {});
 
     this.router.events

@@ -145,6 +145,8 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
     this.defaultColDef = {
 
+      sortable: true,
+      resizeable: true,
       cellStyle: function (params) {
         return {
           cursor: 'pointer',
@@ -161,7 +163,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         },
         { statusPanel: 'agFilteredRowCountComponent' },
         { statusPanel: 'agSelectedRowCountComponent' },
-        { statusPanel: 'agAggregationComponent' }
+      //  { statusPanel: 'agAggregationComponent' }
       ]
     };
 

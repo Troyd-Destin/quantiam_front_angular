@@ -8,22 +8,25 @@
   
 	[multiple]="multiple"
   [placeholder]="placeholder"
- 
+  [hideSelected]="true"
+
   (change)="onChange($event)"
   (add)="onAdd($event)"
   (remove)="onRemove($event)"
-  (scroll)="onScroll($event)"
   (scrollToEnd)="onScrollToEnd()"
+  (clear)="onClear()"
   (open)="onOpen()"
 
   [virtualScroll]="true"
 
   [(ngModel)]="selectedValue"	
+ 
+  [(typeahead)]="input$" 
   
-  [searchFn]="customSearchFn"
 
 >
-<!-- scroll-host & scrollable-content  -->
+<!-- scroll-host & scrollable-content  [searchFn]="customSearchFn" 
+  (scroll)="onScroll($event)" -->
 
 <ng-template ng-label-tmp let-item="item">
     {{item.qcid || item.identifier}} {{item.lot.material.name}} {{item.lot.material.grade}}

@@ -17,6 +17,8 @@ export class SelectMaterialContainerComponent implements OnInit {
   public _people3input = new BehaviorSubject({});
   public people3$: Observable<any> = this._people3input.asObservable();
 
+  input$ = new Subject<string>();
+
 
     // Inputs
   @Input() selectedValue: any = null; // default value, object or ID
@@ -31,7 +33,8 @@ export class SelectMaterialContainerComponent implements OnInit {
   // private modelName = 'User';
 
   items = [];
-  itemsBuffer;
+  itemsBuffer = [];
+  allRetrievedItemsList = [];
   dropdownWidth = 900; // in pixels
   bufferSize = 75;
   virtualScroll = true;
@@ -50,26 +53,51 @@ export class SelectMaterialContainerComponent implements OnInit {
   ngOnInit() {
 
     this.loadItems();
+    this.onSearch();
 
-    //this._people3input.next(this.selectedPersons);
+    // this._people3input.next(this.selectedPersons);
   }
 
   onChange(event) { this.change.emit(event); }
   onAdd() { }
   onRemove() { }
-
-  test(event){
-
-    return of([{name:'thing'}]);
-    console.log(event);
+  onClear() {
+    console.log('test');
+    this.itemsBuffer = this.allRetrievedItemsList;
   }
 
-  loadItems()
-  {
+  onSearch() {
+
+    this.input$.pipe(
+         debounceTime(500),
+        distinctUntilChanged(),
+        switchMap((term) => {
+
+          const params  = new HttpParams().set('like', term).set('limit', '' + this.bufferSize + '').set('active', '1').set('filterSpinner', 'true');
+
+          return this.http.get<any>(environment.apiUrl + `${this.endpoint}`, { 'params': params } );
+
+        })
+    )
+    .subscribe((data) => {
+
+      this.allRetrievedItemsList = this.itemsBuffer;
+      this.itemsBuffer = data;
+
+      if (!data[0]) {
+        if (this.itemsBuffer.length < this.bufferSize) { this.itemsBuffer = this.allRetrievedItemsList; }
+      }
+
+    });
+
+  }
 
 
-    //use a service
-    
+  loadItems() {
+
+
+    // use a service
+
     const params  = new HttpParams().set('page', this.page.toString());
 
     this.http.get<any>(environment.apiUrl + `${this.endpoint}`, { 'params': params } )
@@ -97,7 +125,7 @@ export class SelectMaterialContainerComponent implements OnInit {
     }
   }
 
-  customSearchFn(term: string, item) {
+  customSearchFn(term: string, item) {  // good for lists we store in their entirety
     // console.log(term,item);
     term = term.toLocaleLowerCase();
 
@@ -110,7 +138,7 @@ export class SelectMaterialContainerComponent implements OnInit {
 
   private fetchMore() {
 
-      //use a service as well
+      // use a service as well
 
     this.loading = true;
     this.page = this.page + 1;
@@ -127,17 +155,18 @@ export class SelectMaterialContainerComponent implements OnInit {
   }
 
 
-  private onOpen(){
+  private onOpen() {
 
-  setTimeout((x)=>{ 
-    
+  setTimeout((x) => {
+
     const dropdown = document.querySelector('.total-padding');
-    dropdown.setAttribute('style','width:'+this.dropdownWidth+'px !important;height: 1800px;'); //this changes the dropdown to be as wide as it's contents
-    //dropdown.setAttribute('style',''); //workaround 
+    dropdown.setAttribute('style', 'width:' + this.dropdownWidth + 'px !important;height: 1800px;'); // this changes the dropdown to be as wide as it's contents
+    // dropdown.setAttribute('style',''); //workaround
 
   }, 100);
 
   }
+
 
 
 

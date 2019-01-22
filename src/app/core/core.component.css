@@ -216,7 +216,7 @@ background: rgb(52, 89, 122);
 .side-panel .mat-button
 {
 	font-size: 12px;
-    height: 20px;
+    height: 30px;
     line-height: 0px;
 	width: 148px;
     position: absolute;
@@ -236,3 +236,12 @@ mat-list-item:focus{
 	outline: none !important;
 }
 
+
+.not-drop-down-button
+{
+	left: 0px !important;
+    width: 100% !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    padding-left: 7px !important;
+}

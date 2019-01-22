@@ -8,12 +8,12 @@
 	selectedValue="7330"
 	(change)="testChange($event)"
 	multiple="true"
-	></app-select-project>
+	></app-select-project>-->
 		
 			
-	<app-select-material-container fxFlex=20 
+	<!-- <app-select-material-container fxFlex=20 
 				(change)="testChange($event)"
-	></app-select-material-container>-->
+	></app-select-material-container> -->
 		
 
 </div>
@@ -23,25 +23,24 @@
 
 
 <ag-grid-angular 
-
-	[toolPanelSuppressSideButtons] = "true"
-  
 	
 	#agGrid	
+
+	
 	style="width: calc(100%); height:calc(70vh); margin-top:25px;" 
-    class="ag-theme-material"
-	[showToolPanel]="false"
+	class="ag-theme-material"
+	animateRows="true"
+	
     [rowData]="rowData" 
-	[toolPanelSuppressSideButtons] = "true"
+
     [columnDefs]="columnDefs"
 	[defaultColDef]="defaultColDef"
-	[enableSorting]="true"
-    [enableFilter]="true"	
+	
     (gridReady)="onGridReady($event)"
 	(cellDoubleClicked)="onCellDoubleClicked($event)"
 	(cellEditingStopped)="onCellEditingStopped($event)"
 	(cellEditingStarted)="onCellEditingStarted($event)"
-	[enableColResize]="true"
+	
 	[enableRangeSelection]="true"
 	[pagination]="false"
 	

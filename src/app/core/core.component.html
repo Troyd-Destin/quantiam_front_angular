@@ -74,7 +74,8 @@
 				</button>
 			</div> -->
 					<mat-accordion class="side-panel" multi="true">
-						<mat-expansion-panel expanded="true" *ngIf="isAdmin">
+
+						<!-- <mat-expansion-panel expanded="true" *ngIf="isAdmin">
 						  <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
 								<mat-panel-title>
 								    Admin
@@ -82,9 +83,9 @@
 								
 							  </mat-expansion-panel-header>
 								<mat-list>
-								<!--  <mat-list-item  > 
+							  <mat-list-item  > 
 										<button routerLink="/material" mat-button>Home</button>
-								</mat-list-item> -->
+								</mat-list-item> 
 								 <mat-list-item > 
 									 <button routerLink="/user/database"  routerLinkActive="mat-list-item-button-active" mat-button  > Users </button>
 								</mat-list-item>
@@ -96,6 +97,19 @@
 								</mat-list-item>	
 							
 								</mat-list>  
+						</mat-expansion-panel> -->
+						<mat-divider style="display:none"></mat-divider >
+						<mat-expansion-panel expanded="true"  style="padding-top:3px; padding-bottom:15px !important;">
+							
+								<mat-list-item > 
+										<button routerLink="/user/database"  routerLinkActive="mat-list-item-button-active" mat-button class="not-drop-down-button" >
+											<!-- <mat-icon>person</mat-icon>  -->
+											Employees 
+											
+										</button>
+								   </mat-list-item>
+					
+							
 						</mat-expansion-panel>
 						
 							<mat-divider style="display:none"></mat-divider >

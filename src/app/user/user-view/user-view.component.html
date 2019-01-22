@@ -4,7 +4,7 @@
 
 
 <div *ngIf="renderUser" fxLayout="row" fxLayoutAlign="center center" fxFlex fxFlex.gt-md="100">
-	<div  fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="10px" fxFlex fxFlex.gt-md="50">
+	<div  fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="10px" fxFlex fxFlex.gt-md="60">
 	
 		<mat-card class="quantiam-mat-card" fxLayout="column" >
 		<mat-card-title>
@@ -71,7 +71,7 @@
 			</div>
 			
 			<div fxLayoutAlign="start stretch" fxLayoutGap="10px" >
-					<label *ngIf="editUser"	fxLayoutAlign="start center"> Immediate Supervisor </label> 
+					<!-- <label *ngIf="editUser"	fxLayoutAlign="start center"> Immediate Supervisor </label>  -->
 					<!-- <app-select2-user
 					   
 							   *ngIf="editUser && user.employeeid"
@@ -107,6 +107,19 @@
 					   >
 				   </mat-form-field >
 
+				   <mat-form-field  fxFlex=10>
+						<input  #Extension 
+						(change)="updateUser(Extension)"
+						disabled
+						type="number" 
+						matInput 
+						placeholder="Extension" 
+						[disabled]="!editUser" 
+						[(ngModel)] ='user.extension'
+						name="extension"
+				>
+				</mat-form-field >
+
 					<mat-form-field  fxFlex>
 							<input  #Email 
 							(change)="updateUser(Email)"
@@ -118,6 +131,8 @@
 							name="email"
 					>
 					</mat-form-field >
+
+				
 			
 
 			</div>
@@ -197,7 +212,7 @@
 			</mat-card-title> 
 			<mat-card-content>
 			
-				<nav mat-tab-nav-bar class="borderless rounded-nav-borders">
+				<nav mat-tab-nav-bar class="borderless">
 					<a mat-tab-link (click)="selectedTable = 'supervisors';" [class.mat-tab-link-active]="selectedTable == 'supervisors'"> Supervisors </a>
 					<a mat-tab-link (click)="selectedTable = 'rto'" [class.mat-tab-link-active]="selectedTable == 'rto'"> RTO Allotment </a>
 					<a mat-tab-link (click)="selectedTable = 'permissions'" [class.mat-tab-link-active]="selectedTable == 'permissions'"> Permissions </a>
@@ -210,7 +225,7 @@
 				</nav>
 				
 				<div  [ngClass]="{'hidden': !(selectedTable == 'supervisors')}" >
-						<table  fxFlex style="box-shadow: none; width:100%;" mat-table [dataSource]="user.supervisors" matSort >
+						<table  fxFlex style="box-shadow: none; width:100%;" mat-table [dataSource]="user.supervisors" matSort *ngIf="selectedTable == 'supervisors'" >
 
 								<!--- Note that these columns can be defined in any order.
 										The actual rendered columns are set as a property on the row definition" -->
@@ -239,7 +254,7 @@
 				</div>
 
 				<div   [ngClass]="{'hidden': !(selectedTable == 'permissions')}"  fxLayout="column"> 
-					<table fxFlex style="box-shadow: none;  width:100%;" mat-table [dataSource]="permissionTableSource" matSort>
+					<table fxFlex style="box-shadow: none;  width:100%;" mat-table [dataSource]="permissionTableSource" matSort *ngIf="selectedTable == 'permissions'">
 
 							<!--- Note that these columns can be defined in any order.
 									The actual rendered columns are set as a property on the row definition" -->
@@ -292,7 +307,7 @@
 				
 					
 				<div [ngClass]="{'hidden': !(selectedTable == 'machines')}" >
-					<table fxFlex style="box-shadow: none;  width:100%;" mat-table [dataSource]="user.machines" matSort>
+					<table fxFlex style="box-shadow: none;  width:100%;" mat-table [dataSource]="user.machines" matSort *ngIf="selectedTable == 'machines'">
 
 						
 							<ng-container matColumnDef="id">
@@ -359,8 +374,9 @@
 					
 						<ag-grid-angular  
 					
+						*ngIf="selectedTable == 'rto'"
 						#rto_agrid
-						style="width: calc(100%); height:250px;margin-top:10px;" 
+						style="width: calc(98%);height:250px;margin-top:10px;" 
 						class="ag-theme-material"
 					
 						[rowData]="user.rto_allotment" 

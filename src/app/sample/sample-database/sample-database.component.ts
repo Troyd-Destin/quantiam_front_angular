@@ -18,7 +18,7 @@ export class SampleDatabaseComponent implements OnInit {
 
   private gridApi;
   private gridColumnApi;
-  private rowData: any[];
+  private rowData = [];
 
   private columnDefs;
   private defaultColDef;
@@ -101,9 +101,6 @@ export class SampleDatabaseComponent implements OnInit {
         headerName: 'Delete',
         editable: false,
         width: 130,
-        suppressFilter: true,
-        suppressMenu: true,
-        suppressSorting: true,
         cellStyle: function (params) {
           return {
             cursor: 'pointer'
@@ -124,7 +121,13 @@ export class SampleDatabaseComponent implements OnInit {
 
 
     this.defaultColDef = {
-      editable: true,
+      // editable: true,
+      sortable: true,
+      resizeable: true,
+      filter: true,
+      suppressMenu: true,
+
+
     };
 
 
@@ -145,7 +148,8 @@ export class SampleDatabaseComponent implements OnInit {
 
     this.sampleService.sampleDatabase$.subscribe((r) => {
 
-      this.rowData = r;
+
+      if(r[0]) this.rowData = r;
       setTimeout(() => {  this.gridApi.sizeColumnsToFit(); }, 300);
 
     });
