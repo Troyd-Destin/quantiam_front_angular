@@ -8,8 +8,11 @@
     <div fxLayout="row"  fxLayoutGap="20px"    >
 
         <div fxFlex fxLayout="column" fxLayoutAlign="center start"> 
-                <mat-slide-toggle  (click)="toggleCellsEditable()"> Edit Table </mat-slide-toggle>
-            
+                <!-- <mat-slide-toggle  (click)="toggleCellsEditable()"> Edit Table </mat-slide-toggle> -->
+            <button (click)="fetchTableData()" mat-raised-button> 
+                Refresh
+                <mat-icon  >refresh</mat-icon>
+            </button>
             
         </div>
         <div fxFlex fxLayout="column"  fxLayoutAlign="center center"> 

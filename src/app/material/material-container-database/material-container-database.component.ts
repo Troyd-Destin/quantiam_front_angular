@@ -124,6 +124,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         width: 120,
         field: 'container_received',
         headerName: 'Received',
+        sort: 'desc',
      //   cellEditor: "datePicker",
       },
       {
@@ -205,7 +206,11 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
   }
 
+  fetchTableData()
+  {
+      this.containerAggridService.getDatabase({},true);
 
+  }
 
 
   refreshTable() {
@@ -232,6 +237,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
 
     this.containerAggridService.Database$.subscribe((r) => {
+      //console.log(r);
       if (r[0]) { this.rowData = r; }
       setTimeout(() => {  this.gridApi.sizeColumnsToFit(); }, 300);
     });

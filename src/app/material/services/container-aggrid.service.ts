@@ -27,17 +27,18 @@ export class ContainerAggridService {
 		public notification: NotificationsService, ) { }
 
 
-  getDatabase(params: Object) {
+  getDatabase(params: Object, forceLoad = false) {
 
+	//	console.log(forceLoad);
 
-		if (!this.alreadyLoadedDb) {
+		if (!this.alreadyLoadedDb || forceLoad) {
 
 			this.alreadyLoadedDb = true;
 
-		   return  this.http.get<any>(environment.apiUrl + `${this.endpoint}?filterSpinner&creator=true`, params)
+		   return  this.http.get<any>(environment.apiUrl + `${this.endpoint}`, params)
 			   .pipe(
 					map( res => {
-             // this.notification.success('Delete','Sample Deleted',{showProgressBar:false,timeOut:3000,clickToClose: true});
+             //
 					  return res;
 					})
 				)

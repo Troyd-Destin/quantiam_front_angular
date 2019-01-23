@@ -35,7 +35,6 @@
               "src/styles.css"
             ],
             "scripts": [
-             // "src/assets/js/savitzky-golay.js",
               "node_modules/jquery/dist/jquery.js",
               "node_modules/datatables.net/js/jquery.dataTables.js",
               "node_modules/select2/dist/js/select2.full.js",

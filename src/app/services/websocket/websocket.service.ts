@@ -111,7 +111,7 @@ export class WebsocketService {
 				this.ws.onmessage = (e) => {
 				// console.log(e);
 					const r = JSON.parse(e.data);
-					console.log(r);
+					//console.log(r);
 					observer.next(r);
 				};
 
