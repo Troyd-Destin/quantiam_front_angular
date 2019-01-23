@@ -232,7 +232,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
 
     this.containerAggridService.Database$.subscribe((r) => {
-      this.rowData = r;
+      if (r[0]) { this.rowData = r; }
       setTimeout(() => {  this.gridApi.sizeColumnsToFit(); }, 300);
     });
   }

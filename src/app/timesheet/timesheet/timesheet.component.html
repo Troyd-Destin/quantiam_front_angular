@@ -1,3 +1,36 @@
-<p>
-  timesheet works!
-</p>
+<div fxFlex fxLayout="column">
+
+  
+  <ag-grid-angular 
+
+  *ngIf="displayTimesheet"
+    
+  #agGrid	
+
+
+    style="width: calc(100%); height:500px; margin-top:25px;" 
+    class="ag-theme-material"
+    animateRows="true"
+
+    [rowData]="rowData" 
+
+    [columnDefs]="columnDefs"
+    [defaultColDef]="defaultColDef"
+    [autoGroupColumnDef]="autoGroupColumnDef"
+
+    (gridReady)="onGridReady($event)"
+    (cellDoubleClicked)="onCellDoubleClicked($event)"
+    (cellEditingStopped)="onCellEditingStopped($event)"
+    (cellEditingStarted)="onCellEditingStarted($event)"
+
+    [enableRangeSelection]="true"
+    [pagination]="false"
+    [suppressPropertyNamesCheck]="true"
+    [groupIncludeTotalFooter]="true"
+
+    [suppressContextMenu] = "true"
+    
+    >
+  </ag-grid-angular>
+
+</div>

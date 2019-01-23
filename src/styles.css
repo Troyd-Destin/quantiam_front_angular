@@ -28,6 +28,16 @@ padding-right:12px !important;
 }
 
 
+.ag-theme-material .ag-ltr .ag-row-group-leaf-indent{
+
+    margin-left: 0px !important;
+}
+
+.ag-theme-material .ag-ltr .ag-row-group-indent-1{
+
+    padding-left: 0px !important;
+}
+
 /* Angular Fixes */
 
 [hidden] {

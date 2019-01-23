@@ -82,7 +82,7 @@ export class SampleCreationDialogComponent implements OnInit, OnDestroy {
     {headerName: 'Formula Weight (g/mol)', field: 'lot.material.formula_weight', editable: true},
     {headerName: 'Mols (mol)', editable: true, field: 'mols', type: 'numericColumn'  },
     {headerName: 'Mass (g)', editable: true, field: 'mass', type: 'numericColumn'  },
-   /* {headerName: 'Actual', editable: false,  field: 'actual', cellRenderer: function(params){ 
+   /* {headerName: 'Actual', editable: false,  field: 'actual', cellRenderer: function(params){
 
      // console.log(params);
       const USL = params.data.mass + 0.1;
@@ -101,7 +101,7 @@ export class SampleCreationDialogComponent implements OnInit, OnDestroy {
 
 
     }},*/
-    {headerName: 'Measured', editable: true,  field: 'actual',type: 'numericColumn'},
+    {headerName: 'Measured', editable: true,  field: 'actual', type: 'numericColumn'},
 
   ];
 
@@ -117,17 +117,17 @@ export class SampleCreationDialogComponent implements OnInit, OnDestroy {
 
   };
 
- 
+
 
     ngOnInit() {
 
       this.websocket.redirectOnScan = false;
 
-      setInterval((x)=>{
+      setInterval((x) => {
 
         this.updateSelectedRowScaleValue();
-      
-      },200)
+
+      }, 200);
 
 
       // subscribe to scanner events
@@ -137,9 +137,9 @@ export class SampleCreationDialogComponent implements OnInit, OnDestroy {
               console.log(r.data);
               this.materialLotContainer.fetch(r.data).subscribe((container: any) => {
 
-              
+
                 this.addContainerToTable(container);
-               
+
               });
       });
 
@@ -173,15 +173,13 @@ export class SampleCreationDialogComponent implements OnInit, OnDestroy {
     onCellEditingStopped(event) {
 
 
-      if(event.column.colId === 'lot.material.formula_weight')
-      {
+      if (event.column.colId === 'lot.material.formula_weight') {
         const params = {'formula_weight': event.data.lot.material.formula_weight};
-        this.material.updateMaterial(params,event.data.lot.material.id).subscribe();
+        this.material.updateMaterial(params, event.data.lot.material.id).subscribe();
 
       }
 
-      if (event.column.colId === 'mass')
-      {
+      if (event.column.colId === 'mass') {
         event.data.mols =  event.data.mass / event.data.lot.material.formula_weight;
         event.node.setData(event.data);
 
@@ -204,49 +202,42 @@ export class SampleCreationDialogComponent implements OnInit, OnDestroy {
 
       console.log(event);
       this.selectedExperiment = event;
-      this.newSample.experiment_sample = this.selectedExperiment.abbrev+'-'+this.selectedExperiment.next_sample;
+      this.newSample.experiment_sample = this.selectedExperiment.abbrev + '-' + this.selectedExperiment.next_sample;
 
 //
     }
 
-    selectRow(event)
-    {
+    selectRow(event) {
       this.selectedRowObj = event;
     }
-    unSelectRow()
-    {
+    unSelectRow() {
       this.selectedRowObj = null;
     }
 
-    updateSelectedRowScaleValue()
-    {
-      if(this.selectedRowObj)
-      {
+    updateSelectedRowScaleValue() {
+      if (this.selectedRowObj) {
        this.selectedRowObj.data.actual = Math.random();
        this.selectedRowObj.node.setData(this.selectedRowObj.data);
       }
     }
 
-    addContainerToTable(container)
-    {
-      const testPresence = this.selectedContainers.find(function(obj, index){ //search containers that have the same ID
-        return container.id == obj.id;
+    addContainerToTable(container) {
+      const testPresence = this.selectedContainers.find(function(obj, index) { // search containers that have the same ID
+        return container.id === obj.id;
       });
 
-      if(!testPresence)
-      {
+      if (!testPresence) {
         container.mols = 1;
         container.rowId = container.id;
         this.selectedContainers.push(container);
         this.gridApi.setRowData(this.selectedContainers);
-      } else
-      {
+      } else {
         this.notification.error('Error', 'Container is already in the list.', {timeOut: 4000, showProgressBar: false, clickToClose: true});
       }
 
       console.log(this.gridApi);
 
-      //get row ID for container and set as selected
-      if(this.weighAfterScanning){}
+      // get row ID for container and set as selected
+      if (this.weighAfterScanning) {}
     }
 }

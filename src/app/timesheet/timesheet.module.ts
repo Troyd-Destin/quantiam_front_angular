@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AgGridModule } from 'ag-grid-angular';
+
+import { SharedModule } from '../shared/shared.module';
 import { MaterialDesignModule } from '../material-design/material-design.module';
 import { TimesheetRoutingModule } from './timesheet-routing.module';
 import { TimesheetIndexComponent } from './timesheet-index/timesheet-index.component';
@@ -15,8 +17,9 @@ import { TimesheetRtoViewComponent } from './timesheet-rto-view/timesheet-rto-vi
   imports: [
     CommonModule,
     TimesheetRoutingModule,
-    AgGridModule,    
-    MaterialDesignModule
+    AgGridModule.withComponents([]),
+    MaterialDesignModule,
+    SharedModule
   ],
   declarations: [TimesheetIndexComponent, TimesheetComponent, TimesheetBankComponent, TimesheetSimpleComponent, TimesheetCalendarComponent, TimesheetRtoComponent, TimesheetRtoViewComponent]
 })
