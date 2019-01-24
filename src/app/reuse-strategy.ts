@@ -2,7 +2,8 @@ import {ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy} from '@
 
 export class CustomReuseStrategy implements RouteReuseStrategy {
 
-  routesToCache: string[] = ['userDatabase', 'userView', 'xpsDatabase', 'tgaDatabase', 'tgaPeakTool', 'timesheet'];
+  routesToCache: string[] = ['userDatabase', 'userView', 'xpsDatabase', 
+  'tgaDatabase', 'tgaPeakTool', 'timesheet', 'MaterialContainerDatabase'];
   storedRouteHandles = new Map<string, DetachedRouteHandle>();
 
   // Decides if the route should be stored

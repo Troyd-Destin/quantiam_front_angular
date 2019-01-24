@@ -1,9 +1,11 @@
 ## 19.1.0
 ### Fixes
    - Auth screen no longer locks you out when you fail your password.
+   - Materials screen now preserves itself when navigating around. 
 
 ### TGA
    **[Feature]** TGA Peak Tool for SGX analysis added   
+
 
 
 ## 18.12.0 

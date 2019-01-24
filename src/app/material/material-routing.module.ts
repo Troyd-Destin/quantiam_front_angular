@@ -18,13 +18,13 @@ const routes: Routes = [
         path: 'container/database',
         pathMatch: 'full',
         component: MaterialContainerDatabaseComponent,
-        data: {name: 'MaterialContainerDatabase'}
+        data: {key: 'MaterialContainerDatabase'}
       },
       {
         path: 'container/:id',
         component: MaterialContainerViewComponent,
         pathMatch: 'full',
-        data: {name: 'MaterialContainerView'}
+        data: {key: 'MaterialContainerView'}
       },
       {
         path: 'database',
