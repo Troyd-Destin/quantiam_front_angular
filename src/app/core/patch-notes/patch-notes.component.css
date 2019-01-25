@@ -9,13 +9,27 @@ markdown ::ng-deep p {
     line-height: 1.5;   
     font-weight: 400;
     color: rgba(0,0,0,.87);
-    font-size: 13px;
+    font-size: 11px;
 }
 
-markdown ::ng-deep h4 {
-    margin-left: 10px;
+markdown ::ng-deep ul {
+    margin-top: 5px;
+}
+
+markdown ::ng-deep li {
+    font-size: 12px;
 }
 
 markdown ::ng-deep h3 {
-    margin-top: 40px;
+    font-size:14px;
+    margin-bottom: 10px;
+}
+
+markdown ::ng-deep h4 {
+    margin-left: 5px;
+}
+
+markdown ::ng-deep h2 {
+    margin-top: 50px; 
+    margin-bottom: 5px;
 }

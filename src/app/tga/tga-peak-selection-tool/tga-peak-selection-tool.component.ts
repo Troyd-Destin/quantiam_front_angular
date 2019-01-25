@@ -6,6 +6,9 @@ import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { TgaRunService } from '../services/tga-run.service';
 import { NotificationsService } from 'angular2-notifications';
+import { RendererAnimationPlayer } from '@angular/platform-browser/animations/src/animation_builder';
+import { NgMultiLabelTemplateDirective } from '@ng-select/ng-select/ng-select/ng-templates.directive';
+import { splitClasses } from '@angular/compiler';
 
 @Component({
   selector: 'app-tga-peak-selection-tool',
@@ -15,10 +18,15 @@ import { NotificationsService } from 'angular2-notifications';
 export class TgaPeakSelectionToolComponent implements OnInit {
 
   TgaFileList = [];
+  selectedTgaRuns = [];
   selectedFileIndex = 1;
   selectedFile;
   TgaRun;
+  storedTgaRuns = [];
   updateFlag;
+  previousSelectedTgaRuns = [];
+  tgaRunsToLoad = [];
+  tgaRunsLoaded = 0;
 
   firstRunLoaded = false;
   renderChart = false;
@@ -67,11 +75,45 @@ export class TgaPeakSelectionToolComponent implements OnInit {
 
  sgOptions;
 
+ renderMultiChart = false;
+ multiUpdateFlag = false;
+ 
+ multiChartOptions = {
+  chart: {
+
+    zoomType: 'xy',
+  },
+  tooltip: { enabled: false },
+  series: [],
+  plotOptions:{
+
+    spline:{
+       marker:{
+         enabled: false,
+       }
+    }
+  },
+  title: {
+    text: 'Click Load to Overlay Derivatives',
+  },
+  yAxis: [
+    {
+    title: {
+      text: 'd(%) / d(c)'
+    },
+    resize: {
+      enabled: true
+    }
+  },
+  ],
+
+};
+
   constructor(public http: HttpClient, public notification: NotificationsService) { }
 
   ngOnInit() {
 
-    this.fetchFileList();
+   // this.fetchFileList();
 
   }
 
@@ -135,6 +177,10 @@ export class TgaPeakSelectionToolComponent implements OnInit {
 
   }
 
+  multiChartRender() {
+
+  }
+
   fetchFileList () {
     this.http.get<any>(environment.apiUrl + `/tga/filelist`)
     .subscribe(items => {
@@ -157,8 +203,85 @@ export class TgaPeakSelectionToolComponent implements OnInit {
 
             this.TgaRun = obj;
 
-            this.updateHighchartObj();
+             this.updateHighchartObj();
+
         });
+
+  }
+
+  fetchTgaMultiRun (runName) {
+
+    this.http.get<any>(environment.apiUrl + `/tga/` + runName)
+    .subscribe(obj => {
+
+            this.tgaRunsLoaded++;
+            this.storedTgaRuns.push(obj);
+            if (this.tgaRunsLoaded === this.tgaRunsToLoad.length) {
+              this.updateMultiHighchartObj();
+            }
+        });
+
+  }
+
+  updateMultiHighchartObj() {
+
+
+    this.multiChartOptions.series = [];
+    this.tgaRunsLoaded = 0;
+    this.tgaRunsToLoad = [];
+    console.log(this.storedTgaRuns);
+
+  //  this.chartOptions.series = [];
+
+
+    this.multiChartOptions.title.text = 'd(%) / d(C) Overlay ' + this.storedTgaRuns.length;
+
+    this.storedTgaRuns.forEach((TgaRun) => {
+
+        TgaRun.steps.forEach((step, i) => {
+
+          if (step.name === 'Ramp 20.00 °C/min to 1000.00 °C' || step.name === 'Ramp 50.00 °C/min to 1000.00 °C') {
+
+            // console.log(step);
+
+              /// Derivative
+              const seriesObj = {
+
+                name: TgaRun.filename,
+                type: 'spline',
+                // yAxis: 0,
+                turboThreshold: 0,
+                data: [],
+              };
+
+
+              TgaRun.steps[i].data.forEach((point) => {
+
+                const newPoint = {x: null, y: null, marker: { enabled: false }};
+
+
+                newPoint.x = parseFloat(point.temperature);
+                newPoint.y = parseFloat(point['% / C']);
+                
+
+                seriesObj.data.push(newPoint);
+
+
+
+              });
+              this.multiChartOptions.series.push(seriesObj);
+
+            }
+          });
+
+      });
+
+       console.log( this.multiChartOptions);
+
+
+      this.multiUpdateFlag = true;
+      console.log(this.multiUpdateFlag);
+      this.renderMultiChart = true;
 
   }
 
@@ -184,7 +307,7 @@ export class TgaPeakSelectionToolComponent implements OnInit {
           /// Derivative
           const seriesObj = {
 
-            name: 'd(%) / d(C) - ' + this.TgaRun.filename,
+            name: 'd(%) / d(C)',
             type: 'spline',
             yAxis: 0,
             turboThreshold: 0,
@@ -337,5 +460,101 @@ export class TgaPeakSelectionToolComponent implements OnInit {
     this.selectedFile = event.value;
     this.fetchTgaRun(this.selectedFile.name);
   }
+
+  changeTgaRun(event) {
+    this.selectedTgaRuns = event;
+    console.log(event);
+    if(event.length === 1 && this.renderChart === true)
+    {
+      //console.log(event);
+      this.fetchTgaRun(event[0].name);
+
+    }
+  }
+
+  loadSelectedTgaRuns() {
+
+    if (this.selectedTgaRuns.length  === 1) {
+
+      this.fetchTgaRun(this.selectedTgaRuns[0].name);
+      return;
+    }
+
+
+
+    console.log(this.multiChartOptions);
+
+
+    // Identify objects we haven't laoded yet.
+
+    this.selectedTgaRuns.forEach(item => {
+
+      const check = this.storedTgaRuns.filter((previousItem) => {
+
+        console.log(previousItem);
+         return previousItem.filename === item.name;
+
+      });
+      console.log(check);
+      if (!check[0]) { this.tgaRunsToLoad.push(item); }
+
+    });
+
+    this.renderMultiChart = false;
+    this.tgaRunsToLoad.forEach(run => {
+
+      this.fetchTgaMultiRun(run.name);
+    });
+
+
+
+
+
+  }
+
+  removeTgaRun(event) {
+
+
+    this.renderMultiChart = false;
+
+    const check = this.storedTgaRuns.forEach((previousItem, i, object) => {
+
+       if (previousItem.filename === event.value.name) {
+
+         object.splice(i, 1 );
+       }
+
+       
+    });
+
+
+    this.multiChartOptions.series.forEach((item, index, object2) => {
+
+      if (item.name === event.value.name) {
+        object2.splice(index, 1 );
+      }
+
+   });
+
+  //  this.multiChartOptions.title.text = 'test';
+
+ setTimeout((r)=>{
+
+  this.renderMultiChart = true;
+ },300);  
+
+   /// console.log(this.storedTgaRuns);
+
+
+
+  }
+
+
+  ///////////////////////////// MultiChart /////////////
+
+
+
+
+
 
 }

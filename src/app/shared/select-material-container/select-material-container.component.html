@@ -9,6 +9,7 @@
 	[multiple]="multiple"
   [placeholder]="placeholder"
   [hideSelected]="true"
+  [virtualScroll]="true"
 
   (change)="onChange($event)"
   (add)="onAdd($event)"
@@ -17,10 +18,9 @@
   (clear)="onClear()"
   (open)="onOpen()"
 
-  [virtualScroll]="true"
-
-  [(ngModel)]="selectedValue"	
  
+
+  [(ngModel)]="selectedValue"	 
   [(typeahead)]="input$" 
   
 

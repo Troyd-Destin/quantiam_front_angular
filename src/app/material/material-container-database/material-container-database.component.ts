@@ -180,7 +180,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
       'aggridActiveParentComponent': AggridActiveParentComponent,
     };
 
-   
+
 
   }
 
@@ -213,7 +213,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         console.log('fetched?');
 
       }
-      
+
 
   });
 

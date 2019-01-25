@@ -28,6 +28,7 @@ import { SelectExperimentComponent } from './select-experiment/select-experiment
 import { SelectMaterialContainerComponent } from './select-material-container/select-material-container.component';
 import { SelectSampleComponent } from './select-sample/select-sample.component';
 import { SelectExperimentTypeComponent } from './select-experiment-type/select-experiment-type.component';
+import { SelectTgarunComponent } from './select-tgarun/select-tgarun.component';
 
 @NgModule({
   imports: [
@@ -53,7 +54,8 @@ import { SelectExperimentTypeComponent } from './select-experiment-type/select-e
     SelectExperimentComponent,
     SelectMaterialContainerComponent,
     SelectSampleComponent,
-    SelectExperimentTypeComponent],
+    SelectExperimentTypeComponent,
+    SelectTgarunComponent],
   exports: [
     Select2MaterialComponent,
     Select2MaterialLotComponent,
@@ -64,7 +66,8 @@ import { SelectExperimentTypeComponent } from './select-experiment-type/select-e
     SelectUserComponent,
     SelectExperimentComponent,
     SelectMaterialContainerComponent,
-    SelectSampleComponent
+    SelectSampleComponent,
+    SelectTgarunComponent
 
   ],
   schemas: [NO_ERRORS_SCHEMA]
