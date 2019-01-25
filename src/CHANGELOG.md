@@ -1,7 +1,12 @@
 ## 19.1.0
-### Fixes
-   - Auth screen no longer locks you out when you fail your password.
-   - Materials screen now preserves itself when navigating around. 
+
+### Misc
+   -  Auth screen no longer locks you out when you fail your password.
+
+### Materials / Containers
+   
+   **[Feature]** Materials screen now preserves itself when navigating around. 
+   **[Feature]** You can now delete containers, after deleting one you are redirected to the database and the table refreshed
 
 ### TGA
    **[Feature]** TGA Peak Tool for SGX analysis added   

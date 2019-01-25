@@ -5,7 +5,7 @@ import { MaterialService } from '../../services/material/material.service';
 import { MaterialSupplierService } from '../../services/material-supplier/material-supplier.service';
 import { LocationService } from '../../services/location/location.service';
 import * as moment from 'moment';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-material-container-view',
@@ -34,6 +34,7 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 	private materialSupplierService: MaterialSupplierService,
 	private route: ActivatedRoute,
 	private locationService: LocationService,
+	private router: Router,
 
 	) { }
 
@@ -210,7 +211,22 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 
 		});
 
-  }
+	}
+
+
+	deleteContainer() {
+
+
+		confirm('Are you sure you want to delete this container?'); {
+			this.materialLotCotainerService.delete(this.container.id).subscribe(r => {
+
+							this.router.navigate(['/material/container/database'], {queryParams: { refreshTable: true}});
+
+			});
+
+		}
+
+	}
 
 
 

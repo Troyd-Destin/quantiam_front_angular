@@ -1,6 +1,6 @@
 import {  AfterViewInit,  Component,  OnInit,  ViewChild} from '@angular/core';
 import {  HttpClient,  HttpResponse} from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import {  MaterialLotContainerDatatableService} from '../services/material-lot-container-datatable.service';
 import { MaterialLotContainerService } from '../../services/material-lot-container/material-lot-container.service';
@@ -43,7 +43,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
   private editableContainerCellFields = ['location', 'purchase_order', 'qcid', 'container_name', 'container_number'];
 
 
-  constructor(private http: HttpClient, public router: Router, public containerAggridService: ContainerAggridService,	private locationService: LocationService, private materialLotContainerService: MaterialLotContainerService ) {
+  constructor(private http: HttpClient, public router: Router, private route: ActivatedRoute, public containerAggridService: ContainerAggridService,	private locationService: LocationService, private materialLotContainerService: MaterialLotContainerService ) {
 
   this.locationList = [];
 
@@ -180,7 +180,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
       'aggridActiveParentComponent': AggridActiveParentComponent,
     };
 
-
+   
 
   }
 
@@ -202,6 +202,20 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         }
 
     });
+
+    this.route.queryParams.subscribe((queryParams: any) => {
+
+      console.log(queryParams);
+
+      if(queryParams.refreshTable == "true"){
+
+        this.fetchTableData();
+        console.log('fetched?');
+
+      }
+      
+
+  });
 
 
   }
