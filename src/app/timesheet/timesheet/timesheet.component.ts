@@ -44,8 +44,8 @@ export class TimesheetComponent implements OnInit {
     pinned: 'left',
     sortable: true,
     field: 'project.description',
-   
-    
+
+
     cellRendererParams: {
       suppressCount: true,
      // checkbox: true,
@@ -57,15 +57,15 @@ export class TimesheetComponent implements OnInit {
       innerRenderer: function(params) {
         console.log(params);
 
-        if(params.node.group){
+        if (params.node.group) {
 
-            return ''+params.value+'';
+            return '' + params.value + '';
         }
 
         return '<b style="display: inline-block;">' + params.data.project.projectID + '</b>\
-         - <p style="display: inline-block; font-size:11px;">'+ params.value + '</p>';
+         - <p style="display: inline-block; font-size:11px;">' + params.value + '</p>';
       },
-     
+
     }
   };
 
@@ -76,8 +76,8 @@ export class TimesheetComponent implements OnInit {
       field: 'category.categoryName',
       width: 120,
       rowGroup: true,
-      
-      //cellRenderer: "agGroupCellRenderer",
+
+      // cellRenderer: "agGroupCellRenderer",
      // columnGroupShow: false,
      // marryChildren: true,
      // headerGroupTooltip: 'test tool tip',
@@ -90,7 +90,7 @@ export class TimesheetComponent implements OnInit {
        width: 90,
        suppressMenu: true,
        lockPosition: true,
-       
+
      //  columnGroupShow: false,
       // rowGroup: true,
        hide: true,
@@ -127,9 +127,9 @@ export class TimesheetComponent implements OnInit {
 
   }
 
-   onCellDoubleClicked($event){}
-   onCellEditingStopped($event){}
-   onCellEditingStarted($event){}
+   onCellDoubleClicked($event) {}
+   onCellEditingStopped($event) {}
+   onCellEditingStarted($event) {}
 
 
   fetchTimesheet() {
@@ -196,18 +196,17 @@ export class TimesheetComponent implements OnInit {
 
       // identify if weekend
 
-      let headerDate = moment(date).format('ddd DD');
-      let day = moment(date).format('ddd');
+      const headerDate = moment(date).format('ddd DD');
+      const day = moment(date).format('ddd');
 
-      let cellStyle = {};
+      const cellStyle = {};
 
-      if(day == 'Sun' || day == 'Sat')
-      {
+      if (day === 'Sun' || day === 'Sat') {
         cellStyle['background-color'] = '#E8F2FF';
       }
 
 
-      const  obj:any = {
+      const  obj: any = {
         headerName: headerDate,
         field: date,
         suppressMenu: true,
@@ -217,8 +216,8 @@ export class TimesheetComponent implements OnInit {
         type: 'numericColumn',
         timesheet_type: 'hours_field',
       tooltip: function (params) {
-        
-        if(params.node.group) return null;
+
+        if (params.node.group) { return null; }
         console.log(params);
         return params.data.project.projectID;
        // return (params.data.project.projectID);
@@ -241,12 +240,12 @@ export class TimesheetComponent implements OnInit {
       this.columnDefs.push(obj);
       // if day 7 push empty obj
       if (i === 6) {
-        const emptyCol:any = {
+        const emptyCol: any = {
           width: 40,
           headerName: ' ',
           field: null,
           lockPosition: true,
-          suppressMenu:true,
+          suppressMenu: true,
           resizable: false,
         };
         this.columnDefs.push(emptyCol);

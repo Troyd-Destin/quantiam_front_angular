@@ -57,7 +57,8 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 	  this.route.queryParams.subscribe((p: any) => {
 
 
-			  this.scannerNavigation = p['scannerNavigation'];
+				this.scannerNavigation = p['scannerNavigation'];
+				
 
 	  });
 
