@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
+import HC_exporting from 'highcharts/modules/exporting';
+HC_exporting(Highcharts);
+
  import * as SavitzkyGolay from 'ml-savitzky-golay';
 
 import { environment } from '../../../environments/environment';
@@ -77,18 +80,22 @@ export class TgaPeakSelectionToolComponent implements OnInit {
 
  renderMultiChart = false;
  multiUpdateFlag = false;
- 
+
  multiChartOptions = {
   chart: {
 
     zoomType: 'xy',
   },
+  exporting: {
+
+    enabled: true,
+  },
   tooltip: { enabled: false },
   series: [],
-  plotOptions:{
+  plotOptions: {
 
-    spline:{
-       marker:{
+    spline: {
+       marker: {
          enabled: false,
        }
     }
@@ -262,7 +269,7 @@ export class TgaPeakSelectionToolComponent implements OnInit {
 
                 newPoint.x = parseFloat(point.temperature);
                 newPoint.y = parseFloat(point['% / C']);
-                
+
 
                 seriesObj.data.push(newPoint);
 
@@ -464,9 +471,8 @@ export class TgaPeakSelectionToolComponent implements OnInit {
   changeTgaRun(event) {
     this.selectedTgaRuns = event;
     console.log(event);
-    if(event.length === 1 && this.renderChart === true)
-    {
-      //console.log(event);
+    if (event.length === 1 && this.renderChart === true) {
+      // console.log(event);
       this.fetchTgaRun(event[0].name);
 
     }
@@ -524,7 +530,7 @@ export class TgaPeakSelectionToolComponent implements OnInit {
          object.splice(i, 1 );
        }
 
-       
+
     });
 
 
@@ -538,10 +544,10 @@ export class TgaPeakSelectionToolComponent implements OnInit {
 
   //  this.multiChartOptions.title.text = 'test';
 
- setTimeout((r)=>{
+ setTimeout((r) => {
 
   this.renderMultiChart = true;
- },300);  
+ }, 300);
 
    /// console.log(this.storedTgaRuns);
 
