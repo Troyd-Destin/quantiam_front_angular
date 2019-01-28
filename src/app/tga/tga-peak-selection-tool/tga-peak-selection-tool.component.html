@@ -71,22 +71,85 @@
     </div>
   </div>
 
-  <div *ngIf="selectedTgaRuns.length > 1">
+  <div *ngIf="selectedTgaRuns.length > 1" fxLayout="row">
    
- 
-          <highcharts-chart 
-            *ngIf="renderMultiChart"
-            [Highcharts]="Highcharts"
-            [options]="multiChartOptions"
-            [callbackFunction]="multiChartRender()"
-            [(update)]="multiUpdateFlag"
-           
-    
-            style="width: 100%; height: 500px; display: block;"
-          ></highcharts-chart>
-          <!-- {{multiUpdateFlag}} -->
-          <p>Loaded {{storedTgaRuns.length}} Files </p>
 
+            <mat-slider
+            id="min_slider"
+            class=""
+            [disabled]="false"
+            [invert]="false"
+            [max]="multiYaxisMaxCeiling"
+            [min]="multiYaxisMinFloor"
+            [step]="0.005"
+            [thumbLabel]="true"
+            [tickInterval]="2"
+            [(ngModel)]="multiYaxisMin"
+            [vertical]="true"
+            (change)="changeMultiYaxis()"
+            >
+         </mat-slider>
+    
+          <mat-slider
+          id="max slider"
+          [disabled]="false"
+          [invert]="false"
+          [max]="multiYaxisMaxCeiling"
+          [min]="multiYaxisMinFloor"
+          [step]="0.005"
+          [thumbLabel]="true"
+          [tickInterval]="2"
+          [(ngModel)]="multiYaxisMax"
+          [vertical]="true"
+          (change)="changeMultiYaxis()"
+          >
+             </mat-slider>
+
+         
+
+          <div fxLayout="column" fxFlex=100>
+ 
+            <highcharts-chart 
+              *ngIf="renderMultiChart"
+              [Highcharts]="Highcharts"
+              [options]="multiChartOptions"
+              [callbackFunction]="multiChartRender()"
+              [(update)]="multiUpdateFlag"
+            
+      
+              style="width: 100%; height: 500px; display: block;"
+            ></highcharts-chart>
+
+            <mat-slider
+              class=""
+              [disabled]="false"
+              [max]="multiXaxisMaxCeiling"
+              [min]="multiXaxisMinFloor"
+              [step]="10"
+              [thumbLabel]="true"
+              [tickInterval]="2"
+              [(ngModel)]="multiXaxisMax"
+              (change)="changeMultiXaxis()" 
+            >
+               </mat-slider>
+
+               <mat-slider
+              class=""
+              [invert]="false"
+              [disabled]="false"
+              [max]="multiXaxisMaxCeiling"
+              [min]="multiXaxisMinFloor"
+              [step]="10"
+              [thumbLabel]="true"
+              [tickInterval]="2"
+              [(ngModel)]="multiXaxisMin"
+              (change)="changeMultiXaxis()"
+            >
+               </mat-slider>
+
+            <!-- {{multiUpdateFlag}} -->
+            <p>Loaded {{storedTgaRuns.length}} Files </p>
+        </div>
   </div>
 
   

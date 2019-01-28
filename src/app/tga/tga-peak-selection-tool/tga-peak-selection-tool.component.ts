@@ -22,6 +22,21 @@ import { splitClasses } from '@angular/compiler';
 })
 export class TgaPeakSelectionToolComponent implements OnInit {
 
+
+  // sliders
+  multiXaxisMax = 1020;
+  multiXaxisMin = 320;
+  multiYaxisMax = 0.1;
+  multiYaxisMin = -0.1;
+
+  multiXaxisMinFloor = this.multiXaxisMin-50;
+  multiXaxisMaxCeiling = this.multiXaxisMax+50;
+
+  multiYaxisMaxCeiling = this.multiYaxisMax+0.1;
+  multiYaxisMinFloor = this.multiYaxisMin-0.1;
+
+  //
+
   TgaFileList = [];
   selectedTgaRuns = [];
   selectedFileIndex = 1;
@@ -110,17 +125,22 @@ export class TgaPeakSelectionToolComponent implements OnInit {
     title: {
       text: 'd(%) / d(c)'
     },
+    max: null,
+    min: null,
+    maxPadding: 0.05,
+    minPadding: 0.05,
   },
   ],
-  xAxis:[
+  xAxis: [
     {
-      title:{
+      title: {
 
-        text:'Temperature (C)',
-      } ,
-    resize: {
-      enabled: true
-    }
+        text: 'Temperature (C)',
+      },
+      max: 1100,
+      min: 250,
+      maxPadding: 50,
+      minPadding: 50,
 
     }
 
@@ -576,6 +596,24 @@ export class TgaPeakSelectionToolComponent implements OnInit {
 
 
 
+  /// Slider Controls
 
+  changeMultiXaxis()
+  {
+    this.multiChartOptions.xAxis[0].max = this.multiXaxisMax;
+    this.multiChartOptions.xAxis[0].min = this.multiXaxisMin;
+    this.multiUpdateFlag = true; // Update Chart
+
+    console.log(this.multiXaxisMax);
+
+  }
+
+  changeMultiYaxis()
+  {
+    this.multiChartOptions.yAxis[0].max = this.multiYaxisMax;
+    this.multiChartOptions.yAxis[0].min = this.multiYaxisMin;
+    this.multiUpdateFlag = true; // Update Chart
+
+  }
 
 }
