@@ -28,12 +28,8 @@ export class TgaPeakSelectionToolComponent implements OnInit {
   multiXaxisMin = 320;
   multiYaxisMax = 0.1;
   multiYaxisMin = -0.1;
+  pointIntervalDisplayed = 10;
 
-  multiXaxisMinFloor = this.multiXaxisMin-50;
-  multiXaxisMaxCeiling = this.multiXaxisMax+50;
-
-  multiYaxisMaxCeiling = this.multiYaxisMax+0.1;
-  multiYaxisMinFloor = this.multiYaxisMin-0.1;
 
   //
 
@@ -297,8 +293,10 @@ export class TgaPeakSelectionToolComponent implements OnInit {
               };
 
 
-              TgaRun.steps[i].data.forEach((point) => {
+              TgaRun.steps[i].data.forEach((point,index) => {
 
+                if(index === 0 || (index % this.pointIntervalDisplayed) === 0)
+                {
                 const newPoint = {x: null, y: null, marker: { enabled: false }};
 
 
@@ -307,7 +305,7 @@ export class TgaPeakSelectionToolComponent implements OnInit {
 
 
                 seriesObj.data.push(newPoint);
-
+                }
 
 
               });
@@ -604,7 +602,7 @@ export class TgaPeakSelectionToolComponent implements OnInit {
     this.multiChartOptions.xAxis[0].min = this.multiXaxisMin;
     this.multiUpdateFlag = true; // Update Chart
 
-    console.log(this.multiXaxisMax);
+    console.log(this.multiXaxisMax,event);
 
   }
 

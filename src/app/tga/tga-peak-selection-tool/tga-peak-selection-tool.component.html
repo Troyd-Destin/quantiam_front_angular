@@ -74,36 +74,6 @@
   <div *ngIf="selectedTgaRuns.length > 1" fxLayout="row">
    
 
-            <mat-slider
-            id="min_slider"
-            class=""
-            [disabled]="false"
-            [invert]="false"
-            [max]="multiYaxisMaxCeiling"
-            [min]="multiYaxisMinFloor"
-            [step]="0.005"
-            [thumbLabel]="true"
-            [tickInterval]="2"
-            [(ngModel)]="multiYaxisMin"
-            [vertical]="true"
-            (change)="changeMultiYaxis()"
-            >
-         </mat-slider>
-    
-          <mat-slider
-          id="max slider"
-          [disabled]="false"
-          [invert]="false"
-          [max]="multiYaxisMaxCeiling"
-          [min]="multiYaxisMinFloor"
-          [step]="0.005"
-          [thumbLabel]="true"
-          [tickInterval]="2"
-          [(ngModel)]="multiYaxisMax"
-          [vertical]="true"
-          (change)="changeMultiYaxis()"
-          >
-             </mat-slider>
 
          
 
@@ -120,35 +90,34 @@
               style="width: 100%; height: 500px; display: block;"
             ></highcharts-chart>
 
-            <mat-slider
-              class=""
-              [disabled]="false"
-              [max]="multiXaxisMaxCeiling"
-              [min]="multiXaxisMinFloor"
-              [step]="10"
-              [thumbLabel]="true"
-              [tickInterval]="2"
-              [(ngModel)]="multiXaxisMax"
-              (change)="changeMultiXaxis()" 
-            >
-               </mat-slider>
-
-               <mat-slider
-              class=""
-              [invert]="false"
-              [disabled]="false"
-              [max]="multiXaxisMaxCeiling"
-              [min]="multiXaxisMinFloor"
-              [step]="10"
-              [thumbLabel]="true"
-              [tickInterval]="2"
-              [(ngModel)]="multiXaxisMin"
-              (change)="changeMultiXaxis()"
-            >
-               </mat-slider>
+         
 
             <!-- {{multiUpdateFlag}} -->
-            <p>Loaded {{storedTgaRuns.length}} Files </p>
+           
+
+            <div class="example-form" fxLayout="row" fxLayoutGap="10px">
+                <mat-form-field class="example-full-width">
+                  <input matInput   type="number" step="0.005" placeholder="Y Axis Min" [(ngModel)]="multiYaxisMin" (change)="changeMultiYaxis()" >
+                </mat-form-field>
+              
+                <mat-form-field  class="example-full-width">
+                  <input matInput   type="number" step="0.005" placeholder="Y Axis Max"  [(ngModel)]="multiYaxisMax" (change)="changeMultiYaxis()">
+                </mat-form-field>
+
+                <mat-form-field   class="example-full-width">
+                    <input matInput type="number" step="10" placeholder="X Axis Min"  [(ngModel)]="multiXaxisMin" (change)="changeMultiXaxis()">
+                  </mat-form-field>
+
+                  <mat-form-field   class="example-full-width">
+                      <input matInput type="number" step="10" placeholder="X Axis Max"  [(ngModel)]="multiXaxisMax" (change)="changeMultiXaxis()">
+                    </mat-form-field>
+                  <mat-form-field   class="example-full-width">
+                      <input matInput type="number"  placeholder="Displayed Internval"  [(ngModel)]="pointIntervalDisplayed" (blur)="updateMultiHighchartObj()">
+                      <mat-hint>Interval between displayed points and raw data.</mat-hint>
+                    </mat-form-field>
+              </div>
+
+              <p>Loaded {{storedTgaRuns.length}} Files </p>
         </div>
   </div>
 
