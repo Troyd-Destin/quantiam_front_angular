@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import HC_exporting from 'highcharts/modules/exporting';
 HC_exporting(Highcharts);
+import HC_dragPanes from 'highcharts/modules/drag-panes';
+HC_dragPanes(Highcharts);
 
  import * as SavitzkyGolay from 'ml-savitzky-golay';
 
@@ -87,10 +89,10 @@ export class TgaPeakSelectionToolComponent implements OnInit {
     zoomType: 'xy',
   },
   exporting: {
-
+    url: 'http://192.168.1.179:7801',
     enabled: true,
   },
-  tooltip: { enabled: false },
+ // tooltip: { enabled: false },
   series: [],
   plotOptions: {
 
@@ -108,11 +110,21 @@ export class TgaPeakSelectionToolComponent implements OnInit {
     title: {
       text: 'd(%) / d(c)'
     },
+  },
+  ],
+  xAxis:[
+    {
+      title:{
+
+        text:'Temperature (C)',
+      } ,
     resize: {
       enabled: true
     }
-  },
-  ],
+
+    }
+
+  ]
 
 };
 
@@ -251,10 +263,13 @@ export class TgaPeakSelectionToolComponent implements OnInit {
 
             // console.log(step);
 
+              const SGX_name = TgaRun.Procedure.comments.match(/(SGX)\w+/g);
+              console.log(SGX_name);
+
               /// Derivative
               const seriesObj = {
 
-                name: TgaRun.filename,
+                name: SGX_name[0] + ' (' + TgaRun.filename + ')',
                 type: 'spline',
                 // yAxis: 0,
                 turboThreshold: 0,
