@@ -1,7 +1,7 @@
-<div fxLayout="column" fxLayoutGap="50px">
+<div fxLayout="column" fxLayoutGap="50px" >
 
 
-    <div fxLayout="row" fxFlex>
+    <div fxLayout="row" fxFlex >
 
       <app-select-tgarun
 
@@ -19,7 +19,11 @@
       <div *ngIf="selectedTgaRuns.length == 1 && TgaRun?.filename">
       <!-- <button mat-button *ngIf="selectedFileIndex != 0" (click)="previousRun()">Previous</button>
       <button mat-button *ngIf="selectedFileIndex < TgaFileList.length"(click)="nextRun()">Next</button> -->
+     
     </div>
+
+    <button mat-button > {{storedTgaRuns.length}} Files </button>
+    
   </div>
 
   <div *ngIf="TgaRun?.filename && selectedTgaRuns.length == 1">
@@ -94,30 +98,91 @@
 
             <!-- {{multiUpdateFlag}} -->
            
+            <mat-tab-group *ngIf="storedTgaRuns[1]?.filename">
+               
+             
 
-            <div class="example-form" fxLayout="row" fxLayoutGap="10px">
-                <mat-form-field class="example-full-width">
-                  <input matInput   type="number" step="0.005" placeholder="Y Axis Min" [(ngModel)]="multiYaxisMin" (change)="changeMultiYaxis()" >
-                </mat-form-field>
-              
-                <mat-form-field  class="example-full-width">
-                  <input matInput   type="number" step="0.005" placeholder="Y Axis Max"  [(ngModel)]="multiYaxisMax" (change)="changeMultiYaxis()">
-                </mat-form-field>
+                <mat-tab label="Controls">  
+                    <div class="example-form" fxLayout="row" fxLayoutGap="10px" style="margin-top:20px; height:200px; margin-left:20px;">
+                        <mat-form-field class="example-full-width">
+                          <input matInput   type="number" step="0.005" placeholder="Y Axis Min" [(ngModel)]="multiYaxisMin" (change)="changeMultiYaxis()" >
+                        </mat-form-field>
+                      
+                        <mat-form-field  class="example-full-width">
+                          <input matInput   type="number" step="0.005" placeholder="Y Axis Max"  [(ngModel)]="multiYaxisMax" (change)="changeMultiYaxis()">
+                        </mat-form-field>
+        
+                        <mat-form-field   class="example-full-width">
+                            <input matInput type="number" step="10" placeholder="X Axis Min"  [(ngModel)]="multiXaxisMin" (change)="changeMultiXaxis()">
+                          </mat-form-field>
+        
+                          <mat-form-field   class="example-full-width">
+                              <input matInput type="number" step="10" placeholder="X Axis Max"  [(ngModel)]="multiXaxisMax" (change)="changeMultiXaxis()">
+                            </mat-form-field>
+                          <mat-form-field   class="example-full-width">
+                              <input matInput type="number"  placeholder="Displayed Internval"  [(ngModel)]="pointIntervalDisplayed" (blur)="updateMultiHighchartObj()">
+                              <mat-hint>Interval between displayed points and raw data.</mat-hint>
+                            </mat-form-field>
+                      </div>
 
-                <mat-form-field   class="example-full-width">
-                    <input matInput type="number" step="10" placeholder="X Axis Min"  [(ngModel)]="multiXaxisMin" (change)="changeMultiXaxis()">
-                  </mat-form-field>
 
-                  <mat-form-field   class="example-full-width">
-                      <input matInput type="number" step="10" placeholder="X Axis Max"  [(ngModel)]="multiXaxisMax" (change)="changeMultiXaxis()">
-                    </mat-form-field>
-                  <mat-form-field   class="example-full-width">
-                      <input matInput type="number"  placeholder="Displayed Internval"  [(ngModel)]="pointIntervalDisplayed" (blur)="updateMultiHighchartObj()">
-                      <mat-hint>Interval between displayed points and raw data.</mat-hint>
-                    </mat-form-field>
-              </div>
+                </mat-tab>
+                <mat-tab label="Selected Runs" fxLayout="row" >
 
-              <p>Loaded {{storedTgaRuns.length}} Files </p>
+                    <table mat-table  [dataSource]='tableDataSource'  style="width:95%;  margin-left:20px;"> 
+                      <!-- Position Column -->
+                        <ng-container matColumnDef="filename">
+                            <th mat-header-cell *matHeaderCellDef> Run </th>
+                            <td mat-cell *matCellDef="let element"> {{element.filename}} </td>
+                          </ng-container>
+                        <ng-container matColumnDef="comments">
+                            <th mat-header-cell *matHeaderCellDef> Sample Name </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Procedure.comments}} </td>
+                          </ng-container>
+  
+                          <!-- Position Column -->
+                          <ng-container matColumnDef="steps">
+                              <th mat-header-cell *matHeaderCellDef> Steps </th>
+                              <td mat-cell *matCellDef="let element"> {{element.steps.length}} </td>
+                            </ng-container>
+  
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="peaks">
+                            <th mat-header-cell *matHeaderCellDef> Peaks Identified </th>
+                            <td mat-cell *matCellDef="let element"> {{element.peaks.length}} </td>
+                          </ng-container>
+  
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="rundate">
+                            <th mat-header-cell *matHeaderCellDef> Run Date </th>
+                            <td mat-cell *matCellDef="let element"> {{element.rundate}} </td>
+                          </ng-container>
+  
+                          <ng-container matColumnDef="file_download">
+                              <th mat-header-cell *matHeaderCellDef> Export </th>
+                              <td mat-cell *matCellDef="let element"> 
+                                
+                                <button  (click)="downloadTgaJsonFile(element.url,element.filename)" mat-button>
+                                   Export 
+                                </button>
+                                
+  
+  
+                              </td>
+                            </ng-container>
+  
+  
+                      <tr mat-header-row *matHeaderRowDef="['filename','comments','steps','peaks','rundate','file_download']"></tr>
+                      <tr mat-row *matRowDef="let row; columns: ['filename','comments','steps','peaks','rundate','file_download'];"></tr>
+                    </table>
+  
+                  </mat-tab>
+              </mat-tab-group>
+           
+
+         
+
+          
         </div>
   </div>
 

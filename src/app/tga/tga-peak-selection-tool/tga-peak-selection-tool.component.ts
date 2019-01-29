@@ -1,19 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,  } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import HC_exporting from 'highcharts/modules/exporting';
 HC_exporting(Highcharts);
 import HC_dragPanes from 'highcharts/modules/drag-panes';
 HC_dragPanes(Highcharts);
 
+import { MatTableDataSource } from '@angular/material/table';
  import * as SavitzkyGolay from 'ml-savitzky-golay';
 
 import { environment } from '../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient  } from '@angular/common/http';
 import { TgaRunService } from '../services/tga-run.service';
 import { NotificationsService } from 'angular2-notifications';
 import { RendererAnimationPlayer } from '@angular/platform-browser/animations/src/animation_builder';
 import { NgMultiLabelTemplateDirective } from '@ng-select/ng-select/ng-select/ng-templates.directive';
 import { splitClasses } from '@angular/compiler';
+import { DomSanitizerImpl, DomSanitizer } from '@angular/platform-browser/src/security/dom_sanitization_service';
 
 @Component({
   selector: 'app-tga-peak-selection-tool',
@@ -33,6 +35,8 @@ export class TgaPeakSelectionToolComponent implements OnInit {
 
   //
 
+  tableDataSource = new MatTableDataSource<any>();
+
   TgaFileList = [];
   selectedTgaRuns = [];
   selectedFileIndex = 1;
@@ -43,6 +47,7 @@ export class TgaPeakSelectionToolComponent implements OnInit {
   previousSelectedTgaRuns = [];
   tgaRunsToLoad = [];
   tgaRunsLoaded = 0;
+  loading;
 
   firstRunLoaded = false;
   renderChart = false;
@@ -280,7 +285,8 @@ export class TgaPeakSelectionToolComponent implements OnInit {
             // console.log(step);
 
               const SGX_name = TgaRun.Procedure.comments.match(/(SGX)\w+/g);
-              console.log(SGX_name);
+              // const chemicals = TgaRun.Procedure.comments.match(/[A-Z][a-z]?\d*|\((?:[^()]*(?:\(.*\))?[^()]*)+\)\d+/g);
+              // console.log(chemicals);
 
               /// Derivative
               const seriesObj = {
@@ -293,10 +299,9 @@ export class TgaPeakSelectionToolComponent implements OnInit {
               };
 
 
-              TgaRun.steps[i].data.forEach((point,index) => {
+              TgaRun.steps[i].data.forEach((point, index) => {
 
-                if(index === 0 || (index % this.pointIntervalDisplayed) === 0)
-                {
+                if (index === 0 || (index % this.pointIntervalDisplayed) === 0) {
                 const newPoint = {x: null, y: null, marker: { enabled: false }};
 
 
@@ -320,8 +325,9 @@ export class TgaPeakSelectionToolComponent implements OnInit {
 
 
       this.multiUpdateFlag = true;
-      console.log(this.multiUpdateFlag);
+      // console.log(this.multiUpdateFlag);
       this.renderMultiChart = true;
+      this.tableDataSource.data = this.storedTgaRuns;
 
   }
 
@@ -530,11 +536,11 @@ export class TgaPeakSelectionToolComponent implements OnInit {
 
       const check = this.storedTgaRuns.filter((previousItem) => {
 
-        console.log(previousItem);
+       // console.log(previousItem);
          return previousItem.filename === item.name;
 
       });
-      console.log(check);
+     // console.log(check);
       if (!check[0]) { this.tgaRunsToLoad.push(item); }
 
     });
@@ -596,22 +602,53 @@ export class TgaPeakSelectionToolComponent implements OnInit {
 
   /// Slider Controls
 
-  changeMultiXaxis()
-  {
+  changeMultiXaxis() {
     this.multiChartOptions.xAxis[0].max = this.multiXaxisMax;
     this.multiChartOptions.xAxis[0].min = this.multiXaxisMin;
     this.multiUpdateFlag = true; // Update Chart
 
-    console.log(this.multiXaxisMax,event);
+    console.log(this.multiXaxisMax, event);
 
   }
 
-  changeMultiYaxis()
-  {
+  changeMultiYaxis() {
     this.multiChartOptions.yAxis[0].max = this.multiYaxisMax;
     this.multiChartOptions.yAxis[0].min = this.multiYaxisMin;
     this.multiUpdateFlag = true; // Update Chart
 
   }
+
+
+  downloadTgaJsonFile(url, name) {
+    return this.http
+    .get(url, { })
+    .subscribe(res => {
+
+     
+      const jsonStr = JSON.stringify(res);
+
+
+      const a = document.createElement('a');
+      const blob = new Blob([jsonStr], {type: 'text/json' }),
+      url2 = window.URL.createObjectURL(blob);
+
+      a.href = url2;
+      a.download = name + '.json';
+      a.click();
+      window.URL.revokeObjectURL(url2);
+      a.remove();
+
+      }, error => {
+        console.log('download error:', JSON.stringify(error));
+      }, () => {
+        console.log('Completed file download.');
+      });
+  }
+
+  
+
+
+
+
 
 }

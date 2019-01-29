@@ -17,9 +17,14 @@
 		  <input [disabled]="loginHappening" matInput placeholder="Quantiam Password" [type]="hidePassword ? 'password' : 'text'" #password>
 		  <mat-icon style="cursor:pointer;" matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
 	  </mat-form-field>
-	  <input  type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
+		<input  type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
+		<div fxLayout="row" fxLayoutAlign="end center">
+
+			<button mat-button> Login </button>
+		</div>
 	</form>
-	
+
+
  <!--  <mat-form-field>
     <mat-select placeholder="Select">
       <mat-option value="option">Option</mat-option>
