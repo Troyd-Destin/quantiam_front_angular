@@ -135,8 +135,13 @@
                             <th mat-header-cell *matHeaderCellDef> Run </th>
                             <td mat-cell *matCellDef="let element"> {{element.filename}} </td>
                           </ng-container>
+                      <!-- Position Column -->
+                        <ng-container matColumnDef="sample">
+                            <th mat-header-cell *matHeaderCellDef> Sample </th>
+                            <td mat-cell *matCellDef="let element"> {{element.sample}} </td>
+                          </ng-container>
                         <ng-container matColumnDef="comments">
-                            <th mat-header-cell *matHeaderCellDef> Sample Name </th>
+                            <th mat-header-cell *matHeaderCellDef> Comments </th>
                             <td mat-cell *matCellDef="let element"> {{element.Procedure.comments}} </td>
                           </ng-container>
   
