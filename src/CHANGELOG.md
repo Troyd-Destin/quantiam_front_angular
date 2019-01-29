@@ -3,6 +3,7 @@
 ### Misc
 -  Auth screen no longer locks you out when you fail your password.
 -  Updated to Angular 7.2
+-  Login button now visible
 
 ### Materials / Containers
    
@@ -12,6 +13,8 @@
 
 ### TGA
 - TGA Peak Tool for SGX analysis added   
+- Peak Tool: Added a table to show selected runs, ability to export raw data
+- Peak Tool: Added basic graph controls to multi graph mode
 
 
 

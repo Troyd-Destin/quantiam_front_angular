@@ -128,8 +128,8 @@
 
                 </mat-tab>
                 <mat-tab label="Selected Runs" fxLayout="row" >
-
-                    <table mat-table  [dataSource]='tableDataSource'  style="width:95%;  margin-left:20px;"> 
+                  <div style="padding: 0px 20px 0px 20px;">
+                    <table mat-table  [dataSource]='tableDataSource'  style="width:100%;"> 
                       <!-- Position Column -->
                         <ng-container matColumnDef="filename">
                             <th mat-header-cell *matHeaderCellDef> Run </th>
@@ -175,7 +175,7 @@
                       <tr mat-header-row *matHeaderRowDef="['filename','comments','steps','peaks','rundate','file_download']"></tr>
                       <tr mat-row *matRowDef="let row; columns: ['filename','comments','steps','peaks','rundate','file_download'];"></tr>
                     </table>
-  
+                    </div>
                   </mat-tab>
               </mat-tab-group>
            
