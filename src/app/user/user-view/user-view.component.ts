@@ -62,6 +62,7 @@ export class UserViewComponent implements OnInit, OnDestroy {
     {headerName: 'Updated', field: 'updated_at',   },
     {
 
+    hide: !(this.userService.hasPermission(39)),
     field: 'created_at',
     headerName: 'Delete',
     editable: false,
@@ -94,6 +95,7 @@ export class UserViewComponent implements OnInit, OnDestroy {
     },
     sortable: false,
     dragable: false,
+    resizable: false,
 
   };
 

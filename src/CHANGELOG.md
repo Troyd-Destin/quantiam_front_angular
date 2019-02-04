@@ -3,6 +3,8 @@
 ### TGA
 - Peak tool now has "previous" and "next" buttons for navigating single runs easier
 
+### Users
+- Can now create and delete RTO Allotments on the user view screen
 
 ## [19.1.0] January 2019
 
