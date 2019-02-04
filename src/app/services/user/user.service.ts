@@ -111,7 +111,7 @@ export class UserService  {
  }
 
   updateRtoAllotment(id, obj) {
-    return this.http.put<any>(environment.apiUrl + `/rto/allocation/${id}`, obj).pipe(
+    return this.http.put<any>(environment.apiUrl + `/rto/allocation/${id}` + '?filterSpinner', obj).pipe(
       tap( r => {
 
         }),

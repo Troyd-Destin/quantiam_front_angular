@@ -2,3 +2,18 @@ ng-select {
 
 width:100% !important;
 }
+
+/deep/ .mat-tab-body-wrapper{
+
+    padding:15px !important;
+}
+
+/deep/ .mat-tab-body-content {
+
+    overflow: hidden !important;
+}
+
+/deep/ .mat-tab-body.mat-tab-body-active {
+
+    overflow: hidden !important;
+}

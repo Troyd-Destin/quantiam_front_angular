@@ -55,11 +55,32 @@ export class UserViewComponent implements OnInit, OnDestroy {
 
   private rtoColumnDefs = [
 
-    {headerName: 'Year', field: 'year',   },
-    {headerName: 'Vacation', field: 'vacation', editable: false,   },
-    {headerName: 'PTO', field: 'pto',  editable: false,   },
+    {headerName: 'Year', field: 'year',  width: 80, },
+    {headerName: 'Vacation', field: 'vacation', editable: false, width: 120,  },
+    {headerName: 'PTO', field: 'pto',  editable: false, width: 120,  },
     {headerName: 'PPL', field: 'ppl', hide: true,  },
     {headerName: 'Updated', field: 'updated_at',   },
+    {
+
+    field: 'created_at',
+    headerName: 'Delete',
+    editable: false,
+    width: 100,
+    cellStyle: function (params) {
+      return {
+        cursor: 'pointer'
+      };
+    },
+    cellRenderer: function (params) {
+      return '<button mat-button class="mat-button mat-warn" style="color:red;">Delete</button>';
+
+
+    },
+    onCellClicked: (params) => {
+
+      this.deleteRtoAllotment(params);
+
+    }  },
 
   ];
 
@@ -71,6 +92,8 @@ export class UserViewComponent implements OnInit, OnDestroy {
         cursor: 'pointer',
       };
     },
+    sortable: false,
+    dragable: false,
 
   };
 
@@ -194,7 +217,7 @@ export class UserViewComponent implements OnInit, OnDestroy {
   onRtoGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-	  setTimeout(() => {  this.gridApi.sizeColumnsToFit(); }, 200);
+	//  setTimeout(() => {  this.gridApi.sizeColumnsToFit(); }, 200);
 
   }
 
@@ -227,6 +250,39 @@ export class UserViewComponent implements OnInit, OnDestroy {
     // this.rtoColumnDefs[2].type = "numericColumn";
       this.rtoColumnDefs[2].editable = true;
     }
+  }
+
+  createRtoAllotment()  {
+
+    const params = {
+      employee_id: this.user.id,
+    };
+
+    this.http.post<any>(environment.apiUrl + '/rto/allocation',params)
+    .subscribe(response => {
+      console.log(response);
+
+      this.user.rto_allotment.unshift(response);
+      this.gridApi.setRowData(this.user.rto_allotment);
+    
+    });
+
+  }
+  
+  deleteRtoAllotment(row) {
+
+   
+    confirm('Do you want to delete this Allocation?')
+    {
+      this.http.delete<any>(environment.apiUrl + '/rto/allocation/'+row.data.entry_id).subscribe((r)=>{
+
+          const index = this.user.rto_allotment.findIndex(obj => obj.entry_id === row.data.entry_id);
+          console.log(index);
+          this.user.rto_allotment.splice(index,1);
+         
+          this.gridApi.setRowData(this.user.rto_allotment);
+      });
+   }
   }
 
 

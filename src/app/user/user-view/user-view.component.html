@@ -206,202 +206,212 @@
 	
 			
 			
-			<mat-card   class='quantiam-mat-card' fxLayout="column"  >
+		<mat-card   class='quantiam-mat-card' fxLayout="column"  >
 			<mat-card-title>
 				Management
 			</mat-card-title> 
 			<mat-card-content>
-			
-				<nav mat-tab-nav-bar class="borderless">
-					<a mat-tab-link (click)="selectedTable = 'supervisors';" [class.mat-tab-link-active]="selectedTable == 'supervisors'"> Supervisors </a>
-					<a mat-tab-link (click)="selectedTable = 'rto'" [class.mat-tab-link-active]="selectedTable == 'rto'"> RTO Allotment </a>
-					<a mat-tab-link (click)="selectedTable = 'permissions'" [class.mat-tab-link-active]="selectedTable == 'permissions'"> Permissions </a>
-					<a mat-tab-link (click)="selectedTable = 'machines'" [class.mat-tab-link-active]="selectedTable == 'machines'"> Machines </a>
-					<a mat-tab-link (click)="selectedTable = 'rfid'" [class.mat-tab-link-active]="selectedTable == 'rfid'"> Key Cards </a>
+
 					
+				
+				<mat-tab-group>
+					<mat-tab label="Supervisors"> 
+
 					
-					<a mat-tab-link (click)="selectedTable = 'compensation'" [class.mat-tab-link-active]="selectedTable == 'compensation'"> Compensation </a>
-				
-				</nav>
-				
-				<div  [ngClass]="{'hidden': !(selectedTable == 'supervisors')}" >
-						<table  fxFlex style="box-shadow: none; width:100%;" mat-table [dataSource]="user.supervisors" matSort *ngIf="selectedTable == 'supervisors'" >
+								<table  fxFlex style="box-shadow: none; width:100%;" mat-table [dataSource]="user.supervisors" matSort  >
+		
+										<!--- Note that these columns can be defined in any order.
+												The actual rendered columns are set as a property on the row definition" -->
+		
+										<!-- Position Column -->
+										<ng-container matColumnDef="id">
+											<th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+											<td mat-cell *matCellDef="let element"> {{element.id}} </td>
+										</ng-container>
+		
+										<!-- Name Column -->
+										<ng-container matColumnDef="name">
+											<th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+											<td mat-cell *matCellDef="let element">  <button mat-button  routerLink="/user/{{element.id}}"> {{element.name}} </button>  </td>
+										</ng-container> 
+										<ng-container matColumnDef="title">
+											<th mat-header-cell *matHeaderCellDef> Title </th>
+											<td mat-cell *matCellDef="let element"> {{element.title}} </td>
+										</ng-container>
+		
+										
+		
+										<tr mat-header-row *matHeaderRowDef="displayedColumnsSupervisors"></tr>
+										<tr mat-row *matRowDef="let row; columns: displayedColumnsSupervisors;"></tr>
+								</table>
+					
 
-								<!--- Note that these columns can be defined in any order.
-										The actual rendered columns are set as a property on the row definition" -->
-
-								<!-- Position Column -->
-								<ng-container matColumnDef="id">
-									<th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-									<td mat-cell *matCellDef="let element"> {{element.id}} </td>
-								</ng-container>
-
-								<!-- Name Column -->
-								<ng-container matColumnDef="name">
-									<th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-									<td mat-cell *matCellDef="let element">  <button mat-button  routerLink="/user/{{element.id}}"> {{element.name}} </button>  </td>
-								</ng-container> 
-								<ng-container matColumnDef="title">
-									<th mat-header-cell *matHeaderCellDef> Title </th>
-									<td mat-cell *matCellDef="let element"> {{element.title}} </td>
-								</ng-container>
+					</mat-tab>
+					<mat-tab label="RTO">
+							<div *ngIf="userService.hasPermission(39)" fxLayout="row" fxLayoutAlign="center center" >
+									<button mat-stroked-button color="primary" (click)="createRtoAllotment()">Create</button>
 
 								
-
-								<tr mat-header-row *matHeaderRowDef="displayedColumnsSupervisors"></tr>
-								<tr mat-row *matRowDef="let row; columns: displayedColumnsSupervisors;"></tr>
-						</table>
-				</div>
-
-				<div   [ngClass]="{'hidden': !(selectedTable == 'permissions')}"  fxLayout="column"> 
-					<table fxFlex style="box-shadow: none;  width:100%;" mat-table [dataSource]="permissionTableSource" matSort *ngIf="selectedTable == 'permissions'">
-
-							<!--- Note that these columns can be defined in any order.
-									The actual rendered columns are set as a property on the row definition" -->
-
-							<!-- Position Column -->
-							<ng-container matColumnDef="permission_id">
-								<th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-								<td mat-cell *matCellDef="let element"> {{element.permission_id}} </td>
-							</ng-container> 
+							</div>
+						<div fxLayout="column" fxLayoutAlign="start center">
 							
-							<ng-container matColumnDef="permission_name">
-								<th mat-header-cell *matHeaderCellDef style="width:150px"  mat-sort-header> Name </th>
-								<td mat-cell *matCellDef="let element"> {{element.permission_name}} </td>
-							</ng-container>
-
-							<!-- Name Column -->
-							<ng-container matColumnDef="permission_description">
-								<th mat-header-cell *matHeaderCellDef> Description </th>
-								<td mat-cell *matCellDef="let element"> {{element.permission_description}} </td>
-							</ng-container> 
+						
+							<ag-grid-angular  
+					
 							
-								<ng-container matColumnDef="derived_from_group">
-								<th mat-header-cell *matHeaderCellDef> Derived </th>
-								<td mat-cell *matCellDef="let element" style="text-align: center;"> 
-									<mat-icon *ngIf="element.group_id"> group </mat-icon>
-									<mat-icon *ngIf="!element.group_id"> person </mat-icon>
+							#rto_agrid
+							style="" 
+							class="ag-theme-material"
+						
+							[rowData]="user.rto_allotment" 
+							[columnDefs]="rtoColumnDefs"
+							[enableSorting]="true"
+							[enableFilter]="true"	
+							(gridReady)="onRtoGridReady($event)"
+							(cellEditingStopped)="onRtoCellEditingStopped($event)"
+							(cellEditingStarted)="onRtoCellEditingStarted($event)"
+							[statusBar]="false"
+							[enableColResize]="true"
+							[enableRangeSelection]="true"						
+							[defaultColDef]="rtoDefaultColDef"
+
+							
+							[domLayout]='autoHeight'
+							
+							>
+						</ag-grid-angular>
+					
+						
+						</div>
+					</mat-tab>
+					<mat-tab label="Permissions">
+						
+							<table fxFlex style="box-shadow: none;  width:100%;" mat-table [dataSource]="permissionTableSource" matSort >
+		
+									<!--- Note that these columns can be defined in any order.
+											The actual rendered columns are set as a property on the row definition" -->
+		
+									<!-- Position Column -->
+									<ng-container matColumnDef="permission_id">
+										<th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+										<td mat-cell *matCellDef="let element"> {{element.permission_id}} </td>
+									</ng-container> 
 									
-								</td>
-								</ng-container>
-							
-							<ng-container matColumnDef="customColumn1">
-								<th mat-header-cell *matHeaderCellDef> More </th>
-								<td mat-cell *matCellDef="let element; " > 
-									<button mat-button *ngIf="element.group_id" routerLink="../group/{{element.group_id}}" style="font-size:12px"> {{element.group_name}} </button> 
-									<button mat-button>
-										<mat-icon  *ngIf="!element.group_id" mat-raised-button color="warn" (click)="deletePermission(element)"> delete </mat-icon> 
-									</button>
+									<ng-container matColumnDef="permission_name">
+										<th mat-header-cell *matHeaderCellDef style="width:150px"  mat-sort-header> Name </th>
+										<td mat-cell *matCellDef="let element"> {{element.permission_name}} </td>
+									</ng-container>
+		
+									<!-- Name Column -->
+									<ng-container matColumnDef="permission_description">
+										<th mat-header-cell *matHeaderCellDef> Description </th>
+										<td mat-cell *matCellDef="let element"> {{element.permission_description}} </td>
+									</ng-container> 
 									
-								</td>
-							</ng-container>
-							
+										<ng-container matColumnDef="derived_from_group">
+										<th mat-header-cell *matHeaderCellDef> Derived </th>
+										<td mat-cell *matCellDef="let element" style="text-align: center;"> 
+											<mat-icon *ngIf="element.group_id"> group </mat-icon>
+											<mat-icon *ngIf="!element.group_id"> person </mat-icon>
+											
+										</td>
+										</ng-container>
+									
+									<ng-container matColumnDef="customColumn1">
+										<th mat-header-cell *matHeaderCellDef> More </th>
+										<td mat-cell *matCellDef="let element; " > 
+											<button mat-button *ngIf="element.group_id" routerLink="../group/{{element.group_id}}" style="font-size:12px"> {{element.group_name}} </button> 
+											<button mat-button>
+												<mat-icon  *ngIf="!element.group_id" mat-raised-button color="warn" (click)="deletePermission(element)"> delete </mat-icon> 
+											</button>
+											
+										</td>
+									</ng-container>
+									
+		
+									<tr mat-header-row *matHeaderRowDef="displayedColumnsPermissions"></tr>
+									<tr mat-row *matRowDef="let row; columns: displayedColumnsPermissions;"></tr>
+							</table>
+							<!-- <mat-paginator   [pageSizeOptions]="pageSizeOptions"
+										(page)="pageEvent = $event" showFirstLastButtons>
+							</mat-paginator> -->
+						
+						
+			
+					</mat-tab>
+					<mat-tab label="Machines">
+							<table fxFlex style="box-shadow: none;  width:100%;" mat-table [dataSource]="user.machines" matSort>
 
-							<tr mat-header-row *matHeaderRowDef="displayedColumnsPermissions"></tr>
-							<tr mat-row *matRowDef="let row; columns: displayedColumnsPermissions;"></tr>
-					</table>
-					<mat-paginator   [pageSizeOptions]="pageSizeOptions"
-								(page)="pageEvent = $event" showFirstLastButtons>
-					</mat-paginator>
-				</div>
+						
+									<ng-container matColumnDef="id">
+										<th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+										<td mat-cell *matCellDef="let element"> {{element.id}} </td>
+									</ng-container> 
+									
+									<ng-container matColumnDef="machine_name">
+										<th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+										<td mat-cell *matCellDef="let element"> {{element.machine_name}} </td>
+									</ng-container>
+		
+									
+		
+									
+		
+									<tr mat-header-row *matHeaderRowDef="displayedColumnsMachines"></tr>
+									<tr mat-row *matRowDef="let row; columns: displayedColumnsMachines;"></tr>
+							</table>
+							<!-- <mat-paginator   [pageSizeOptions]="pageSizeOptions"
+										(page)="pageEvent = $event" showFirstLastButtons>
+							</mat-paginator> -->
+					
+					</mat-tab>
+					<mat-tab label="RFID">
+							<table fxFlex style="box-shadow: none;  width:100%;" mat-table [dataSource]="rfidTableSource" matSort>
+
+									<tr mat-header-row *matHeaderRowDef="displayedColumnsRfid"></tr>
+									<tr mat-row *matRowDef="let row; let index = index; columns: displayedColumnsRfid;"></tr>
+								
+									<ng-container matColumnDef="id">
+										<th mat-header-cell *matHeaderCellDef mat-sort-header> Card # </th>
+										<td mat-cell *matCellDef="let element"> {{element.id}} </td>
+									</ng-container> 
+									
+									<ng-container matColumnDef="string">
+										<th mat-header-cell *matHeaderCellDef mat-sort-header> String </th>
+										<td mat-cell *matCellDef="let element"> {{element.string}} </td>
+									</ng-container>
+									<ng-container matColumnDef="customColumn1"> 
+										<th mat-header-cell *matHeaderCellDef> More </th>
+										<td mat-cell *matCellDef="let row; let i = index;" > 
+											
+											<button mat-button>
+												<mat-icon   mat-raised-button color="warn" (click)="deleteRfid(i)"> delete </mat-icon> 
+											</button>
+											
+										</td>
+									</ng-container>
+		
+									
+		
+									
+		
+									
+							</table>
+							<mat-paginator  style="display:none;" [pageSizeOptions]="pageSizeOptions"
+										(page)="pageEvent = $event" showFirstLastButtons>
+							</mat-paginator> 
+					
+					</mat-tab>
+				</mat-tab-group>
+			
+		
+			
+
+			
+					
 				
 					
-				<div [ngClass]="{'hidden': !(selectedTable == 'machines')}" >
-					<table fxFlex style="box-shadow: none;  width:100%;" mat-table [dataSource]="user.machines" matSort *ngIf="selectedTable == 'machines'">
-
-						
-							<ng-container matColumnDef="id">
-								<th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-								<td mat-cell *matCellDef="let element"> {{element.id}} </td>
-							</ng-container> 
-							
-							<ng-container matColumnDef="machine_name">
-								<th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-								<td mat-cell *matCellDef="let element"> {{element.machine_name}} </td>
-							</ng-container>
-
-							
-
-							
-
-							<tr mat-header-row *matHeaderRowDef="displayedColumnsMachines"></tr>
-							<tr mat-row *matRowDef="let row; columns: displayedColumnsMachines;"></tr>
-					</table>
-					<!-- <mat-paginator   [pageSizeOptions]="pageSizeOptions"
-								(page)="pageEvent = $event" showFirstLastButtons>
-					</mat-paginator> -->
-				</div>
-					
-				<div [ngClass]="{'hidden': !(selectedTable == 'rfid')}" >
-					<table fxFlex style="box-shadow: none;  width:100%;" mat-table [dataSource]="rfidTableSource" matSort>
-
-							<tr mat-header-row *matHeaderRowDef="displayedColumnsRfid"></tr>
-							<tr mat-row *matRowDef="let row; let index = index; columns: displayedColumnsRfid;"></tr>
-						
-							<ng-container matColumnDef="id">
-								<th mat-header-cell *matHeaderCellDef mat-sort-header> Card # </th>
-								<td mat-cell *matCellDef="let element"> {{element.id}} </td>
-							</ng-container> 
-							
-							<ng-container matColumnDef="string">
-								<th mat-header-cell *matHeaderCellDef mat-sort-header> String </th>
-								<td mat-cell *matCellDef="let element"> {{element.string}} </td>
-							</ng-container>
-							<ng-container matColumnDef="customColumn1"> 
-								<th mat-header-cell *matHeaderCellDef> More </th>
-								<td mat-cell *matCellDef="let row; let i = index;" > 
-									
-									<button mat-button>
-										<mat-icon   mat-raised-button color="warn" (click)="deleteRfid(i)"> delete </mat-icon> 
-									</button>
-									
-								</td>
-							</ng-container>
-
-							
-
-							
-
-							
-					</table>
-					<mat-paginator  style="display:none;" [pageSizeOptions]="pageSizeOptions"
-								(page)="pageEvent = $event" showFirstLastButtons>
-					</mat-paginator> 
-				</div>
-					
-				<div   [class.hidden]="selectedTable != 'rto'"  fxLayout="column" fxLayoutAlign="center center" > 
-
-					
-						<ag-grid-angular  
-					
-						*ngIf="selectedTable == 'rto'"
-						#rto_agrid
-						style="width: calc(98%);height:250px;margin-top:10px;" 
-						class="ag-theme-material"
-					
-						[rowData]="user.rto_allotment" 
-						[columnDefs]="rtoColumnDefs"
-						[enableSorting]="true"
-						[enableFilter]="true"	
-						(gridReady)="onRtoGridReady($event)"
-						(cellEditingStopped)="onRtoCellEditingStopped($event)"
-    				    (cellEditingStarted)="onRtoCellEditingStarted($event)"
-						[statusBar]="false"
-						[enableColResize]="true"
-						[enableRangeSelection]="true"						
-						[defaultColDef]="rtoDefaultColDef"
-						
-						>
-					</ag-grid-angular>
-
-					<div *ngIf="userService.hasPermission(39)" fxLayout="row" style="margin-top:10px;">
-							<mat-chip-list>
-								<mat-chip color="accent"> You can edit the vacation and pto for this person. </mat-chip> 
-							</mat-chip-list>
-						</div>
-
-
-				</div>
+				
 
 			
 			</mat-card-content>	
@@ -412,7 +422,7 @@
 			
 			</mat-card-actions>
 		
-			</mat-card>		
+		</mat-card>		
 	
 		
 	
