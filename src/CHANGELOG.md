@@ -1,3 +1,9 @@
+## [19.2.0] February 2019
+
+### TGA
+- Peak tool now has "previous" and "next" buttons for navigating single runs easier
+
+
 ## [19.1.0] January 2019
 
 ### Misc

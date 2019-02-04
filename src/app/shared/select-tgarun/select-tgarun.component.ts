@@ -14,7 +14,7 @@ export class SelectTgarunComponent implements OnInit, OnDestroy {
   items: any = [];
   allItems: any = [];
   itemsBuffer: any = [];
-  dropdownWidth: '1000'; //in Pixels
+  dropdownWidth: '1000'; // in Pixels
 
 
   // Inputs

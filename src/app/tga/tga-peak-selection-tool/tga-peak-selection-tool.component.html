@@ -8,7 +8,7 @@
       placeholder="Please select one or more TGA Runs"
       multiple="true"
       style="min-width:400px;"
-      selectedValue=""
+      selectedValue="selectedTgaRuns"
       (change)="changeTgaRun($event)"
       (remove)="removeTgaRun($event)"
 
@@ -16,13 +16,17 @@
 
       <button mat-button (click)="loadSelectedTgaRuns()"> Load </button>
 
+      <button mat-button > {{storedTgaRuns.length}} Files </button>
+
       <div *ngIf="selectedTgaRuns.length == 1 && TgaRun?.filename">
-      <!-- <button mat-button *ngIf="selectedFileIndex != 0" (click)="previousRun()">Previous</button>
-      <button mat-button *ngIf="selectedFileIndex < TgaFileList.length"(click)="nextRun()">Next</button> -->
+          <button mat-button  *ngIf="TgaRun.filename !== tgaRunBuffer[0].name" (click)="previousRun()">Previous</button> 
+         <button mat-button (click)="nextRun()">Next</button>
+
+       
      
     </div>
 
-    <button mat-button > {{storedTgaRuns.length}} Files </button>
+    
     
   </div>
 

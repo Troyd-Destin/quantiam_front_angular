@@ -1,5 +1,9 @@
 <div fxFlex fxLayout="column">
 
+  <div fxLayout="row">
+      <app-select-user></app-select-user>
+
+  </div>
   
   <ag-grid-angular 
 
@@ -8,11 +12,12 @@
   #agGrid	
 
 
-    style="width: calc(100%); height:500px; margin-top:25px;" 
+    style="width: calc(100%);  margin-top:25px;" 
     class="ag-theme-material"
     animateRows="true"
 
     [rowData]="rowData" 
+    
 
     [columnDefs]="columnDefs"
     [defaultColDef]="defaultColDef"
@@ -22,12 +27,16 @@
     (cellDoubleClicked)="onCellDoubleClicked($event)"
     (cellEditingStopped)="onCellEditingStopped($event)"
     (cellEditingStarted)="onCellEditingStarted($event)"
+    (rowGroupOpened)="onRowGroupOpened($event)"
+    (rowDataChanged)="rowDataChanged($event)"
 
     [enableRangeSelection]="true"
     [pagination]="false"
     [suppressPropertyNamesCheck]="true"
     [groupIncludeTotalFooter]="true"
-
+    [domLayout]='autoHeight'
+    [rowStyle] = 'rowStyle'
+    
     [suppressContextMenu] = "true"
     
     >

@@ -3,3 +3,7 @@
     font-size:8px;
 }
 
+.ag-theme-material .ag-row ::ng-deep{
+
+    border: 0px !important;
+}

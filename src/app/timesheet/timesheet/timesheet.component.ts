@@ -25,6 +25,12 @@ export class TimesheetComponent implements OnInit {
 
   displayTimesheet = false;
 
+
+  rowStyle = {
+
+    border: '0px',
+  };
+
   routeParams = {
     userId: null,
     year: null,
@@ -35,10 +41,12 @@ export class TimesheetComponent implements OnInit {
     resizable: true,
   };
 
+
+
   autoGroupColumnDef = {
     headerName: 'Category',
     lockPosition: true,
-    width: 400,
+    width: 380,
     suppressMenu: true,
     lockPinned: true,
     pinned: 'left',
@@ -55,15 +63,15 @@ export class TimesheetComponent implements OnInit {
         'font-size': '12px',
       },
       innerRenderer: function(params) {
-        console.log(params);
+     //   console.log(params);
 
         if (params.node.group) {
 
             return '' + params.value + '';
         }
 
-        return '<b style="display: inline-block;">' + params.data.project.projectID + '</b>\
-         - <p style="display: inline-block; font-size:11px;">' + params.value + '</p>';
+        return '<b style="display: inline-block; font-size: 12px;">' + params.data.project.projectID + '</b>\
+         - <p style="display: inline-block; font-size:10px;">' + params.value + '</p>';
       },
 
     }
@@ -76,6 +84,7 @@ export class TimesheetComponent implements OnInit {
       field: 'category.categoryName',
       width: 120,
       rowGroup: true,
+      rowPinned: true,
 
       // cellRenderer: "agGroupCellRenderer",
      // columnGroupShow: false,
@@ -124,6 +133,7 @@ export class TimesheetComponent implements OnInit {
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
+    params.api.sizeColumnsToFit();
 
   }
 
@@ -197,43 +207,58 @@ export class TimesheetComponent implements OnInit {
       // identify if weekend
 
       const headerDate = moment(date).format('ddd DD');
-      const day = moment(date).format('ddd');
 
-      const cellStyle = {};
 
-      if (day === 'Sun' || day === 'Sat') {
-        cellStyle['background-color'] = '#E8F2FF';
-      }
+
+
+
 
 
       const  obj: any = {
-        headerName: headerDate,
+        headerName: 'test',
         field: date,
         suppressMenu: true,
         width: 80,
-         editable: true,
-         lockPosition: true,
+        editable: true,
+        lockPosition: true,
         type: 'numericColumn',
         timesheet_type: 'hours_field',
-      tooltip: function (params) {
+        tooltip: function (params) {
 
-        if (params.node.group) { return null; }
-        console.log(params);
-        return params.data.project.projectID;
-       // return (params.data.project.projectID);
-       },
-        aggFunc: function(data) {
+          if (params.node.group) { return null; }
 
-          let sum = 0;
-          data.forEach( function(value) {
-            if (value) {
-                sum = sum + parseFloat(value);
-              }
-          } );
-          if (!sum) { return null; }
-          return sum;
+          return params.data.project.projectID;
+
         },
-        cellStyle: cellStyle
+        aggFunc: this.sumHoursColumn,
+        cellStyle: (params) => {
+
+          const cellStyle = {
+
+            'text-align': 'center',
+          };
+
+          const day = moment(params.column.colId).format('ddd');
+          if (day === 'Sun' || day === 'Sat') {
+            cellStyle['background-color'] = '#E8F2FF';
+          }
+
+          // console.log(params);
+
+          if (params.node.footer) {
+            // console.log('footer');
+            if (params.value > 8) {
+              cellStyle['color'] = 'red';
+            }
+              cellStyle['color'] = 'black';
+          }
+
+          if (params.node.group) {
+            cellStyle['font-size'] = '12px';
+            cellStyle['font-weight'] = 'bold';
+          }
+          return cellStyle;
+        },
 
       };
 
@@ -258,5 +283,43 @@ export class TimesheetComponent implements OnInit {
     this.rowData = this.timeSheetFramework;
     console.log(this.timeSheetFramework);
   }
+
+  onRowGroupOpened(event) {
+    console.log(event);
+
+    console.log(this.rowData[0]);
+   // this.gridApi.setPinnedTopRowData([this.rowData[0]]);
+  }
+
+  rowDataChanged(event) {
+
+
+    console.log(event);
+    this.gridApi.getRowStyle = function(params) {
+
+      const rowStyle = {
+        'border': '0px',
+      };
+      console.log(params);
+      return rowStyle;
+
+    };
+
+  }
+
+  sumHoursColumn(data) {
+
+    let sum = 0;
+    data.forEach( function(value) {
+      if (value) {
+          sum = sum + parseFloat(value);
+        }
+    } );
+    if (!sum) { return null; }
+
+    return sum.toFixed(2);
+  }
+
+
 
 }

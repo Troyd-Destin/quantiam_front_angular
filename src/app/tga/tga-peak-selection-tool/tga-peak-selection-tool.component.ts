@@ -17,6 +17,9 @@ import { NgMultiLabelTemplateDirective } from '@ng-select/ng-select/ng-select/ng
 import { splitClasses } from '@angular/compiler';
 import { DomSanitizerImpl, DomSanitizer } from '@angular/platform-browser/src/security/dom_sanitization_service';
 
+import { SelectTgarunService } from './../../shared/select-tgarun/select-tgarun.service';
+
+
 @Component({
   selector: 'app-tga-peak-selection-tool',
   templateUrl: './tga-peak-selection-tool.component.html',
@@ -36,6 +39,10 @@ export class TgaPeakSelectionToolComponent implements OnInit {
   //
 
   tableDataSource = new MatTableDataSource<any>();
+
+  tgaRunBuffer;
+  tgaRunlist$;
+  selectTgaRun;
 
   TgaFileList = [];
   selectedTgaRuns = [];
@@ -149,11 +156,19 @@ export class TgaPeakSelectionToolComponent implements OnInit {
 
 };
 
-  constructor(public http: HttpClient, public notification: NotificationsService) { }
+  constructor(public http: HttpClient, public notification: NotificationsService, private selectTgarunService: SelectTgarunService) { }
 
   ngOnInit() {
 
    // this.fetchFileList();
+   this.selectTgarunService.list();
+   this.tgaRunlist$ = this.selectTgarunService.list$.subscribe((r) => {
+
+
+         this.tgaRunBuffer = r;
+         // console.log(r);
+
+     });
 
   }
 
@@ -338,7 +353,7 @@ export class TgaPeakSelectionToolComponent implements OnInit {
     this.chartOptions.series = [];
     this.chartOptions.xAxis[0].plotLines = [];
 
-    this.chartOptions.title.text = this.TgaRun.Procedure.comments;
+    this.chartOptions.title.text = this.TgaRun.Procedure.comments + ' (' + this.TgaRun.filename + ')';
 
 
 
@@ -490,15 +505,23 @@ export class TgaPeakSelectionToolComponent implements OnInit {
   }
 
   previousRun() {
-    this.selectedFileIndex = this.selectedFileIndex - 1;
-    this.selectedFile = this.TgaFileList[this.selectedFileIndex];
-    this.fetchTgaRun(this.TgaFileList[this.selectedFileIndex].name);
+
+
+    this.tgaRunBuffer.forEach((item, index, object) => {
+        if (item.name === this.TgaRun.filename) {
+          this.fetchTgaRun(this.tgaRunBuffer[index - 1].name);
+        }
+    });
+
   }
 
   nextRun() {
-    this.selectedFileIndex = this.selectedFileIndex + 1;
-    this.selectedFile = this.TgaFileList[this.selectedFileIndex];
-    this.fetchTgaRun(this.TgaFileList[this.selectedFileIndex].name);
+
+    this.tgaRunBuffer.forEach((item, index, object) => {
+      if (item.name === this.TgaRun.filename) {
+        this.fetchTgaRun(this.tgaRunBuffer[index + 1].name);
+      }
+  });
   }
 
   changeSelectedFile(event) {
@@ -624,7 +647,7 @@ export class TgaPeakSelectionToolComponent implements OnInit {
     .get(url, { })
     .subscribe(res => {
 
-     
+
       const jsonStr = JSON.stringify(res);
 
 
@@ -645,7 +668,7 @@ export class TgaPeakSelectionToolComponent implements OnInit {
       });
   }
 
-  
+
 
 
 
