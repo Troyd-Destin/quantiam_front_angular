@@ -215,6 +215,43 @@
 					
 				
 				<mat-tab-group>
+						<mat-tab label="RTO">
+								<div *ngIf="userService.hasPermission(39)" fxLayout="row" fxLayoutAlign="center center" >
+										<button mat-stroked-button color="primary" (click)="createRtoAllotment()">Create</button>
+	
+									
+								</div>
+							<div fxLayout="column" fxLayoutAlign="start center">
+								
+							
+								<ag-grid-angular  
+						
+								
+								#rto_agrid
+								style="" 
+								class="ag-theme-material"
+							
+								[rowData]="user.rto_allotment" 
+								[columnDefs]="rtoColumnDefs"
+								[enableSorting]="true"
+								[enableFilter]="true"	
+								(gridReady)="onRtoGridReady($event)"
+								(cellEditingStopped)="onRtoCellEditingStopped($event)"
+								(cellEditingStarted)="onRtoCellEditingStarted($event)"
+								[statusBar]="false"
+								[enableColResize]="true"
+								[enableRangeSelection]="true"						
+								[defaultColDef]="rtoDefaultColDef"
+	
+								
+								[domLayout]='autoHeight'
+								
+								>
+							</ag-grid-angular>
+						
+							
+							</div>
+						</mat-tab>
 					<mat-tab label="Supervisors"> 
 
 					
@@ -247,43 +284,7 @@
 					
 
 					</mat-tab>
-					<mat-tab label="RTO">
-							<div *ngIf="userService.hasPermission(39)" fxLayout="row" fxLayoutAlign="center center" >
-									<button mat-stroked-button color="primary" (click)="createRtoAllotment()">Create</button>
-
-								
-							</div>
-						<div fxLayout="column" fxLayoutAlign="start center">
-							
-						
-							<ag-grid-angular  
-					
-							
-							#rto_agrid
-							style="" 
-							class="ag-theme-material"
-						
-							[rowData]="user.rto_allotment" 
-							[columnDefs]="rtoColumnDefs"
-							[enableSorting]="true"
-							[enableFilter]="true"	
-							(gridReady)="onRtoGridReady($event)"
-							(cellEditingStopped)="onRtoCellEditingStopped($event)"
-							(cellEditingStarted)="onRtoCellEditingStarted($event)"
-							[statusBar]="false"
-							[enableColResize]="true"
-							[enableRangeSelection]="true"						
-							[defaultColDef]="rtoDefaultColDef"
-
-							
-							[domLayout]='autoHeight'
-							
-							>
-						</ag-grid-angular>
-					
-						
-						</div>
-					</mat-tab>
+				
 					<mat-tab label="Permissions">
 						
 							<table fxFlex style="box-shadow: none;  width:100%;" mat-table [dataSource]="permissionTableSource" matSort >
