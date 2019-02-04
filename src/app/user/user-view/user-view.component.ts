@@ -274,7 +274,7 @@ export class UserViewComponent implements OnInit, OnDestroy {
   deleteRtoAllotment(row) {
 
    
-    confirm('Do you want to delete this Allocation?')
+    if(confirm('Do you want to delete this Allocation?'))
     {
       this.http.delete<any>(environment.apiUrl + '/rto/allocation/'+row.data.entry_id).subscribe((r)=>{
 
