@@ -6,6 +6,15 @@
 ### Users
 - Can now create and delete RTO Allotments on the user view screen
 
+### Timesheet
+- Can now view timesheet data on a per user basis, similar to the anuglarjs app
+- RTO Calendar rebuilt, has all functionality of angularjs app
+
+### Sidemenu
+- Added Timesheet Category
+- Sorted SGX towards the bottom
+- Instruments now has a SEM category
+
 ## [19.1.0] January 2019
 
 ### Misc

@@ -1,6 +1,8 @@
 markdown ::ng-deep{
 
     font-family: Roboto,sans-serif;
+    overflow-y: scroll;
+    height: 92vh;
 }
 
 markdown ::ng-deep p {
@@ -33,3 +35,4 @@ markdown ::ng-deep h2 {
     margin-top: 50px; 
     margin-bottom: 5px;
 }
+
