@@ -50,6 +50,8 @@ export class CoreComponent implements OnInit, OnDestroy {
   scannerSelect2Options = {'theme': 'classic'};
   loading;
 
+  currentYear = (new Date()).getFullYear();
+
 
   webSocketMessages: WebSocketMessages;
   lastWebSocketMessage;

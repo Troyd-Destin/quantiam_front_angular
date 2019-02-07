@@ -17,6 +17,11 @@ const routes: Routes = [{
       data: { key: 'timesheet'},
       component: TimesheetComponent,
     },
+    {
+      path: 'calendar',
+      data: { key: 'timesheet-calendar'},
+      component: TimesheetCalendarComponent,
+    },
 
   ],
 

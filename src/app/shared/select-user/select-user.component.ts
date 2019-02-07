@@ -69,6 +69,7 @@ export class SelectUserComponent implements OnInit, OnDestroy {
   }
 
   onChange(event) {
+   
      this.change.emit(event);
   }
 

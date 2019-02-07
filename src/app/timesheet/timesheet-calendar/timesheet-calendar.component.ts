@@ -1,4 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild  } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import {  HttpClient} from '@angular/common/http';
+
+import {  environment} from '../../../environments/environment';
+import { LoadedRouterConfig } from '@angular/router/src/config';
+
+
+import { UserService } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-timesheet-calendar',
@@ -7,9 +16,91 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TimesheetCalendarComponent implements OnInit {
 
-  constructor() { }
+  calendarEvents = [];
+  subordinatesOnly = false;
+  selectedUser;
+  minimumHours = 0;
+  
+  constructor(private router: Router, private http: HttpClient, private userService: UserService) { }
 
   ngOnInit() {
+
+    
+      setTimeout((x) => {
+
+        console.log('test');
+
+        $('#calendar').fullCalendar({
+
+        eventLimit: 5,
+				aspectRatio: 3,
+        header: {
+          left: 'prev,next',
+          center: 'title',
+          right: 'month,agendaWeek,agendaDay,listMonth'
+        },
+        height: 700,
+        eventClick: (calEvent, jsEvent, view) => {
+
+          this.loadRTO(calEvent.rto_id);
+
+
+        },
+        eventSources: [this.eventSourceQuantiam()],
+      });
+
+    }, 500);
   }
 
+
+  loadRTO(rto) {
+
+     console.log('navigate');
+
+  }
+
+  updateCalendar = function ()
+	{	
+    console.log(this.selectedUser);
+    const eventSource = this.eventSourceQuantiam();
+    console.log('updated');
+		 $('#calendar').fullCalendar( 'removeEventSource', eventSource.url );
+		 $('#calendar').fullCalendar( 'addEventSource',  this.eventSourceQuantiam());
+	}
+
+  eventSourceQuantiam() {
+
+    return  {
+      url: environment.apiUrl + '/rtocalendar',
+      headers: {'Authorization': 'Bearer ' + localStorage.getItem('token'), },
+     data: {
+                 
+                  userID: this.selectedUser,
+                  subordinates: this.subordinatesOnly,
+                 'minimumHours': this.minimumHours
+              },
+     color: '#38536f',
+    };
+
+
+
+
+  }
+
+  updateSelectedUser(event)
+  {
+    if(!event) { this.selectedUser = null; }
+    else { this.selectedUser = event.employeeid; }
+    
+    this.updateCalendar();
+    //console.log(event);
+  }
+
+
+
+
+
+
 }
+
+

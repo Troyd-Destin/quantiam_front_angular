@@ -99,9 +99,9 @@
 								</mat-list>  
 						</mat-expansion-panel> -->
 						<mat-divider style="display:none"></mat-divider >
-						<mat-expansion-panel expanded="true"  style="padding-top:3px; padding-bottom:15px !important;">
+						<mat-expansion-panel expanded="true"  style="padding-top:3px; padding-bottom:15px !important; ">
 							
-								<mat-list-item > 
+								<mat-list-item style="" > 
 										<button routerLink="/user/database"  routerLinkActive="mat-list-item-button-active" mat-button class="not-drop-down-button" >
 											<!-- <mat-icon>person</mat-icon>  -->
 											Employees 
@@ -112,8 +112,8 @@
 							
 						</mat-expansion-panel>
 						
-					<mat-divider style="display:none"></mat-divider >
-						<mat-expansion-panel expanded="false" style="display:none">
+					<mat-divider></mat-divider >
+						<mat-expansion-panel expanded="true" >
 						 <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
 							<mat-panel-title>
 								    Timesheet
@@ -125,21 +125,21 @@
 										<button routerLink="/material" mat-button>Home</button>
 								</mat-list-item> -->
 								 <mat-list-item > 
-									 <button  routerLinkActive="mat-list-item-button-active" mat-button> Timesheet </button>
+									 <button  routerLink="/timesheet/65/year/2019/payperoid/4" routerLinkActive="mat-list-item-button-active" mat-button> Timesheet </button>
 								</mat-list-item>	
 								 <mat-list-item > 
-									 <button  routerLinkActive="mat-list-item-button-active" mat-button> Calendar </button>
+									 <button routerLink="/timesheet/calendar" routerLinkActive="mat-list-item-button-active" mat-button> Calendar </button>
 								</mat-list-item>
-								<mat-list-item > 
+								<!-- <mat-list-item > 
 									 <button  routerLinkActive="mat-list-item-button-active" mat-button> RTO </button>
-								</mat-list-item>
+								</mat-list-item> -->
 								
 							
 								</mat-list>  
 						</mat-expansion-panel>
 						
 				
-
+						<mat-divider></mat-divider>
 						<mat-expansion-panel expanded="true" >
 							  <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
 								<mat-panel-title>
@@ -178,24 +178,7 @@
 						</mat-expansion-panel>
 					
 						
-								
-						<mat-divider style="display:none"></mat-divider>
-						<mat-expansion-panel expanded="true" >
-							  <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
-								<mat-panel-title>
-								    SGX
-								</mat-panel-title>
-								
-							  </mat-expansion-panel-header>
-								<mat-list>
-
-
-										<mat-list-item  > 
-												<button routerLink="/sample/database" routerLinkActive="mat-list-item-button-active" mat-button>Samples</button>
-										   </mat-list-item>
-										   
-								</mat-list>
-						</mat-expansion-panel>
+					
 
 
 						<mat-divider style="display:none"></mat-divider>
@@ -252,6 +235,10 @@
 								</mat-list>
 						</mat-expansion-panel>
 						
+
+									
+					
+
 						<mat-divider style="display:none"></mat-divider>
 						<mat-expansion-panel expanded="false" style="display:none">
 								 <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
@@ -306,6 +293,26 @@
 								</mat-list>
 						</mat-expansion-panel>
 						
+
+
+						<mat-divider ></mat-divider>
+						<mat-expansion-panel expanded="false" >
+							  <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
+								<mat-panel-title>
+								    SGX
+								</mat-panel-title>
+								
+							  </mat-expansion-panel-header>
+								<mat-list>
+
+
+										<mat-list-item  > 
+												<button routerLink="/sample/database" routerLinkActive="mat-list-item-button-active" mat-button>Samples</button>
+										   </mat-list-item>
+										   
+								</mat-list>
+						</mat-expansion-panel>
+
 						<mat-divider></mat-divider>
 						<mat-expansion-panel expanded="true">
 								 <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
@@ -348,10 +355,21 @@
   <mat-toolbar fxLayout="row-reverse" class="app-footer" color="primary">
 		
 
-			<div style="padding-right: 20px;">
+			<div style="padding-right: 20px; " fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+
+				<p style="font-size: 12px;">  © {{currentYear}} Quantiam Technologies, Inc.</p>
 				<a style="color:white;" target="_blank" href="https://github.com/Troyd-Destin/quantiam_angular_boiler_plate">
-					<fa style="" name="github" ></fa>
+					<fa  name="github" ></fa>
 				</a>
+				
+				<a style="color:white;" target="_blank" href="https://origin.fontawesome.com">
+					<fa style="font-size:15px;" name="font-awesome" ></fa>
+				</a>
+
+				<a style="color:white;" target="_blank" href="https://angular.io/">
+					<fa  name="angular" ></fa>
+				</a>
+			
 			</div>
 
 	</mat-toolbar>

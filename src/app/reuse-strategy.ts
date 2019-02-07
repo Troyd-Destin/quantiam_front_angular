@@ -3,7 +3,7 @@ import {ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy} from '@
 export class CustomReuseStrategy implements RouteReuseStrategy {
 
   // tslint:disable-next-line:no-trailing-whitespace
-  routesToCache: string[] = ['userDatabase', 'userView', 'xpsDatabase', 
+  routesToCache: string[] = ['userDatabase', 'userView', 'xpsDatabase', 'timesheet-calendar',
   'tgaDatabase', 'tgaPeakTool', 'timesheet', 'MaterialContainerDatabase'];
   storedRouteHandles = new Map<string, DetachedRouteHandle>();
 

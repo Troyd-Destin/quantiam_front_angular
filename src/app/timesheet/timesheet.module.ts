@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AgGridModule } from 'ag-grid-angular';
+import { FullCalendarModule } from 'ng-fullcalendar';
 
 
 import { SharedModule } from '../shared/shared.module';

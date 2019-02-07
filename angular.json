@@ -33,6 +33,7 @@
               "node_modules/ag-grid-community/dist/styles/ag-theme-material.css",
               "node_modules/@ng-select/ng-select/themes/default.theme.css",
               "node_modules/font-awesome/css/font-awesome.css",
+              "node_modules/fullcalendar/dist/fullcalendar.min.css",
               "src/styles.css"
             ],
             "scripts": [
@@ -40,6 +41,7 @@
               "node_modules/datatables.net/js/jquery.dataTables.js",
               "node_modules/select2/dist/js/select2.full.js",
               "node_modules/moment/min/moment.min.js",
+              "node_modules/fullcalendar/dist/fullcalendar.min.js",
               "node_modules/hammerjs/hammer.min.js",
               "node_modules/marked/lib/marked.js"
             ]
