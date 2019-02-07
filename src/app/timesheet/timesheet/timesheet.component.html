@@ -1,7 +1,73 @@
-<div fxFlex fxLayout="column">
+<div fxFlex fxLayout="column" fxLayoutGap="10px" style="height:100%">
 
   <div fxLayout="row">
-      <app-select-user></app-select-user>
+
+      <div fxLayout="column" fxFlex=20 fxLayoutAlign="start start">
+
+        <p style="margin-bottom:5px;"> {{timeSheetObj?.fullname}} - Pay Peroid {{routeParams.payperoid}}, {{routeParams.year}} </p>
+        <p> {{timeSheetObj?.payPeriod.startDateHeader}} - {{timeSheetObj?.payPeriod.endDateHeader}}  </p>
+       
+
+      </div>
+
+      <div fxFlex=60 fxLayout="row" fxLayoutAlign="center start">
+
+        <div>
+          <table class="" style=" font-size:12px;">
+              <tbody>
+              <tr>
+              <td style="padding-right:10px">Absence</td>
+              <td style="background-color: #E8FAFF;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+              <td style="padding-right:10px; padding-left:10px;">Weekend / Holiday </td>
+              <td style="background-color: #E8F2FF;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+              </tr>
+              </tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <div fxFlex=20 fxLayoutAlign="start end" fxLayout="column" fxLayoutGap="10px">
+
+        
+         
+
+          <div fxLayout="row" fxLayoutGap="7px" fxFlex=100 fxLayoutAlign="center start">
+         
+             
+              <p> Payperoid </p>
+              <select placeholder="Payperiod" >
+                  <option *ngFor="let item of timesheetPayperoids" [value]="item" [attr.selected]="routeParams.payperoid == item ? 'selected' : null">
+                    {{item}}
+                  </option>
+                </select>
+                <p>  Year </p>
+                <select placeholder="Year" >
+                    <option *ngFor="let year of timesheetYears" [value]="year"  [attr.selected]="routeParams.year == year ? 'selected' : null">
+                      {{year}}
+                    </option>
+                  </select>
+                 
+          </div>
+        
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex>
+          
+
+            <button mat-button (click)="previousPayPeroid()">
+                <mat-icon>arrow_left</mat-icon>Previous</button>
+
+               
+          
+            <button mat-button (click)="nextPayPeroid()">Next
+              <mat-icon>arrow_right</mat-icon>
+            </button>
+        </div>
+         
+      
+
+      </div>
+
+     
 
   </div>
   
@@ -12,7 +78,7 @@
   #agGrid	
 
 
-    style="width: calc(100%);  margin-top:25px;" 
+    style="width: calc(100%);  margin-top:10px;" 
     class="ag-theme-material"
     animateRows="true"
 
@@ -22,6 +88,7 @@
     [columnDefs]="columnDefs"
     [defaultColDef]="defaultColDef"
     [autoGroupColumnDef]="autoGroupColumnDef"
+    [frameworkComponents]="frameworkComponents"
 
     (gridReady)="onGridReady($event)"
     (cellDoubleClicked)="onCellDoubleClicked($event)"
@@ -33,13 +100,25 @@
     [enableRangeSelection]="true"
     [pagination]="false"
     [suppressPropertyNamesCheck]="true"
+    [suppressAggFuncInHeader] = "true"
     [groupIncludeTotalFooter]="true"
-    [domLayout]='autoHeight'
-    [rowStyle] = 'rowStyle'
+    [rowClassRules]="rowClassRules"
+    [getRowHeight]="getRowHeight"
+    
     
     [suppressContextMenu] = "true"
     
     >
   </ag-grid-angular>
+
+
+  <div fxLayout="row" id="summary_tables">
+
+
+      <div>
+        {{user}}
+      </div>
+      
+  </div>
 
 </div>

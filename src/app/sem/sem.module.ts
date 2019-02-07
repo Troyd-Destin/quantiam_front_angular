@@ -15,14 +15,25 @@ import { SemRunComponent } from './sem-run/sem-run.component';
 
 
 const routes: Routes = [
+  {
+    path: '',
+    component: SemIndexComponent,
+    children: [
 
+      {
+        path: 'database',
+        component: SemDatabaseComponent,
+      }
+    ],
+
+  }
 
 ];
 
 @NgModule({
   declarations: [SemIndexComponent, SemDatabaseComponent, SemRunComponent],
   imports: [
-    RouterModule.forRoot(routes),
+    RouterModule.forChild(routes),
     CommonModule,
     HighchartsChartModule,
     SharedModule,

@@ -7,3 +7,45 @@
 
     border: 0px !important;
 }
+
+/deep/ .ag-theme-material .footer-row {
+
+    /* border-top: 2px !important; */
+    border-bottom: 0px !important;
+    border-left: 0px !important;
+    border-right: 0px !important;
+    border-color: rgba(226, 226, 226,0.8);
+    border-width: 1px !important;
+    border-style: solid;
+    background-color: rgba(163, 7, 7, 0);
+  
+
+}
+
+/deep/ .ag-theme-material .normal-row .ag-cell {
+
+    line-height: 35px !important;
+  
+}
+
+/deep/ .ag-theme-material .normal-row {
+
+   
+    height: 35px !important;
+    font-size: 11px;
+    border: 0px;
+    line-height: 35px !important;
+}
+
+/deep/ .ag-theme-material .group-row {
+
+    border-color: rgba(226, 226, 226,0.8) !important;
+    /* //cursor: pointer; */
+
+}
+
+/deep/ .ag-status-bar 
+{
+
+    display: none;
+}

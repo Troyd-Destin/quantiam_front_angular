@@ -275,7 +275,7 @@
 						</mat-expansion-panel>
 						
 						
-						<mat-divider style="display:none"></mat-divider>
+						<mat-divider ></mat-divider>
 						<mat-expansion-panel expanded="true" >
 								 <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
 								
@@ -286,6 +286,9 @@
 								
 							  </mat-expansion-panel-header>
 								<mat-list>
+								<mat-list-item  > 
+										<button routerLink="/sem/database" routerLinkActive="mat-list-item-button-active" mat-button> SEM </button>
+								</mat-list-item>
 								<mat-list-item  > 
 										<button routerLink="/tga/database" routerLinkActive="mat-list-item-button-active" mat-button> TGA </button>
 								</mat-list-item>
@@ -342,9 +345,14 @@
 	
   </mat-sidenav-container>
 
-  <mat-toolbar class="app-footer" color="primary">
+  <mat-toolbar fxLayout="row-reverse" class="app-footer" color="primary">
 		
-		
-		
+
+			<div style="padding-right: 20px;">
+				<a style="color:white;" target="_blank" href="https://github.com/Troyd-Destin/quantiam_angular_boiler_plate">
+					<fa style="" name="github" ></fa>
+				</a>
+			</div>
+
 	</mat-toolbar>
 

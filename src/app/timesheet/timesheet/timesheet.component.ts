@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import {  environment} from '../../../environments/environment';
 
 import {  HttpClient} from '@angular/common/http';
+
+import { UserService } from '../../services/user/user.service';
+
+
+import { NumericEditor } from './numeric-editor.component';
 
 import * as moment from 'moment';
 
@@ -17,11 +22,17 @@ export class TimesheetComponent implements OnInit {
   private gridApi;
   private gridColumnApi;
 
-
   private rowData = [];
 
+  timesheetStartYear = 2014;
+  timesheetEndYear;
+  currentYear = (new Date()).getFullYear();
+  timesheetYears = [];
+  timesheetPayperoids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26];
   timeSheetObj;
   timeSheetFramework = [];
+
+  timesheetEditable = false;
 
   displayTimesheet = false;
 
@@ -34,11 +45,12 @@ export class TimesheetComponent implements OnInit {
   routeParams = {
     userId: null,
     year: null,
-    payperiod: null,
+    payperoid: null,
   };
 
   defaultColDef = {
-    resizable: true,
+    resizable: false,
+    editable: false,
   };
 
 
@@ -52,16 +64,30 @@ export class TimesheetComponent implements OnInit {
     pinned: 'left',
     sortable: true,
     field: 'project.description',
+    cellStyle: function (params) {
+      const cellStyle = {};
 
+      if (params.node.footer) {
+
+        cellStyle['font-weight'] = 'bold !important';
+        cellStyle['border-right'] = '0px !important';
+      } else {
+
+        cellStyle['cursor'] = 'pointer';
+      }
+
+      return cellStyle;
+      console.log(params);
+
+
+
+
+    },
 
     cellRendererParams: {
       suppressCount: true,
      // checkbox: true,
       padding: 20,
-      cellStyle:
-      {
-        'font-size': '12px',
-      },
       innerRenderer: function(params) {
      //   console.log(params);
 
@@ -106,9 +132,45 @@ export class TimesheetComponent implements OnInit {
      }
   ];
 
+
+  rowClassRules = {
+
+    'normal-row': function(params) {
+
+      if (!params.node.footer && !params.node.group)  { return true; }
+    },
+    'footer-row': function(params) {
+       if (params.node.footer) {
+        console.log(params);
+        return true;
+      }
+      return false;
+
+    },
+    'group-row': function (params) {
+      if (params.node.group && !params.node.footer) {return true; }
+    }
+
+  };
+
+  frameworkComponents = {
+    numericEditor: NumericEditor
+  };
+
+  getRowHeight = function(params) {
+    if (params.node.level === 0) {
+      return 48;
+    } else {
+      return 35;
+    }
+  };
+
+
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
+    private router: Router,
+    private userService: UserService,
     ) {  }
 
 
@@ -118,14 +180,28 @@ export class TimesheetComponent implements OnInit {
   ngOnInit() {
 
     // update these params if they change
+
+    this.checkIfTimesheetEditable();
+
     this.route.paramMap.subscribe(params => {
       this.routeParams.userId = params.get('user');
       this.routeParams.year = params.get('year');
-      this.routeParams.payperiod = params.get('payperiod');
+      this.routeParams.payperoid = params.get('payperoid');
 
       this.fetchTimesheet();
 
     });
+
+
+    this.timesheetEndYear = this.currentYear + 1;
+    let i;
+    for ( i = this.timesheetStartYear; i <= this.timesheetEndYear; i++) {
+      this.timesheetYears.push(i);
+    }
+
+
+
+
 
 
   }
@@ -147,7 +223,7 @@ export class TimesheetComponent implements OnInit {
 
     // Auth layer on fetching.
 
-    const url = '/timesheet/' + this.routeParams.userId + '/year/' + this.routeParams.year + '/payperiod/' + this.routeParams.payperiod + '';
+    const url = '/timesheet/' + this.routeParams.userId + '/year/' + this.routeParams.year + '/payperiod/' + this.routeParams.payperoid + '';
 
 
     this.http.get<any>(environment.apiUrl + url)
@@ -163,8 +239,9 @@ export class TimesheetComponent implements OnInit {
   constructTimesheet() {
 
     // this.rowData = this.timeSheetObj.framework;
-
+    this.timeSheetFramework = [];
     this.displayTimesheet = true;
+    this.columnDefs.splice(2, 20);
 
     this.timeSheetObj.framework.forEach(category => {
 
@@ -199,14 +276,16 @@ export class TimesheetComponent implements OnInit {
 
     });
 
-
     this.timeSheetObj.payPeriod.dateArray.forEach((date, i) => {
 
       // moment to convert date string to date + wahtever
 
       // identify if weekend
 
-      const headerDate = moment(date).format('ddd DD');
+    //
+
+      const headerDate = moment(date).format('dd - DD');
+      const long_headerDate = moment(date).format('dddd DD, YYYY');
 
 
 
@@ -215,19 +294,19 @@ export class TimesheetComponent implements OnInit {
 
 
       const  obj: any = {
-        headerName: 'test',
+        headerName: headerDate,
         field: date,
         suppressMenu: true,
         width: 80,
-        editable: true,
         lockPosition: true,
         type: 'numericColumn',
+       // cellEditor: NumericEditor,
         timesheet_type: 'hours_field',
         tooltip: function (params) {
 
           if (params.node.group) { return null; }
 
-          return params.data.project.projectID;
+          return long_headerDate + ' - Project ' + params.data.project.projectID;
 
         },
         aggFunc: this.sumHoursColumn,
@@ -239,26 +318,27 @@ export class TimesheetComponent implements OnInit {
           };
 
           const day = moment(params.column.colId).format('ddd');
-          if (day === 'Sun' || day === 'Sat') {
-            cellStyle['background-color'] = '#E8F2FF';
+          if ((day === 'Sun' || day === 'Sat') && !params.node.footer) {
+            cellStyle['background-color'] = 'rgba(232, 242, 255,0.25)';
           }
 
-          // console.log(params);
-
           if (params.node.footer) {
-            // console.log('footer');
+            cellStyle['font-weight'] = 'bold';
+            cellStyle['border'] = '0px';
             if (params.value > 8) {
               cellStyle['color'] = 'red';
             }
               cellStyle['color'] = 'black';
           }
 
-          if (params.node.group) {
+          if (params.node.group && !params.node.footer) {
             cellStyle['font-size'] = '12px';
-            cellStyle['font-weight'] = 'bold';
+
+            cellStyle['font-style'] = 'italic';
           }
           return cellStyle;
         },
+
 
       };
 
@@ -272,6 +352,7 @@ export class TimesheetComponent implements OnInit {
           lockPosition: true,
           suppressMenu: true,
           resizable: false,
+          editable: false,
         };
         this.columnDefs.push(emptyCol);
       }
@@ -280,7 +361,16 @@ export class TimesheetComponent implements OnInit {
 
     });
 
-    this.rowData = this.timeSheetFramework;
+    if (!this.gridApi) {   this.rowData = this.timeSheetFramework; }
+
+    if (this.gridApi) {
+
+      this.gridApi.setColumnDefs(this.columnDefs);
+      this.gridApi.setRowData(this.timeSheetFramework);
+      this.gridApi.sizeColumnsToFit();
+    }
+
+
     console.log(this.timeSheetFramework);
   }
 
@@ -320,6 +410,49 @@ export class TimesheetComponent implements OnInit {
     return sum.toFixed(2);
   }
 
+  previousPayPeroid() {
+    this.routeParams.payperoid  = parseInt(this.routeParams.payperoid, null) - 1;
+    if (this.routeParams.payperoid  === 0) {
 
+      this.routeParams.payperoid = 26;
+      this.routeParams.year = parseInt(this.routeParams.year, null) - 1;
+
+    }
+
+    this.router.navigate([`/timesheet/${this.routeParams.userId}/year/${this.routeParams.year}/payperoid/${this.routeParams.payperoid}`]);
+
+  }
+
+  nextPayPeroid() {
+    this.routeParams.payperoid  = parseInt(this.routeParams.payperoid, null) + 1;
+    if (this.routeParams.payperoid  === 27) {
+
+      this.routeParams.payperoid = 1;
+      this.routeParams.year = parseInt(this.routeParams.year, null) + 1;
+
+    }
+
+    this.router.navigate([`/timesheet/${this.routeParams.userId}/year/${this.routeParams.year}/payperoid/${this.routeParams.payperoid}`]);
+
+  }
+
+  checkIfTimesheetEditable() {
+
+    if (this.userService.hasPermission(10)) {
+      console.log('worked');
+      this.timesheetEditable = true;
+      this.defaultColDef['editable'] = true;
+      return;
+    }
+
+    return;
+
+  }
+
+
+  getRowClass(params) {
+    console.log('test', params);
+
+  }
 
 }

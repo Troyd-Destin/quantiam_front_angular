@@ -96,7 +96,7 @@ export class UserViewComponent implements OnInit, OnDestroy {
     sortable: false,
     dragable: false,
     resizable: false,
-
+    suppressMovable: true,
   };
 
   ngOnInit() {
@@ -260,28 +260,27 @@ export class UserViewComponent implements OnInit, OnDestroy {
       employee_id: this.user.id,
     };
 
-    this.http.post<any>(environment.apiUrl + '/rto/allocation',params)
+    this.http.post<any>(environment.apiUrl + '/rto/allocation', params)
     .subscribe(response => {
       console.log(response);
 
       this.user.rto_allotment.unshift(response);
       this.gridApi.setRowData(this.user.rto_allotment);
-    
+
     });
 
   }
-  
+
   deleteRtoAllotment(row) {
 
-   
-    if(confirm('Do you want to delete this Allocation?'))
-    {
-      this.http.delete<any>(environment.apiUrl + '/rto/allocation/'+row.data.entry_id).subscribe((r)=>{
+
+    if (confirm('Do you want to delete this Allocation?')) {
+      this.http.delete<any>(environment.apiUrl + '/rto/allocation/' + row.data.entry_id).subscribe((r) => {
 
           const index = this.user.rto_allotment.findIndex(obj => obj.entry_id === row.data.entry_id);
           console.log(index);
-          this.user.rto_allotment.splice(index,1);
-         
+          this.user.rto_allotment.splice(index, 1);
+
           this.gridApi.setRowData(this.user.rto_allotment);
       });
    }

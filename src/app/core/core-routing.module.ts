@@ -34,6 +34,11 @@ const routes: Routes = [
 			// 	pathMatch: 'prefix',
 			},
 			{
+				path: 'sem',
+				loadChildren: '../sem/sem.module#SemModule',
+			// 	pathMatch: 'prefix',
+			},
+			{
 				path: 'xps',
 				loadChildren: '../xps/xps.module#XpsModule',
 			// 	pathMatch: 'prefix',

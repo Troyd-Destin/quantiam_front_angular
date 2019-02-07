@@ -13,7 +13,7 @@ const routes: Routes = [{
     path: '',
     component: TimesheetIndexComponent,
     children: [{
-      path: ':user/year/:year/payperiod/:payperiod',
+      path: ':user/year/:year/payperoid/:payperoid',
       data: { key: 'timesheet'},
       component: TimesheetComponent,
     },
