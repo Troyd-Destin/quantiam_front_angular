@@ -179,8 +179,15 @@ router-outlet ~ * {
 .side-panel .mat-list .mat-list-item
 {	
 	font-size: 10px;
-	height:25px;
+	height: 30px;
 	cursor: pointer;
+	
+}
+
+
+.side-panel .mat-list .mat-list-item:hover
+{	
+	/* background: rgba(0,0,0,.04); */
 	
 }
 
@@ -245,4 +252,36 @@ mat-list-item:focus{
     margin-left: 0px !important;
     margin-right: 0px !important;
     padding-left: 7px !important;
+}
+
+
+/deep/ .app-container mat-list-item button span {
+
+	width: 100%;
+}
+/deep/ .app-container mat-list-item button p {
+
+	display: inline;
+	float: left;
+	margin-top: 6px;
+}
+
+/deep/ .app-container mat-list-item button fa-icon { 
+	display: inline;
+	float: right;
+
+}
+
+/***** Footer ***/
+
+.footer-icon-array
+{
+	font-size: 16px;
+	
+}
+
+.footer-icon-array a fa-icon:hover{
+
+	color: rgba(255, 255, 255, 0.788);
+
 }

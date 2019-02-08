@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import {  environment} from '../../../environments/environment';
 
 import {  HttpClient} from '@angular/common/http';
-
 import { UserService } from '../../services/user/user.service';
-
-
 import { NumericEditor } from './numeric-editor.component';
+
+import { NotificationsService } from 'angular2-notifications';
 
 import * as moment from 'moment';
 
@@ -32,10 +30,12 @@ export class TimesheetComponent implements OnInit {
   timeSheetObj;
   timeSheetFramework = [];
 
+
   timesheetEditable = false;
 
   displayTimesheet = false;
 
+  oldCellValue;
 
   rowStyle = {
 
@@ -69,7 +69,7 @@ export class TimesheetComponent implements OnInit {
 
       if (params.node.footer) {
 
-        cellStyle['font-weight'] = 'bold !important';
+        //cellStyle['font-weight'] = 'bold !important';
         cellStyle['border-right'] = '0px !important';
       } else {
 
@@ -141,7 +141,7 @@ export class TimesheetComponent implements OnInit {
     },
     'footer-row': function(params) {
        if (params.node.footer) {
-        console.log(params);
+      //  console.log(params);
         return true;
       }
       return false;
@@ -171,6 +171,7 @@ export class TimesheetComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private userService: UserService,
+    private notification: NotificationsService,
     ) {  }
 
 
@@ -214,8 +215,34 @@ export class TimesheetComponent implements OnInit {
   }
 
    onCellDoubleClicked($event) {}
-   onCellEditingStopped($event) {}
-   onCellEditingStarted($event) {}
+   onCellEditingStopped($event) {
+
+     const value = $event.value;
+      if(this.oldCellValue !== value )
+      {
+        //save value to database
+        console.log(value, this.oldCellValue, 'test' );
+
+        this.updateHours($event);
+
+      }
+
+   }
+   onCellEditingStarted($event) {
+        
+
+         console.log($event);
+
+         //check for holiday
+         this.oldCellValue = $event.value;
+         
+        if($event.data.category.categoryName === 'Absence')
+        {
+         this.gridApi.stopEditing();
+         return;
+        }
+      
+   }
 
 
   fetchTimesheet() {
@@ -234,6 +261,11 @@ export class TimesheetComponent implements OnInit {
          });
 
 
+  }
+
+  test(){
+
+    console.log('test');
   }
 
   constructTimesheet() {
@@ -298,9 +330,45 @@ export class TimesheetComponent implements OnInit {
         field: date,
         suppressMenu: true,
         width: 80,
+        //editable: false,
         lockPosition: true,
         type: 'numericColumn',
-       // cellEditor: NumericEditor,
+        //cellEditor: NumericEditor,
+        cellRenderer:  (params)=> {
+          
+
+
+          if(params.node.group && !params.node.footer) { return '<i>'+$.trim(params.value)+'</i>'; }
+
+          if(params.node.footer) {
+
+            if(params.value > 8)
+            {
+              this.notification.info('Overtime', params.column.colId+' has more then 8 hours.', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
+              return '<b style="color:red;">'+$.trim(params.value)+'</b>'; 
+              
+            }
+            
+            return '<b>'+$.trim(params.value)+'</b>'; 
+        
+           }
+
+          if(params.value > 0){
+
+           console.log(params);
+         }
+
+          let disabled = '';
+        
+          if(params.data.category.categoryName === 'Absence' ||  (!this.timesheetEditable)) { disabled = 'disabled'; }
+
+           return '<input class="form-control timesheet" style="width:60px; height:25px; margin-top: 5px;" value="'+$.trim(params.value)+'" \
+           \
+           min="0"\
+           step="0.25"\
+           '+disabled+' ></input>';
+
+        },        
         timesheet_type: 'hours_field',
         tooltip: function (params) {
 
@@ -318,12 +386,13 @@ export class TimesheetComponent implements OnInit {
           };
 
           const day = moment(params.column.colId).format('ddd');
+          cellStyle['background-color'] = 'rgba(232, 242, 255,0.0)';
           if ((day === 'Sun' || day === 'Sat') && !params.node.footer) {
-            cellStyle['background-color'] = 'rgba(232, 242, 255,0.25)';
+            cellStyle['background-color'] = 'rgba(232, 242, 255,0.50)';
           }
 
           if (params.node.footer) {
-            cellStyle['font-weight'] = 'bold';
+           // cellStyle['font-weight'] = 'bold';
             cellStyle['border'] = '0px';
             if (params.value > 8) {
               cellStyle['color'] = 'red';
@@ -453,6 +522,40 @@ export class TimesheetComponent implements OnInit {
   getRowClass(params) {
     console.log('test', params);
 
+  }
+
+  updateHours(params)
+  {
+
+    console.log(params);
+    let payload = {
+
+      date: params.column.colId,
+      payperoid: this.timeSheetObj.payPeriod.payPeriod,
+      projectid: params.data.project.projectID,
+      year: this.timeSheetObj.payPeriod.year,
+      employeeid: this.timeSheetObj.userID,
+
+    };
+
+    payload[this.timeSheetObj.denomination.toLowerCase()] = ""+params.value+"";
+
+    const url = '/timesheet/' + this.routeParams.userId + '/process';
+    this.http.put<any>(environment.apiUrl + url + '?filterSpinner', payload)
+    .subscribe(response => {
+            console.log(response);
+
+            this.timeSheetObj.bank = response.bank;
+            this.notification.success('Saved ', response.projectid + ', ' + response[this.timeSheetObj.denomination.toLowerCase()] + ' ' + this.timeSheetObj.denomination + ' on ' + response.date, {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
+
+         });
+
+    //     date: "2019-02-04"
+    // employeeid: "65"
+    // hours: "8.00"
+    // payperoid: 5
+    // projectid: 7330
+    // year: 2019
   }
 
 }

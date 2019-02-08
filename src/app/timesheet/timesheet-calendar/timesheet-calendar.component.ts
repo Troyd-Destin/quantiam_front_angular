@@ -80,6 +80,7 @@ export class TimesheetCalendarComponent implements OnInit {
                  'minimumHours': this.minimumHours
               },
      color: '#38536f',
+     //color: '#5c7a9a;',
     };
 
 

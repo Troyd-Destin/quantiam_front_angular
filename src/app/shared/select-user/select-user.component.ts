@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { SelectUserService } from './select-user.service';
+import { UserService } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-select-user',
@@ -21,25 +22,29 @@ export class SelectUserComponent implements OnInit, OnDestroy {
   @Input() selectableGroup: any = false; // multi version
   @Input() placeholder = 'Select Somebody'; // multi version
   @Input() showMachines = false; // multi version
+  @Input() restrictedAccessMode = false; // multi version
 
   // Outputs
   @Output() change = new EventEmitter<any>();
 
 
-  constructor(private selectUserService: SelectUserService) { }
+  constructor(private selectUserService: SelectUserService, private userService: UserService) { }
 
   ngOnInit() {
 
+
+    if(!this.restrictedAccessMode)
+    {
+
     this.selectUserService.list(); // Make sure the service is initialized.
     this.list$ = this.selectUserService.list$.subscribe((r) => {
-
-
          this.allItems = r;
-       //   if(r[0]) this.showItems();
           if (r[0]) {  this.showItems(); }
-
-
       });
+    }
+
+
+
   }
 
   showItems() {

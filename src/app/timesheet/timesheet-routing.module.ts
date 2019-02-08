@@ -12,15 +12,31 @@ import { TimesheetRtoViewComponent } from './timesheet-rto-view/timesheet-rto-vi
 const routes: Routes = [{
     path: '',
     component: TimesheetIndexComponent,
-    children: [{
+    children: [
+    {
       path: ':user/year/:year/payperoid/:payperoid',
       data: { key: 'timesheet'},
       component: TimesheetComponent,
     },
     {
+      path: 'bank/:type/:user',
+      data: { key: 'timesheet-bank'},
+      component: TimesheetBankComponent,
+    },
+    {
       path: 'calendar',
       data: { key: 'timesheet-calendar'},
       component: TimesheetCalendarComponent,
+    },
+    {
+      path: 'rto/database',
+      data: { key: 'timesheet-rto-database'},
+      component: TimesheetRtoComponent,
+    },
+    {
+      path: 'rto/:id',
+      data: { key: 'timesheet-rto-view'},
+      component: TimesheetRtoViewComponent,
     },
 
   ],

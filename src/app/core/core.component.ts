@@ -17,6 +17,11 @@ import { WebsocketService } from '../services/websocket/websocket.service';
 import { SettingsService } from '../services/settings/settings.service';
 
 
+import { faCoffee, faMicroscope, faBolt, faFlask, faXRay, faFireAlt, faPlaneDeparture } from '@fortawesome/free-solid-svg-icons';
+import { faCalendar, faClock } from '@fortawesome/free-regular-svg-icons';
+import { faAngular, faGithub, faFontAwesome, faLaravel } from '@fortawesome/free-brands-svg-icons';
+
+
 interface WebSocketMessages {
 
 }
@@ -37,6 +42,20 @@ interface WebSocketMessages {
 export class CoreComponent implements OnInit, OnDestroy {
 
 
+  // Icons
+  faLaravel = faLaravel;
+  faPlaneDeparture = faPlaneDeparture;
+  faFireAlt = faFireAlt;
+  faXRay = faXRay;
+  faFlask = faFlask;
+  faBolt = faBolt;
+  faMicroscope = faMicroscope;
+  faFontAwesome = faFontAwesome;
+  faGithub = faGithub;
+  faAngular= faAngular;
+  faClock = faClock;
+  faCalendar = faCalendar;
+  faCoffee = faCoffee;
 
 
   title = 'app';

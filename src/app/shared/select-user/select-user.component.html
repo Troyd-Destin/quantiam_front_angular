@@ -1,9 +1,14 @@
 <ng-select 
 	[items]="items"
+
 	[(ngModel)]="selectedValue"	
+
 	[multiple]="multiple"
 	[placeholder]="placeholder"
+	[restrictedAccessMode]="restrictedAccessMode"
+
 	(change)="onChange($event)"
+
 	bindValue="id"
 	bindLabel="name_abbrev"
 >

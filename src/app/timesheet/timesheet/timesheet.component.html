@@ -1,10 +1,26 @@
+
 <div fxFlex fxLayout="column" fxLayoutGap="10px" style="height:100%">
+
+
+  <div id="alerts">
+
+
+    <ngb-alert [dismissible]="false" type="info" *ngIf="timeSheetObj?.payPeriod?.locked && !userService.hasPermission(10)">
+      <strong> Closed </strong> The period in which you could edit this timesheet has expired. 
+    </ngb-alert>
+
+   <ngb-alert [dismissible]="false" type="success" *ngIf="timeSheetObj?.payPeriod?.locked && userService.hasPermission(10)">
+      <strong> Notice </strong> The period in which you could edit this timesheet has expired. However, you are a Timesheet Administrator and can edit this timesheet.
+    </ngb-alert>
+    
+
+  </div>
 
   <div fxLayout="row">
 
       <div fxLayout="column" fxFlex=20 fxLayoutAlign="start start">
 
-        <p style="margin-bottom:5px;"> {{timeSheetObj?.fullname}} - Pay Peroid {{routeParams.payperoid}}, {{routeParams.year}} </p>
+        <p style="margin-bottom:5px;" >   {{timeSheetObj?.fullname}}  - Pay Peroid {{routeParams.payperoid}}, {{routeParams.year}} </p>
         <p> {{timeSheetObj?.payPeriod.startDateHeader}} - {{timeSheetObj?.payPeriod.endDateHeader}}  </p>
        
 
@@ -89,6 +105,7 @@
     [defaultColDef]="defaultColDef"
     [autoGroupColumnDef]="autoGroupColumnDef"
     [frameworkComponents]="frameworkComponents"
+   
 
     (gridReady)="onGridReady($event)"
     (cellDoubleClicked)="onCellDoubleClicked($event)"
@@ -97,7 +114,9 @@
     (rowGroupOpened)="onRowGroupOpened($event)"
     (rowDataChanged)="rowDataChanged($event)"
 
-    [enableRangeSelection]="true"
+    [enableRangeSelection]="false"
+    [suppressCellSelection]="false"
+    [singleClickEdit] = "true"
     [pagination]="false"
     [suppressPropertyNamesCheck]="true"
     [suppressAggFuncInHeader] = "true"

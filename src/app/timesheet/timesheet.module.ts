@@ -16,6 +16,7 @@ import { TimesheetRtoComponent } from './timesheet-rto/timesheet-rto.component';
 import { TimesheetRtoViewComponent } from './timesheet-rto-view/timesheet-rto-view.component';
 
 import { NumericEditor } from './timesheet/numeric-editor.component';
+import { TimesheetReportsComponent } from './timesheet-reports/timesheet-reports.component';
 
 @NgModule({
   imports: [
@@ -25,6 +26,6 @@ import { NumericEditor } from './timesheet/numeric-editor.component';
     MaterialDesignModule,
     SharedModule
   ],
-  declarations: [NumericEditor, TimesheetIndexComponent, TimesheetComponent, TimesheetBankComponent, TimesheetSimpleComponent, TimesheetCalendarComponent, TimesheetRtoComponent, TimesheetRtoViewComponent]
+  declarations: [NumericEditor, TimesheetIndexComponent, TimesheetComponent, TimesheetBankComponent, TimesheetSimpleComponent, TimesheetCalendarComponent, TimesheetRtoComponent, TimesheetRtoViewComponent, TimesheetReportsComponent]
 })
 export class TimesheetModule { }

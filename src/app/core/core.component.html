@@ -125,10 +125,25 @@
 										<button routerLink="/material" mat-button>Home</button>
 								</mat-list-item> -->
 								 <mat-list-item > 
-									 <button  routerLink="/timesheet/65/year/2019/payperoid/4" routerLinkActive="mat-list-item-button-active" mat-button> Timesheet </button>
+									 <button  routerLink="/timesheet/65/year/2019/payperoid/4" routerLinkActive="mat-list-item-button-active" mat-button> <p>Timesheet</p>
+										<fa-icon [icon]="faClock"></fa-icon>
+									</button>
 								</mat-list-item>	
 								 <mat-list-item > 
-									 <button routerLink="/timesheet/calendar" routerLinkActive="mat-list-item-button-active" mat-button> Calendar </button>
+									 
+									 <button routerLink="/timesheet/calendar" routerLinkActive="mat-list-item-button-active" mat-button  fxLayout="row" >  
+										<p>	Calendar</p> 
+										<fa-icon [icon]="faCalendar" ></fa-icon>
+									</button>
+									 
+								</mat-list-item>
+								 <mat-list-item > 
+									 
+									 <button routerLink="/timesheet/rto/database" routerLinkActive="mat-list-item-button-active" mat-button  fxLayout="row" >  
+										<p>	RTO </p> 
+										<fa-icon [icon]="faPlaneDeparture" ></fa-icon>
+									</button>
+									 
 								</mat-list-item>
 								<!-- <mat-list-item > 
 									 <button  routerLinkActive="mat-list-item-button-active" mat-button> RTO </button>
@@ -146,7 +161,7 @@
 								    Inventory
 								</mat-panel-title>
 								
-							  </mat-expansion-panel-header>
+							  </mat-expansion-panel-header>                  
 								<mat-list>
 								<!--  <mat-list-item  > 
 										<button routerLink="/material" mat-button>Home</button>
@@ -162,7 +177,9 @@
 									</mat-list-item>  
 
 										 <mat-list-item  > 
-										 <button routerLink="/material/container/database" routerLinkActive="mat-list-item-button-active" mat-button> Materials </button>
+										 <button routerLink="/material/container/database" routerLinkActive="mat-list-item-button-active" mat-button> <p>Materials</p>
+											<fa-icon [icon]="faFlask"></fa-icon>
+										</button>
 									</mat-list-item> 
 
 								
@@ -274,19 +291,29 @@
 							  </mat-expansion-panel-header>
 								<mat-list>
 								<mat-list-item  > 
-										<button routerLink="/sem/database" routerLinkActive="mat-list-item-button-active" mat-button> SEM </button>
+										<button routerLink="/sem/database" routerLinkActive="mat-list-item-button-active" mat-button> <p>SEM </p>
+										
+											<fa-icon  [icon]="faMicroscope" ></fa-icon>
+										</button>
 								</mat-list-item>
 								<mat-list-item  > 
-										<button routerLink="/tga/database" routerLinkActive="mat-list-item-button-active" mat-button> TGA </button>
+										<button routerLink="/tga/database" routerLinkActive="mat-list-item-button-active" mat-button> <p>TGA</p>
+											<fa-icon  [icon]="faFireAlt" ></fa-icon>
+										</button>
 								</mat-list-item>
 								<mat-list-item  > 
-										 <button routerLink="/xps/database" routerLinkActive="mat-list-item-button-active" mat-button> XPS </button>
+										 <button routerLink="/xps/database" routerLinkActive="mat-list-item-button-active" mat-button> <p>XPS </p>
+											<fa-icon  [icon]="faBolt" ></fa-icon>
+										</button>
 								</mat-list-item>
-								 <mat-list-item style="display:none"  > 
-										 <button routerLinkActive="mat-list-item-button-active" mat-button>SEM / EDS</button>
-								</mat-list-item >
-									 <mat-list-item  style="display:none" > 
-										 <button routerLinkActive="mat-list-item-button-active" mat-button>XRD</button>
+						
+									 <mat-list-item   > 
+										 <button routerLinkActive="mat-list-item-button-active" mat-button>
+											 
+											<p>XRD</p>
+											<fa-icon  [icon]="faXRay" ></fa-icon>
+
+										 </button>
 								</mat-list-item>
 					
 								
@@ -358,17 +385,24 @@
 			<div style="padding-right: 20px; " fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
 
 				<p style="font-size: 12px;">  © {{currentYear}} Quantiam Technologies, Inc.</p>
-				<a style="color:white;" target="_blank" href="https://github.com/Troyd-Destin/quantiam_angular_boiler_plate">
-					<fa  name="github" ></fa>
-				</a>
-				
-				<a style="color:white;" target="_blank" href="https://origin.fontawesome.com">
-					<fa style="font-size:15px;" name="font-awesome" ></fa>
-				</a>
 
-				<a style="color:white;" target="_blank" href="https://angular.io/">
-					<fa  name="angular" ></fa>
-				</a>
+				<div class="footer-icon-array" fxLayout="row"  fxLayoutGap="10px" >
+					<a style="color:white;" target="_blank" href="https://github.com/Troyd-Destin/quantiam_angular_boiler_plate">
+						<fa-icon  [icon]="faGithub" ></fa-icon>
+					</a>
+					<a style="color:white;" target="_blank" href="https://angular.io/">
+						<fa-icon  [icon]="faAngular" ></fa-icon>
+					</a>
+					<a style="color:white;" target="_blank" href="https://laravel.com/docs/5.7">
+						<fa-icon  [icon]="faLaravel" ></fa-icon>
+					</a>
+					
+					<a style="color:white;" target="_blank" href="https://origin.fontawesome.com/icons">
+						<fa-icon  [icon]="faFontAwesome" ></fa-icon>
+					</a>
+				</div>
+
+				
 			
 			</div>
 

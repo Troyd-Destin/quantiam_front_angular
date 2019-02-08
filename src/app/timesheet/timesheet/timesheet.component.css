@@ -49,3 +49,31 @@
 
     display: none;
 }
+
+/deep/ .ag-cell-edit-input
+{
+
+    padding-bottom: 0px !important;
+    font-size: 16px !important; 
+    text-align: center !important;
+}
+
+/deep/.ag-theme-material .ag-cell-inline-editing
+{
+    background-color: #ffffff !important;
+
+}
+
+/deep/ .ag-theme-material{
+
+     background-color: rgba(232, 242, 255,0.0);
+}
+
+/deep/ .form-control
+{
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    text-align: center !important;
+    font-size: 12px !important;
+
+}
