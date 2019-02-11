@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 import {
@@ -53,7 +53,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
-    NgbModule,
+    NgbAlertModule,
   CommonModule,
   FontAwesomeModule,
      MatAutocompleteModule,
@@ -93,7 +93,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatNativeDateModule,
   ],
   exports: [
-    NgbModule,
+    NgbAlertModule,
     FontAwesomeModule,
     MatAutocompleteModule,
     MatButtonModule,

@@ -29,6 +29,7 @@ export class TimesheetComponent implements OnInit {
   timesheetPayperoids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26];
   timeSheetObj;
   timeSheetFramework = [];
+  lastCellEdited;
 
 
   timesheetEditable = false;
@@ -69,7 +70,7 @@ export class TimesheetComponent implements OnInit {
 
       if (params.node.footer) {
 
-        //cellStyle['font-weight'] = 'bold !important';
+        // cellStyle['font-weight'] = 'bold !important';
         cellStyle['border-right'] = '0px !important';
       } else {
 
@@ -217,31 +218,31 @@ export class TimesheetComponent implements OnInit {
    onCellDoubleClicked($event) {}
    onCellEditingStopped($event) {
 
-     const value = $event.value;
-      if(this.oldCellValue !== value )
-      {
-        //save value to database
-        console.log(value, this.oldCellValue, 'test' );
 
+     let value = $event.value;
+
+     // tslint:disable-next-line:quotemark
+     if (value === "") { value = null; }
+
+     if (this.oldCellValue !== value ) {
         this.updateHours($event);
-
       }
-
+      return;
    }
    onCellEditingStarted($event) {
-        
 
          console.log($event);
 
-         //check for holiday
+         // check for holiday
          this.oldCellValue = $event.value;
-         
-        if($event.data.category.categoryName === 'Absence')
-        {
+
+         console.log(this.oldCellValue);
+
+        if ($event.data.category.categoryName === 'Absence') {
          this.gridApi.stopEditing();
          return;
         }
-      
+
    }
 
 
@@ -263,7 +264,7 @@ export class TimesheetComponent implements OnInit {
 
   }
 
-  test(){
+  test() {
 
     console.log('test');
   }
@@ -330,45 +331,44 @@ export class TimesheetComponent implements OnInit {
         field: date,
         suppressMenu: true,
         width: 80,
-        //editable: false,
+        // editable: false,
         lockPosition: true,
         type: 'numericColumn',
-        //cellEditor: NumericEditor,
-        cellRenderer:  (params)=> {
-          
+        // cellEditor: NumericEditor,
+        cellRenderer:  (params) => {
 
 
-          if(params.node.group && !params.node.footer) { return '<i>'+$.trim(params.value)+'</i>'; }
 
-          if(params.node.footer) {
+          if (params.node.group && !params.node.footer) { return '<i>' + $.trim(params.value) + '</i>'; }
 
-            if(params.value > 8)
-            {
-              this.notification.info('Overtime', params.column.colId+' has more then 8 hours.', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
-              return '<b style="color:red;">'+$.trim(params.value)+'</b>'; 
-              
+          if (params.node.footer) {
+
+            if (params.value > 8) {
+              this.notification.info('Overtime', params.column.colId + ' has more then 8 hours.', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
+              return '<b style="color:red;">' + $.trim(params.value) + '</b>';
+
             }
-            
-            return '<b>'+$.trim(params.value)+'</b>'; 
-        
+
+            return '<b>' + $.trim(params.value) + '</b>';
+
            }
 
-          if(params.value > 0){
+          if (params.value > 0) {
 
            console.log(params);
          }
 
           let disabled = '';
-        
-          if(params.data.category.categoryName === 'Absence' ||  (!this.timesheetEditable)) { disabled = 'disabled'; }
 
-           return '<input class="form-control timesheet" style="width:60px; height:25px; margin-top: 5px;" value="'+$.trim(params.value)+'" \
+          if (params.data.category.categoryName === 'Absence' ||  (!this.timesheetEditable)) { disabled = 'disabled'; }
+
+           return '<input class="form-control timesheet" style="width:60px; height:25px; margin-top: 5px;" value="' + $.trim(params.value) + '" \
            \
            min="0"\
            step="0.25"\
-           '+disabled+' ></input>';
+           ' + disabled + ' ></input>';
 
-        },        
+        },
         timesheet_type: 'hours_field',
         tooltip: function (params) {
 
@@ -524,21 +524,22 @@ export class TimesheetComponent implements OnInit {
 
   }
 
-  updateHours(params)
-  {
+  updateHours(params) {
 
+    this.lastCellEdited = params;
     console.log(params);
-    let payload = {
+    const payload = { 
 
       date: params.column.colId,
       payperoid: this.timeSheetObj.payPeriod.payPeriod,
       projectid: params.data.project.projectID,
       year: this.timeSheetObj.payPeriod.year,
       employeeid: this.timeSheetObj.userID,
+      
 
     };
 
-    payload[this.timeSheetObj.denomination.toLowerCase()] = ""+params.value+"";
+    payload[this.timeSheetObj.denomination.toLowerCase()] = '' + params.value + '';
 
     const url = '/timesheet/' + this.routeParams.userId + '/process';
     this.http.put<any>(environment.apiUrl + url + '?filterSpinner', payload)
@@ -548,14 +549,16 @@ export class TimesheetComponent implements OnInit {
             this.timeSheetObj.bank = response.bank;
             this.notification.success('Saved ', response.projectid + ', ' + response[this.timeSheetObj.denomination.toLowerCase()] + ' ' + this.timeSheetObj.denomination + ' on ' + response.date, {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
 
-         });
+         },
+         error => {
 
-    //     date: "2019-02-04"
-    // employeeid: "65"
-    // hours: "8.00"
-    // payperoid: 5
-    // projectid: 7330
-    // year: 2019
+            const rowNode = this.gridApi.getRowNode(params.rowIndex);
+            params.data[params.column.colId] = null;
+            rowNode.setData(params.data);
+            this.gridApi.redrawRows();
+            this.notification.error('error ',  'The data was not saved.', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
+
+         });
   }
 
 }
