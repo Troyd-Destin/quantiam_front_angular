@@ -87,7 +87,7 @@ padding-right:12px !important;
 	position: relative;
     z-index: 1;
     display: block;
-    height: calc(100% - 60px);
+    height: calc(100% - 50px);
     overflow: auto;
     padding: 0px 25px 10px 20px;
     margin-top: 10px;
@@ -484,3 +484,21 @@ p {
 	padding: .50rem 0.75rem;
     font-size: 0.8rem;
 }
+
+
+
+
+.page-header {
+    padding-bottom: 11px;
+    margin: 20px 0 10px;
+	border-bottom: 1px solid #e5e6e6;
+	border-bottom-color: rgba(0, 0, 0, 0.3);
+}
+
+.page-header small {
+
+	font-size: 70%;
+	font-weight: lighter;
+	margin-left: 10px;
+}
+

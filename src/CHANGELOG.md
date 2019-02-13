@@ -7,8 +7,10 @@
 - Can now create and delete RTO Allotments on the user view screen
 
 ### Timesheet
-- Can now view timesheet data on a per user basis, similar to the anuglarjs app
-- RTO Calendar rebuilt, has all functionality of angularjs app
+- Can now view timesheet data on a per user basis
+- Machines can now be viewed
+- Hours, Overtime, RTO and Bank tables exist
+- RTO Calendar rebuilt, has all previous functionality 
 
 ### Sidemenu
 - Added Timesheet Category

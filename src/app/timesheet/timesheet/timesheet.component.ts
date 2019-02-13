@@ -7,6 +7,7 @@ import { UserService } from '../../services/user/user.service';
 import { NumericEditor } from './numeric-editor.component';
 
 import { NotificationsService } from 'angular2-notifications';
+import { faDownload } from '@fortawesome/free-solid-svg-icons';
 
 import * as moment from 'moment';
 
@@ -16,6 +17,8 @@ import * as moment from 'moment';
   styleUrls: ['./timesheet.component.css']
 })
 export class TimesheetComponent implements OnInit {
+
+  faDownload = faDownload;
 
   private gridApi;
   private gridColumnApi;
@@ -30,11 +33,10 @@ export class TimesheetComponent implements OnInit {
   timeSheetObj;
   timeSheetFramework = [];
   lastCellEdited;
-
-
+  timesheetLoaded = false;
   timesheetEditable = false;
-
   displayTimesheet = false;
+  showSelectBox = false;
 
   oldCellValue;
 
@@ -252,28 +254,26 @@ export class TimesheetComponent implements OnInit {
     // Auth layer on fetching.
 
     const url = '/timesheet/' + this.routeParams.userId + '/year/' + this.routeParams.year + '/payperiod/' + this.routeParams.payperoid + '';
-
+    this.timesheetLoaded = false;
 
     this.http.get<any>(environment.apiUrl + url)
     .subscribe(response => {
       console.log(response);
             this.timeSheetObj = response;
-            this.constructTimesheet();
+            this.displayTimesheet = true;
+            setTimeout((x)=>{this.constructTimesheet();},100);
+            setTimeout((x)=>{ this.timesheetLoaded = true;},1000);
          });
 
 
   }
 
-  test() {
-
-    console.log('test');
-  }
+  
 
   constructTimesheet() {
 
     // this.rowData = this.timeSheetObj.framework;
     this.timeSheetFramework = [];
-    this.displayTimesheet = true;
     this.columnDefs.splice(2, 20);
 
     this.timeSheetObj.framework.forEach(category => {
@@ -343,8 +343,12 @@ export class TimesheetComponent implements OnInit {
 
           if (params.node.footer) {
 
-            if (params.value > 8) {
+            if (params.value > 8 && !this.timeSheetObj.machine) {
+              console.log(params);
+              if(this.timesheetLoaded)
+              {
               this.notification.info('Overtime', params.column.colId + ' has more then 8 hours.', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
+              }
               return '<b style="color:red;">' + $.trim(params.value) + '</b>';
 
             }
@@ -383,18 +387,55 @@ export class TimesheetComponent implements OnInit {
           const cellStyle = {
 
             'text-align': 'center',
+            'background-color': 'rgba(232, 242, 255,0.0)'
           };
 
-          const day = moment(params.column.colId).format('ddd');
-          cellStyle['background-color'] = 'rgba(232, 242, 255,0.0)';
-          if ((day === 'Sun' || day === 'Sat') && !params.node.footer) {
-            cellStyle['background-color'] = 'rgba(232, 242, 255,0.50)';
+          let absenceCheck = false;
+
+        if(Array.isArray(this.timeSheetObj.rto) && this.timeSheetObj.rto.length > 0)
+        {
+            this.timeSheetObj.rto.forEach((rto) => {
+
+              if(absenceCheck) { return; }
+              if(rto.status === 'approved')
+              {
+                
+                rto.requested_time.forEach((time)=>{
+              
+                  if(time.date === params.column.colId) {
+                    
+                    absenceCheck = true; 
+                    return;
+                    }
+                })
+              }
+
+
+            })
+        }
+
+          if(absenceCheck && !params.node.footer)
+          {
+            cellStyle['background-color'] = '#e8faff6b';
           }
 
+
+          const holidayCheck = this.timeSheetObj.holidays.find((holiday) => {
+            return holiday.date === params.column.colId;
+          })
+
+          const day = moment(params.column.colId).format('ddd');
+          if ((holidayCheck || day === 'Sun' || day === 'Sat') && !params.node.footer) {
+
+            cellStyle['background-color'] = 'rgba(232, 242, 255,0.50)';
+
+          }
+
+         
           if (params.node.footer) {
            // cellStyle['font-weight'] = 'bold';
             cellStyle['border'] = '0px';
-            if (params.value > 8) {
+            if (params.value > 8 && !this.timeSheetObj.machine) {
               cellStyle['color'] = 'red';
             }
               cellStyle['color'] = 'black';
@@ -429,25 +470,24 @@ export class TimesheetComponent implements OnInit {
 
 
     });
-
+    
+    this.displayTimesheet = true;
     if (!this.gridApi) {   this.rowData = this.timeSheetFramework; }
 
     if (this.gridApi) {
-
+      
       this.gridApi.setColumnDefs(this.columnDefs);
       this.gridApi.setRowData(this.timeSheetFramework);
       this.gridApi.sizeColumnsToFit();
     }
 
-
+    
     console.log(this.timeSheetFramework);
   }
 
   onRowGroupOpened(event) {
     console.log(event);
 
-    console.log(this.rowData[0]);
-   // this.gridApi.setPinnedTopRowData([this.rowData[0]]);
   }
 
   rowDataChanged(event) {
@@ -505,6 +545,12 @@ export class TimesheetComponent implements OnInit {
 
   }
 
+  changePayperoid()
+  {
+    this.router.navigate([`/timesheet/${this.routeParams.userId}/year/${this.routeParams.year}/payperoid/${this.routeParams.payperoid}`]);
+
+  }
+
   checkIfTimesheetEditable() {
 
     if (this.userService.hasPermission(10)) {
@@ -547,7 +593,9 @@ export class TimesheetComponent implements OnInit {
             console.log(response);
 
             this.timeSheetObj.bank = response.bank;
-            this.notification.success('Saved ', response.projectid + ', ' + response[this.timeSheetObj.denomination.toLowerCase()] + ' ' + this.timeSheetObj.denomination + ' on ' + response.date, {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
+            this.timeSheetObj.overhours[response.week-1].daily_sum = response.totaldaily_overhours;
+            this.timeSheetObj.overhours[response.week-1].weekly_sum = response.totalweekly_overhours;
+            this.notification.success('Saved ', response.projectid + ', ' + response[this.timeSheetObj.denomination.toLowerCase()] + ' ' + this.timeSheetObj.denomination + ' on ' + response.date, {timeOut: 2000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
 
          },
          error => {
@@ -561,4 +609,35 @@ export class TimesheetComponent implements OnInit {
          });
   }
 
+  generateTimesheetDownload()
+  {
+    const url = '/timesheet/' + this.routeParams.userId + '/year/' + this.routeParams.year + '/payperiod/' + this.routeParams.payperoid + '/generate';
+
+    //this.notification.info('Processing... ',  'Generating this timesheet.', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
+
+    this.http.get<any>(environment.apiUrl + url + '')
+    .subscribe(r=>{
+      console.log(r);
+      window.location.assign(r.url);
+      this.notification.success('Success',  'Timesheet made!', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
+
+    });
+  
+  }
+
+  selectedUserChanged(event){
+
+    this.routeParams.userId = event.employeeid;
+    this.router.navigate([`/timesheet/${this.routeParams.userId}/year/${this.routeParams.year}/payperoid/${this.routeParams.payperoid}`]);
+    this.showSelectBox = false;
+
+  }
+
+ hideSelectBox()
+ {
+  if(this.showSelectBox)
+  {
+  setTimeout((x)=>{this.showSelectBox = false;},200);
+  }
+}
 }

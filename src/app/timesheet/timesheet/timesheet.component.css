@@ -77,3 +77,32 @@
     font-size: 12px !important;
 
 }
+
+
+.print-button{
+
+    border-radius: 17px;
+    margin-right: 50px;
+    padding: 5px 10px !important;
+    line-height: inherit !important;
+    font-size: 13px;
+    background-color: #52bb56;
+}
+
+.print-button:hover
+{
+    background-color: #3d8d40;
+}
+
+.standards-button{
+
+  
+    padding: 5px 10px !important;
+    line-height: inherit !important;
+    font-size: 11px;
+    margin-top:15px;
+}
+.standards-button:hover
+{
+    color: #4db0ce;
+}

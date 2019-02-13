@@ -32,6 +32,8 @@ export class SelectUserComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+    console.log(this.selectedValue);
+
 
     if(!this.restrictedAccessMode)
     {
