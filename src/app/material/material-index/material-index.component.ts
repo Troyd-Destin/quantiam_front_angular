@@ -5,6 +5,7 @@ import { MaterialService } from '../../services/material/material.service';
 import { MaterialLotContainerService } from '../../services/material-lot-container/material-lot-container.service';
 import { Router  } from '@angular/router';
 import { Subject } from 'rxjs';
+import { UserService } from '../../services/user/user.service';
 
 
 @Component({
@@ -24,7 +25,10 @@ export class MaterialIndexComponent implements OnInit, OnDestroy {
 
 
 
-  constructor(private dialog: MatDialog, private materialService: MaterialService, private materialLotContainerService: MaterialLotContainerService, public router: Router) { }
+  constructor(
+    private dialog: MatDialog, private materialService: MaterialService, 
+    private materialLotContainerService: MaterialLotContainerService, 
+    public router: Router, private userService: UserService) { }
 
   ngOnInit() {
 

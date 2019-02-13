@@ -190,13 +190,41 @@ export class UserService  {
   public hasPermission(permission_id) {
 
      // console.log(this.authedUser$);
+      let checked = false;
+      let Exception = {};
       const user = this.fetchAuthUserObj();
-      // console.log(user.permissions);
+
+      if(Array.isArray(permission_id))
+      {
+       
+        try{
+        permission_id.forEach((p, index) => {
+
+          let result = user.permissions.filter(obj => {
+            return obj.permission_id === p;
+          })
+
+         // console.log(result);
+
+          if(result[0]){
+            checked = true;
+             throw Exception;
+            }
+
+        })
+      } catch(e){  }
+
+        if(checked){ return true; }
+
+      }
+      else
+      {      // console.log(user.permissions);
 
       for (let i = 0; i < user.permissions.length; i++) {
       // console.log(user.permissions[i]);
             if (user.permissions[i].permission_id === permission_id) { return true; }
         }
+      }
 
       return false;
 
