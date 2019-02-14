@@ -17,6 +17,10 @@
 - Sorted SGX towards the bottom
 - Instruments now has a SEM category
 
+### Materials
+
+- Containers now require R&D L1 or Manufacturing Access to edit / create 
+
 ## [19.1.0] January 2019
 
 ### Misc

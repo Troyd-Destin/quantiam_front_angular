@@ -281,6 +281,12 @@ padding-right:12px !important;
 	margin-left:5px;
 }
 
+.select2-container--classic .select2-selection--single .select2-selection__placeholder
+{
+	margin-right:10px;
+
+}
+
 /* .select2-container .select2-selection--single .select2-selection__rendered{
 	
 	

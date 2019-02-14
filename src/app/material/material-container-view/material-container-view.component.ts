@@ -6,6 +6,7 @@ import { MaterialSupplierService } from '../../services/material-supplier/materi
 import { LocationService } from '../../services/location/location.service';
 import * as moment from 'moment';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UserService } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-material-container-view',
@@ -15,7 +16,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 
   _container = null;
-  container: any;
+	container: any;
+	canEdit = false;
   editMaterial = false;
   editLot = false;
   editContainer = false;
@@ -35,10 +37,13 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 	private route: ActivatedRoute,
 	private locationService: LocationService,
 	private router: Router,
+	private userService: UserService,
 
 	) { }
 
   ngOnInit() {
+
+		if(this.userService.hasPermission([8,13])){ this.canEdit = true; }
 
       let id  = this.route.snapshot.params.id;  // obtain ID from route
 
