@@ -18,9 +18,9 @@
 
   <div fxLayout="row">
 
-      <div fxLayout="column" fxFlex=20 fxLayoutAlign="start start"  (mouseenter)="showSelectBox = true"  (mouseleave) ="hideSelectBox()">
+      <div fxLayout="column" fxFlex=20 fxLayoutAlign="start start" >
 
-        <div  fxLayout="row">   
+        <div  fxLayout="row"  (mouseenter)="showSelectBox = true"  (mouseleave) ="hideSelectBox()">   
           
           <p [hidden]="showSelectBox" >{{timeSheetObj?.fullname}} </p> 
 

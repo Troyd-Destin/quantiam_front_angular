@@ -43,7 +43,7 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-		if(this.userService.hasPermission([8,13])){ this.canEdit = true; }
+		if(this.userService.hasPermission([40,41])){ this.canEdit = true; }
 
       let id  = this.route.snapshot.params.id;  // obtain ID from route
 

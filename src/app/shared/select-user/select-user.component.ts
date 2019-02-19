@@ -49,6 +49,13 @@ export class SelectUserComponent implements OnInit, OnDestroy {
 
   }
 
+  showMachineItems()
+  {
+
+
+  }
+
+
   showItems() {
     console.log(this.showActive, this.showInactive);
 

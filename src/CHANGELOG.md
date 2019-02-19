@@ -5,10 +5,11 @@
 
 ### Users
 - Can now create and delete RTO Allotments on the user view screen
+- Added a group tab to the Managment box
 
 ### Timesheet
 - Can now view timesheet data on a per user basis
-- Machines can now be viewed
+- Machine Timesheets can now be viewed
 - Hours, Overtime, RTO and Bank tables exist
 - RTO Calendar rebuilt, has all previous functionality 
 
@@ -20,6 +21,11 @@
 ### Materials
 
 - Containers now require R&D L1 or Manufacturing Access to edit / create 
+
+### Other
+
+- Select2 boxes now have proper padding for placeholder text
+
 
 ## [19.1.0] January 2019
 

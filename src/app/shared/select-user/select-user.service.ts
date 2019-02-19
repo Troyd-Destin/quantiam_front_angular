@@ -15,6 +15,7 @@ export class SelectUserService {
   private modelName = 'User';
 
   private listFetched = false;
+  private previousParams = {};
 
   public _UserListSource = new BehaviorSubject({});
   public list$: Observable<any> = this._UserListSource.asObservable();
@@ -23,10 +24,12 @@ export class SelectUserService {
 
  constructor(public http: HttpClient, public notification: NotificationsService) { }
 
- list() {
+ list(params = {}) {
 
-       if (!this.listFetched) {
-          this.http.get<any>(environment.apiUrl + `${this.endpoint}`)
+       if (!this.listFetched || this.previousParams !== params) {
+
+          this.previousParams = params;
+          this.http.get<any>(environment.apiUrl + `${this.endpoint}`, params)
           .pipe(
              tap( r => {    }), // set id to be last_id
              map( r =>  r), // return results without transformation
@@ -44,5 +47,12 @@ export class SelectUserService {
            );
 
        }
+ }
+
+ listMachines()
+ {
+
+
+
  }
 }

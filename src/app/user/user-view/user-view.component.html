@@ -3,7 +3,7 @@
 </div>
 
 
-<div *ngIf="renderUser" fxFlex=100  >
+<div *ngIf="renderUser && user" fxFlex=100  >
 	<div  fxLayout="column" fxLayout.gt-md="row"  fxLayoutAlign="start start" fxLayoutGap="20px" fxFlex >
 	
 		<mat-card class="quantiam-mat-card" fxLayout="column" >
@@ -91,7 +91,7 @@
 							   fxLayoutAlign="start center"
 							   (change)="updateSupervisor($event)"
 							   [placeholder]="user.supervisors[0]?.name"
-						   
+							   						   
 					   ></app-select-user>
 					   
 					   
@@ -216,7 +216,7 @@
 				
 				<mat-tab-group>
 						<mat-tab label="RTO">
-								<div *ngIf="userService.hasPermission(39)" fxLayout="row" fxLayoutAlign="center center" >
+								<div *ngIf="userService.hasPermission(39)" fxLayout="row" fxLayoutAlign="start center" >
 										<button mat-stroked-button color="primary" (click)="createRtoAllotment()">Create</button>
 	
 									
@@ -232,13 +232,12 @@
 							
 								[rowData]="user.rto_allotment" 
 								[columnDefs]="rtoColumnDefs"
-								[enableSorting]="true"
-								[enableFilter]="true"	
+								
 								(gridReady)="onRtoGridReady($event)"
 								(cellEditingStopped)="onRtoCellEditingStopped($event)"
 								(cellEditingStarted)="onRtoCellEditingStarted($event)"
 								[statusBar]="false"
-								[enableColResize]="true"
+							
 								[enableRangeSelection]="true"						
 								[defaultColDef]="rtoDefaultColDef"
 	
@@ -339,6 +338,34 @@
 						
 			
 					</mat-tab>
+
+					<mat-tab label="Group">
+						
+					<div fxLayout="column" fxLayoutAlign="start center">
+						
+					
+						<ag-grid-angular  
+				
+						
+						#rto_agrid								
+						class="ag-theme-material"
+					
+						[rowData]="user.groups" 
+						[columnDefs]="groupColumnDefs"
+						(gridReady)="onGroupGridReady($event)"
+					
+						[statusBar]="false"
+					
+						[enableRangeSelection]="true"						
+						[defaultColDef]="groupDefaultColDef"
+						[domLayout]='autoHeight'
+						
+						>
+					</ag-grid-angular>
+				
+					
+					</div>
+				</mat-tab>
 					<mat-tab label="Machines">
 							<table fxFlex style="box-shadow: none;  width:100%;" mat-table [dataSource]="user.machines" matSort>
 
@@ -351,6 +378,11 @@
 									<ng-container matColumnDef="machine_name">
 										<th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
 										<td mat-cell *matCellDef="let element"> {{element.machine_name}} </td>
+									</ng-container>
+									
+									<ng-container matColumnDef="machine_purpose">
+										<th mat-header-cell *matHeaderCellDef mat-sort-header> Purpose </th>
+										<td mat-cell *matCellDef="let element"> {{element.machine_purpose}} </td>
 									</ng-container>
 		
 									

@@ -99,6 +99,10 @@ padding-right:12px !important;
     color: rgba(0, 0, 0, 0.65) !important;
 }
 
+.mat-tab-label{
+
+	min-width: 100px !important;
+}
 
 .mat-tab-link
 {
@@ -110,6 +114,8 @@ padding-right:12px !important;
 	/* border-top-left-radius: 10px;	 
 	border-top-right-radius: 10px;	 */
 }
+
+
 .mat-tab-link:hover
 {
 	background-color: #d0cfcf60;

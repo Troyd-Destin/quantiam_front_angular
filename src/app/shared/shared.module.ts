@@ -29,6 +29,8 @@ import { SelectMaterialContainerComponent } from './select-material-container/se
 import { SelectSampleComponent } from './select-sample/select-sample.component';
 import { SelectExperimentTypeComponent } from './select-experiment-type/select-experiment-type.component';
 import { SelectTgarunComponent } from './select-tgarun/select-tgarun.component';
+import { SelectPermissionComponent } from './select-permission/select-permission.component';
+import { SelectGroupComponent } from './select-group/select-group.component';
 
 @NgModule({
   imports: [
@@ -55,7 +57,9 @@ import { SelectTgarunComponent } from './select-tgarun/select-tgarun.component';
     SelectMaterialContainerComponent,
     SelectSampleComponent,
     SelectExperimentTypeComponent,
-    SelectTgarunComponent],
+    SelectTgarunComponent,
+    SelectPermissionComponent,
+    SelectGroupComponent],
   exports: [
     Select2MaterialComponent,
     Select2MaterialLotComponent,

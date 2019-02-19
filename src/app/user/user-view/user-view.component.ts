@@ -39,8 +39,9 @@ export class UserViewComponent implements OnInit, OnDestroy {
   editUser = false;
   displayedColumnsSupervisors: string[] = ['id', 'name', 'title'];
   displayedColumnsPermissions: string[] = ['permission_id', 'permission_name', 'permission_description', 'derived_from_group', 'customColumn1'];
-  displayedColumnsMachines: string[] = ['id', 'machine_name'];
+  displayedColumnsMachines: string[] = ['id', 'machine_name','machine_purpose'];
   displayedColumnsRfid: string[] = ['id', 'string', 'customColumn1'];
+  displayedColumnsGroups: string[] = ['id', 'string', 'customColumn1'];
   pageSizeOptions: number[] = [5, 10, 25, 100];
   selectedTable = 'supervisors';
   permissionTableSource: any;
@@ -52,6 +53,27 @@ export class UserViewComponent implements OnInit, OnDestroy {
 
   private gridApi;
   private gridColumnApi;
+
+  private groupGridColumnApi;
+  private groupGridApi;
+
+  private groupColumnDefs = [
+
+    {headerName: 'ID', field: 'group_id',  width: 80, },
+    {headerName: 'Name', field: 'group_name', width: 200,   },
+    {
+      headerName: 'Managed By',
+      field: 'ldap', 
+      cellRenderer: function (params) {
+
+      if(params.data.ldap){ return 'LDAP'; }
+      return 'Web App';
+
+    },  
+   },
+    //{headerName: 'Name', field: 'group_name',  width: 80, },
+  ];
+
 
   private rtoColumnDefs = [
 
@@ -99,6 +121,20 @@ export class UserViewComponent implements OnInit, OnDestroy {
     suppressMovable: true,
   };
 
+  private groupDefaultColDef = {
+
+  // maxWidth:120,
+    cellStyle: function (params) {
+      return {
+        cursor: 'pointer',
+      };
+    },
+    sortable: true,
+    dragable: false,
+    resizable: false,
+    suppressMovable: true,
+  };
+
   ngOnInit() {
 
 
@@ -107,7 +143,7 @@ export class UserViewComponent implements OnInit, OnDestroy {
     this.route.params.subscribe(params => {
 
     this.id  = params.id;  // obtain ID from route
-	  console.log(this.id);
+	  //console.log(this.id);
 
 
      // get user data and store in user Variable
@@ -243,7 +279,7 @@ export class UserViewComponent implements OnInit, OnDestroy {
   permissionChanges() {
 
 
-    console.log('permission pass');
+    //console.log('permission pass');
     if (this.userService.hasPermission(37)) {
 
      // this.rtoColumnDefs[1].type = "numericColumn";
@@ -285,6 +321,16 @@ export class UserViewComponent implements OnInit, OnDestroy {
       });
    }
   }
+
+  ////  Group Grid ////
+
+  onGroupGridReady(params) {
+    this.groupGridApi = params.api;
+    this.groupGridColumnApi = params.columnApi;
+	  setTimeout(() => {  this.groupGridApi.sizeColumnsToFit(); }, 200);
+
+  }
+
 
 
   ngOnDestroy() {
