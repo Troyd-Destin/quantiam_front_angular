@@ -277,7 +277,9 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 		
 			if(r.rows.length === 0)
 			{	
+				const splitstring = params.p1.split(' ');
 				params.p2 = null;
+				params.p1 = splitstring[0];
 				this.http.post<any>('https://chemicalsafety.com/sds1/retriever.php?filterSpinner', params).subscribe(r2=>{
 
 					console.log(r2);
