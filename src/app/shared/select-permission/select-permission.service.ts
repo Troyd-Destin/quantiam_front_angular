@@ -27,7 +27,9 @@ export class SelectPermissionService {
     if (!this.listFetched || this.previousParams !== params) {
 
        this.previousParams = params;
-       this.http.get<any>(environment.apiUrl + `${this.endpoint}` + '/list/select2', params)
+       console.log(params);
+      // if(params.user.id){ params.user_does_not_possess =  };
+       this.http.get<any>(environment.apiUrl + `${this.endpoint}` + '/list/select2', {'params': params})
        .pipe(
           tap( r => {    }), // set id to be last_id
           map( r =>  r), // return results without transformation

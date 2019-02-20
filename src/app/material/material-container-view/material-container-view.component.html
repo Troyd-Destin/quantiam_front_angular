@@ -1,10 +1,10 @@
-<div *ngIf="!container.hasOwnProperty('id')">
+<div *ngIf="container && !container.hasOwnProperty('id')">
 	
 	<center style="margin-top:30px;"><h2> This container does not exist yet. </h2></center>
 	
 </div>
 
-<div *ngIf="container.hasOwnProperty('id')">
+<div *ngIf="container && container.hasOwnProperty('id')">
 	
 	
 	<!-- {{container.lot.material.name}} -->
@@ -15,7 +15,7 @@
 </form>
 
 
-	<div fxLayoutGap="20px" fxLayout="column"  fxLayout.xl="row wrap"  fxLayout.lg="row wrap" fxLayoutAlign="start stretch">
+	<div fxLayoutGap="20px" fxLayout="row"  fxLayout.xl="row wrap"  fxLayout.lg="row wrap" fxLayoutAlign="start stretch">
 			
 		<mat-accordion  multi="true" fxFlex.lg=40 fxFlex.xl=40>
 			<mat-expansion-panel expanded="true">
@@ -83,7 +83,7 @@
 					<div fxLayout="row wrap"  fxLayoutAlign="end center">
 					<button mat-button routerLink="/material/{{container.lot.material.id}}" > View </button>
 					<button mat-button   *ngIf="canEdit" (click)="editMaterial = !editMaterial"  > Edit </button>
-					<button mat-button routerLink="/material/{{container.lot.material.id}}" > MSDS </button>
+					<!-- <button mat-button routerLink="/material/{{container.lot.material.id}}" > MSDS </button> -->
 					
 					</div>
 					
@@ -139,110 +139,157 @@
 		</mat-accordion>
 		
 	
-		<div fxFlex>
-			<mat-card class="quantiam-mat-card" style="padding-bottom:10px !important;"   >
-			<mat-card-title style="margin:0px">
-				 Container Attributes
-			</mat-card-title>		
-				<mat-card-content fxLayoutGap="20px"   >
-				
+		<div fxLayout="column" fxFlex fxLayoutGap="20px">
+			<div fxFlex>
+				<mat-card class="quantiam-mat-card" style="padding-bottom:10px !important;"   >
+				<mat-card-title style="margin:0px">
+					Container Attributes
+				</mat-card-title>		
+					<mat-card-content fxLayoutGap="20px"   >
 					
-				<!-- 	<img fxFlex width=75px height=75px    [(src)]="container.datamatrix"/>  -->
-				
-				   <div fxLayoutGap="30px"  class="top-mat-form-buffer" fxLayout="row wrap">	
-							
-							
-							  <mat-form-field class="full-width" fxFlex>
-									  <input  #ContainerName (change)="updateContainerField(ContainerName)" [disabled]="!editContainer"   type="text" matInput placeholder="Container Name " [(ngModel)] ='container.container_name' name="container_name" >
-									<mat-hint> Optional </mat-hint>
-								 </mat-form-field >  
-								   <mat-form-field fxFlex="20"  class="full-width">
-									  <input  #ContainerNumber (change)="updateContainerField(ContainerNumber)"  [disabled]="!editContainer" type="text" matInput placeholder="Container #" [(ngModel)] ='container.container_number' name="container_number" >
-								 </mat-form-field>   
-								   
-								 <mat-form-field fxFlex class="full-width">
-										 <mat-select 
-												#LocationId
-												placeholder="Location"
-												name="location_id"
-												 [(ngModel)]="container.location_id"
-												
-												
-												[disabled]="!editContainer"
-												 (ngModelChange)="updateContainerField($event,'location_id')"
-										>
-											<mat-option
-												*ngFor="let location of locationList" 
-												[value]="location.id"
-												
-												>{{location.name}}</mat-option>
-										</mat-select>
+						
+					<!-- 	<img fxFlex width=75px height=75px    [(src)]="container.datamatrix"/>  -->
+					
+					<div fxLayoutGap="30px"  class="top-mat-form-buffer" fxLayout="row wrap">	
 								
 								
-								 </mat-form-field>   
+								<mat-form-field class="full-width" fxFlex>
+										<input  #ContainerName (change)="updateContainerField(ContainerName)" [disabled]="!editContainer"   type="text" matInput placeholder="Container Name " [(ngModel)] ='container.container_name' name="container_name" >
+										<mat-hint> Optional </mat-hint>
+									</mat-form-field >  
+									<mat-form-field fxFlex="20"  class="full-width">
+										<input  #ContainerNumber (change)="updateContainerField(ContainerNumber)"  [disabled]="!editContainer" type="text" matInput placeholder="Container #" [(ngModel)] ='container.container_number' name="container_number" >
+									</mat-form-field>   
+									
+									<mat-form-field fxFlex class="full-width">
+											<mat-select 
+													#LocationId
+													placeholder="Location"
+													name="location_id"
+													[(ngModel)]="container.location_id"
+													
+													
+													[disabled]="!editContainer"
+													(ngModelChange)="updateContainerField($event,'location_id')"
+											>
+												<mat-option
+													*ngFor="let location of locationList" 
+													[value]="location.id"
+													
+													>{{location.name}}</mat-option>
+											</mat-select>
+									
+									
+									</mat-form-field>   
 
-								 <!-- {{locationList}} -->
-							 
-				  
-							
-							
-							<mat-form-field class="full-width" fxFlex="10" >
-											<input  #Denomination (change)="updateContainerField(Denomination)" [disabled]="!editContainer" type="text" matInput placeholder="Denomination" [(ngModel)] ='container.denomination' name="denomination" >
-							 </mat-form-field >
-							  <mat-form-field  fxFlex.gt-lg="20" fxFlex="30" class="full-width">
-								  <input #AmountOrdered (change)="updateContainerField(AmountOrdered)" [disabled]="!editContainer"   type="text" matInput placeholder="Amount Ordered ({{container.denomination}})" [(ngModel)] ='container.amount_ordered' name="amount_ordered" >
-							 </mat-form-field >
-							  <mat-form-field  fxFlex class="full-width">
-								  <input #GrossWeight (change)="updateContainerField(GrossWeight)" [disabled]="!editContainer"  type="text" matInput placeholder="Gross Weight (g)" [(ngModel)] ='container.gross_weight' name="gross_weight" >
-							 </mat-form-field>	
-
-							 <mat-form-field  fxFlex class="full-width">
-								  <input #Remaining (change)="updateContainerField(Remaining)" [disabled]="!editContainer"  type="text" matInput placeholder="Remaining Weight (g)" [(ngModel)] ='container.remaining' name="remaining" >
-							 </mat-form-field>	 
-							 
-				
-							<mat-form-field fxFlex>
-									  <input  #PurchaseOrder (change)="updateContainerField(PurchaseOrder)" [disabled]="!editContainer"  type="text" matInput placeholder="P.O. #" [(ngModel)] ='container.purchase_order' name="purchase_order" >
-								 </mat-form-field>  
-								 
-							<mat-form-field class="full-width" fxFlex>
-							  <input matInput [matDatepicker]="myDatepicker2" placeholder="Date Received" [(ngModel)] ='container.container_received' (dateChange)="updateContainerField($event.value,'container_received')" [disabled]="!editContainer">
-							  <mat-datepicker-toggle matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
-							  <mat-datepicker #myDatepicker2></mat-datepicker>
-							</mat-form-field>
-							<mat-form-field class="full-width" fxFlex>
-							  <input matInput [matDatepicker]="myDatepicker" placeholder="Date Opened" [(ngModel)] ='container.container_opened' (dateChange)="updateContainerField($event.value,'container_opened')" [disabled]="!editContainer">
-							  <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
-							  <mat-datepicker #myDatepicker></mat-datepicker>
-							</mat-form-field>
-							
-							
-							<mat-form-field fxFlex>
-									  <input  #QCID (change)="updateContainerField(QCID)" [disabled]="!editContainer"  type="text" matInput placeholder="QCID (optional)" [(ngModel)] ='container.qcid' name="qcid" >
-								 </mat-form-field>  
-
-											  
-
-											  
-					</div>	
-				</mat-card-content>
-				
-				<mat-card-actions >	
+									<!-- {{locationList}} -->
+								
 					
-					<mat-checkbox (change)="changeContainerStatus()" style="margin-left:15px" [disabled]="!editContainer" [(ngModel)] ='container.active' name="active" fxLayoutAlign="start center">Active</mat-checkbox>
+								
+								
+								<mat-form-field class="full-width" fxFlex="10" >
+												<input  #Denomination (change)="updateContainerField(Denomination)" [disabled]="!editContainer" type="text" matInput placeholder="Denomination" [(ngModel)] ='container.denomination' name="denomination" >
+								</mat-form-field >
+								<mat-form-field  fxFlex.gt-lg="20" fxFlex="30" class="full-width">
+									<input #AmountOrdered (change)="updateContainerField(AmountOrdered)" [disabled]="!editContainer"   type="text" matInput placeholder="Amount Ordered ({{container.denomination}})" [(ngModel)] ='container.amount_ordered' name="amount_ordered" >
+								</mat-form-field >
+								<mat-form-field  fxFlex class="full-width">
+									<input #GrossWeight (change)="updateContainerField(GrossWeight)" [disabled]="!editContainer"  type="text" matInput placeholder="Gross Weight (g)" [(ngModel)] ='container.gross_weight' name="gross_weight" >
+								</mat-form-field>	
+
+								<mat-form-field  fxFlex class="full-width">
+									<input #Remaining (change)="updateContainerField(Remaining)" [disabled]="!editContainer"  type="text" matInput placeholder="Remaining Weight (g)" [(ngModel)] ='container.remaining' name="remaining" >
+								</mat-form-field>	 
+								
 					
-					<div  fxLayoutAlign="end center" fxFlex>			
-								<button mat-button  *ngIf="canEdit"  (click)="editContainer = !editContainer"  > Edit </button>						
-								<button mat-button   *ngIf="canEdit" (click)="deleteContainer()"  color="warn"  >  Delete </button>						
-								<!-- <button mat-button routerLink="/material/{{container.lot.material.id}}" >MSDS</button> -->
+								<mat-form-field fxFlex>
+										<input  #PurchaseOrder (change)="updateContainerField(PurchaseOrder)" [disabled]="!editContainer"  type="text" matInput placeholder="P.O. #" [(ngModel)] ='container.purchase_order' name="purchase_order" >
+									</mat-form-field>  
+									
+								<mat-form-field class="full-width" fxFlex>
+								<input matInput [matDatepicker]="myDatepicker2" placeholder="Date Received" [(ngModel)] ='container.container_received' (dateChange)="updateContainerField($event.value,'container_received')" [disabled]="!editContainer">
+								<mat-datepicker-toggle matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
+								<mat-datepicker #myDatepicker2></mat-datepicker>
+								</mat-form-field>
+								<mat-form-field class="full-width" fxFlex>
+								<input matInput [matDatepicker]="myDatepicker" placeholder="Date Opened" [(ngModel)] ='container.container_opened' (dateChange)="updateContainerField($event.value,'container_opened')" [disabled]="!editContainer">
+								<mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+								<mat-datepicker #myDatepicker></mat-datepicker>
+								</mat-form-field>
+								
+								
+								<mat-form-field fxFlex>
+										<input  #QCID (change)="updateContainerField(QCID)" [disabled]="!editContainer"  type="text" matInput placeholder="QCID (optional)" [(ngModel)] ='container.qcid' name="qcid" >
+									</mat-form-field>  
+
+												
+
+												
+						</div>	
+					</mat-card-content>
+					
+					<mat-card-actions >	
+						
+						<mat-checkbox (change)="changeContainerStatus()" style="margin-left:15px" [disabled]="!editContainer" [(ngModel)] ='container.active' name="active" fxLayoutAlign="start center">Active</mat-checkbox>
+						
+						<div  fxLayoutAlign="end center" fxFlex>			
+									<button mat-button  *ngIf="canEdit"  (click)="editContainer = !editContainer"  > Edit </button>						
+									<button mat-button   *ngIf="canEdit" (click)="deleteContainer()"  color="warn"  >  Delete </button>						
+									<!-- <button mat-button routerLink="/material/{{container.lot.material.id}}" >MSDS</button> -->
+						</div>
+					</mat-card-actions>
+					
+						
+				</mat-card>
+			</div>
+		<!-- <select2-material ></select2-material> -->
+			
+			<div fxFlex *ngIf="!container.lot.material.msds_path">
+
+					<div *ngIf="searchingPossibleSDS && !sdsSearch[0]" fxLayoutAlign="center center" fxLayout="column">
+
+							<mat-spinner diameter=10></mat-spinner>
+							<p>Searching online for possible SDS</p>
 					</div>
-				</mat-card-actions>
-				
-					
-			</mat-card>
+
+					<mat-card  *ngIf="!searchingPossibleSDS && sdsSearch[0]" class="quantiam-mat-card" style="padding-bottom:10px !important;"   >
+						<mat-card-title style="margin:0px">
+								Possible Safety Data Sheet(s) 
+						</mat-card-title>		
+						<mat-card-content fxLayoutGap="20px"   >
+
+								
+
+								<table class="table">
+										<thead>
+										<tr>
+										  <th scope="col">ID</th>
+										  <th scope="col">Material Name</th>
+										  <th scope="col">Manufacturer</th>
+										  <th scope="col">CAS#</th>
+										  <!-- <th scope="col"></th>  -->
+										  
+										</tr>
+										</thead>
+										<tbody>
+												<tr class="clickable" *ngFor="let item of sdsSearch" >
+
+														<td  (click)="navigateToSDS(item)"> {{item[0]}} </td>
+														<td  (click)="navigateToSDS(item)"> {{item[1]}} </td>
+														<td  (click)="navigateToSDS(item)"> {{item[2]}} </td>
+														<td  (click)="navigateToSDS(item)"> {{item[3]}} </td>
+														 <!-- <td>
+															 <button mat-button matTooltip="Remember this SDS for another time.">Save
+															</button>
+														 </td>  -->
+												</tr>
+
+										</tbody>
+								</table>
+						</mat-card-content>
+					</mat-card>
+			</div>
 		</div>
-	<!-- <select2-material ></select2-material> -->
-	
 	</div>
 	
 </div>

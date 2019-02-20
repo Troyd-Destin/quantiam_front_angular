@@ -27,10 +27,11 @@ export class MaterialLotContainerService {
    //  console.log(id,this.last_id);
     if (id !== this.last_id) {
 
-     this.http.get<any>(environment.apiUrl + `${this.endpoint}/${id}`)
+     return this.http.get<any>(environment.apiUrl + `${this.endpoint}/${id}`)
      .pipe(
-        tap( r => {
-
+        tap( container => {
+                      this._containerSource.next(container); // broadcast the material to all subscribers
+                      this.last_id = container.id;
 
                     }), // set id to be last_id
         map( res => res), // return results without transformation
@@ -39,12 +40,6 @@ export class MaterialLotContainerService {
 			this.notification.error(id, 'Does not exist.', {showProgressBar: false, timeOut: 3000, clickToClose: true});
 			return err;
          }),
-      )
-      .subscribe(
-        (container: any) => {
-			this._containerSource.next(container); // broadcast the material to all subscribers
-			 this.last_id = container.id;
-		}
       );
     }
   }

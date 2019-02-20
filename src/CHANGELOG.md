@@ -23,6 +23,7 @@
 ### Materials
 
 - Containers now require R&D L1 or Manufacturing Access to edit / create 
+- The container screeen will now try to search online for a relevant MSDS
 
 ### Other
 

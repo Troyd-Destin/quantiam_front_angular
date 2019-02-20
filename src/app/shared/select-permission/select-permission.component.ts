@@ -19,6 +19,8 @@ export class SelectPermissionComponent implements OnInit, OnDestroy {
   @Input() selectedValue: any = null; // default value, object or ID
   @Input() multiple: any = false; // multi version
   @Input() placeholder = 'Select Permission'; 
+  @Input() user; 
+  
 
   // Outputs
   @Output() change = new EventEmitter<any>();
@@ -28,8 +30,9 @@ export class SelectPermissionComponent implements OnInit, OnDestroy {
   constructor(private selectPermissionService: SelectPermissionService) { }
 
   ngOnInit() {
-
-    this.selectPermissionService.list(); // Make sure the service is initialized.
+    const params: any = {};
+    if(this.user){ params.user_does_not_possess = this.user.id; }
+    this.selectPermissionService.list(params); // Make sure the service is initialized.
     this.list$ = this.selectPermissionService.list$.subscribe((r) => {
          this.itemsBuffer = r;
         

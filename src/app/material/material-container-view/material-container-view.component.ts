@@ -8,11 +8,17 @@ import * as moment from 'moment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user/user.service';
 
+import { HttpClient,  } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+
 @Component({
   selector: 'app-material-container-view',
   templateUrl: './material-container-view.component.html',
   styleUrls: ['./material-container-view.component.css']
 })
+
+
+
 export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 
   _container = null;
@@ -24,7 +30,19 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
   test_selector = null;
   newLotCreated = false;
   scannerNavigation: any;
-  fetched = false;
+	fetched = false;
+	sdsSearch = [];
+	searchingPossibleSDS = false;
+	
+	MsdsSearch = {
+
+		action: 'search',
+		hostName: 'chemicalsafety.com',
+		isContains: 1,
+		p1: 'MSMSDS.COMMON|',  // Chemical name lowercase
+		p2: 'MSMSDS.MANUFACT|', // Manufactuer
+		p3: 'MSCHEM.CAS|',  // CAS
+	}
 
 
   locationList: any;
@@ -38,41 +56,43 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 	private locationService: LocationService,
 	private router: Router,
 	private userService: UserService,
+	private http: HttpClient,
 
 	) { }
 
   ngOnInit() {
 
-		if(this.userService.hasPermission([40,41])){ this.canEdit = true; }
-
-      let id  = this.route.snapshot.params.id;  // obtain ID from route
-
-      this.materialLotCotainerService.getMaterialLotContainer(id);
-
-      this.route.params.subscribe(val => {
-
-        if (id !== val.id) {
-          id = val.id;
-           this.materialLotCotainerService.getMaterialLotContainer(id);
+		if (this.userService.hasPermission([40, 41])) { this.canEdit = true; }
 
 
-        }
-      });
+		let id  = this.route.snapshot.params.id;  // obtain ID from route
 
-	  this.route.queryParams.subscribe((p: any) => {
+		
+    
+		
+			
+			this.route.queryParams.subscribe((p: any) => {
 
 
-				this.scannerNavigation = p['scannerNavigation'];
-				
+					this.scannerNavigation = p['scannerNavigation'];
 
-	  });
 
-      this._container = this.materialLotCotainerService.materialLotContainer$.subscribe(res => { // subscribe to the material service for updates
+			});
+
+      this._container = this.materialLotCotainerService.getMaterialLotContainer(id).subscribe(res => { // subscribe to the material service for updates
 
 		 console.log(res);
-		this.fetched = true;
-        if (typeof res !== 'undefined') {
+
+		
+			this.fetched = true;
+			if (typeof res !== 'undefined') {
+
 			this.container = res;
+			if(typeof res.lot !== 'undefined'){
+
+				this.fetchPotentialMSDS();
+
+			}
 
 			if (this.scannerNavigation && this.container.id && !this.container.active) { this.materialLotCotainerService.update({active: 1}, this.container.id).subscribe((r) => { this.container.active = true; }); }
 
@@ -109,7 +129,6 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 	fetchLocationList() {
 		this.locationService.list$.subscribe((r) => {
 
-			console.log(this.locationList);
 
 
 				this.locationList = r;
@@ -223,7 +242,7 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 	deleteContainer() {
 
 
-		confirm('Are you sure you want to delete this container?'); {
+		if(confirm('Are you sure you want to delete this container?')) {
 			this.materialLotCotainerService.delete(this.container.id).subscribe(r => {
 
 							this.router.navigate(['/material/container/database'], {queryParams: { refreshTable: true}});
@@ -234,6 +253,56 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 
 	}
 
+	fetchPotentialMSDS() {
+
+		const params = this.MsdsSearch;
+		
+		if(this.searchingPossibleSDS === false && this.container.lot.material)
+		{
+		this.searchingPossibleSDS = true;
+		params.p1 = 'MSMSDS.COMMON|' + this.container.lot.material.name.toLowerCase();
+		params.p2 = 'MSMSDS.MANUFACT|' + this.container.lot.material.supplier.supplier_name.toLowerCase();
+		params.p3 = 'MSCHEM.CAS|' + this.container.lot.material.cas;
+
+		
+		this.http.post<any>('https://chemicalsafety.com/sds1/retriever.php?filterSpinner', params).subscribe(r=>{
+
+			console.log(r);
+			this.sdsSearch = r.rows;
+
+			console.log(this.sdsSearch);
+
+			if(this.sdsSearch[0]) { this.searchingPossibleSDS = false; }
+
+		
+			if(r.rows.length === 0)
+			{	
+				params.p2 = null;
+				this.http.post<any>('https://chemicalsafety.com/sds1/retriever.php?filterSpinner', params).subscribe(r2=>{
+
+					console.log(r2);
+
+						this.sdsSearch = r2.rows;
+				
+						if(this.sdsSearch[0]) { 
+							console.log(this.sdsSearch);
+					
+						
+						}
+						this.searchingPossibleSDS = false;
+					});
+
+			}
+
+		});
+		}
+	}
+
+	navigateToSDS(item)
+	{
+		const win = window.open("https://chemicalsafety.com/sds1/sdsviewer.php?id="+item[0], '_blank');
+ 		 win.focus();
+	}
 
 
 }
