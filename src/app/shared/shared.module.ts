@@ -71,7 +71,8 @@ import { SelectGroupComponent } from './select-group/select-group.component';
     SelectExperimentComponent,
     SelectMaterialContainerComponent,
     SelectSampleComponent,
-    SelectTgarunComponent
+    SelectTgarunComponent,
+    SelectPermissionComponent
 
   ],
   schemas: [NO_ERRORS_SCHEMA]

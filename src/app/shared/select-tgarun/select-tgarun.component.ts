@@ -26,6 +26,7 @@ export class SelectTgarunComponent implements OnInit, OnDestroy {
   // Outputs
   @Output() change = new EventEmitter<any>();
   @Output() remove = new EventEmitter<any>();
+  @Output() clear = new EventEmitter<any>();
 
   constructor(private selectTgarunService: SelectTgarunService) { }
 
@@ -45,7 +46,7 @@ export class SelectTgarunComponent implements OnInit, OnDestroy {
   onChange(event) { this.change.emit(event); }
   onAdd() { }
   onRemove(event) { this.remove.emit(event); }
-  onClear() {}
+  onClear(event) { this.clear.emit(event); }
   onScrollToEnd() {}
 
   ngOnDestroy() {

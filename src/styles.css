@@ -467,6 +467,13 @@ padding-right:12px !important;
 	width: inherit !important;
 }
 
+.ng-select .ng-clear-wrapper
+{
+    margin-left: 10px;
+
+
+}
+
 
 
 /** Bootstrap fixes ***/

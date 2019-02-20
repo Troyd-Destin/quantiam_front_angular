@@ -284,6 +284,11 @@
 					</mat-tab>
 				
 					<mat-tab label="Permissions">
+
+								<div fxLayout="row">
+
+									<app-select-permission></app-select-permission>
+								</div>
 						
 							<table fxFlex style="box-shadow: none;  width:100%;" mat-table [dataSource]="permissionTableSource" matSort >
 		

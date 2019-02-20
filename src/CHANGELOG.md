@@ -2,6 +2,8 @@
 
 ### TGA
 - Peak tool now has "previous" and "next" buttons for navigating single runs easier
+- Peak tool now clears selection properly
+- Fixed a bug where the graphs would not delete when expected
 
 ### Users
 - Can now create and delete RTO Allotments on the user view screen

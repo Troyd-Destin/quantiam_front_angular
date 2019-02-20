@@ -300,13 +300,12 @@ export class TgaPeakSelectionToolComponent implements OnInit {
             // console.log(step);
 
               const SGX_name = TgaRun.Procedure.comments.match(/(SGX)\w+/g);
-              // const chemicals = TgaRun.Procedure.comments.match(/[A-Z][a-z]?\d*|\((?:[^()]*(?:\(.*\))?[^()]*)+\)\d+/g);
-              // console.log(chemicals);
 
               /// Derivative
               const seriesObj = {
 
                 name: SGX_name[0] + ' (' + TgaRun.filename + ')',
+                sgx_name: SGX_name[0],
                 type: 'spline',
                 // yAxis: 0,
                 turboThreshold: 0,
@@ -530,6 +529,13 @@ export class TgaPeakSelectionToolComponent implements OnInit {
     this.fetchTgaRun(this.selectedFile.name);
   }
 
+  clearAllSelectedFiles(event){
+    this.storedTgaRuns = [];
+    this.multiChartOptions.series = [];
+    this.chartOptions.series = [];
+
+  }
+
   changeTgaRun(event) {
     this.selectedTgaRuns = event;
     console.log(event);
@@ -598,12 +604,16 @@ export class TgaPeakSelectionToolComponent implements OnInit {
 
     this.multiChartOptions.series.forEach((item, index, object2) => {
 
-      if (item.name === event.value.name) {
+      console.log(item, event.value);
+      if (item.sgx_name === event.value.sample) {
         object2.splice(index, 1 );
       }
 
    });
 
+   console.log(this.multiChartOptions.series);
+
+   
   //  this.multiChartOptions.title.text = 'test';
 
  setTimeout((r) => {

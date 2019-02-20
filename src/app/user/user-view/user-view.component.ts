@@ -60,7 +60,7 @@ export class UserViewComponent implements OnInit, OnDestroy {
   private groupColumnDefs = [
 
     {headerName: 'ID', field: 'group_id',  width: 80, },
-    {headerName: 'Name', field: 'group_name', width: 200,   },
+    {headerName: 'Name', field: 'group_name', width: 250,   },
     {
       headerName: 'Managed By',
       field: 'ldap', 

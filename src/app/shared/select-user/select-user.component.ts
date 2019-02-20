@@ -19,10 +19,10 @@ export class SelectUserComponent implements OnInit, OnDestroy {
   // Inputs
   @Input() selectedValue: any = null; // default value, object or ID
   @Input() multiple: any = false; // multi version
-  @Input() selectableGroup: any = false; // multi version
-  @Input() placeholder = 'Select Somebody'; // multi version
-  @Input() showMachines = false; // multi version
-  @Input() restrictedAccessMode = false; // multi version
+  @Input() selectableGroup: any = false; 
+  @Input() placeholder = 'Select Somebody'; 
+  @Input() showMachines = false;
+  @Input() restrictedAccessMode = false; 
 
   // Outputs
   @Output() change = new EventEmitter<any>();
