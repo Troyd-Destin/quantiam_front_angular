@@ -135,10 +135,44 @@ export class MaterialContainerDatabaseComponent implements OnInit {
       {
         field: 'active',
         width: 80,
-        headerName: 'Active',
-        // cellRenderer: function(data){ return '<button mat-button> Test </button>';},
+        headerName: '?',
+        cellRenderer: function(cell){ 
+          
+          console.log(cell);
+          if(cell.value){
+            return '<p style="color:green">In Stock</p>';
+          }
 
+          return '<p style="color:orange"> Used up </p>';
+        },
 
+      },
+      {
+        field: 'sds',
+        width: 80,
+        headerName: 'SDS',
+        cellRenderer: function(cell){ 
+          
+          console.log(cell);
+          if(cell.value){
+            return '<p style="color:green">View</p>';
+          }
+
+          return '<p style="color:red">Missing</p>';        
+        },
+        onCellClicked:(cell )=> {
+
+          if(cell.value) { this.fetchSDS(cell.data.material_id); }
+            console.log('worked');
+
+        }
+
+      },
+      {
+        width: 100,
+        field: 'sds_updated_at',
+        headerName: 'Updated',
+        hide: true,
       },
     ];
 
@@ -147,7 +181,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
     this.defaultColDef = {
 
       sortable: true,
-      resizeable: true,
+      resizable: true,
       cellStyle: function (params) {
         return {
           cursor: 'pointer',
@@ -343,6 +377,19 @@ export class MaterialContainerDatabaseComponent implements OnInit {
   onFilterChanged() {
     this.gridApi.setQuickFilter(this.searchBarValue);
   }
+
+  
+	fetchSDS(id)
+	{
+		this.http.get(environment.apiUrl + '/material/'+id+'/sds?filterSpinner',  {responseType:'blob'}).subscribe((response)=>{
+
+			
+        const url = window.URL.createObjectURL(response);
+     	 window.open(url);
+
+		});
+
+	}
 
   // ngOnDestroy() {  }
 

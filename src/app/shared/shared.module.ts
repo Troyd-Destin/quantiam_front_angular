@@ -3,16 +3,12 @@ import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 
+import { FileDropModule } from 'ngx-file-drop';
+
 
 import {FlexLayoutModule} from '@angular/flex-layout';
 
-import {
-  MatIconModule,
-  MatButtonModule,
-  MatCardModule,
-   MatCheckboxModule,
 
-} from '@angular/material';
 
 import { Select2Module } from 'ng2-select2';
 import { Select2MaterialComponent } from './select2-material/select2-material.component';
@@ -39,10 +35,7 @@ import { SelectGroupComponent } from './select-group/select-group.component';
     NgSelectModule,
     FormsModule,
     FlexLayoutModule,
-    MatIconModule,
-    MatCardModule,
-    MatButtonModule,
-    MatCheckboxModule,
+    FileDropModule,
   ],
   declarations: [
     SelectProjectComponent,
@@ -72,7 +65,8 @@ import { SelectGroupComponent } from './select-group/select-group.component';
     SelectMaterialContainerComponent,
     SelectSampleComponent,
     SelectTgarunComponent,
-    SelectPermissionComponent
+    SelectPermissionComponent,
+    FileDropModule,
 
   ],
   schemas: [NO_ERRORS_SCHEMA]

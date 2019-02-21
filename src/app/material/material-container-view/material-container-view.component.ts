@@ -7,9 +7,13 @@ import { LocationService } from '../../services/location/location.service';
 import * as moment from 'moment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user/user.service';
+import { UploadEvent, UploadFile, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
+import { NotificationsService } from 'angular2-notifications';
 
-import { HttpClient,  } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { fileURLToPath } from 'url';
+import { headersToString } from 'selenium-webdriver/http';
 
 @Component({
   selector: 'app-material-container-view',
@@ -33,6 +37,11 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 	fetched = false;
 	sdsSearch = [];
 	searchingPossibleSDS = false;
+	sdsBlob;
+	showSDS = false;
+	SDSurl;
+
+	public files: UploadFile[] = [];
 	
 	MsdsSearch = {
 
@@ -57,6 +66,7 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 	private router: Router,
 	private userService: UserService,
 	private http: HttpClient,
+	private notification: NotificationsService,
 
 	) { }
 
@@ -90,8 +100,8 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 			this.container = res;
 			if(typeof res.lot !== 'undefined'){
 
-				this.fetchPotentialMSDS();
-
+				if(!this.container.lot.material.sds) { this.fetchPotentialMSDS(); }
+				if(this.container.lot.material.sds) { this.fetchSDS(); }
 			}
 
 			if (this.scannerNavigation && this.container.id && !this.container.active) { this.materialLotCotainerService.update({active: 1}, this.container.id).subscribe((r) => { this.container.active = true; }); }
@@ -257,7 +267,7 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 
 		const params = this.MsdsSearch;
 		
-		if(this.searchingPossibleSDS === false && this.container.lot.material)
+		if(this.searchingPossibleSDS === false && this.container.lot.material && this.container.lot.material.cas)
 		{
 		this.searchingPossibleSDS = true;
 		params.p1 = 'MSMSDS.COMMON|' + this.container.lot.material.name.toLowerCase();
@@ -297,6 +307,10 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 			}
 
 		});
+		} else {
+
+			this.notification.info('Missing', 'If possible, please add a CAS number for this material.', {showProgressBar: false, timeOut: 5000, clickToClose: true});		
+						
 		}
 	}
 
@@ -306,5 +320,92 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
  		 win.focus();
 	}
 
+	public dropped(event: UploadEvent) {
+   // this.files = event.files;
+    for (const droppedFile of event.files) {
+ 
+			// Is it a file?
+			console.log(droppedFile);
+      if (droppedFile.fileEntry.isFile && droppedFile.fileEntry.name.includes('.pdf')) {
+        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
+        fileEntry.file((file: File) => {
+ 
+          // Here you can access the real file
+          console.log(droppedFile.relativePath, file);
+ 
+         
+          // You could upload it like this:
+          const formData = new FormData()
+          formData.append('sds', file, 'test.pdf');
+ 
+          // Headers
+          const headers = new HttpHeaders({
+					
+          });
+ 
+          this.http.post(environment.apiUrl + '/material/'+this.container.lot.material.id+'/sds', formData, { headers: headers })
+          .subscribe(response => {
+
+						this.container.lot.material = response;
+						this.files = [];
+						this.fetchSDS();
+            // Sanitized logo returned from backend
+					},
+					error =>{
+											console.log(error);
+											this.notification.error('Error', error.error.error, {showProgressBar: false, timeOut: 5000, clickToClose: true});		
+											this.files = [];
+						
+					})
+       
+ 
+        });
+      } else {
+				// It was a directory (empty directories are added, otherwise only files)
+				this.notification.error('Error', 'You can only upload a pdf file.', {showProgressBar: false, timeOut: 3000, clickToClose: true});
+				this.files = [];             
+        
+      }
+    }
+  }
+
+	public fileOver(event){
+    console.log(event);
+  }
+ 
+  public fileLeave(event){
+    console.log(event);
+	}
+	
+
+	fetchSDS()
+	{
+		this.http.get(environment.apiUrl + '/material/'+this.container.lot.material.id+'/sds?filterSpinner',  {responseType:'blob'}).subscribe((response)=>{
+
+				this.sdsBlob = response;
+				this.showSDS = true;
+				 this.SDSurl = window.URL.createObjectURL(response);
+				 console.log(this.SDSurl);
+     	 // window.open(url);
+				document.querySelector("iframe").src = this.SDSurl;
+
+		});
+
+	}
+
+	deleteSDS()
+	{
+
+		if(confirm('Are you sure you want to delete the SDS?')){
+
+			this.http.delete(environment.apiUrl + '/material/'+this.container.lot.material.id+'/sds?filterSpinner').subscribe((response)=>{
+
+					//console.log(respone)
+					this.container.lot.material = response;
+			})
+
+		}
+
+	}
 
 }

@@ -24,6 +24,9 @@
 
 - Containers now require R&D L1 or Manufacturing Access to edit / create 
 - The container screeen will now try to search online for a relevant MSDS
+- You can now save SDS sheets in this application. 
+- The material database now displays if a SDS is on file.
+- All SDS sheets live in Q:\Administration - All Staff\SDS 
 
 ### Other
 

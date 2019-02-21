@@ -4,16 +4,7 @@
 	
 </div>
 
-<div *ngIf="container && container.hasOwnProperty('id')">
-	
-	
-	<!-- {{container.lot.material.name}} -->
-	
-	
-<form  style='margin-top:10px'  #containerForm="ngForm">
-			
-</form>
-
+<div *ngIf="container && container.hasOwnProperty('id')" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center center">
 
 	<div fxLayoutGap="20px" fxLayout="row"  fxLayout.xl="row wrap"  fxLayout.lg="row wrap" fxLayoutAlign="start stretch">
 			
@@ -81,15 +72,15 @@
 						
 					</div>
 					<div fxLayout="row wrap"  fxLayoutAlign="end center">
-					<button mat-button routerLink="/material/{{container.lot.material.id}}" > View </button>
+					<!-- <button mat-button routerLink="/material/{{container.lot.material.id}}" > View </button> -->
 					<button mat-button   *ngIf="canEdit" (click)="editMaterial = !editMaterial"  > Edit </button>
-					<!-- <button mat-button routerLink="/material/{{container.lot.material.id}}" > MSDS </button> -->
+					 <button mat-button  *ngIf="canEdit && container.lot.material.sds" (click)="deleteSDS()" color="warn"  > Delete SDS </button> 
 					
 					</div>
 					
 				</div>
 			</mat-expansion-panel>
-			<mat-expansion-panel expanded="true">
+			<!-- <mat-expansion-panel expanded="true">
 				<mat-expansion-panel-header>
 					<mat-panel-title>
 						<b>	Lot Information </b>
@@ -134,7 +125,7 @@
 					<button mat-button *ngIf="canEdit"  (click)="editLot = !editLot"  > Edit </button>
 					
 					</div>
-			</mat-expansion-panel>
+			</mat-expansion-panel> -->
 			
 		</mat-accordion>
 		
@@ -152,7 +143,26 @@
 					
 					<div fxLayoutGap="30px"  class="top-mat-form-buffer" fxLayout="row wrap">	
 								
-								
+
+							<mat-form-field *ngIf="!editContainer" class="full-width" fxFlex>
+									<input  type="text" matInput placeholder="Lot name" [(ngModel)] ='container.lot.lot_name' name="name" disabled>
+								</mat-form-field>
+							  <div *ngIf="container.lot.material.id && editContainer">
+									<label>Lot Name </label>
+									<app-select2-material-lot 
+										
+									fxLayoutAlign="start center"
+									placeholder="Lot Name" 
+									
+									enable_create="true"
+									query_params='{"material_id":{{container.lot.material.id}}}'
+									(selectedValue)="changedLot($event)"
+									[default_lot]="container.lot"
+									[disabled]="!editContainer"
+									
+									></app-select2-material-lot>
+							</div>
+					 
 								<mat-form-field class="full-width" fxFlex>
 										<input  #ContainerName (change)="updateContainerField(ContainerName)" [disabled]="!editContainer"   type="text" matInput placeholder="Container Name " [(ngModel)] ='container.container_name' name="container_name" >
 										<mat-hint> Optional </mat-hint>
@@ -243,8 +253,45 @@
 				</mat-card>
 			</div>
 		<!-- <select2-material ></select2-material> -->
-			
-			<div fxFlex *ngIf="!container.lot.material.msds_path">
+
+	
+	
+	
+	
+		</div>
+	</div>
+
+
+		<iframe  [hidden]="!container.lot.material.sds" src="" type="application/pdf"  height="800px" style="overflow: auto; min-width: 50%;">
+		</iframe> 
+	
+	 
+	<div fxLayout="row" id="MSDS SECTION" *ngIf="!container.lot.material.sds"  fxFlex fxLayoutGap="20px">
+		
+		
+			<div fxFlex fxLayout="column" fxLayoutGap="20px">
+
+					<ngb-alert type="danger"  [dismissible]="false"> <b> Oops </b> We can't find an SDS. Employers are required by <a target="_blank" href="https://www.ccohs.ca/oshanswers/chemicals/whmis_ghs/sds.html"> federal WHIMIS 2015 legislation </a> to have an SDS readily accessible.  </ngb-alert>
+						
+					<file-drop headertext="Drop files here" (onFileDrop)="dropped($event)"  showBrowseBtn="false"
+					(onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+						
+					</file-drop>
+					<div class="upload-table" *ngIf="files[0]">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Name</th>
+									</tr>
+								</thead>
+								<tbody class="upload-name-style">
+									<tr *ngFor="let item of files; let i=index">
+										<td><strong>{{ item.relativePath }}</strong></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
 
 					<div *ngIf="searchingPossibleSDS && !sdsSearch[0]" fxLayoutAlign="center center" fxLayout="column">
 
@@ -252,23 +299,31 @@
 							<p>Searching online for possible SDS</p>
 					</div>
 
-					<mat-card  *ngIf="!searchingPossibleSDS && sdsSearch[0]" class="quantiam-mat-card" style="padding-bottom:10px !important;"   >
-						<mat-card-title style="margin:0px">
+				
+				
+
+			</div>
+
+			<div *ngIf="!searchingPossibleSDS && sdsSearch[0]" fxFlex>
+					<ngb-alert type="warning"  [dismissible]="false"> Here is a list of possible SDS's from <a target="_blank" href="https://chemicalsafety.com/sds-search/"> sds.chemicalsafety.com </a>  to help you out. </ngb-alert>
+					<mat-card   class="quantiam-mat-card" style="padding-bottom:10px !important;"   >
+							<mat-card-title style="margin:0px">
 								Possible Safety Data Sheet(s) 
 						</mat-card-title>		
 						<mat-card-content fxLayoutGap="20px"   >
 
 								
+								
 
 								<table class="table">
 										<thead>
 										<tr>
-										  <th scope="col">ID</th>
-										  <th scope="col">Material Name</th>
-										  <th scope="col">Manufacturer</th>
-										  <th scope="col">CAS#</th>
-										  <!-- <th scope="col"></th>  -->
-										  
+										<th scope="col">ID</th>
+										<th scope="col">Material Name</th>
+										<th scope="col">Manufacturer</th>
+										<th scope="col">CAS#</th>
+										<!-- <th scope="col"></th>  -->
+										
 										</tr>
 										</thead>
 										<tbody>
@@ -278,19 +333,24 @@
 														<td  (click)="navigateToSDS(item)"> {{item[1]}} </td>
 														<td  (click)="navigateToSDS(item)"> {{item[2]}} </td>
 														<td  (click)="navigateToSDS(item)"> {{item[3]}} </td>
-														 <!-- <td>
-															 <button mat-button matTooltip="Remember this SDS for another time.">Save
+														<!-- <td>
+															<button mat-button matTooltip="Remember this SDS for another time.">Save
 															</button>
-														 </td>  -->
+														</td>  -->
 												</tr>
 
 										</tbody>
 								</table>
 						</mat-card-content>
 					</mat-card>
+
 			</div>
-		</div>
-	</div>
+
 	
+	</div>
+
+
+
+
 </div>
 	
