@@ -40,6 +40,7 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 	sdsBlob;
 	showSDS = false;
 	SDSurl;
+	firstLoad = true;
 
 	public files: UploadFile[] = [];
 	
@@ -79,21 +80,26 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 
 		
     
-		
+			this.route.params.subscribe((p) =>{
+
+					console.log(p);
+				 	this.materialLotCotainerService.getMaterialLotContainer(p.id).subscribe(res => {});
+
+			})
 			
 			this.route.queryParams.subscribe((p: any) => {
 
-
+					console.log('test');
 					this.scannerNavigation = p['scannerNavigation'];
 
 
 			});
 
-      this._container = this.materialLotCotainerService.getMaterialLotContainer(id).subscribe(res => { // subscribe to the material service for updates
+      this._container = this.materialLotCotainerService.materialLotContainer$.subscribe(res => { // subscribe to the material service for updates
 
 		 console.log(res);
 
-		
+			this.firstLoad = false;
 			this.fetched = true;
 			if (typeof res !== 'undefined') {
 

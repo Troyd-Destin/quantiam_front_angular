@@ -85,7 +85,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         width: 90,
       },
       {
-        width: 90,
+        width: 80,
         field: 'size'
       },
       {
@@ -138,7 +138,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         headerName: '?',
         cellRenderer: function(cell){ 
           
-          console.log(cell);
+         // console.log(cell);
           if(cell.value){
             return '<p style="color:green">In Stock</p>';
           }
@@ -153,17 +153,19 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         headerName: 'SDS',
         cellRenderer: function(cell){ 
           
-          console.log(cell);
+         // console.log(cell);
           if(cell.value){
             return '<p style="color:green">View</p>';
           }
 
-          return '<p style="color:red">Missing</p>';        
+          if(cell.data.active) return '<p style="color:red">Missing</p>';  
+          
+          return '';
         },
         onCellClicked:(cell )=> {
 
           if(cell.value) { this.fetchSDS(cell.data.material_id); }
-            console.log('worked');
+          //  console.log('worked');
 
         }
 

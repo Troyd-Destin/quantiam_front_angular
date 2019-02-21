@@ -4,7 +4,7 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
 
   // tslint:disable-next-line:no-trailing-whitespace
   routesToCache: string[] = ['userDatabase', 'userView', 'xpsDatabase', 'timesheet-calendar',
-  'tgaDatabase', 'tgaPeakTool', 'timesheet', 'MaterialContainerDatabase'];
+  'tgaDatabase', 'tgaPeakTool', 'timesheet', 'MaterialContainerDatabase','MaterialContainerView'];
   storedRouteHandles = new Map<string, DetachedRouteHandle>();
 
   // Decides if the route should be stored
