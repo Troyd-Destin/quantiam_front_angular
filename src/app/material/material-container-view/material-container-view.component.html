@@ -273,7 +273,7 @@
 
 					<ngb-alert type="danger"  [dismissible]="false"> <b> Oops </b> We can't find an SDS. Employers are required by <a target="_blank" href="https://www.ccohs.ca/oshanswers/chemicals/whmis_ghs/sds.html"> federal WHIMIS 2015 legislation </a> to have an SDS readily accessible.  </ngb-alert>
 						
-					<file-drop headertext="Drop files here" (onFileDrop)="dropped($event)"  showBrowseBtn="false"
+					<file-drop headertext="Drop SDS file here" (onFileDrop)="dropped($event)"  showBrowseBtn="false"
 					(onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
 						
 					</file-drop>

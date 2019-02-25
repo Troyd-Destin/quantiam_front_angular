@@ -136,10 +136,10 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         field: 'active',
         width: 80,
         headerName: '?',
-        cellRenderer: function(cell){ 
-          
+        cellRenderer: function(cell) {
+
          // console.log(cell);
-          if(cell.value){
+          if (cell.value) {
             return '<p style="color:green">In Stock</p>';
           }
 
@@ -151,20 +151,20 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         field: 'sds',
         width: 80,
         headerName: 'SDS',
-        cellRenderer: function(cell){ 
-          
+        cellRenderer: function(cell) {
+
          // console.log(cell);
-          if(cell.value){
+          if (cell.value) {
             return '<p style="color:green">View</p>';
           }
 
-          if(cell.data.active) return '<p style="color:red">Missing</p>';  
-          
+          if (cell.data.active) { return '<p style="color:red">Missing</p>'; }
+
           return '';
         },
-        onCellClicked:(cell )=> {
+        onCellClicked: (cell ) => {
 
-          if(cell.value) { this.fetchSDS(cell.data.material_id); }
+          if (cell.value) { this.fetchSDS(cell.data.material_id); }
           //  console.log('worked');
 
         }
@@ -184,6 +184,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
       sortable: true,
       resizable: true,
+      filter: true,
       cellStyle: function (params) {
         return {
           cursor: 'pointer',
@@ -243,7 +244,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
       console.log(queryParams);
 
-      if(queryParams.refreshTable == "true"){
+      if (queryParams.refreshTable === 'true') {
 
         this.fetchTableData();
         console.log('fetched?');
@@ -256,9 +257,8 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
   }
 
-  fetchTableData()
-  {
-      this.containerAggridService.getDatabase({},true);
+  fetchTableData() {
+      this.containerAggridService.getDatabase({}, true);
 
   }
 
@@ -287,7 +287,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
 
     this.containerAggridService.Database$.subscribe((r) => {
-      //console.log(r);
+      // console.log(r);
       if (r[0]) { this.rowData = r; }
       setTimeout(() => {  this.gridApi.sizeColumnsToFit(); }, 300);
     });
@@ -380,12 +380,11 @@ export class MaterialContainerDatabaseComponent implements OnInit {
     this.gridApi.setQuickFilter(this.searchBarValue);
   }
 
-  
-	fetchSDS(id)
-	{
-		this.http.get(environment.apiUrl + '/material/'+id+'/sds?filterSpinner',  {responseType:'blob'}).subscribe((response)=>{
 
-			
+	fetchSDS(id) {
+		this.http.get(environment.apiUrl + '/material/' + id + '/sds?filterSpinner',  {responseType: 'blob'}).subscribe((response) => {
+
+
         const url = window.URL.createObjectURL(response);
      	 window.open(url);
 

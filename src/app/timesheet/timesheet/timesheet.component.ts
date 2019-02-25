@@ -48,7 +48,7 @@ export class TimesheetComponent implements OnInit {
   routeParams = {
     userId: null,
     year: null,
-    payperoid: null,
+    payperiod: null,
   };
 
   defaultColDef = {
@@ -190,7 +190,7 @@ export class TimesheetComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.routeParams.userId = params.get('user');
       this.routeParams.year = params.get('year');
-      this.routeParams.payperoid = params.get('payperoid');
+      this.routeParams.payperiod = params.get('payperiod');
 
       this.fetchTimesheet();
 
@@ -253,7 +253,7 @@ export class TimesheetComponent implements OnInit {
 
     // Auth layer on fetching.
 
-    const url = '/timesheet/' + this.routeParams.userId + '/year/' + this.routeParams.year + '/payperiod/' + this.routeParams.payperoid + '';
+    const url = '/timesheet/' + this.routeParams.userId + '/year/' + this.routeParams.year + '/payperiod/' + this.routeParams.payperiod + '';
     this.timesheetLoaded = false;
 
     this.http.get<any>(environment.apiUrl + url)
@@ -261,14 +261,14 @@ export class TimesheetComponent implements OnInit {
       console.log(response);
             this.timeSheetObj = response;
             this.displayTimesheet = true;
-            setTimeout((x)=>{this.constructTimesheet();},100);
-            setTimeout((x)=>{ this.timesheetLoaded = true;},1000);
+            setTimeout((x) => {this.constructTimesheet(); }, 100);
+            setTimeout((x) => { this.timesheetLoaded = true; }, 1000);
          });
 
 
   }
 
-  
+
 
   constructTimesheet() {
 
@@ -345,8 +345,7 @@ export class TimesheetComponent implements OnInit {
 
             if (params.value > 8 && !this.timeSheetObj.machine) {
               console.log(params);
-              if(this.timesheetLoaded)
-              {
+              if (this.timesheetLoaded) {
               this.notification.info('Overtime', params.column.colId + ' has more then 8 hours.', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
               }
               return '<b style="color:red;">' + $.trim(params.value) + '</b>';
@@ -392,37 +391,34 @@ export class TimesheetComponent implements OnInit {
 
           let absenceCheck = false;
 
-        if(Array.isArray(this.timeSheetObj.rto) && this.timeSheetObj.rto.length > 0)
-        {
+        if (Array.isArray(this.timeSheetObj.rto) && this.timeSheetObj.rto.length > 0) {
             this.timeSheetObj.rto.forEach((rto) => {
 
-              if(absenceCheck) { return; }
-              if(rto.status === 'approved')
-              {
-                
-                rto.requested_time.forEach((time)=>{
-              
-                  if(time.date === params.column.colId) {
-                    
-                    absenceCheck = true; 
+              if (absenceCheck) { return; }
+              if (rto.status === 'approved') {
+
+                rto.requested_time.forEach((time) => {
+
+                  if (time.date === params.column.colId) {
+
+                    absenceCheck = true;
                     return;
                     }
-                })
+                });
               }
 
 
-            })
+            });
         }
 
-          if(absenceCheck && !params.node.footer)
-          {
+          if (absenceCheck && !params.node.footer) {
             cellStyle['background-color'] = '#e8faff6b';
           }
 
 
           const holidayCheck = this.timeSheetObj.holidays.find((holiday) => {
             return holiday.date === params.column.colId;
-          })
+          });
 
           const day = moment(params.column.colId).format('ddd');
           if ((holidayCheck || day === 'Sun' || day === 'Sat') && !params.node.footer) {
@@ -431,7 +427,7 @@ export class TimesheetComponent implements OnInit {
 
           }
 
-         
+
           if (params.node.footer) {
            // cellStyle['font-weight'] = 'bold';
             cellStyle['border'] = '0px';
@@ -470,18 +466,18 @@ export class TimesheetComponent implements OnInit {
 
 
     });
-    
+
     this.displayTimesheet = true;
     if (!this.gridApi) {   this.rowData = this.timeSheetFramework; }
 
     if (this.gridApi) {
-      
+
       this.gridApi.setColumnDefs(this.columnDefs);
       this.gridApi.setRowData(this.timeSheetFramework);
       this.gridApi.sizeColumnsToFit();
     }
 
-    
+
     console.log(this.timeSheetFramework);
   }
 
@@ -520,34 +516,33 @@ export class TimesheetComponent implements OnInit {
   }
 
   previousPayPeroid() {
-    this.routeParams.payperoid  = parseInt(this.routeParams.payperoid, null) - 1;
-    if (this.routeParams.payperoid  === 0) {
+    this.routeParams.payperiod  = parseInt(this.routeParams.payperiod, null) - 1;
+    if (this.routeParams.payperiod  === 0) {
 
-      this.routeParams.payperoid = 26;
+      this.routeParams.payperiod = 26;
       this.routeParams.year = parseInt(this.routeParams.year, null) - 1;
 
     }
 
-    this.router.navigate([`/timesheet/${this.routeParams.userId}/year/${this.routeParams.year}/payperoid/${this.routeParams.payperoid}`]);
+    this.router.navigate([`/timesheet/${this.routeParams.userId}/year/${this.routeParams.year}/payperiod/${this.routeParams.payperiod}`]);
 
   }
 
   nextPayPeroid() {
-    this.routeParams.payperoid  = parseInt(this.routeParams.payperoid, null) + 1;
-    if (this.routeParams.payperoid  === 27) {
+    this.routeParams.payperiod  = parseInt(this.routeParams.payperiod, null) + 1;
+    if (this.routeParams.payperiod  === 27) {
 
-      this.routeParams.payperoid = 1;
+      this.routeParams.payperiod = 1;
       this.routeParams.year = parseInt(this.routeParams.year, null) + 1;
 
     }
 
-    this.router.navigate([`/timesheet/${this.routeParams.userId}/year/${this.routeParams.year}/payperoid/${this.routeParams.payperoid}`]);
+    this.router.navigate([`/timesheet/${this.routeParams.userId}/year/${this.routeParams.year}/payperiod/${this.routeParams.payperiod}`]);
 
   }
 
-  changePayperoid()
-  {
-    this.router.navigate([`/timesheet/${this.routeParams.userId}/year/${this.routeParams.year}/payperoid/${this.routeParams.payperoid}`]);
+  changePayperoid() {
+    this.router.navigate([`/timesheet/${this.routeParams.userId}/year/${this.routeParams.year}/payperiod/${this.routeParams.payperiod}`]);
 
   }
 
@@ -574,14 +569,14 @@ export class TimesheetComponent implements OnInit {
 
     this.lastCellEdited = params;
     console.log(params);
-    const payload = { 
+    const payload = {
 
       date: params.column.colId,
       payperoid: this.timeSheetObj.payPeriod.payPeriod,
       projectid: params.data.project.projectID,
       year: this.timeSheetObj.payPeriod.year,
       employeeid: this.timeSheetObj.userID,
-      
+
 
     };
 
@@ -593,8 +588,8 @@ export class TimesheetComponent implements OnInit {
             console.log(response);
 
             this.timeSheetObj.bank = response.bank;
-            this.timeSheetObj.overhours[response.week-1].daily_sum = response.totaldaily_overhours;
-            this.timeSheetObj.overhours[response.week-1].weekly_sum = response.totalweekly_overhours;
+            this.timeSheetObj.overhours[response.week - 1].daily_sum = response.totaldaily_overhours;
+            this.timeSheetObj.overhours[response.week - 1].weekly_sum = response.totalweekly_overhours;
             this.notification.success('Saved ', response.projectid + ', ' + response[this.timeSheetObj.denomination.toLowerCase()] + ' ' + this.timeSheetObj.denomination + ' on ' + response.date, {timeOut: 2000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
 
          },
@@ -609,35 +604,32 @@ export class TimesheetComponent implements OnInit {
          });
   }
 
-  generateTimesheetDownload()
-  {
-    const url = '/timesheet/' + this.routeParams.userId + '/year/' + this.routeParams.year + '/payperiod/' + this.routeParams.payperoid + '/generate';
+  generateTimesheetDownload() {
+    const url = '/timesheet/' + this.routeParams.userId + '/year/' + this.routeParams.year + '/payperiod/' + this.routeParams.payperiod + '/generate';
 
-    //this.notification.info('Processing... ',  'Generating this timesheet.', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
+    // this.notification.info('Processing... ',  'Generating this timesheet.', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
 
     this.http.get<any>(environment.apiUrl + url + '')
-    .subscribe(r=>{
+    .subscribe(r => {
       console.log(r);
       window.location.assign(r.url);
       this.notification.success('Success',  'Timesheet made!', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
 
     });
-  
+
   }
 
-  selectedUserChanged(event){
+  selectedUserChanged(event) {
 
     this.routeParams.userId = event.employeeid;
-    this.router.navigate([`/timesheet/${this.routeParams.userId}/year/${this.routeParams.year}/payperoid/${this.routeParams.payperoid}`]);
+    this.router.navigate([`/timesheet/${this.routeParams.userId}/year/${this.routeParams.year}/payperiod/${this.routeParams.payperiod}`]);
     this.showSelectBox = false;
 
   }
 
- hideSelectBox()
- {
-  if(this.showSelectBox)
-  {
-  setTimeout((x)=>{this.showSelectBox = false;},200);
+ hideSelectBox() {
+  if (this.showSelectBox) {
+  setTimeout((x) => {this.showSelectBox = false; }, 200);
   }
 }
 }

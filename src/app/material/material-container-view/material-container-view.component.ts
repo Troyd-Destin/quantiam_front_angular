@@ -52,7 +52,7 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 		p1: 'MSMSDS.COMMON|',  // Chemical name lowercase
 		p2: 'MSMSDS.MANUFACT|', // Manufactuer
 		p3: 'MSCHEM.CAS|',  // CAS
-	}
+	};
 
 
   locationList: any;
@@ -79,14 +79,14 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 		let id  = this.route.snapshot.params.id;  // obtain ID from route
 
 		
-    
+
 			this.route.params.subscribe((p) =>{
 
 					console.log(p);
 				 	this.materialLotCotainerService.getMaterialLotContainer(p.id).subscribe(res => {});
 
 			})
-			
+
 			this.route.queryParams.subscribe((p: any) => {
 
 					console.log('test');
@@ -272,7 +272,7 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 	fetchPotentialMSDS() {
 
 		const params = this.MsdsSearch;
-		
+
 		if(this.searchingPossibleSDS === false && this.container.lot.material && this.container.lot.material.cas)
 		{
 		this.searchingPossibleSDS = true;
@@ -280,32 +280,31 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 		params.p2 = 'MSMSDS.MANUFACT|' + this.container.lot.material.supplier.supplier_name.toLowerCase();
 		params.p3 = 'MSCHEM.CAS|' + this.container.lot.material.cas;
 
-		
-		this.http.post<any>('https://chemicalsafety.com/sds1/retriever.php?filterSpinner', params).subscribe(r=>{
+
+		this.http.post<any>('https://chemicalsafety.com/sds1/retriever.php?filterSpinner', params).subscribe(r => {
 
 			console.log(r);
 			this.sdsSearch = r.rows;
 
 			console.log(this.sdsSearch);
 
-			if(this.sdsSearch[0]) { this.searchingPossibleSDS = false; }
+			if (this.sdsSearch[0]) { this.searchingPossibleSDS = false; }
 
-		
-			if(r.rows.length === 0)
-			{	
+
+			if (r.rows.length === 0) {
 				const splitstring = params.p1.split(' ');
 				params.p2 = null;
 				params.p1 = splitstring[0];
-				this.http.post<any>('https://chemicalsafety.com/sds1/retriever.php?filterSpinner', params).subscribe(r2=>{
+				this.http.post<any>('https://chemicalsafety.com/sds1/retriever.php?filterSpinner', params).subscribe(r2 => {
 
 					console.log(r2);
 
 						this.sdsSearch = r2.rows;
-				
-						if(this.sdsSearch[0]) { 
+
+						if (this.sdsSearch[0]) {
 							console.log(this.sdsSearch);
-					
-						
+
+
 						}
 						this.searchingPossibleSDS = false;
 					});
@@ -315,41 +314,40 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 		});
 		} else {
 
-			this.notification.info('Missing', 'If possible, please add a CAS number for this material.', {showProgressBar: false, timeOut: 5000, clickToClose: true});		
-						
+			this.notification.info('Missing', 'If possible, please add a CAS number for this material.', {showProgressBar: false, timeOut: 5000, clickToClose: true});
+
 		}
 	}
 
-	navigateToSDS(item)
-	{
-		const win = window.open("https://chemicalsafety.com/sds1/sdsviewer.php?id="+item[0], '_blank');
+	navigateToSDS(item) {
+		const win = window.open('https://chemicalsafety.com/sds1/sdsviewer.php?id=' + item[0], '_blank');
  		 win.focus();
 	}
 
 	public dropped(event: UploadEvent) {
    // this.files = event.files;
     for (const droppedFile of event.files) {
- 
+
 			// Is it a file?
 			console.log(droppedFile);
       if (droppedFile.fileEntry.isFile && droppedFile.fileEntry.name.includes('.pdf')) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         fileEntry.file((file: File) => {
- 
+
           // Here you can access the real file
           console.log(droppedFile.relativePath, file);
- 
-         
+
+
           // You could upload it like this:
-          const formData = new FormData()
+          const formData = new FormData();
           formData.append('sds', file, 'test.pdf');
- 
+
           // Headers
           const headers = new HttpHeaders({
-					
+
           });
- 
-          this.http.post(environment.apiUrl + '/material/'+this.container.lot.material.id+'/sds', formData, { headers: headers })
+
+          this.http.post(environment.apiUrl + '/material/' + this.container.lot.material.id + '/sds', formData, { headers: headers })
           .subscribe(response => {
 
 						this.container.lot.material = response;
@@ -357,58 +355,56 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 						this.fetchSDS();
             // Sanitized logo returned from backend
 					},
-					error =>{
+					error => {
 											console.log(error);
-											this.notification.error('Error', error.error.error, {showProgressBar: false, timeOut: 5000, clickToClose: true});		
+											this.notification.error('Error', error.error.error, {showProgressBar: false, timeOut: 5000, clickToClose: true});
 											this.files = [];
-						
-					})
-       
- 
+
+					});
+
+
         });
       } else {
 				// It was a directory (empty directories are added, otherwise only files)
 				this.notification.error('Error', 'You can only upload a pdf file.', {showProgressBar: false, timeOut: 3000, clickToClose: true});
-				this.files = [];             
-        
+				this.files = [];
+
       }
     }
   }
 
-	public fileOver(event){
+	public fileOver(event) {
     console.log(event);
   }
- 
-  public fileLeave(event){
+
+  public fileLeave(event) {
     console.log(event);
 	}
-	
 
-	fetchSDS()
-	{
-		this.http.get(environment.apiUrl + '/material/'+this.container.lot.material.id+'/sds?filterSpinner',  {responseType:'blob'}).subscribe((response)=>{
+
+	fetchSDS() {
+		this.http.get(environment.apiUrl + '/material/' + this.container.lot.material.id + '/sds?filterSpinner',  {responseType: 'blob'}).subscribe((response) => {
 
 				this.sdsBlob = response;
 				this.showSDS = true;
 				 this.SDSurl = window.URL.createObjectURL(response);
 				 console.log(this.SDSurl);
      	 // window.open(url);
-				document.querySelector("iframe").src = this.SDSurl;
+				document.querySelector('iframe').src = this.SDSurl;
 
 		});
 
 	}
 
-	deleteSDS()
-	{
+	deleteSDS() {
 
-		if(confirm('Are you sure you want to delete the SDS?')){
+		if (confirm('Are you sure you want to delete the SDS?')) {
 
-			this.http.delete(environment.apiUrl + '/material/'+this.container.lot.material.id+'/sds?filterSpinner').subscribe((response)=>{
+			this.http.delete(environment.apiUrl + '/material/' + this.container.lot.material.id + '/sds?filterSpinner').subscribe((response) => {
 
-					//console.log(respone)
+					// console.log(respone)
 					this.container.lot.material = response;
-			})
+			});
 
 		}
 

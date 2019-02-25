@@ -8,7 +8,13 @@ import { FileDropModule } from 'ngx-file-drop';
 
 import {FlexLayoutModule} from '@angular/flex-layout';
 
+import {
+  MatIconModule,
+  MatButtonModule,
+  MatCardModule,
+   MatCheckboxModule,
 
+} from '@angular/material';
 
 import { Select2Module } from 'ng2-select2';
 import { Select2MaterialComponent } from './select2-material/select2-material.component';
@@ -35,6 +41,10 @@ import { SelectGroupComponent } from './select-group/select-group.component';
     NgSelectModule,
     FormsModule,
     FlexLayoutModule,
+    MatIconModule,
+    MatCardModule,
+    MatButtonModule,
+    MatCheckboxModule,
     FileDropModule,
   ],
   declarations: [

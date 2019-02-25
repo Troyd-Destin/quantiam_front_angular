@@ -1,4 +1,5 @@
 
+
 <div fxFlex fxLayout="column" fxLayoutGap="10px" style="height:100%" id="timesheetPage" *ngIf="displayTimesheet">
 
 
@@ -26,7 +27,7 @@
 
           <app-select-user  [hidden]="!showSelectBox" (change)="selectedUserChanged($event)" [selectedValue]="timeSheetObj.user?.id"></app-select-user>
         </div>
-        <p> Pay Peroid {{routeParams.payperoid}}, {{routeParams.year}} </p>
+        <p> Pay Period {{routeParams.payperiod}}, {{routeParams.year}} </p>
         <p> {{timeSheetObj?.payPeriod.startDateHeader}} - {{timeSheetObj?.payPeriod.endDateHeader}}  </p>
        
 
@@ -64,9 +65,9 @@
                 Download
               </button>
              
-              <p> Payperoid </p>
-              <select placeholder="Payperiod" (change)="changePayperoid()"  [(ngModel)]="routeParams.payperoid">
-                  <option *ngFor="let item of timesheetPayperoids" [value]="item" [attr.selected]="routeParams.payperoid == item ? 'selected' : null">
+              <p> Pay Period </p>
+              <select placeholder="Payperiod" (change)="changePayperoid()"  [(ngModel)]="routeParams.payperiod">
+                  <option *ngFor="let item of timesheetPayperoids" [value]="item" [attr.selected]="routeParams.payperiod == item ? 'selected' : null">
                     {{item}}
                   </option>
                 </select>
@@ -150,7 +151,7 @@
 
 
       <div fxFlex=20>
-          <h3 class="page-header">Hours <small>Current Payperoid</small>
+          <h3 class="page-header">Hours <small>Current Pay Period</small>
             <div  style="float:right;" ><b>Total:</b> {{timeSheetObj.time.total}} Hours </div>
           </h3>
           <table class="stattable table table-stats table-condensed table-striped table-shadow">

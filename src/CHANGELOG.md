@@ -28,6 +28,9 @@
 - The material database now displays if a SDS is on file.
 - All SDS sheets live in Q:\Administration - All Staff\SDS 
 
+### SEM 
+- SEM database now works with server side querying
+
 ### Other
 
 - Select2 boxes now have proper padding for placeholder text

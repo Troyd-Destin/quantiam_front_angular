@@ -1,3 +1,36 @@
-<p>
-  sem-database works!
-</p>
+
+<div fxLayout="row" fxLayoutGap="20px">
+
+    <mat-form-field style="max-width: 100px;">
+        <mat-select  placeholder="Page Size"  [(ngModel)]="gridOptions.cacheBlockSize" (selectionChange)="onPageSizeChanged()">
+          <mat-option *ngFor="let pageSize of pageSizes" [value]="pageSize" [attr.selected]="pageSize === gridOptions.cacheBlockSize ? 'selected': null">
+            {{pageSize}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field style="width:400px">
+          <!--   <span matPrefix>+1 &nbsp;</span> -->
+          <input id="semDatabaseSearchBar" type="text" matInput (keyup)="onTextFilterChanged()"  [(ngModel)]="filteredTextFilterName"  placeholder="Search">
+          <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>  
+
+</div>
+
+
+
+<ag-grid-angular
+#agGrid
+
+id="semDatabase"
+class="ag-theme-balham"
+[columnDefs]="columnDefs"
+[gridOptions]="gridOptions"
+[defaultColDef]="defaultColDef"
+[rowData]="rowData"
+
+[animateRows]="true"
+
+(gridReady)="onGridReady($event)"
+>
+</ag-grid-angular>

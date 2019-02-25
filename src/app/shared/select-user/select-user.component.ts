@@ -19,10 +19,10 @@ export class SelectUserComponent implements OnInit, OnDestroy {
   // Inputs
   @Input() selectedValue: any = null; // default value, object or ID
   @Input() multiple: any = false; // multi version
-  @Input() selectableGroup: any = false; 
-  @Input() placeholder = 'Select Somebody'; 
+  @Input() selectableGroup: any = false;
+  @Input() placeholder = 'Select Somebody';
   @Input() showMachines = false;
-  @Input() restrictedAccessMode = false; 
+  @Input() restrictedAccessMode = false;
 
   // Outputs
   @Output() change = new EventEmitter<any>();
@@ -35,8 +35,7 @@ export class SelectUserComponent implements OnInit, OnDestroy {
     console.log(this.selectedValue);
 
 
-    if(!this.restrictedAccessMode)
-    {
+    if (!this.restrictedAccessMode) {
 
     this.selectUserService.list(); // Make sure the service is initialized.
     this.list$ = this.selectUserService.list$.subscribe((r) => {
@@ -49,8 +48,7 @@ export class SelectUserComponent implements OnInit, OnDestroy {
 
   }
 
-  showMachineItems()
-  {
+  showMachineItems() {
 
 
   }
@@ -83,7 +81,7 @@ export class SelectUserComponent implements OnInit, OnDestroy {
   }
 
   onChange(event) {
-   
+
      this.change.emit(event);
   }
 

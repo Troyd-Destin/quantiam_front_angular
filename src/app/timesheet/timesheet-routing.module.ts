@@ -14,7 +14,7 @@ const routes: Routes = [{
     component: TimesheetIndexComponent,
     children: [
     {
-      path: ':user/year/:year/payperoid/:payperoid',
+      path: ':user/year/:year/payperiod/:payperiod',
       data: { key: 'timesheet'},
       component: TimesheetComponent,
     },
