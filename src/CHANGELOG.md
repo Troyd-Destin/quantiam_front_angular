@@ -30,6 +30,7 @@
 
 ### SEM 
 - SEM database now works with server side querying
+- Various fitlers tested and working
 
 ### XRD
 - Xrd database now works with server side querying

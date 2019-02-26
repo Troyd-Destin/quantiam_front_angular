@@ -14,12 +14,12 @@ export class SemDatabaseComponent implements OnInit {
   private gridApi;
   private gridColumnApi;
 
-  private pageSizes = [20, 25, 50, 100];
+  private pageSizes = [20, 25, 50, 100, 200];
 
 
   private columnDefs;
   private defaultColDef;
-  private rowData: [{id:100,semrun_id:'thing'}];
+  private rowData: [];
 
   private gridOptions;
   private rowModelType;
@@ -53,7 +53,7 @@ export class SemDatabaseComponent implements OnInit {
         {
           headerName: 'SEM',
           field: 'sem',
-          width: 100,
+          width: 80,
           filter: false
         },
         {
@@ -65,7 +65,7 @@ export class SemDatabaseComponent implements OnInit {
         {
           headerName: 'Project',
           field: 'project_id',
-          width: 80,
+          width: 70,
           filter: true
         },
         {
@@ -78,25 +78,38 @@ export class SemDatabaseComponent implements OnInit {
         {
           headerName: 'Type',
           field: 'type.type_id',
-           width: 80,
-          filter: true
+           width: 150,
+          filter: true,
+          cellRenderer: (cell) => {
+            if(cell.data.type){ return cell.data.type.type; }
+            return '';
+          }
         },
         {
           headerName: 'Operator',
           field: 'operator_id',
-         // width: 100,
-          filter: true
+          width: 80,
+          filter: true,
+          cellRenderer: (cell) => {
+            if(cell.data.operator){ return cell.data.operator.name_abbrev; }
+            return '';
+          }
         },
         {
           headerName: 'Requested',
           field: 'requested_by',
-         // width: 100,
-          filter: true
+          width: 80,
+          filter: true,
+          cellRenderer: (cell) => {
+           // console.log(cell);
+            if(cell.data.requestor){ return cell.data.requestor.name_abbrev; }
+            return '';
+          }
         },
         {
           headerName: 'Duration',
           field: 'duration',
-          width: 100,
+          //width: 100,
           filter: false
         },
         {

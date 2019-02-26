@@ -41,7 +41,7 @@ export class UserDatabaseComponent implements OnInit {
 
      // maxWidth:120,
       sorting: true,
-     // suppressMenu: true,
+     //   suppressMenu: true,
       sortable: true,
       filter: true,
       cellStyle: function (params) {
