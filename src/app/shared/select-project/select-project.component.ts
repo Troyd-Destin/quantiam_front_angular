@@ -23,6 +23,7 @@ export class SelectProjectComponent implements OnInit, OnDestroy {
 
   // Outputs
   @Output() change = new EventEmitter<any>();
+  @Output() clear = new EventEmitter<any>();
 
   constructor(private projectService: ProjectService) { }
 
@@ -70,9 +71,8 @@ export class SelectProjectComponent implements OnInit, OnDestroy {
   }
 
 
-  onChange(event) {
-     this.change.emit(event);
-  }
+  onChange(event) { this.change.emit(event); }
+  onClear(event) { this.change.emit(event); }
 
   ngOnDestroy() {
     this.list$ .unsubscribe();

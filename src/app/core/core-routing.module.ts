@@ -44,6 +44,11 @@ const routes: Routes = [
 			// 	pathMatch: 'prefix',
 			},
 			{
+				path: 'xrd',
+				loadChildren: '../xrd/xrd.module#XrdModule',
+			// 	pathMatch: 'prefix',
+			},
+			{
 				path: 'tga',
 				loadChildren: '../tga/tga.module#TgaModule',
 			// 	pathMatch: 'prefix',

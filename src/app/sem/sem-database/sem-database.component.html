@@ -1,19 +1,50 @@
 
-<div fxLayout="row" fxLayoutGap="20px">
+<div fxLayout="row"  >
 
-    <mat-form-field style="max-width: 100px;">
-        <mat-select  placeholder="Page Size"  [(ngModel)]="gridOptions.cacheBlockSize" (selectionChange)="onPageSizeChanged()">
-          <mat-option *ngFor="let pageSize of pageSizes" [value]="pageSize" [attr.selected]="pageSize === gridOptions.cacheBlockSize ? 'selected': null">
-            {{pageSize}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlex>
+
+
+      <app-select-project
+        style="min-width:150px;"
+        (change)="filterProject($event)"
+        (clear)="clearFilterProject($event)"
+      ></app-select-project>
+
+      <app-select-user
+         style="min-width:150px;"
+        (change)="filterOperator($event)"
+        (clear)="clearFilterOperator($event)"
+        placeholder="Operator"
+      ></app-select-user>
+
+
+      <app-select-user
+        style="min-width:150px;"
+        (change)="filterRequestor($event)"
+        (clear)="clearFilterRequestor($event)"
+        placeholder="Requested by"
+      ></app-select-user>
+
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="end start" fxFlex fxLayoutGap="20px">
+
+    
+      <mat-form-field style="max-width: 100px;">
+          <mat-select  placeholder="Page Size"  [(ngModel)]="gridOptions.cacheBlockSize" (selectionChange)="onPageSizeChanged()">
+            <mat-option *ngFor="let pageSize of pageSizes" [value]="pageSize" [attr.selected]="pageSize === gridOptions.cacheBlockSize ? 'selected': null">
+              {{pageSize}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
       <mat-form-field style="width:400px">
           <!--   <span matPrefix>+1 &nbsp;</span> -->
           <input id="semDatabaseSearchBar" type="text" matInput (keyup)="onTextFilterChanged()"  [(ngModel)]="filteredTextFilterName"  placeholder="Search">
           <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>  
+
+    </div>
 
 </div>
 

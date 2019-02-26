@@ -25,7 +25,9 @@ export class SelectUserComponent implements OnInit, OnDestroy {
   @Input() restrictedAccessMode = false;
 
   // Outputs
-  @Output() change = new EventEmitter<any>();
+  @Output() change = new EventEmitter<any>();  
+  @Output() remove = new EventEmitter<any>();
+  @Output() clear = new EventEmitter<any>();
 
 
   constructor(private selectUserService: SelectUserService, private userService: UserService) { }
@@ -80,10 +82,9 @@ export class SelectUserComponent implements OnInit, OnDestroy {
    if (this.showActive && this.showInactive) {this.items = this.allItems; }
   }
 
-  onChange(event) {
-
-     this.change.emit(event);
-  }
+  onChange(event) {this.change.emit(event);}  
+  onRemove(event) { this.remove.emit(event); }
+  onClear(event) { this.clear.emit(event); }
 
   ngOnDestroy() {
    if (this.list$) { this.list$.unsubscribe(); }

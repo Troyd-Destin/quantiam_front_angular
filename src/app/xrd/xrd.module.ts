@@ -7,32 +7,32 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialDesignModule } from '../material-design/material-design.module';
 
-
+// Ag-grid
 import { AgGridModule } from 'ag-grid-angular';
 import 'ag-grid-enterprise';
 
 
-// Components
-import { SemIndexComponent } from './sem-index/sem-index.component';
-import { SemDatabaseComponent } from './sem-database/sem-database.component';
-import { SemRunComponent } from './sem-run/sem-run.component';
+
+import { XrdIndexComponent } from './xrd-index/xrd-index.component';
+import { XrdDatabaseComponent } from './xrd-database/xrd-database.component';
+import { XrdViewComponent } from './xrd-view/xrd-view.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: SemIndexComponent,
+    component: XrdIndexComponent,
     children: [
 
       {
         path: 'database',
-        component: SemDatabaseComponent,
-        data: {key: 'SemDatabase'}
+        component: XrdDatabaseComponent,
+        data: {key: 'XrdDatabase'}
       },
       {
         path: ':id',
-        component: SemRunComponent,
-        data: {key: 'SemRun'}
+        component: XrdViewComponent,
+        data: {key: 'XrdView'}
       }
     ],
 
@@ -40,8 +40,9 @@ const routes: Routes = [
 
 ];
 
+
 @NgModule({
-  declarations: [SemIndexComponent, SemDatabaseComponent, SemRunComponent],
+  declarations: [XrdIndexComponent, XrdDatabaseComponent, XrdViewComponent],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
@@ -51,5 +52,4 @@ const routes: Routes = [
     AgGridModule.withComponents([]),
   ]
 })
-export class SemModule { }
-
+export class XrdModule { }

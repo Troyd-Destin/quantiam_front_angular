@@ -31,6 +31,9 @@
 ### SEM 
 - SEM database now works with server side querying
 
+### XRD
+- Xrd database now works with server side querying
+
 ### Other
 
 - Select2 boxes now have proper padding for placeholder text

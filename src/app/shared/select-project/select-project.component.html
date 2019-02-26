@@ -6,7 +6,10 @@
 	[(ngModel)]="selectedValue"
 	placeholder="Project"
 	[multiple]="multiple"
+
 	(change)="onChange($event)"
+	(clear)="onClear($event)"
+
 	groupBy="Category"
 	[selectableGroup]="selectableGroup"
 

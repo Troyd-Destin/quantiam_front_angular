@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SemDatabaseService } from './sem-database.service';
 import { HttpClient,HttpParams } from '@angular/common/http';
-import { IGetRowsParams  } from 'ag-grid-community';
 
 import {  environment} from '../../../environments/environment';
 
@@ -15,7 +14,7 @@ export class SemDatabaseComponent implements OnInit {
   private gridApi;
   private gridColumnApi;
 
-  private pageSizes = [25, 50, 100];
+  private pageSizes = [20, 25, 50, 100];
 
 
   private columnDefs;
@@ -48,38 +47,38 @@ export class SemDatabaseComponent implements OnInit {
           headerName: 'ID',
           field: 'id',
           width: 100,
-          hidden: true,
+          hide: true,
           filter: false
         },
         {
           headerName: 'SEM',
           field: 'sem',
           width: 100,
-          hidden: true,
           filter: false
         },
         {
           headerName: 'ID',
           field: 'semrun_id',
-          width: 100,
+          width: 80,
           filter: false
         },
         {
           headerName: 'Project',
           field: 'project_id',
-          width: 100,
+          width: 80,
           filter: true
         },
         {
           headerName: 'Sample Name',
           field: 'samplename',
-          minwidth: 200,
-          filter: false
+          minwidth: 250,
+          filter: false,
+          editable: true,
         },
         {
-          headerName: 'Sample Type',
+          headerName: 'Type',
           field: 'type.type_id',
-         // width: 100,
+           width: 80,
           filter: true
         },
         {
@@ -158,6 +157,9 @@ export class SemDatabaseComponent implements OnInit {
         const requestParams: HttpParams = new HttpParams()
         .append('limit', `${this.gridOptions.cacheBlockSize}`)
         .append('like', `${this.filteredTextFilterName}`)
+        .append('requestor', `${this.filteredRequestor}`)
+        .append('operator', `${this.filteredOperator}`)
+        .append('project', `${this.filteredProject}`)
         .append('page', `${page}`);
 
           this.http.get(environment.apiUrl + '/instrument/sem/run', {params: requestParams}).subscribe((response:any) => {
@@ -173,14 +175,19 @@ export class SemDatabaseComponent implements OnInit {
 
   }
 
+  refreshDatabase()
+  {
+
+    const datasource = this.fetchSemDatabase();
+    this.gridApi.setServerSideDatasource(datasource);
+  }
+
   onTextFilterChanged()
   {
       clearTimeout(this.timeoutTextFilter);
       this.timeoutTextFilter = setTimeout((x) => {
 
-            console.log('test');
-            const datasource = this.fetchSemDatabase();
-            this.gridApi.setServerSideDatasource(datasource);
+              this.refreshDatabase();
       }, 500 )
 
   }
@@ -188,10 +195,46 @@ export class SemDatabaseComponent implements OnInit {
   onPageSizeChanged()
   {
     this.gridOptions.paginationPageSize = this.gridOptions.cacheBlockSize;
-    const datasource = this.fetchSemDatabase();
-    this.gridApi.setServerSideDatasource(datasource);
+    this.refreshDatabase();
+  
   }
 
+  filterProject(event)
+  {
+      this.filteredProject = event.id;
+      this.refreshDatabase();
+  }
+  clearFilterProject(event)
+  {
+     this.filteredProject = '';
+     this.refreshDatabase();
+  }
+
+
+  filterOperator(event)
+  {
+      this.filteredOperator = event.id;
+      this.refreshDatabase();
+  }
+
+  clearFilterOperator(event)
+  {
+     this.filteredOperator = '';
+     this.refreshDatabase();
+  }
+
+
+  filterRequestor(event)
+  {
+    this.filteredRequestor = event.id;
+    this.refreshDatabase();
+  }
+
+  clearFilterRequestor(event)
+  {
+     this.filteredRequestor = '';
+     this.refreshDatabase();
+  }
 
 }
 
