@@ -16,6 +16,7 @@ export class SelectUserComponent implements OnInit, OnDestroy {
   showInactive = false;
   virtualScroll = true;
 
+
   // Inputs
   @Input() selectedValue: any = null; // default value, object or ID
   @Input() multiple: any = false; // multi version
@@ -23,6 +24,8 @@ export class SelectUserComponent implements OnInit, OnDestroy {
   @Input() placeholder = 'Select Somebody';
   @Input() showMachines = false;
   @Input() restrictedAccessMode = false;
+  @Input() subordinates = false;
+  @Input() supervisors = false;
 
   // Outputs
   @Output() change = new EventEmitter<any>();  
@@ -80,6 +83,13 @@ export class SelectUserComponent implements OnInit, OnDestroy {
 
    if (!this.showActive && !this.showInactive) { this.items = []; }
    if (this.showActive && this.showInactive) {this.items = this.allItems; }
+
+  
+   // check for  subordinate and supervisors 
+
+
+
+
   }
 
   onChange(event) {this.change.emit(event);}  
