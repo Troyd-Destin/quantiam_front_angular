@@ -1,0 +1,8 @@
+<div class="background" (keydown)="onKeyDown($event)">
+    <app-select-user
+    #userEditor 
+        (change)="selectValue($event)"
+        placeholder="Select Employee"
+    ></app-select-user>
+  
+  </div>

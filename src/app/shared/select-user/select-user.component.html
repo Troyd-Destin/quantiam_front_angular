@@ -13,6 +13,8 @@
 	(remove)="onRemove($event)"
 	(clear)="onClear()"
 
+	[searchFn]="customSearchFn"
+
 	bindValue="id"
 	bindLabel="name"
 >
@@ -27,7 +29,7 @@
   <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm" >
 			<div fxLayout="row" fxLayoutAlign="center center"  fxLayoutGap="10px">
 				<div fxLayout="row"  fxLayoutAlign="start center" fxFlex >
-					<div style="width:45px"  [ngOptionHighlight]="search"><b>{{item.id}}</b></div> 
+					<div style="width:45px; font-size:14px;"  [ngOptionHighlight]="search"><b>{{item.id}}</b></div> 
 					<div style="width:150px;font-size:13px; margin-right:5px;"  [ngOptionHighlight]="search" >{{item.name}}</div>
 					<div style="font-size:13px; width:250px; display: inline; word-wrap: break-word;" >{{item.title}}</div>
 					

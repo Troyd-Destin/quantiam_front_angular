@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient,HttpParams } from '@angular/common/http';
 
 import {environment} from '../../../environments/environment';
-
 import * as moment from 'moment';
+
+import { AgGridSelectProjectEditorComponent } from '../../shared/ag-grid-select-project/ag-grid-select-project.component';
+
+import { MoodEditor } from '../../ag-grid-editors/mood-editor.component';
 
 @Component({
   selector: 'app-timesheet-rto',
@@ -34,6 +37,8 @@ export class TimesheetRtoComponent implements OnInit {
   private filteredStatus = '';
   private filteredTextFilterName = '';
   private timeoutTextFilter;
+
+  private frameworkComponents;
 
   private totalRows;
 
@@ -114,7 +119,6 @@ export class TimesheetRtoComponent implements OnInit {
         filter: false,
         editable: true,
       },
-     
     ];
 
     this.defaultColDef = {
@@ -133,6 +137,11 @@ export class TimesheetRtoComponent implements OnInit {
       maxConcurrentDatasourceRequests: 1,
        paginationPageSize: 20,
        //rowHeight: 25
+    };
+
+    this.frameworkComponents = {
+      moodEditor: MoodEditor,
+      projectEditor: AgGridSelectProjectEditorComponent,
     };
 
    }

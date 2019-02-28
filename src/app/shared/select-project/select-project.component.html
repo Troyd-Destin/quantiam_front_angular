@@ -12,6 +12,7 @@
 
 	groupBy="Category"
 	[selectableGroup]="selectableGroup"
+	[searchFn]="customSearchFn"
 
 		  
 >
@@ -34,7 +35,7 @@
 					
 			<div fxLayout="row" fxLayoutAlign="start center"  >
 				<div fxLayout="row"  fxLayoutAlign="start center"  >
-					<div style="width:50px;"  [ngOptionHighlight]="search"> <b>{{item.id}} </b></div> 
+					<div style="width:50px; font-size:14px;"  [ngOptionHighlight]="search"> <b>{{item.id}} </b></div> 
 					<div style="width:250px; font-size:12px; margin-left:10px" [ngOptionHighlight]="search">{{item.Description}}</div>
 					
 				</div>

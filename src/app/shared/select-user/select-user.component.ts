@@ -96,6 +96,16 @@ export class SelectUserComponent implements OnInit, OnDestroy {
   onRemove(event) { this.remove.emit(event); }
   onClear(event) { this.clear.emit(event); }
 
+  customSearchFn(term: string, item) {  // good for lists we store in their entirety
+    console.log(term,item);
+    term = term.toLocaleLowerCase();
+
+    item.id = String(item.id);
+    return item.id.toLocaleLowerCase().indexOf(term) > -1
+    || item.name.toLocaleLowerCase().indexOf(term) > -1;
+
+}
+
   ngOnDestroy() {
    if (this.list$) { this.list$.unsubscribe(); }
   }

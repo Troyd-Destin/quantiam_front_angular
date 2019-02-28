@@ -74,6 +74,17 @@ export class SelectProjectComponent implements OnInit, OnDestroy {
   onChange(event) { this.change.emit(event); }
   onClear(event) { this.change.emit(event); }
 
+  customSearchFn(term: string, item) {  // good for lists we store in their entirety
+    console.log(term,item);
+    term = term.toLocaleLowerCase();
+
+    item.id = String(item.id);
+    return item.id.toLocaleLowerCase().indexOf(term) > -1
+    || item.Description.toLocaleLowerCase().indexOf(term) > -1;
+
+}
+
+
   ngOnDestroy() {
     this.list$ .unsubscribe();
   }

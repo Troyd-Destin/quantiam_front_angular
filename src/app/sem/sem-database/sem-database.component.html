@@ -19,11 +19,14 @@
 
 
       <app-select-user
-        style="min-width:150px;"
+        style="min-width:150px;" 
+        
         (change)="filterRequestor($event)"
         (clear)="clearFilterRequestor($event)"
         placeholder="Requested by"
       ></app-select-user>
+
+      <!-- <button class="mat-elevation-z1" mat-raised-button>Test </button> -->
 
   </div>
 
@@ -59,6 +62,10 @@ class="ag-theme-balham"
 [gridOptions]="gridOptions"
 [defaultColDef]="defaultColDef"
 [rowData]="rowData"
+[frameworkComponents] = "frameworkComponents"
+
+(cellEditingStopped)="onCellEditingStopped($event)"
+(cellEditingStarted)="onCellEditingStarted($event)"
 
 [animateRows]="true"
 

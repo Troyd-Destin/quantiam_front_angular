@@ -4,6 +4,12 @@ import { HttpClient,HttpParams } from '@angular/common/http';
 
 import {  environment} from '../../../environments/environment';
 
+
+import { NotificationsService } from 'angular2-notifications';
+
+import { AgGridSelectProjectEditorComponent } from '../../shared/ag-grid-select-project/ag-grid-select-project.component';
+import { AgGridSelectUserComponent } from '../../shared/ag-grid-select-user/ag-grid-select-user.component';
+
 @Component({
   selector: 'app-sem-database',
   templateUrl: './sem-database.component.html',
@@ -21,11 +27,14 @@ export class SemDatabaseComponent implements OnInit {
   private defaultColDef;
   private rowData: [];
 
+  private editable = false;
+
   private gridOptions;
   private rowModelType;
   private rowSelection;
   private maxBlocksInCache;
   private cacheBlockSize;
+  private oldCellValue;
 
   private filteredOperator = '';
   private filteredRequestor = '';
@@ -34,12 +43,15 @@ export class SemDatabaseComponent implements OnInit {
   private filteredTextFilterName = '';
   private timeoutTextFilter;
 
+  private frameworkComponents;
+
   private totalRows;
 
 
   constructor(
     private semDatabaseService: SemDatabaseService,
     private http: HttpClient,
+    private notification: NotificationsService,
   ) {
 
       this.columnDefs = [
@@ -48,36 +60,39 @@ export class SemDatabaseComponent implements OnInit {
           field: 'id',
           width: 100,
           hide: true,
-          filter: false
+          filter: false,
+          editable: false,
         },
         {
           headerName: 'SEM',
           field: 'sem',
           width: 80,
-          filter: false
+          filter: false,
+          editable: false,
         },
         {
           headerName: 'ID',
           field: 'semrun_id',
           width: 80,
-          filter: false
+          filter: false,
+          editable: false,
         },
         {
           headerName: 'Project',
           field: 'project_id',
           width: 70,
-          filter: true
+          filter: true,
+          cellEditor: 'projectEditor',
         },
         {
           headerName: 'Sample Name',
           field: 'samplename',
           minwidth: 250,
           filter: false,
-          editable: true,
         },
         {
           headerName: 'Type',
-          field: 'type.type_id',
+          field: 'type',
            width: 150,
           filter: true,
           cellRenderer: (cell) => {
@@ -87,19 +102,24 @@ export class SemDatabaseComponent implements OnInit {
         },
         {
           headerName: 'Operator',
-          field: 'operator_id',
+          field: 'operator',
           width: 80,
           filter: true,
+          cellEditor: 'userEditor',
+          
           cellRenderer: (cell) => {
+          
             if(cell.data.operator){ return cell.data.operator.name_abbrev; }
             return '';
           }
         },
         {
           headerName: 'Requested',
-          field: 'requested_by',
+          field: 'requestor',
           width: 80,
           filter: true,
+          cellEditor: 'userEditor',
+         
           cellRenderer: (cell) => {
            // console.log(cell);
             if(cell.data.requestor){ return cell.data.requestor.name_abbrev; }
@@ -110,13 +130,26 @@ export class SemDatabaseComponent implements OnInit {
           headerName: 'Duration',
           field: 'duration',
           //width: 100,
-          filter: false
+          filter: false,
+          editable: false,
         },
         {
           headerName: 'Date',
           field: 'date_created',
          // width: 100,
-          filter: false
+          filter: false,
+          editable: false,
+        },
+        {
+          headerName: 'Actions',
+          field: 'id',
+         // width: 100,
+          filter: false,
+          editable: false,
+          cellRenderer: (cell) => {
+
+             return '';
+           }
         },
 
       ];
@@ -124,6 +157,7 @@ export class SemDatabaseComponent implements OnInit {
       this.defaultColDef = {
         filter: true,
         sorting: true,
+        editable: true,
        };
 
       
@@ -140,6 +174,11 @@ export class SemDatabaseComponent implements OnInit {
         maxConcurrentDatasourceRequests: 1,
          paginationPageSize: 20,
         //paginationAutoPageSize: true
+      };
+
+      this.frameworkComponents = {
+        projectEditor: AgGridSelectProjectEditorComponent,
+        userEditor: AgGridSelectUserComponent,
       };
    }
 
@@ -248,6 +287,53 @@ export class SemDatabaseComponent implements OnInit {
      this.filteredRequestor = '';
      this.refreshDatabase();
   }
+
+  onCellEditingStopped($event) {
+
+    let value = $event.value;
+    if (value === "") { value = null; }
+    if (this.oldCellValue !== value ) {
+      this.updateSemRun($event);
+     }
+     return;
+  }
+  onCellEditingStarted($event) {
+
+        console.log($event);
+        this.oldCellValue = $event.value;
+        return;
+       
+
+  }
+
+  updateSemRun(cell)
+  {
+
+    console.log(cell);
+
+    const params: any = {};
+
+    if(cell.column.colId === 'requestor') { params.requested_by = cell.data.requestor.id; }
+    if(cell.column.colId === 'operator') { params.operator_id = cell.data.operator.id; }
+    if(cell.column.colId === 'project_id') { params.project_id = cell.value; }
+    if(cell.column.colId === 'samplename') { params.samplename = cell.value; }
+
+    console.log(params);
+
+     this.http.put(environment.apiUrl + '/instrument/sem/run/' + cell.data.semrun_id + '?filterSpinner', params)
+    .subscribe(response => {
+
+      this.notification.success('Success', 'This field was updated', {showProgressBar: false, timeOut: 2000, clickToClose: true});
+      // Sanitized logo returned from backend
+    },
+    error => {
+                this.notification.error('Error', error.error.error, {showProgressBar: false, timeOut: 5000, clickToClose: true});
+               
+    }); 
+
+
+  }
+
 
 }
 

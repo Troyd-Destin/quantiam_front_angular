@@ -8,10 +8,6 @@ import { SharedModule } from '../shared/shared.module';
 import { MaterialDesignModule } from '../material-design/material-design.module';
 
 
-import { AgGridModule } from 'ag-grid-angular';
-import 'ag-grid-enterprise';
-
-
 // Components
 import { SemIndexComponent } from './sem-index/sem-index.component';
 import { SemDatabaseComponent } from './sem-database/sem-database.component';
@@ -48,7 +44,6 @@ const routes: Routes = [
     HighchartsChartModule,
     SharedModule,
     MaterialDesignModule,
-    AgGridModule.withComponents([]),
   ]
 })
 export class SemModule { }

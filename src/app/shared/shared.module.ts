@@ -1,10 +1,12 @@
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+
+
 import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 
 import { FileDropModule } from 'ngx-file-drop';
-
+import { AgGridModule } from 'ag-grid-angular';
 
 import {FlexLayoutModule} from '@angular/flex-layout';
 
@@ -33,9 +35,13 @@ import { SelectExperimentTypeComponent } from './select-experiment-type/select-e
 import { SelectTgarunComponent } from './select-tgarun/select-tgarun.component';
 import { SelectPermissionComponent } from './select-permission/select-permission.component';
 import { SelectGroupComponent } from './select-group/select-group.component';
+import { MoodEditor } from '../ag-grid-editors/mood-editor.component';
+import { AgGridSelectProjectEditorComponent } from './ag-grid-select-project/ag-grid-select-project.component';
+import { AgGridSelectUserComponent } from './ag-grid-select-user/ag-grid-select-user.component';
 
 @NgModule({
   imports: [
+    AgGridModule.withComponents([MoodEditor,AgGridSelectProjectEditorComponent,AgGridSelectUserComponent]),
     CommonModule,
     Select2Module,
     NgSelectModule,
@@ -62,7 +68,11 @@ import { SelectGroupComponent } from './select-group/select-group.component';
     SelectExperimentTypeComponent,
     SelectTgarunComponent,
     SelectPermissionComponent,
-    SelectGroupComponent],
+    SelectGroupComponent,
+    MoodEditor,
+    AgGridSelectProjectEditorComponent,
+    AgGridSelectUserComponent
+  ],
   exports: [
     Select2MaterialComponent,
     Select2MaterialLotComponent,
@@ -77,6 +87,7 @@ import { SelectGroupComponent } from './select-group/select-group.component';
     SelectTgarunComponent,
     SelectPermissionComponent,
     FileDropModule,
+    AgGridModule
 
   ],
   schemas: [NO_ERRORS_SCHEMA]

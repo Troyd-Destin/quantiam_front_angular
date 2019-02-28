@@ -7,12 +7,6 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialDesignModule } from '../material-design/material-design.module';
 
-// Ag-grid
-import { AgGridModule } from 'ag-grid-angular';
-import 'ag-grid-enterprise';
-
-
-
 import { XrdIndexComponent } from './xrd-index/xrd-index.component';
 import { XrdDatabaseComponent } from './xrd-database/xrd-database.component';
 import { XrdViewComponent } from './xrd-view/xrd-view.component';
@@ -49,7 +43,6 @@ const routes: Routes = [
     HighchartsChartModule,
     SharedModule,
     MaterialDesignModule,
-    AgGridModule.withComponents([]),
   ]
 })
 export class XrdModule { }
