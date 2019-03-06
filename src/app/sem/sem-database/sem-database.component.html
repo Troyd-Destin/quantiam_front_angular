@@ -26,13 +26,13 @@
         placeholder="Requested by"
       ></app-select-user>
 
-      <!-- <button class="mat-elevation-z1" mat-raised-button>Test </button> -->
+  
 
   </div>
 
-  <div fxLayout="row" fxLayoutAlign="end start" fxFlex fxLayoutGap="20px">
+  <div fxLayout="row" fxLayoutAlign="end center" fxFlex fxLayoutGap="20px">
 
-    
+      <button class="mat-elevation-z1" mat-raised-button> Refresh </button>
       <mat-form-field style="max-width: 100px;">
           <mat-select  placeholder="Page Size"  [(ngModel)]="gridOptions.cacheBlockSize" (selectionChange)="onPageSizeChanged()">
             <mat-option *ngFor="let pageSize of pageSizes" [value]="pageSize" [attr.selected]="pageSize === gridOptions.cacheBlockSize ? 'selected': null">
