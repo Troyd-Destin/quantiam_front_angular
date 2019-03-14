@@ -221,15 +221,16 @@
 	
 									
 								</div>
-							<div fxLayout="column" fxLayoutAlign="start center">
+							<div fxLayout="column"  fxLayoutAlign="start center">
 								
 							
 								<ag-grid-angular  
 						
 								
-								#rto_agrid								
+								#rto_agrid	
+								*ngIf="user.rto_allotment[0]"							
 								class="ag-theme-material"
-							
+								style="min-height:200px"
 								[rowData]="user.rto_allotment" 
 								[columnDefs]="rtoColumnDefs"
 								
@@ -246,6 +247,8 @@
 								
 								>
 							</ag-grid-angular>
+
+							<div 	*ngIf="!user.rto_allotment[0]"	> This user does not have any rto allotments.</div>
 						
 							
 							</div>

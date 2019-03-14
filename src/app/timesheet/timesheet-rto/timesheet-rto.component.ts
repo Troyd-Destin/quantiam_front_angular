@@ -6,7 +6,6 @@ import * as moment from 'moment';
 
 import { AgGridSelectProjectEditorComponent } from '../../shared/ag-grid-select-project/ag-grid-select-project.component';
 
-import { MoodEditor } from '../../ag-grid-editors/mood-editor.component';
 
 @Component({
   selector: 'app-timesheet-rto',
@@ -140,7 +139,7 @@ export class TimesheetRtoComponent implements OnInit {
     };
 
     this.frameworkComponents = {
-      moodEditor: MoodEditor,
+     // moodEditor: MoodEditor,
       projectEditor: AgGridSelectProjectEditorComponent,
     };
 

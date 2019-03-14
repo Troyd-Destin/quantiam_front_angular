@@ -35,13 +35,12 @@ import { SelectExperimentTypeComponent } from './select-experiment-type/select-e
 import { SelectTgarunComponent } from './select-tgarun/select-tgarun.component';
 import { SelectPermissionComponent } from './select-permission/select-permission.component';
 import { SelectGroupComponent } from './select-group/select-group.component';
-import { MoodEditor } from '../ag-grid-editors/mood-editor.component';
 import { AgGridSelectProjectEditorComponent } from './ag-grid-select-project/ag-grid-select-project.component';
 import { AgGridSelectUserComponent } from './ag-grid-select-user/ag-grid-select-user.component';
 
 @NgModule({
   imports: [
-    AgGridModule.withComponents([MoodEditor,AgGridSelectProjectEditorComponent,AgGridSelectUserComponent]),
+    AgGridModule.withComponents([AgGridSelectProjectEditorComponent,AgGridSelectUserComponent]),
     CommonModule,
     Select2Module,
     NgSelectModule,
@@ -69,7 +68,6 @@ import { AgGridSelectUserComponent } from './ag-grid-select-user/ag-grid-select-
     SelectTgarunComponent,
     SelectPermissionComponent,
     SelectGroupComponent,
-    MoodEditor,
     AgGridSelectProjectEditorComponent,
     AgGridSelectUserComponent
   ],
