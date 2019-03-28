@@ -39,9 +39,11 @@ import { AgGridSelectProjectEditorComponent } from './ag-grid-select-project/ag-
 import { AgGridSelectUserComponent } from './ag-grid-select-user/ag-grid-select-user.component';
 import { SelectSemrunTypeComponent } from './select-semrun-type/select-semrun-type.component';
 
+import { AgGridSemTypeComponent } from '../sem/sem-database/ag-grid-sem-type/ag-grid-sem-type.component';
+
 @NgModule({
   imports: [
-    AgGridModule.withComponents([AgGridSelectProjectEditorComponent,AgGridSelectUserComponent]),
+    AgGridModule.withComponents([AgGridSelectProjectEditorComponent,AgGridSelectUserComponent, AgGridSemTypeComponent]),
     CommonModule,
     Select2Module,
     NgSelectModule,
@@ -71,6 +73,7 @@ import { SelectSemrunTypeComponent } from './select-semrun-type/select-semrun-ty
     SelectGroupComponent,
     AgGridSelectProjectEditorComponent,
     AgGridSelectUserComponent,
+    AgGridSemTypeComponent,
     SelectSemrunTypeComponent
   ],
   exports: [

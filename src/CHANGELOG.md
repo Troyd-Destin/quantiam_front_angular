@@ -1,12 +1,13 @@
 
-## [0.19.3] February 2019
+## [0.19.3] March 2019
 
 ### SEM
 - Can now select run types
-
+- Can now refresh the data table
+- Fixes to keyboard commands and when using filters
 
 ### Misc
-- User select box will now hard check for employee ID
+- User select box will now hard check for employee ID, typing 1 will now select Robert
 
 ## [0.19.2] February 2019
 

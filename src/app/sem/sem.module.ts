@@ -12,8 +12,6 @@ import { MaterialDesignModule } from '../material-design/material-design.module'
 import { SemIndexComponent } from './sem-index/sem-index.component';
 import { SemDatabaseComponent } from './sem-database/sem-database.component';
 import { SemRunComponent } from './sem-run/sem-run.component';
-import { AgGridSemTypeComponent } from './sem-database/ag-grid-sem-type/ag-grid-sem-type.component';
-
 
 const routes: Routes = [
   {
@@ -38,7 +36,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [SemIndexComponent, SemDatabaseComponent, SemRunComponent, AgGridSemTypeComponent],
+  declarations: [SemIndexComponent, SemDatabaseComponent, SemRunComponent],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,

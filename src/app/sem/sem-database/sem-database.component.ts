@@ -9,6 +9,7 @@ import { NotificationsService } from 'angular2-notifications';
 
 import { AgGridSelectProjectEditorComponent } from '../../shared/ag-grid-select-project/ag-grid-select-project.component';
 import { AgGridSelectUserComponent } from '../../shared/ag-grid-select-user/ag-grid-select-user.component';
+import { AgGridSemTypeComponent } from './ag-grid-sem-type/ag-grid-sem-type.component';
 
 @Component({
   selector: 'app-sem-database',
@@ -94,10 +95,11 @@ export class SemDatabaseComponent implements OnInit {
         {
           headerName: 'Type',
           field: 'type',
-           width: 150,
+           width: 120,
           filter: true,
+          cellEditor: 'typeEditor',
           cellRenderer: (cell) => {
-            if(cell.hasOwnProperty('data') && cell.data.hasOwnProperty('type')){ return cell.data.type.type; }
+            if(cell.hasOwnProperty('data') && cell.data.type){ return cell.data.type.type; }
             return '';
           }
         },
@@ -197,6 +199,7 @@ export class SemDatabaseComponent implements OnInit {
       this.frameworkComponents = {
         projectEditor: AgGridSelectProjectEditorComponent,
         userEditor: AgGridSelectUserComponent,
+        typeEditor: AgGridSemTypeComponent,
       };
    }
 
