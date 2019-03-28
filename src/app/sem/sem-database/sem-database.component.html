@@ -10,6 +10,14 @@
         (clear)="clearFilterProject($event)"
       ></app-select-project>
 
+      <app-select-semrun-type
+        style="min-width:150px;" 
+        
+        (change)="filterSemrun($event)"
+        (clear)="clearFilterSemrun($event)"
+        placeholder="Run Type"
+      ></app-select-semrun-type>
+
       <app-select-user
          style="min-width:150px;"
         (change)="filterOperator($event)"
@@ -26,13 +34,15 @@
         placeholder="Requested by"
       ></app-select-user>
 
+      
+
   
 
   </div>
 
   <div fxLayout="row" fxLayoutAlign="end center" fxFlex fxLayoutGap="20px">
 
-      <button class="mat-elevation-z1" mat-raised-button> Refresh </button>
+      <button class="mat-elevation-z1" mat-raised-button (click)="refreshDatabase()"> Refresh </button>
       <mat-form-field style="max-width: 100px;">
           <mat-select  placeholder="Page Size"  [(ngModel)]="gridOptions.cacheBlockSize" (selectionChange)="onPageSizeChanged()">
             <mat-option *ngFor="let pageSize of pageSizes" [value]="pageSize" [attr.selected]="pageSize === gridOptions.cacheBlockSize ? 'selected': null">

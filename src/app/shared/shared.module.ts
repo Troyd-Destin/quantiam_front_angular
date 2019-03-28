@@ -37,6 +37,7 @@ import { SelectPermissionComponent } from './select-permission/select-permission
 import { SelectGroupComponent } from './select-group/select-group.component';
 import { AgGridSelectProjectEditorComponent } from './ag-grid-select-project/ag-grid-select-project.component';
 import { AgGridSelectUserComponent } from './ag-grid-select-user/ag-grid-select-user.component';
+import { SelectSemrunTypeComponent } from './select-semrun-type/select-semrun-type.component';
 
 @NgModule({
   imports: [
@@ -69,9 +70,11 @@ import { AgGridSelectUserComponent } from './ag-grid-select-user/ag-grid-select-
     SelectPermissionComponent,
     SelectGroupComponent,
     AgGridSelectProjectEditorComponent,
-    AgGridSelectUserComponent
+    AgGridSelectUserComponent,
+    SelectSemrunTypeComponent
   ],
   exports: [
+    SelectSemrunTypeComponent,
     Select2MaterialComponent,
     Select2MaterialLotComponent,
     Select2MaterialSupplierComponent,

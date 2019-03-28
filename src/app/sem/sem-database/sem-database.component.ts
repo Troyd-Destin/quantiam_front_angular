@@ -41,6 +41,7 @@ export class SemDatabaseComponent implements OnInit {
   private filteredSampleType = '';
   private filteredProject = '';
   private filteredTextFilterName = '';
+  private filteredSemrun = '';
   private timeoutTextFilter;
 
   private frameworkComponents;
@@ -96,7 +97,7 @@ export class SemDatabaseComponent implements OnInit {
            width: 150,
           filter: true,
           cellRenderer: (cell) => {
-            if(cell.data.type){ return cell.data.type.type; }
+            if(cell.hasOwnProperty('data') && cell.data.hasOwnProperty('type')){ return cell.data.type.type; }
             return '';
           }
         },
@@ -109,7 +110,7 @@ export class SemDatabaseComponent implements OnInit {
           
           cellRenderer: (cell) => {
           
-            if(cell.data.operator){ return cell.data.operator.name_abbrev; }
+            if(cell.hasOwnProperty('data') && cell.data.operator){ return cell.data.operator.name_abbrev; }
             return '';
           }
         },
@@ -122,16 +123,33 @@ export class SemDatabaseComponent implements OnInit {
          
           cellRenderer: (cell) => {
            // console.log(cell);
-            if(cell.data.requestor){ return cell.data.requestor.name_abbrev; }
+            if(cell.hasOwnProperty('data') && cell.data.requestor){ return cell.data.requestor.name_abbrev; }
             return '';
           }
         },
         {
           headerName: 'Duration',
           field: 'duration',
-          //width: 100,
+          width: 100,
           filter: false,
           editable: false,
+          cellRenderer: (cell) => {
+
+
+
+             if(cell.hasOwnProperty('data') && cell.data.duration){
+
+                let minutes = (cell.data.duration / 60);
+
+                if(minutes > 60)
+                {
+                    minutes = (minutes / 60);
+                    return '~' + minutes.toFixed(2) + ' Hours';
+                }
+                return '~' + minutes.toFixed() + ' Mins';
+             }
+             return '';
+           }
         },
         {
           headerName: 'Date',
@@ -212,6 +230,7 @@ export class SemDatabaseComponent implements OnInit {
         .append('requestor', `${this.filteredRequestor}`)
         .append('operator', `${this.filteredOperator}`)
         .append('project', `${this.filteredProject}`)
+        .append('type', `${this.filteredSemrun}`)
         .append('page', `${page}`);
 
           this.http.get(environment.apiUrl + '/instrument/sem/run', {params: requestParams}).subscribe((response:any) => {
@@ -253,7 +272,8 @@ export class SemDatabaseComponent implements OnInit {
 
   filterProject(event)
   {
-      this.filteredProject = event.id;
+    if(event){  this.filteredProject = event.id;} 
+    else { this.filteredProject = ''; }
       this.refreshDatabase();
   }
   clearFilterProject(event)
@@ -265,7 +285,9 @@ export class SemDatabaseComponent implements OnInit {
 
   filterOperator(event)
   {
-      this.filteredOperator = event.id;
+    if(event){ this.filteredOperator = event.id; }
+    else { this.filteredOperator = ''; }
+
       this.refreshDatabase();
   }
 
@@ -278,13 +300,27 @@ export class SemDatabaseComponent implements OnInit {
 
   filterRequestor(event)
   {
-    this.filteredRequestor = event.id;
+    if(event){ this.filteredRequestor = event.id; }
+    else { this.filteredRequestor = ''; }
     this.refreshDatabase();
   }
 
   clearFilterRequestor(event)
   {
      this.filteredRequestor = '';
+     this.refreshDatabase();
+  }
+
+  filterSemrun(event)
+  {
+    if(event){  this.filteredSemrun = event.type_id; }
+    else { this.filteredSemrun = ''; }
+    this.refreshDatabase();
+  }
+
+  clearFilterSemrun(event)
+  {
+     this.filteredSemrun = '';
      this.refreshDatabase();
   }
 
@@ -317,6 +353,7 @@ export class SemDatabaseComponent implements OnInit {
     if(cell.column.colId === 'operator') { params.operator_id = cell.data.operator.id; }
     if(cell.column.colId === 'project_id') { params.project_id = cell.value; }
     if(cell.column.colId === 'samplename') { params.samplename = cell.value; }
+    if(cell.column.colId === 'type') { params.type_id = cell.data.type.type_id; }
 
     console.log(params);
 

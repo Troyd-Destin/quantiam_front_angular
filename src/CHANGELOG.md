@@ -1,4 +1,14 @@
-## [19.2.0] February 2019
+
+## [0.19.3] February 2019
+
+### SEM
+- Can now select run types
+
+
+### Misc
+- User select box will now hard check for employee ID
+
+## [0.19.2] February 2019
 
 ### TGA
 - Peak tool now has "previous" and "next" buttons for navigating single runs easier
