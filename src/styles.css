@@ -158,6 +158,13 @@ color: rgb(255, 255, 255);
     background-color: #e0e0e0 !important;
 }
 
+
+.mat-toolbar-multiple-rows {
+	min-height: 40px !important;
+	z-index:2;
+
+}
+
 /* notification overrieds */
 
 .simple-notification.info {

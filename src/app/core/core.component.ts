@@ -17,9 +17,13 @@ import { WebsocketService } from '../services/websocket/websocket.service';
 import { SettingsService } from '../services/settings/settings.service';
 
 
-import { faCoffee, faMicroscope, faBolt, faFlask, faXRay, faFireAlt, faPlaneDeparture } from '@fortawesome/free-solid-svg-icons';
+import { faCoffee, faMicroscope, faBolt, faFlask, faXRay, faFireAlt, faPlaneDeparture, faHatWizard } from '@fortawesome/free-solid-svg-icons';
 import { faCalendar, faClock } from '@fortawesome/free-regular-svg-icons';
 import { faAngular, faGithub, faFontAwesome, faLaravel } from '@fortawesome/free-brands-svg-icons';
+
+
+import { HttpClient  } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 
 interface WebSocketMessages {
@@ -56,6 +60,7 @@ export class CoreComponent implements OnInit, OnDestroy {
   faClock = faClock;
   faCalendar = faCalendar;
   faCoffee = faCoffee;
+  faHatWizard = faHatWizard;
 
 
   title = 'app';
@@ -68,6 +73,7 @@ export class CoreComponent implements OnInit, OnDestroy {
   scannerList = [];
   scannerSelect2Options = {'theme': 'classic'};
   loading;
+  showUserSwitch = false;
 
   currentYear = (new Date()).getFullYear();
 
@@ -95,7 +101,8 @@ export class CoreComponent implements OnInit, OnDestroy {
 		private websocketService: WebsocketService,
 		private settings: SettingsService,
     private _location: Location,
-    private router: Router
+    private router: Router,
+    private http: HttpClient,
 	) {
 
     this.loading = true;
@@ -118,12 +125,11 @@ export class CoreComponent implements OnInit, OnDestroy {
       this.userService.getAuthedUser().subscribe(res => {
 
 
-		   this.userTitle = res.title;
-		   this.userName = res.name;
-		   this.user = res;
-		   this.userLoaded = true;
+	
+              this.user = res;
+              this.userLoaded = true;
 
-		   this.adminCheck();
+              this.adminCheck();
 
 		//   console.log(this.userService.hasPermission(38));
 
@@ -224,6 +230,22 @@ export class CoreComponent implements OnInit, OnDestroy {
    ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
 	   if (this._ws) { this._ws.unsubscribe(); }
+  }
+
+
+  changeUser(event)
+  {
+    console.log(event);
+    this.userService.getAuthedUser(event.id).subscribe(r=>{
+
+
+     this.userService.fetchAuthUserObj();
+     this.user = r;
+     this.userLoaded = true;
+
+     this.adminCheck();
+
+    });
   }
 
 

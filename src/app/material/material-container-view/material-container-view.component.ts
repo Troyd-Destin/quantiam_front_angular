@@ -410,4 +410,19 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 
 	}
 
+	generateMaterialLargeLabelDownload() {
+    const url = environment.apiUrl + '/material/lot/container/' + this.container.id + '/label';
+
+    // this.notification.info('Processing... ',  'Generating this timesheet.', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
+
+    this.http.get<any>(url)
+    .subscribe(r => {
+      console.log(r);
+     window.location.assign(r.url);
+      this.notification.success('Success',  'Label Generated', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
+
+    });
+
+  }
+
 }

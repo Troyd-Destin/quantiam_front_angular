@@ -21,28 +21,9 @@ export class AuthComponent implements OnInit {
     public notification: NotificationsService, ) { }
 
   ngOnInit() {
-
-	  // try {
-
-    //   this.ws = this.scale_websocket.connect();
-    // 	 this._ws.subscribe((x) => {
-
-
-    //       console.log(x);
-    //       // if token  login(null,null, rfid);
-
-    //     });
-
-    // } catch (e) {}
-
-
-
-
-
   }
 
   login(username, password, rfid) {
-    // console.log(username,password);
 
     this.loginHappening = true;
 

@@ -5,6 +5,8 @@ import { CoreRoutingModule } from './core-routing.module';
 
 import { NgHttpLoaderModule } from 'ng-http-loader';
 import { Select2Module } from 'ng2-select2';
+
+import { SharedModule } from '../shared/shared.module';
 import { MaterialDesignModule } from '../material-design/material-design.module';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
@@ -22,6 +24,7 @@ import { TokenInterceptor } from '../auth/token.interceptor';
 	CoreRoutingModule,
 	MaterialDesignModule,
 	Select2Module,
+	SharedModule,
 	MarkdownModule.forRoot({ loader: HttpClient }),
 	HttpClientModule,
 

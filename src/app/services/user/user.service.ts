@@ -146,7 +146,7 @@ export class UserService  {
  }
 
 
-  public getAuthedUser() {
+  public getAuthedUser(id = null) {
 
      if (localStorage.getItem('authUser') === null) {  }
 
@@ -163,8 +163,7 @@ export class UserService  {
      try {
 
 
-
-     const id = token.employeeID;
+      if(!id){ id = token.employeeID; }
 
     return this.http.get<authedUser$>(environment.apiUrl + `${this.endpoint}/${id}`).pipe(
       //  delay(1000), // simulate slow network
@@ -230,5 +229,7 @@ export class UserService  {
 
   }
 
+
+  
 
 }

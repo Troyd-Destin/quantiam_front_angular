@@ -17,6 +17,22 @@
 					<mat-option value="2">Scanner 2</mat-option>
 			  </mat-select>
 			</mat-form-field> -->
+
+		
+
+			<app-select-user 
+				style="color:black;" 
+				[hidden]="!showUserSwitch"
+				(change)="changeUser($event)"
+      
+				></app-select-user>
+
+
+				<button 
+				*ngIf="userService.hasPermission(43)"
+				(click)="showUserSwitch = !showUserSwitch; " mat-icon-button >
+					<mat-icon  matTooltip="Change user.u">person</mat-icon>
+				</button>
 			
 			<select2 *ngIf="initializeScanner"									
 					 (valueChanged)="updateScanner($event)"
@@ -31,12 +47,12 @@
 			</select2>
 			<button (click)="initializeScanner = !initializeScanner; connectScannerService()" mat-icon-button >
 				<mat-icon  matTooltip="Select a handheld scanner.">track_changes</mat-icon>
-			  </button>
+			</button>
 			
 						
 			<button mat-button class='name-title-box' *ngIf="userLoaded" routerLink="/user/{{user.id}}">
-				<p  class='name'> {{userName}} </p>
-				<p  class='name-title'> {{userTitle}} </p>
+				<p  class='name'> {{user.name}} </p>
+				<p  class='name-title'> {{user.title}} </p>
 			</button>
 			<button style="font-size:14px; font-weight: bold;" mat-button (click)="logout()">Logout</button>
 		

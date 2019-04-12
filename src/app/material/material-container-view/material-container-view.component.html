@@ -72,7 +72,7 @@
 						
 					</div>
 					<div fxLayout="row wrap"  fxLayoutAlign="end center">
-					<!-- <button mat-button routerLink="/material/{{container.lot.material.id}}" > View </button> -->
+				
 					<button mat-button   *ngIf="canEdit" (click)="editMaterial = !editMaterial"  > Edit </button>
 					 <button mat-button  *ngIf="canEdit && container.lot.material.sds" (click)="deleteSDS()" color="warn"  > Delete SDS </button> 
 					
@@ -242,7 +242,8 @@
 						
 						<mat-checkbox (change)="changeContainerStatus()" style="margin-left:15px" [disabled]="!editContainer" [(ngModel)] ='container.active' name="active" fxLayoutAlign="start center">Active</mat-checkbox>
 						
-						<div  fxLayoutAlign="end center" fxFlex>			
+						<div  fxLayoutAlign="end center" fxFlex>
+									<button mat-button (click)="generateMaterialLargeLabelDownload()" > Print Large Label </button> 			
 									<button mat-button  *ngIf="canEdit"  (click)="editContainer = !editContainer"  > Edit </button>						
 									<button mat-button   *ngIf="canEdit" (click)="deleteContainer()"  color="warn"  >  Delete </button>						
 									<!-- <button mat-button routerLink="/material/{{container.lot.material.id}}" >MSDS</button> -->
