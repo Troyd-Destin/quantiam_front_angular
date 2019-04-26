@@ -234,8 +234,8 @@ export class WebsocketService {
 							// console.log('timeout thing',message);
 
 
-							this._keyBoardSubject.next(message);
-							this.redirectOnScanFn(message);
+							this._keyBoardSubject.next(message.toUpperCase());
+							this.redirectOnScanFn(message.toUpperCase());
 
 
 							this.id_string = '';

@@ -19,9 +19,9 @@
 
   <div fxLayout="row">
 
-      <div fxLayout="column" fxFlex=20 fxLayoutAlign="start start" >
+      <div fxLayout="column" (mouseenter)="showSelectBox = true"  (mouseleave) ="hideSelectBox()" fxFlex=20 fxLayoutAlign="start start" >
 
-        <div  fxLayout="row"  (mouseenter)="showSelectBox = true"  (mouseleave) ="hideSelectBox()">   
+        <div  fxLayout="row"  >   
           
           <p [hidden]="showSelectBox" >{{timeSheetObj?.fullname}} </p> 
 
@@ -233,8 +233,8 @@
                   <td > {{rto.requestID}}</td>
                   <td > {{time.date}}</td>
                   <td > {{time.type}}</td>
-                  <td > {{rto.approvals[0].name || ''}}</td>
-                  <td > {{rto.approvals[0].created || ''  | date:'yyyy-MM-dd'}}</td>
+                  <td > {{rto.approvals[0]?.name || ''}}</td>
+                  <td > {{rto.approvals[0]?.created || ''  | date:'yyyy-MM-dd'}}</td>
                   <td > {{rto.approvals[1]?.name  || '' }}</td>
                   <td > {{rto.approvals[1]?.created  || '' | date:'yyyy-MM-dd'}}</td>
                   <td > {{rto.status}}</td>

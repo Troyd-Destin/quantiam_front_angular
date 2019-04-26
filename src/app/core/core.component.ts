@@ -5,6 +5,8 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {MediaMatcher} from '@angular/cdk/layout';
 import { AuthService } from '../services/auth/auth.service';
 import { UserService } from '../services/user/user.service';
+
+import { TimesheetService } from '../timesheet/timesheet.service';
 import { catchError, map, tap, delay } from 'rxjs/operators';
 import {
   Router,  NavigationCancel,   NavigationEnd, NavigationStart
@@ -74,9 +76,13 @@ export class CoreComponent implements OnInit, OnDestroy {
   scannerSelect2Options = {'theme': 'classic'};
   loading;
   showUserSwitch = false;
+  timesheetYear = '';
+  timesheetUser = null;
+  timesheetPayperiod = null;
+ 
 
   currentYear = (new Date()).getFullYear();
-
+  currentTimesheet = {userId: '', year: '', payperiod: ''};
 
   webSocketMessages: WebSocketMessages;
   lastWebSocketMessage;
@@ -103,6 +109,7 @@ export class CoreComponent implements OnInit, OnDestroy {
     private _location: Location,
     private router: Router,
     private http: HttpClient,
+    private timesheetService: TimesheetService,
 	) {
 
     this.loading = true;
@@ -136,6 +143,18 @@ export class CoreComponent implements OnInit, OnDestroy {
         });
 
       // this.user.getUser
+  }
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    
+     this.loading = false;
+      this.timesheetService.currentTimesheet.subscribe(obj =>{
+          this.currentTimesheet.userId = obj.userId;
+          this.currentTimesheet.year = obj.year;
+          this.currentTimesheet.payperiod = obj.payperiod;
+    });
   }
 
   prepareRoute(outlet) {
@@ -196,14 +215,7 @@ export class CoreComponent implements OnInit, OnDestroy {
         this._location.forward();
     }
 
-    ngOnInit() {
-
-
-  // this.websocketService.connect();
-
-      this.loading = false;
-
-}
+    
 
   connectScannerService() {
     if (this.initializeScanner) {

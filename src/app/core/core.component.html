@@ -31,7 +31,7 @@
 				<button 
 				*ngIf="userService.hasPermission(43)"
 				(click)="showUserSwitch = !showUserSwitch; " mat-icon-button >
-					<mat-icon  matTooltip="Change user.u">person</mat-icon>
+					<mat-icon  matTooltip="Change User">person</mat-icon>
 				</button>
 			
 			<select2 *ngIf="initializeScanner"									
@@ -141,7 +141,8 @@
 										<button routerLink="/material" mat-button>Home</button>
 								</mat-list-item> -->
 								 <mat-list-item > 
-									 <button  routerLink="/timesheet/65/year/2019/payperiod/4" routerLinkActive="mat-list-item-button-active" mat-button> <p>Timesheet</p>
+									 <button  [routerLink]="['/timesheet', this.currentTimesheet.userId, 'year', this.currentTimesheet.year, 'payperiod',  this.currentTimesheet.payperiod]" 
+									 routerLinkActive="mat-list-item-button-active" mat-button> <p>Timesheet</p>
 										<fa-icon [icon]="faClock"></fa-icon>
 									</button>
 								</mat-list-item>	

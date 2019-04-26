@@ -1,3 +1,19 @@
+## [0.19.4] April 2019
+
+## Users
+- Can add permissions to individual users now
+
+## Timesheet 
+- Fixed navigation to remember what time sheet you were on when you click the timesheet
+- Known issue: timesheet category does not highligh using dynamic router link
+- Weekends now properly highlight regardless of timesheet state
+
+### Materials Inventory
+- Can now print off large labels with bar codes for scanning. 
+
+### Misc
+- eliminated caps lock bug when scanning materials
+
 
 ## [0.19.3] March 2019
 

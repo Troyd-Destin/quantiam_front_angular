@@ -40,6 +40,7 @@ import { AgGridSelectUserComponent } from './ag-grid-select-user/ag-grid-select-
 import { SelectSemrunTypeComponent } from './select-semrun-type/select-semrun-type.component';
 
 import { AgGridSemTypeComponent } from '../sem/sem-database/ag-grid-sem-type/ag-grid-sem-type.component';
+import { SelectMaterialComponent } from './select-material/select-material.component';
 
 @NgModule({
   imports: [
@@ -74,9 +75,11 @@ import { AgGridSemTypeComponent } from '../sem/sem-database/ag-grid-sem-type/ag-
     AgGridSelectProjectEditorComponent,
     AgGridSelectUserComponent,
     AgGridSemTypeComponent,
-    SelectSemrunTypeComponent
+    SelectSemrunTypeComponent,
+    SelectMaterialComponent
   ],
   exports: [
+    SelectMaterialComponent,
     SelectSemrunTypeComponent,
     Select2MaterialComponent,
     Select2MaterialLotComponent,

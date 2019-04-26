@@ -51,6 +51,11 @@ export class SelectPermissionComponent implements OnInit, OnDestroy {
   
     }
 
+    onChange(event) { this.change.emit(event); }
+    onAdd() { }
+    onRemove() { }
+    onClear() {  }
+
   ngOnDestroy() {
     if (this.list$) { this.list$.unsubscribe(); }
    }

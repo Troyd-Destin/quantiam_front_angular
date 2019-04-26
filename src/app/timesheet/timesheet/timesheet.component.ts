@@ -4,7 +4,11 @@ import {  environment} from '../../../environments/environment';
 
 import {  HttpClient} from '@angular/common/http';
 import { UserService } from '../../services/user/user.service';
+import { TimesheetService } from '../timesheet.service';
+
+
 import { NumericEditor } from './numeric-editor.component';
+
 
 import { NotificationsService } from 'angular2-notifications';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
@@ -175,6 +179,7 @@ export class TimesheetComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private notification: NotificationsService,
+    private timesheetService: TimesheetService,
     ) {  }
 
 
@@ -252,14 +257,24 @@ export class TimesheetComponent implements OnInit {
     console.log(this.routeParams);
 
     // Auth layer on fetching.
+    let url = '';
 
-    const url = '/timesheet/' + this.routeParams.userId + '/year/' + this.routeParams.year + '/payperiod/' + this.routeParams.payperiod + '';
+    if(this.routeParams.year.length > 0) { url = '/timesheet/' + this.routeParams.userId + '/year/' + this.routeParams.year + '/payperiod/' + this.routeParams.payperiod + ''; }
+    else { 
+      this.routeParams.userId = this.userService.currentUser.id;
+      url = '/timesheet/' +  this.routeParams.userId;
+     }
+
     this.timesheetLoaded = false;
 
     this.http.get<any>(environment.apiUrl + url)
     .subscribe(response => {
       console.log(response);
             this.timeSheetObj = response;
+            this.routeParams.year = response.payPeriod.year;
+            this.routeParams.payperiod = response.payPeriod.payPeriod;
+            window.history.replaceState({}, '',`/timesheet/${this.routeParams.userId}/year/${ this.routeParams.year}/payperiod/${ this.routeParams.payperiod }`);
+            this.timesheetService.changeTimesheet(this.routeParams);
             this.displayTimesheet = true;
             setTimeout((x) => {this.constructTimesheet(); }, 100);
             setTimeout((x) => { this.timesheetLoaded = true; }, 1000);
@@ -383,45 +398,50 @@ export class TimesheetComponent implements OnInit {
         aggFunc: this.sumHoursColumn,
         cellStyle: (params) => {
 
+
           const cellStyle = {
 
             'text-align': 'center',
-            'background-color': 'rgba(232, 242, 255,0.0)'
+          //  'background-color': 'rgba(232, 242, 255,0.0)'
           };
 
           let absenceCheck = false;
+        
+        // if (Array.isArray(this.timeSheetObj.rto) && this.timeSheetObj.rto.length > 0) {
+        //     this.timeSheetObj.rto.forEach((rto) => {
 
-        if (Array.isArray(this.timeSheetObj.rto) && this.timeSheetObj.rto.length > 0) {
-            this.timeSheetObj.rto.forEach((rto) => {
+        //       if (absenceCheck) { return; }
+        //       if (rto.status === 'approved') {
 
-              if (absenceCheck) { return; }
-              if (rto.status === 'approved') {
+        //         rto.requested_time.forEach((time) => {
 
-                rto.requested_time.forEach((time) => {
+        //           if (time.date === params.column.colId) {
 
-                  if (time.date === params.column.colId) {
-
-                    absenceCheck = true;
-                    return;
-                    }
-                });
-              }
+        //             absenceCheck = true;
+        //             return;
+        //             }
+        //         });
+        //       }
 
 
-            });
-        }
+        //     });
 
-          if (absenceCheck && !params.node.footer) {
-            cellStyle['background-color'] = '#e8faff6b';
-          }
+           
+        // }
+
+        //   if (absenceCheck && !params.node.footer) {
+        //     cellStyle['background-color'] = '#e8faff6b';
+        //   }
 
 
           const holidayCheck = this.timeSheetObj.holidays.find((holiday) => {
             return holiday.date === params.column.colId;
           });
 
-          const day = moment(params.column.colId).format('ddd');
+          const dateString = params.column.colId.split("_");
+          const day = moment(dateString[0]).format('ddd');
           if ((holidayCheck || day === 'Sun' || day === 'Sat') && !params.node.footer) {
+      
 
             cellStyle['background-color'] = 'rgba(232, 242, 255,0.50)';
 
@@ -442,6 +462,7 @@ export class TimesheetComponent implements OnInit {
 
             cellStyle['font-style'] = 'italic';
           }
+      
           return cellStyle;
         },
 

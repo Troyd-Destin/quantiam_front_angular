@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TimesheetService } from '../timesheet.service';
 
 @Component({
   selector: 'app-timesheet-index',
@@ -9,22 +10,22 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class TimesheetIndexComponent implements OnInit {
 
   routeParams: any;
+  currentTimesheet = {userId: '', year: '', payperiod: ''};
 
-  constructor(private router: Router, private route: ActivatedRoute, ) { }
+  constructor(private router: Router, private route: ActivatedRoute, private timesheetService: TimesheetService) { }
 
   ngOnInit() {
 
+    this.timesheetService.currentTimesheet.subscribe(obj =>{
+          this.currentTimesheet.userId = obj.userId;
+          this.currentTimesheet.year = obj.year;
+          this.currentTimesheet.payperiod = obj.payperiod;
+    });
 
     // figure out current payperoid year
 
 
-     this.route.paramMap.subscribe(params => {
-      this.routeParams.userId = params.get('user');
-      this.routeParams.year = params.get('year');
-      this.routeParams.payperoid = params.get('payperoid');
-
-
-    });
+     
   }
 
 

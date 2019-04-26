@@ -216,7 +216,7 @@
 				
 				<mat-tab-group>
 						<mat-tab label="RTO">
-								<div *ngIf="userService.hasPermission(39)" fxLayout="row" fxLayoutAlign="start center" >
+								<div *ngIf="userService.hasPermission(37)" fxLayout="row" fxLayoutAlign="start center" >
 										<button mat-stroked-button color="primary" (click)="createRtoAllotment()">Create</button>
 	
 									
@@ -290,7 +290,13 @@
 
 								<div fxLayout="row">
 
-									<app-select-permission [user]="user" *ngIf="userService.hasPermission(5)"></app-select-permission>
+									<app-select-permission 
+											placeholder="Add permission" 
+											*ngIf="userService.hasPermission(5)"
+											 (change)="addPermission($event)"
+											 
+											 >
+									</app-select-permission>
 								</div>
 						
 							<table fxFlex style="box-shadow: none;  width:100%;" mat-table [dataSource]="permissionTableSource" matSort >

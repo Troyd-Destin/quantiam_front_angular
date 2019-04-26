@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap, delay, shareReplay, publishReplay, refCount } from 'rxjs/operators';
 import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
 import { NotificationsService } from 'angular2-notifications';
+//import { Cacheable } from 'ngx-cacheable';
 
 @Injectable({
   providedIn: 'root'

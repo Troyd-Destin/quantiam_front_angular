@@ -15,6 +15,7 @@ export class UserService  {
 
   endpoint = '/user';
   authedUser$;
+  currentUser;
 
 
   public _selectedUserSource = new BehaviorSubject({});
@@ -164,7 +165,7 @@ export class UserService  {
 
 
       if(!id){ id = token.employeeID; }
-
+ 
     return this.http.get<authedUser$>(environment.apiUrl + `${this.endpoint}/${id}`).pipe(
       //  delay(1000), // simulate slow network
         tap(
@@ -183,7 +184,8 @@ export class UserService  {
   }
 
   public fetchAuthUserObj () {
-      return JSON.parse(localStorage.getItem('authedUser'));
+       this.currentUser = JSON.parse(localStorage.getItem('authedUser'));
+      return this.currentUser;
   }
 
   public hasPermission(permission_id) {

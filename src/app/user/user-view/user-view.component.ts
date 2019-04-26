@@ -5,6 +5,9 @@ import {Location} from '@angular/common';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+
+import { NotificationsService } from 'angular2-notifications';
+
 import {MatPaginator, MatTableDataSource, MatSort} from '@angular/material';
 
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -23,6 +26,7 @@ export class UserViewComponent implements OnInit, OnDestroy {
   private route: ActivatedRoute,
   private location: Location,
   public http: HttpClient,
+  private notification: NotificationsService,
  ) {
 
   this.renderUser = false;
@@ -218,13 +222,39 @@ export class UserViewComponent implements OnInit, OnDestroy {
     }
   }
 
+  addPermission(event){
+
+    this.http.post<any>(environment.apiUrl + `/permission/${event.id}/user/${this.user.id}`, null).subscribe((r) => {
+
+      console.log(r);
+      this.permissionTableSource.data.push(r);
+      this.permissionTableSource.paginator = this.paginator;
+      this.notification.success(
+        'Success', 'Added permission',
+        {timeOut: 2000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
+       
+      
+    });
+
+  
+
+  }
+
   deletePermission(obj) {
     // Find index
-    const index = this.permissionTableSource.data.findIndex(x => x.permission_id === obj.permission_id);
 
+    
+    const index = this.permissionTableSource.data.findIndex(x => x.permission_id === obj.permission_id);
+    console.log(this.permissionTableSource.data,obj,index,);
     // updated DB
     if (confirm('Are you sure to delete this permission?')) {
-     this.userService.deletePermission(this.user.permissions[index].permissions_employees_id).subscribe((x) => {
+      this.http.delete<any>(environment.apiUrl + `/permission/${this.permissionTableSource.data[index].permission_id}/user/${this.user.id}`).subscribe((x) => {
+
+        this.notification.success(
+          'Success', 'Deleted permission',
+          {timeOut: 2000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton 
+        
+   
 
       // Fix Table
       this.permissionTableSource.data.splice(index, 1);
@@ -338,7 +368,6 @@ export class UserViewComponent implements OnInit, OnDestroy {
 
 
   }
-
 
 
 
