@@ -21,7 +21,7 @@
 		
 
 			<app-select-user 
-				style="color:black;" 
+				style="color:black; font-size: 0.8em;" 
 				[hidden]="!showUserSwitch"
 				(change)="changeUser($event)"
       
@@ -29,7 +29,7 @@
 
 
 				<button 
-				*ngIf="userService.hasPermission(43)"
+				*ngIf="userService.hasPermission(43) || hasSwitchedUser"
 				(click)="showUserSwitch = !showUserSwitch; " mat-icon-button >
 					<mat-icon  matTooltip="Change User">person</mat-icon>
 				</button>

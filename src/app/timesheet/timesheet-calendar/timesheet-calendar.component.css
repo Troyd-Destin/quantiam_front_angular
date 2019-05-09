@@ -19,3 +19,7 @@
 
     color: white;
 }
+
+::ng-deep .fc button, .fc table, body .fc {
+    font-size: 0.9em !important;
+}

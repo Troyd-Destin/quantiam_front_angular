@@ -17,15 +17,22 @@
 
   </div>
 
-  <div fxLayout="row">
+  <div fxLayout="row" style="font-size: 1.25em;" >
 
-      <div fxLayout="column" (mouseenter)="showSelectBox = true"  (mouseleave) ="hideSelectBox()" fxFlex=20 fxLayoutAlign="start start" >
+      <div fxLayout="column" (mouseenter)="checkUserForSubordinatesAndMachines();"  (mouseleave) ="hideSelectBox()" fxFlex=20 fxLayoutAlign="start start" >
 
         <div  fxLayout="row"  >   
           
           <p [hidden]="showSelectBox" >{{timeSheetObj?.fullname}} </p> 
 
-          <app-select-user  [hidden]="!showSelectBox" (change)="selectedUserChanged($event)" [selectedValue]="timeSheetObj.user?.id"></app-select-user>
+          <app-select-user 
+                [placeholder]="timeSheetObj?.fullname"
+                [hidden]="!showSelectBox" 
+                (change)="selectedUserChanged($event)" 
+                [selectedValue]="timeSheetObj?.userID" 
+                [authorizedSubordinatesOrMachines]=true
+                [allOptions]="userService.hasPermission([43,1])"
+          ></app-select-user>
         </div>
         <p> Pay Period {{routeParams.payperiod}}, {{routeParams.year}} </p>
         <p> {{timeSheetObj?.payPeriod.startDateHeader}} - {{timeSheetObj?.payPeriod.endDateHeader}}  </p>
@@ -260,26 +267,26 @@
                   </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr *ngIf="timeSheetObj.compensation == 'Salary' || timeSheetObj.compensation == 'Hourly'">
                       <td><b>Vacation</b></td>
-                      <td>{{timeSheetObj.bank.carry_over[timeSheetObj.payPeriod.year].vacation || 0 | number : '1.2-2'}} Hours</td>
-                      <td>{{timeSheetObj.bank.alloted[timeSheetObj.payPeriod.year].vacation || 0  | number : '1.2-2'}} Hours</td>
+                      <td>{{timeSheetObj.bank.carry_over[timeSheetObj.payPeriod.year]?.vacation || 0 | number : '1.2-2'}} Hours</td>
+                      <td>{{timeSheetObj.bank.alloted[timeSheetObj.payPeriod.year]?.vacation || 0  | number : '1.2-2'}} Hours</td>
                       <td>{{timeSheetObj?.bank.used[timeSheetObj.payPeriod.year]?.vacation || 0  | number : '1.2-2'}} Hours</td>
                       <td>{{timeSheetObj.bank.remaining?.vacation || 0  | number : '1.2-2'}} Hours</td>
                     </tr>
-                    <tr>
+                    <tr *ngIf="timeSheetObj.compensation == 'Salary' || timeSheetObj.compensation == 'Hourly'">
                         <td><b>PTO</b></td>
-                        <td>{{timeSheetObj.bank.carry_over[timeSheetObj.payPeriod.year].pto || 0  | number : '1.2-2'}} Hours</td>
-                        <td>{{timeSheetObj.bank.alloted[timeSheetObj.payPeriod.year].pto || 0  | number : '1.2-2'}} Hours</td>
+                        <td>{{timeSheetObj.bank.carry_over[timeSheetObj.payPeriod.year]?.pto || 0  | number : '1.2-2'}} Hours</td>
+                        <td>{{timeSheetObj.bank.alloted[timeSheetObj.payPeriod.year]?.pto || 0  | number : '1.2-2'}} Hours</td>
                         <td>{{timeSheetObj?.bank.used[timeSheetObj.payPeriod.year]?.pto || 0  | number : '1.2-2'}} Hours</td>
-                        <td>{{timeSheetObj.bank.remaining.pto || 0  | number : '1.2-2'}} Hours</td>
+                        <td>{{timeSheetObj.bank.remaining?.pto || 0  | number : '1.2-2'}} Hours</td>
                     </tr>  
                     <tr>
                         <td><b>CTO</b></td>
-                        <td>{{timeSheetObj.bank.carry_over[timeSheetObj.payPeriod.year].cto || 0  | number : '1.2-2'}} Hours</td>
-                        <td>{{timeSheetObj.bank.alloted[timeSheetObj.payPeriod.year].cto || 0  | number : '1.2-2'}} Hours</td>
+                        <td>{{timeSheetObj.bank.carry_over[timeSheetObj.payPeriod.year]?.cto || 0  | number : '1.2-2'}} Hours</td>
+                        <td>{{timeSheetObj.bank.alloted[timeSheetObj.payPeriod.year]?.cto || 0  | number : '1.2-2'}} Hours</td>
                         <td>{{timeSheetObj?.bank.used[timeSheetObj.payPeriod.year]?.cto || 0  | number : '1.2-2'}} Hours</td>
-                        <td>{{timeSheetObj.bank.remaining.cto || 0  | number : '1.2-2'}} Hours</td>
+                        <td>{{timeSheetObj.bank.remaining?.cto || 0  | number : '1.2-2'}} Hours</td>
                     </tr>
                 </tbody>
           </table>

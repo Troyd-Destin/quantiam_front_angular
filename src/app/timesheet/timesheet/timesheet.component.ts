@@ -41,8 +41,9 @@ export class TimesheetComponent implements OnInit {
   timesheetEditable = false;
   displayTimesheet = false;
   showSelectBox = false;
+  canChangeTimesheetUser = false;
 
-  oldCellValue;
+  oldCellValue = {};
 
   rowStyle = {
 
@@ -84,7 +85,6 @@ export class TimesheetComponent implements OnInit {
       }
 
       return cellStyle;
-      console.log(params);
 
 
 
@@ -96,7 +96,7 @@ export class TimesheetComponent implements OnInit {
      // checkbox: true,
       padding: 20,
       innerRenderer: function(params) {
-     //   console.log(params);
+  
 
         if (params.node.group) {
 
@@ -148,7 +148,6 @@ export class TimesheetComponent implements OnInit {
     },
     'footer-row': function(params) {
        if (params.node.footer) {
-      //  console.log(params);
         return true;
       }
       return false;
@@ -225,36 +224,54 @@ export class TimesheetComponent implements OnInit {
    onCellDoubleClicked($event) {}
    onCellEditingStopped($event) {
 
-
+     
      let value = $event.value;
 
      // tslint:disable-next-line:quotemark
-     if (value === "") { value = null; }
+     if (value && value.length === 0) { 
+      
+      value = null; }
+    
 
-     if (this.oldCellValue !== value ) {
+     //console.log('Comaprison', value, 'against',this.oldCellValue[$event.column.colId]);
+
+     if (this.oldCellValue[$event.column.colId] !== value ) {
         this.updateHours($event);
+       
       }
+      delete this.oldCellValue[$event.column.colId];
       return;
    }
    onCellEditingStarted($event) {
 
-         console.log($event);
+       
 
          // check for holiday
-         this.oldCellValue = $event.value;
+         if($event.value && $event.value.length === 0 ){ $event.value = null; }
+         this.oldCellValue[$event.column.colId] = $event.value;
 
-         console.log(this.oldCellValue);
+         const holidayCheck = this.timeSheetObj.holidays.find((holiday) => {
+          return holiday.date === $event.column.colId;
+        });
 
-        if ($event.data.category.categoryName === 'Absence') {
+     
+        
+
+       // console.log(this.oldCellValue[$event.column.colId], holidayCheck, $event);
+
+        if ($event.data.category.categoryName === 'Absence' &&
+        !($event.data.project.projectID === 5 && holidayCheck)
+        ) {
          this.gridApi.stopEditing();
          return;
         }
 
+      
    }
 
 
   fetchTimesheet() {
-    console.log(this.routeParams);
+    //console.log(this.routeParams);
 
     // Auth layer on fetching.
     let url = '';
@@ -373,12 +390,18 @@ export class TimesheetComponent implements OnInit {
 
           if (params.value > 0) {
 
-           console.log(params);
+          // console.log(params);
          }
 
           let disabled = '';
 
-          if (params.data.category.categoryName === 'Absence' ||  (!this.timesheetEditable)) { disabled = 'disabled'; }
+          const holidayCheck = this.timeSheetObj.holidays.find((holiday) => {
+            return holiday.date === params.column.colId;
+          });
+
+
+          if (params.data.category.categoryName === 'Absence' &&   !(params.data.project.projectID === 5 && holidayCheck)
+           ||  (!this.timesheetEditable)) { disabled = 'disabled'; }
 
            return '<input class="form-control timesheet" style="width:60px; height:25px; margin-top: 5px;" value="' + $.trim(params.value) + '" \
            \
@@ -388,13 +411,13 @@ export class TimesheetComponent implements OnInit {
 
         },
         timesheet_type: 'hours_field',
-        tooltip: function (params) {
+        // tooltipValueGetter: function (params) {
 
-          if (params.node.group) { return null; }
+        //   if (params.node.group) { return null; }
 
-          return long_headerDate + ' - Project ' + params.data.project.projectID;
+        //   return long_headerDate + ' - Project ' + params.data.project.projectID;
 
-        },
+        // },
         aggFunc: this.sumHoursColumn,
         cellStyle: (params) => {
 
@@ -442,7 +465,7 @@ export class TimesheetComponent implements OnInit {
           const day = moment(dateString[0]).format('ddd');
           if ((holidayCheck || day === 'Sun' || day === 'Sat') && !params.node.footer) {
       
-
+        //    if(holidayCheck){ params.column.holiday = true;}
             cellStyle['background-color'] = 'rgba(232, 242, 255,0.50)';
 
           }
@@ -510,17 +533,18 @@ export class TimesheetComponent implements OnInit {
   rowDataChanged(event) {
 
 
-    console.log(event);
-    this.gridApi.getRowStyle = function(params) {
+    if(this.gridApi)
+    {
+      this.gridApi.getRowStyle = function(params) {
 
-      const rowStyle = {
-        'border': '0px',
+        const rowStyle = {
+          'border': '0px',
+        };
+  
+        return rowStyle;
+
       };
-      console.log(params);
-      return rowStyle;
-
-    };
-
+   }
   }
 
   sumHoursColumn(data) {
@@ -570,7 +594,7 @@ export class TimesheetComponent implements OnInit {
   checkIfTimesheetEditable() {
 
     if (this.userService.hasPermission(10)) {
-      console.log('worked');
+     
       this.timesheetEditable = true;
       this.defaultColDef['editable'] = true;
       return;
@@ -589,7 +613,6 @@ export class TimesheetComponent implements OnInit {
   updateHours(params) {
 
     this.lastCellEdited = params;
-    console.log(params);
     const payload = {
 
       date: params.column.colId,
@@ -606,7 +629,6 @@ export class TimesheetComponent implements OnInit {
     const url = '/timesheet/' + this.routeParams.userId + '/process';
     this.http.put<any>(environment.apiUrl + url + '?filterSpinner', payload)
     .subscribe(response => {
-            console.log(response);
 
             this.timeSheetObj.bank = response.bank;
             this.timeSheetObj.overhours[response.week - 1].daily_sum = response.totaldaily_overhours;
@@ -632,7 +654,6 @@ export class TimesheetComponent implements OnInit {
 
     this.http.get<any>(environment.apiUrl + url + '')
     .subscribe(r => {
-      console.log(r);
       window.location.assign(r.url);
       this.notification.success('Success',  'Timesheet made!', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
 
@@ -642,15 +663,27 @@ export class TimesheetComponent implements OnInit {
 
   selectedUserChanged(event) {
 
+  
     this.routeParams.userId = event.employeeid;
-    this.router.navigate([`/timesheet/${this.routeParams.userId}/year/${this.routeParams.year}/payperiod/${this.routeParams.payperiod}`]);
+    this.router.navigate([`/timesheet/${event.id}/year/${this.routeParams.year}/payperiod/${this.routeParams.payperiod}`]);
     this.showSelectBox = false;
 
   }
 
  hideSelectBox() {
-  if (this.showSelectBox) {
-  setTimeout((x) => {this.showSelectBox = false; }, 200);
+    if (this.showSelectBox) {
+    setTimeout((x) => {this.showSelectBox = false; }, 200);
+    }
   }
-}
+
+  checkUserForSubordinatesAndMachines()
+  {
+    if((this.userService.hasMachines() && this.userService.hasSubordinates) || this.userService.hasPermission(1))
+    {
+      this.canChangeTimesheetUser = true;
+      this.showSelectBox = true;
+    }
+  
+    return true;
+  }
 }

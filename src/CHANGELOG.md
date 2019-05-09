@@ -1,3 +1,24 @@
+## [0.19.5] May 2019
+
+## Timesheet
+
+- Fixed stat holiday editing bug
+- User selection dropdown now respects permissions.
+- Built Projects, Holidays, RTO Allocation, Reports tabs
+- User Summary Usage Report is now functional
+
+## Material Container
+- Added a container expiry field
+- New info blurb about where Safety Data Sheets (SDS) are stored on the Q drive
+
+##RTO
+- User selection dropdown now respects permissions
+- 
+
+## Other
+- fixed tab CSS to better handle overflows
+- Ag grid updated to 20.1.0
+
 ## [0.19.4] April 2019
 
 ## Users

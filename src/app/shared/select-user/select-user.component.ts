@@ -11,10 +11,12 @@ export class SelectUserComponent implements OnInit, OnDestroy {
 
   list$: any;
   items: any = [];
+  machineItems: any = [];
   allItems: any = [];
   showActive = true;
   showInactive = false;
   virtualScroll = true;
+  user;
 
 
   // Inputs
@@ -26,6 +28,9 @@ export class SelectUserComponent implements OnInit, OnDestroy {
   @Input() restrictedAccessMode = false;
   @Input() subordinates = false;
   @Input() supervisors = false;
+  @Input() authorizedSubordinatesOrMachines = false;
+  @Input() showSubordinatesOnly = false;
+  @Input() allOptions = false;
 
   // Outputs
   @Output() change = new EventEmitter<any>();  
@@ -39,32 +44,107 @@ export class SelectUserComponent implements OnInit, OnDestroy {
 
     console.log(this.selectedValue);
 
-
+    this.showMachineItems();
     if (!this.restrictedAccessMode) {
 
     this.selectUserService.list(); // Make sure the service is initialized.
     this.list$ = this.selectUserService.list$.subscribe((r) => {
          this.allItems = r;
-          if (r[0]) {  this.showItems(); }
+         
+          if (r[0]) { this.showItems(); }
       });
     }
 
+    
 
 
   }
 
   showMachineItems() {
 
+    
+    if (!this.restrictedAccessMode) {
+
+      this.selectUserService.listMachines(); // Make sure the service is initialized.
+      this.list$ = this.selectUserService.machineList$.subscribe((r) => {
+
+          this.machineItems = r;
+
+        });
+      }
 
   }
 
 
   showItems() {
-    console.log(this.showActive, this.showInactive);
+
+    //check for all Options
+   // console.log(this.allItems);
+    if(this.allOptions)
+    {
+     
+
+        const everything = this.allItems;
+     
+       this.machineItems.forEach(element => {
+              everything.push(element);
+          });
+    
+   
+      return this.activityFilter(everything);
+    }
+
+     // check for  subordinate and supervisors 
+
+    if(this.showSubordinatesOnly)
+    {
+      this.user = this.userService.fetchAuthUserObj();
+      const userObj = this.allItems.find((x)=>{
+
+       return x.id == this.user.id;
+
+      });
+     this.items = this.user.subordinates;
+     return this.activityFilter(this.items);
+
+    }
+
+     if(this.authorizedSubordinatesOrMachines)
+     {
+       this.user = this.userService.fetchAuthUserObj();
+       const userObj = this.allItems.find((x)=>{
+
+        return x.id == this.user.id;
+
+       });
+       /// loop through all items and filter those who are on the authedUser's subodrinates or machines arrays
+   
+      this.items = this.user.subordinates.concat(this.user.machines);
+      this.items.unshift(userObj);
+      return this.activityFilter(this.items);
+      console.log(this.items);
+      //return;
+
+ 
+     }
+
+
+
+     return this.activityFilter(this.allItems);
+  
+
+
+
+  }
+
+  activityFilter(items)
+  {
+
+   // console.log(this.showActive, this.showInactive);
 
     if (this.showActive && !this.showInactive) {
 
-    this.items = this.allItems.filter((obj) => {
+    this.items = items.filter((obj) => {
 
         return obj.active;
 
@@ -73,7 +153,7 @@ export class SelectUserComponent implements OnInit, OnDestroy {
 
     if (!this.showActive && this.showInactive) {
 
-    this.items = this.allItems.filter((obj) => {
+    this.items = items.filter((obj) => {
 
         return !obj.active;
 
@@ -82,17 +162,11 @@ export class SelectUserComponent implements OnInit, OnDestroy {
 
 
    if (!this.showActive && !this.showInactive) { this.items = []; }
-   if (this.showActive && this.showInactive) {this.items = this.allItems; }
-
-  
-   // check for  subordinate and supervisors 
-
-
-
+   if (this.showActive && this.showInactive) {this.items = items; }
 
   }
 
-  onChange(event) {this.change.emit(event);}  
+  onChange(event) {this.change.emit(event);}
   onRemove(event) { this.remove.emit(event); }
   onClear(event) { this.clear.emit(event); }
 

@@ -1,0 +1,40 @@
+
+  <div fxLayout="column" fxFlexOffset.gt-md="20%">
+
+    <div fxlayout="row">
+
+    </div>
+    <div fxlayout="row">
+
+        <hot-table 
+        fxFLex=50
+        class="hot"
+      
+      [hotId]="id"
+      [settings]="hotTableSettings"
+      [licenseKey]="'non-commercial-and-evaluation'"  
+      
+      
+      
+      
+    >
+
+    
+      <hot-column data="projectid" title="Project ID" readonly></hot-column>
+      <hot-column data="Description" title="Name" ></hot-column>
+      <hot-column data="Category" title="Category" type="dropdown"  [source]="categoryHandsList"  > </hot-column>
+
+    <!--  <hot-column data="billable" title="'Billable'" type="'numeric'" >
+        
+      </hot-column> -->
+      <hot-column date-format="'YYYY-MM-DD'" data="start_date" title="Start Date" type="date" ></hot-column>
+      <hot-column date-format="'YYYY-MM-DD'" data="retire_date" title="Retire Date" type="date" ></hot-column>
+    
+
+
+    </hot-table>
+
+    </div>
+
+  </div>
+    

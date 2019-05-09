@@ -1,0 +1,28 @@
+
+<div fxLayout="column" fxFlexOffset.gt-md="20vw">
+
+  <hot-table  
+    
+    class="hot"
+
+    [hotId]="id"
+    [settings]="hotTableSettings"
+    [licenseKey]="'non-commercial-and-evaluation'"  
+    (after-change)="afterChange($event)"
+  
+>
+
+      <hot-column data="employee_id" title="ID" read-only></hot-column>
+      <!--  <hot-column data="year" title="'Year'" read-only></hot-column> -->
+      <hot-column data="employee.name_abbrev" title="Name" read-only></hot-column>
+      <hot-column data="vacation" title="Vacation" ></hot-column>
+      <hot-column data="pto" title="PTO" ></hot-column>
+      <hot-column data="ppl" title="PPL" ></hot-column>
+      <hot-column data="employee.startdate" title="Started"  read-only></hot-column>
+      <hot-column data="employee.leavedate" title="Left"  read-only></hot-column>
+      <hot-column data="comment" title="Comment"  width="300"></hot-column>
+    
+    </hot-table>  
+
+
+</div>

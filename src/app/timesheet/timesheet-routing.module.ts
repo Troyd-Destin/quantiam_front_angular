@@ -8,6 +8,16 @@ import { TimesheetSimpleComponent } from './timesheet-simple/timesheet-simple.co
 import { TimesheetCalendarComponent } from './timesheet-calendar/timesheet-calendar.component';
 import { TimesheetRtoComponent } from './timesheet-rto/timesheet-rto.component';
 import { TimesheetRtoViewComponent } from './timesheet-rto-view/timesheet-rto-view.component';
+import { TimesheetProjectComponent } from './timesheet-project/timesheet-project.component';
+import { TimesheetHolidayComponent } from './timesheet-holiday/timesheet-holiday.component';
+import { TimesheetReportComponent } from './timesheet-report/timesheet-report.component';
+import { TimesheetRtoAllocationComponent } from './timesheet-rto-allocation/timesheet-rto-allocation.component';
+
+import { ProjectUserHoursComponent } from './timesheet-report/project-user-hours/project-user-hours.component';
+import { UserRTOBankStatusComponent } from './timesheet-report/user-rtobank-status/user-rtobank-status.component';
+import { UserAbsenceSummaryComponent } from './timesheet-report/user-absence-summary/user-absence-summary.component';
+
+import { UserHoursComponent } from './timesheet-report/user-hours/user-hours.component';
 
 const routes: Routes = [{
     path: '',
@@ -34,9 +44,57 @@ const routes: Routes = [{
       component: TimesheetRtoComponent,
     },
     {
+      path: 'rto/allocation',
+      data: { key: 'timesheet-rto-allocation'},
+      pathMatch: 'full',
+      component: TimesheetRtoAllocationComponent,
+    },
+    {
       path: 'rto/:id',
       data: { key: 'timesheet-rto-view'},
       component: TimesheetRtoViewComponent,
+    },
+    {
+      path: 'project',
+      data: { key: 'timesheet-project'},
+      component: TimesheetProjectComponent,
+    },
+    {
+      path: 'holiday',
+      data: { key: 'timesheet-holiday'},
+      component: TimesheetHolidayComponent,
+    },
+   
+    {
+      path: 'report',
+      //data: { key: 'timesheet-report'},
+      component: TimesheetReportComponent,
+      children:[
+        {
+          path:'user-hours',
+          data: { key: 'timesheet-report-user-hours'},
+          component: UserHoursComponent
+
+        },
+        {
+          path:'project-user-hours',
+          data: { key: 'timesheet-report-project-user-hours'},
+          component: ProjectUserHoursComponent
+
+        },
+        {
+          path:'user-rto-bank-status',
+          data: { key: 'timesheet-report-user-rto-bank-status'},
+          component: UserRTOBankStatusComponent
+
+        },
+        {
+          path:'user-absences-summary',
+          data: { key: 'timesheet-report-user-absences-summary'},
+          component: UserAbsenceSummaryComponent
+
+        },
+      ]
     },
 
   ],

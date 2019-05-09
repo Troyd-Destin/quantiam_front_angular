@@ -4,6 +4,8 @@ import { HttpClient,HttpParams } from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import * as moment from 'moment';
 
+import { Router } from '@angular/router';
+
 import { AgGridSelectProjectEditorComponent } from '../../shared/ag-grid-select-project/ag-grid-select-project.component';
 
 
@@ -43,6 +45,7 @@ export class TimesheetRtoComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
+    private router: Router
   ) {
 
     this.columnDefs = [
@@ -57,7 +60,12 @@ export class TimesheetRtoComponent implements OnInit {
         headerName: 'Employee',
         field: 'owner.name',
         width: 90,
-        filter: false
+        filter: false,
+        cellRenderer: (cell) => { 
+          try{
+            return '<b>'+cell.data.owner.name+'</b>'; 
+          } catch(e) {  return ''; }
+          }
       },
       {
         headerName: 'Hours',
@@ -78,12 +86,21 @@ export class TimesheetRtoComponent implements OnInit {
 
             cell.data.time_requests.forEach(element => {
 
+              console.log(element);
+
+              sum[element.type] = sum[element.type] + element.hours;
+
             })
 
           }
 
-          return '<table class=""><thead><tr><td> PTO </td><td> Vacation</td> <td> Unpaid </td> <td> CTO </td> </tr> </thead>\
-          <tbody><tr><td>0</td><td>0</td><td>0</td><td>0</td></tr></tbody>\
+          return '<table class="rtoDatabaseTable"><thead ><tr><th> PTO </th><th> Vacation</th> <th> Unpaid </th> <th> CTO </th> </tr> </thead>\
+          <tbody><tr>\
+          <td>'+ sum.pto +'</td>\
+          <td>'+ sum.vacation +'</td>\
+          <td>'+ sum.unpaid +'</td>\
+          <td>'+ sum.cto +'</td>\
+          </tr></tbody>\
           </table>';
 
         }
@@ -91,7 +108,7 @@ export class TimesheetRtoComponent implements OnInit {
       {
         headerName: 'Dates',
         field: 'time_requests',
-      
+        width: 280,
         filter: true,
         cellRenderer: (cell) => { 
 
@@ -104,7 +121,7 @@ export class TimesheetRtoComponent implements OnInit {
             });
 
             str = str.substring(0, str.length - 1);
-            return str;
+            return '<span class="padding">'+str+'</span>';
 
           }
 
@@ -116,31 +133,42 @@ export class TimesheetRtoComponent implements OnInit {
         field: 'status',
         width: 70,
         filter: false,
-        editable: true,
+      
+        cellRenderer: (cell) => { 
+
+            if(cell.data.status === 'pending'){  return '<button class="btn btn-warning btn-sm"> Pending </button>' }
+            if(cell.data.status === 'approved'){  return '<button class="btn btn-success btn-sm"> Approved </button>' }
+            if(cell.data.status === 'denied'){  return '<button class="btn btn-danger btn-sm"> Denied </button>' }
+
+        }
       },
     ];
 
     this.defaultColDef = {
       filter: true,
       sorting: true,
+      editable: false,
      };
 
     
 
     this.gridOptions = {
       rowSelection: 'single',
-      cacheBlockSize: 20,
+      cacheBlockSize: 10,
       enableRangeSelection: true,
       rowModelType: 'serverSide',
       pagination: true,
       maxConcurrentDatasourceRequests: 1,
-       paginationPageSize: 20,
+       paginationPageSize: 10,
+       rowStyle: {
+         cursor: 'pointer',
+       }
        //rowHeight: 25
     };
 
     this.frameworkComponents = {
      // moodEditor: MoodEditor,
-      projectEditor: AgGridSelectProjectEditorComponent,
+     // projectEditor: AgGridSelectProjectEditorComponent,
     };
 
    }
@@ -155,7 +183,7 @@ export class TimesheetRtoComponent implements OnInit {
       console.log(params.api);
 
     const datasource = this.fetchDatabase();
-
+    
     params.api.setServerSideDatasource(datasource); // datasource needs to be a serverSide model
     
   }
@@ -229,6 +257,13 @@ export class TimesheetRtoComponent implements OnInit {
     this.filteredStatus = event.value;
     this.refreshDatabase();
       console.log(event);
+  }
+
+
+  rowClicked(event)
+  {
+     // console.log(event);
+      this.router.navigate(['/timesheet/rto/' + event.data.requestID]);
   }
 
 }

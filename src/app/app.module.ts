@@ -14,7 +14,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
 
 import {LicenseManager} from 'ag-grid-enterprise/main';
 // tslint:disable-next-line:max-line-length
-LicenseManager.setLicenseKey('Evaluation_License_Not_For_Production_Valid_Until3_February_2019__MTU0OTE1MjAwMDAwMA==4219b0917c51680a5c4bde17186c5c08');
+LicenseManager.setLicenseKey('Evaluation_License-_Not_For_Production_Valid_Until_7_July_2019__MTU2MjQ1NDAwMDAwMA==fed960679205b68cd00195b0aaf9b162');
 
 
 import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TimesheetService } from '../timesheet.service';
 
+import { UserService } from '../../services/user/user.service';
+
 @Component({
   selector: 'app-timesheet-index',
   templateUrl: './timesheet-index.component.html',
@@ -10,9 +12,9 @@ import { TimesheetService } from '../timesheet.service';
 export class TimesheetIndexComponent implements OnInit {
 
   routeParams: any;
-  currentTimesheet = {userId: '', year: '', payperiod: ''};
+  currentTimesheet = {userId: '', year: '', payperiod: '', requestID: ''};
 
-  constructor(private router: Router, private route: ActivatedRoute, private timesheetService: TimesheetService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private timesheetService: TimesheetService, private userService: UserService) { }
 
   ngOnInit() {
 

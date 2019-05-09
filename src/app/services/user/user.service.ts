@@ -231,7 +231,27 @@ export class UserService  {
 
   }
 
+  public hasSubordinates()
+  {
+    const user = this.fetchAuthUserObj();
+    if( user.subordinates[0]) { return true; }
+    return false;
+  }
 
+  public hasMachines()
+  {
+    const user = this.fetchAuthUserObj();
+    if( user.machines[0]) { return true; }
+    return false;
+  }
+
+  public hasSupervsors()
+  {
+
+    const user = this.fetchAuthUserObj();
+    if( user.supervisors[0]) { return true; }
+    return false;
+  }
   
 
 }

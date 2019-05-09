@@ -15,9 +15,9 @@
 						<b>	Material Information </b>
 						
 					</mat-panel-title>
-					<mat-panel-description>
+					<!-- <mat-panel-description>
 						{{container.lot.material.name}} <i style="margin-left:10px;">{{container.lot.material.grade}}</i>
-					</mat-panel-description>    
+					</mat-panel-description>     -->
 				</mat-expansion-panel-header>		
 				<div>
 				
@@ -71,11 +71,17 @@
 						 
 						
 					</div>
-					<div fxLayout="row wrap"  fxLayoutAlign="end center">
-				
-					<button mat-button   *ngIf="canEdit" (click)="editMaterial = !editMaterial"  > Edit </button>
-					 <button mat-button  *ngIf="canEdit && container.lot.material.sds" (click)="deleteSDS()" color="warn"  > Delete SDS </button> 
-					
+					<div fxLayout="row wrap"  fxLayoutAlign="start center" >
+
+						<div fxLayout="row" fxFlex>
+							<ngb-alert  [hidden]="!container.lot.material.sds" type="info"  [dismissible]="false" style="margin-top:7px; margin-bottom:0px;">
+									<b> SDS Storage </b> <a target="_blank" href="File:///Q:/Administration - All Staff/SDS"> Q:\Administration - All Staff\SDS </a>
+							</ngb-alert>
+						</div>			
+						<div  fxFlex fxLayout="row"  fxLayoutAlign="end center" >
+							<button mat-button   *ngIf="canEdit" (click)="editMaterial = !editMaterial"  > Edit </button>
+							<button mat-button  *ngIf="canEdit && container.lot.material.sds" (click)="deleteSDS()" color="warn"  > Delete SDS </button> 
+						</div>
 					</div>
 					
 				</div>
@@ -212,7 +218,7 @@
 								</mat-form-field>	 
 								
 					
-								<mat-form-field fxFlex>
+								<mat-form-field fxFlex=10>
 										<input  #PurchaseOrder (change)="updateContainerField(PurchaseOrder)" [disabled]="!editContainer"  type="text" matInput placeholder="P.O. #" [(ngModel)] ='container.purchase_order' name="purchase_order" >
 									</mat-form-field>  
 									
@@ -222,9 +228,14 @@
 								<mat-datepicker #myDatepicker2></mat-datepicker>
 								</mat-form-field>
 								<mat-form-field class="full-width" fxFlex>
-								<input matInput [matDatepicker]="myDatepicker" placeholder="Date Opened" [(ngModel)] ='container.container_opened' (dateChange)="updateContainerField($event.value,'container_opened')" [disabled]="!editContainer">
-								<mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
-								<mat-datepicker #myDatepicker></mat-datepicker>
+									<input matInput [matDatepicker]="myDatepicker" placeholder="Date Opened" [(ngModel)] ='container.container_opened' (dateChange)="updateContainerField($event.value,'container_opened')" [disabled]="!editContainer">
+									<mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+									<mat-datepicker #myDatepicker></mat-datepicker>
+								</mat-form-field>
+								<mat-form-field class="full-width" fxFlex>
+									<input matInput [matDatepicker]="myDatepicker3" placeholder="Expiration Date" [(ngModel)] ='container.expire_date' (dateChange)="updateContainerField($event.value,'expire_date')" [disabled]="!editContainer">
+									<mat-datepicker-toggle matSuffix [for]="myDatepicker3"></mat-datepicker-toggle>
+									<mat-datepicker #myDatepicker3></mat-datepicker>
 								</mat-form-field>
 								
 								
@@ -240,7 +251,7 @@
 					
 					<mat-card-actions >	
 						
-						<mat-checkbox (change)="changeContainerStatus()" style="margin-left:15px" [disabled]="!editContainer" [(ngModel)] ='container.active' name="active" fxLayoutAlign="start center">Active</mat-checkbox>
+						<mat-checkbox (change)="changeContainerStatus()" style="margin-left:15px" [disabled]="!editContainer" [(ngModel)] ='container.active' name="active" fxLayoutAlign="start center"> In Stock? </mat-checkbox>
 						
 						<div  fxLayoutAlign="end center" fxFlex>
 									<button mat-button (click)="generateMaterialLargeLabelDownload()" > Print Large Label </button> 			
@@ -262,6 +273,7 @@
 		</div>
 	</div>
 
+		
 
 		<iframe  [hidden]="!container.lot.material.sds" src="" type="application/pdf"  height="800px" style="overflow: auto; min-width: 50%;">
 		</iframe> 
@@ -271,6 +283,8 @@
 		
 		
 			<div fxFlex fxLayout="column" fxLayoutGap="20px">
+
+				
 
 					<ngb-alert type="danger"  [dismissible]="false"> <b> Oops </b> We can't find an SDS. Employers are required by <a target="_blank" href="https://www.ccohs.ca/oshanswers/chemicals/whmis_ghs/sds.html"> federal WHIMIS 2015 legislation </a> to have an SDS readily accessible.  </ngb-alert>
 						

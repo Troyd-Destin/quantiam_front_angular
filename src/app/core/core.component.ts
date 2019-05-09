@@ -79,6 +79,7 @@ export class CoreComponent implements OnInit, OnDestroy {
   timesheetYear = '';
   timesheetUser = null;
   timesheetPayperiod = null;
+  hasSwitchedUser = false;
  
 
   currentYear = (new Date()).getFullYear();
@@ -254,6 +255,14 @@ export class CoreComponent implements OnInit, OnDestroy {
      this.userService.fetchAuthUserObj();
      this.user = r;
      this.userLoaded = true;
+     this.hasSwitchedUser = true;
+
+     this.http.get<any>(environment.apiUrl + `/user/token/${event.id}?filterSpinner`)
+		 .subscribe(r=>{
+
+      console.log(r);//
+
+     })
 
      this.adminCheck();
 

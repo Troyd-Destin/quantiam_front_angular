@@ -35,7 +35,8 @@
               "node_modules/font-awesome/css/font-awesome.css",
               "node_modules/fullcalendar/dist/fullcalendar.min.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/assets/css/tablecloth.css",
+              "src/assets/css/tablecloth.css",              
+              "node_modules/handsontable/dist/handsontable.full.min.css",
               "src/styles.css"
             ],
             "scripts": [

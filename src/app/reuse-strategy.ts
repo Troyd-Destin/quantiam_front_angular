@@ -3,8 +3,16 @@ import {ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy} from '@
 export class CustomReuseStrategy implements RouteReuseStrategy {
 
   // tslint:disable-next-line:no-trailing-whitespace
-  routesToCache: string[] = ['userDatabase', 'userView', 'xpsDatabase', 'timesheet-calendar',
-  'tgaDatabase', 'tgaPeakTool', 'timesheet', 'MaterialContainerDatabase','MaterialContainerView','SemDatabase','XrdDatabase','XrdView','SemRun'];
+  routesToCache: string[] = [
+   'userDatabase', 'userView', 
+   'timesheet','timesheet-calendar','timesheet-report','timesheet-project','timesheet-holiday','timesheet-rto-view','timesheet-rto-allocation','timesheet-rto-database',  
+   'timesheet-report-user-hours','timesheet-report-project-user-hours','timesheet-report-user-rto-bank-status','timesheet-report-user-absences-summary',
+   'tgaDatabase', 'tgaPeakTool',
+    'MaterialContainerDatabase','MaterialContainerView',
+    'SemDatabase','SemRun',
+    'XrdDatabase','XrdView',
+    'xpsDatabase',
+   ];
   storedRouteHandles = new Map<string, DetachedRouteHandle>();
 
   // Decides if the route should be stored

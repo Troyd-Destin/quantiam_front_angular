@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FullCalendarModule } from 'ng-fullcalendar';
 
+import { HotTableModule } from '@handsontable/angular';
+
 
 import { SharedModule } from '../shared/shared.module';
 import { MaterialDesignModule } from '../material-design/material-design.module';
@@ -15,17 +17,27 @@ import { TimesheetRtoComponent } from './timesheet-rto/timesheet-rto.component';
 import { TimesheetRtoViewComponent } from './timesheet-rto-view/timesheet-rto-view.component';
 
 import { NumericEditor } from './timesheet/numeric-editor.component';
-//import { MoodEditor } from '../ag-grid-editors/mood-editor.component';
-import { TimesheetReportsComponent } from './timesheet-reports/timesheet-reports.component';
+import { TimesheetProjectComponent } from './timesheet-project/timesheet-project.component';
+import { TimesheetHolidayComponent } from './timesheet-holiday/timesheet-holiday.component';
+import { TimesheetRtoAllocationComponent } from './timesheet-rto-allocation/timesheet-rto-allocation.component';
+import { TimesheetReportComponent } from './timesheet-report/timesheet-report.component';
+import { UserHoursComponent } from './timesheet-report/user-hours/user-hours.component';
+import { ProjectUserHoursComponent } from './timesheet-report/project-user-hours/project-user-hours.component';
+import { UserRTOBankStatusComponent } from './timesheet-report/user-rtobank-status/user-rtobank-status.component';
+import { UserAbsenceSummaryComponent } from './timesheet-report/user-absence-summary/user-absence-summary.component';
 
 @NgModule({
   imports: [
     CommonModule,
     TimesheetRoutingModule,
     
+    HotTableModule.forRoot(),
+    
     MaterialDesignModule,
     SharedModule
   ],
-  declarations: [ NumericEditor, TimesheetIndexComponent, TimesheetComponent, TimesheetBankComponent, TimesheetSimpleComponent, TimesheetCalendarComponent, TimesheetRtoComponent, TimesheetRtoViewComponent, TimesheetReportsComponent]
+  declarations: [ NumericEditor, TimesheetIndexComponent, TimesheetComponent, 
+    TimesheetBankComponent, TimesheetSimpleComponent, TimesheetCalendarComponent, TimesheetRtoComponent, TimesheetRtoViewComponent,
+     TimesheetProjectComponent, TimesheetHolidayComponent, TimesheetRtoAllocationComponent, TimesheetReportComponent, UserHoursComponent, ProjectUserHoursComponent, UserRTOBankStatusComponent, UserAbsenceSummaryComponent]
 })
 export class TimesheetModule { }

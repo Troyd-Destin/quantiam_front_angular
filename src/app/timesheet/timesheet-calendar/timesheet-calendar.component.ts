@@ -33,7 +33,7 @@ export class TimesheetCalendarComponent implements OnInit {
         $('#calendar').fullCalendar({
 
         eventLimit: 5,
-				aspectRatio: 3,
+				aspectRatio: 10,
         header: {
           left: 'prev,next',
           center: 'title',
@@ -42,8 +42,8 @@ export class TimesheetCalendarComponent implements OnInit {
         height: 700,
         eventClick: (calEvent, jsEvent, view) => {
 
-          this.loadRTO(calEvent.rto_id);
-
+          
+          this.router.navigate(['/timesheet/rto/' + calEvent.rto_id]);
 
         },
         eventSources: [this.eventSourceQuantiam()],

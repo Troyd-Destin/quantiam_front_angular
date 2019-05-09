@@ -1,66 +1,73 @@
 
-<div fxLayout="row"  >
+<div fxLayout="column">
 
-    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex>
-  
-  
-        <app-select-user
-           style="min-width:150px;"
-          (change)="filterRtoOwner($event)"
-          (clear)="clearRtoOwner($event)"
-          placeholder="Employee"
-          [subordinates]="showSubordinatesOnly"
+    <div fxLayout="row"   fxLayoutAlign="start start" fxFlex=60 fxFlex.lt-lg=100 >
 
-        ></app-select-user>
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlexOffset=20 fxFlexOffset.lt-lg=0 >
+    
+    
+          <app-select-user
+            style="min-width:150px;"
+            (change)="filterRtoOwner($event)"
+            (clear)="clearRtoOwner($event)"
+            placeholder="Employee"
+            [showSubordinatesOnly]="showSubordinatesOnly"
+          
+          ></app-select-user>
 
-        <mat-button-toggle-group  class="mat-elevation-z1"  name="fontStyle" aria-label="Font Style" (change)="statusChanged($event)">
-            <mat-button-toggle value="approved">Aproved</mat-button-toggle>
-            <mat-button-toggle value="pending">Pending</mat-button-toggle>
-            <mat-button-toggle value="denied">Denied </mat-button-toggle>
-          </mat-button-toggle-group>
-  
-  
-  
-    </div>
-  
-    <div fxLayout="row" fxLayoutAlign="end start" fxFlex fxLayoutGap="20px">
-  
-      
-        <mat-form-field style="max-width: 100px;">
-            <mat-select  placeholder="Page Size"  [(ngModel)]="gridOptions.cacheBlockSize" (selectionChange)="onPageSizeChanged()">
-              <mat-option *ngFor="let pageSize of pageSizes" [value]="pageSize" [attr.selected]="pageSize === gridOptions.cacheBlockSize ? 'selected': null">
-                {{pageSize}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-  
-        <!-- <mat-form-field style="width:400px">
+          <mat-button-toggle-group  class="mat-elevation-z1"  name="fontStyle" aria-label="Font Style" (change)="statusChanged($event)" value="">
+              <mat-button-toggle value=""> All </mat-button-toggle>
+              <mat-button-toggle value="approved">Aproved</mat-button-toggle>
+              <mat-button-toggle value="pending">Pending</mat-button-toggle>
+              <mat-button-toggle value="denied">Denied </mat-button-toggle>
             
-            <input id="semDatabaseSearchBar" type="text" matInput (keyup)="onTextFilterChanged()"  [(ngModel)]="filteredTextFilterName"  placeholder="Search">
-            <mat-icon matSuffix>search</mat-icon>
-        </mat-form-field>  
-   -->
+            </mat-button-toggle-group>
+    
+    
+    
       </div>
-  
+    
+      <div fxLayout="row" fxLayoutAlign="end start"  fxLayoutGap="20px" fxFlexOffset=28> 
+    
+        
+          <mat-form-field style="max-width: 100px;">
+              <mat-select  placeholder="Page Size"  [(ngModel)]="gridOptions.paginationPageSize" (selectionChange)="onPageSizeChanged()">
+                <mat-option *ngFor="let pageSize of pageSizes" [value]="pageSize" [attr.selected]="pageSize === gridOptions.paginationPageSize ? 'selected': null">
+                  {{pageSize}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+    
+          <!-- <mat-form-field style="width:400px">
+              
+              <input id="semDatabaseSearchBar" type="text" matInput (keyup)="onTextFilterChanged()"  [(ngModel)]="filteredTextFilterName"  placeholder="Search">
+              <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>  
+    -->
+      </div>
+    
   </div>
   
   
-  <div fxLayout="row" fxLayoutAlign="center start">
-      <ag-grid-angular fxFlex=60
-      #agGrid
-      
-      id="rtoDatabase"
-      class="ag-theme-balham"
-      [columnDefs]="columnDefs"
-      [gridOptions]="gridOptions"
-      [defaultColDef]="defaultColDef"
-      [rowData]="rowData"
-      
-      [animateRows]="true"
-      
-      [frameworkComponents]="frameworkComponents"
-      
-      (gridReady)="onGridReady($event)"
-      >
-      </ag-grid-angular>
+    <div fxLayout="row" fxLayoutAlign="center start">
+        <ag-grid-angular fxFlex=60 fxFlex.lt-lg=100
+        #agGrid 
+        
+        id="rtoDatabase"
+        rowHeight="50"
+        class="ag-theme-balham"
+        [columnDefs]="columnDefs"
+        [gridOptions]="gridOptions"
+        [defaultColDef]="defaultColDef"
+        [rowData]="rowData"
+        (rowClicked)="rowClicked($event)"
+        
+        [animateRows]="true"
+        
+        [frameworkComponents]="frameworkComponents"
+        
+        (gridReady)="onGridReady($event)"
+        >
+        </ag-grid-angular>
+  </div>
 </div>

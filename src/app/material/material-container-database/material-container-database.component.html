@@ -9,16 +9,13 @@
 
         <div fxFlex fxLayout="column" fxLayoutAlign="center start"> 
                 <!-- <mat-slide-toggle  (click)="toggleCellsEditable()"> Edit Table </mat-slide-toggle> -->
-            <button (click)="fetchTableData()" mat-raised-button> 
-                Refresh
-                <mat-icon  >refresh</mat-icon>
-            </button>
+                <app-select-material></app-select-material>
+            
             
         </div>
         <div fxFlex fxLayout="row"  fxLayoutAlign="center center" fxLayoutGap="20px"> 
 
-            <app-select-material></app-select-material>
-            
+           
                 <mat-form-field style="width:300px">
                         <!--   <span matPrefix>+1 &nbsp;</span> -->
                         <input type="text" matInput (keyup)="onFilterChanged()"  [(ngModel)]="searchBarValue"  placeholder="Search">
@@ -26,6 +23,11 @@
                     </mat-form-field>  
         </div>
         <div fxFlex fxLayout="column"  fxLayoutAlign="center end">
+
+            <button (click)="fetchTableData()" mat-raised-button> 
+                Refresh
+                <mat-icon  >refresh</mat-icon>
+            </button>
 
                 <!-- <div fxFlex fxLayout="row"  fxLayoutGap="15px"  fxLayoutAlign="center center"> 
                 <b> Filters </b>  
