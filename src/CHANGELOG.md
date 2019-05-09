@@ -13,11 +13,14 @@
 
 ##RTO
 - User selection dropdown now respects permissions
-- 
+
+## SEM
+- Data storage location now displayed
 
 ## Other
 - fixed tab CSS to better handle overflows
 - Ag grid updated to 20.1.0
+- HandsOnTable added in for quick tabular display, stil can't figure out how to copy with headers. 
 
 ## [0.19.4] April 2019
 

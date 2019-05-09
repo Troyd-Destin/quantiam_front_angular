@@ -1,5 +1,5 @@
 
-<div fxLayout="column">
+<div fxLayout="column" fxLayoutGap="20px">
 
     <div fxLayout="row"   fxLayoutAlign="start start" fxFlex=60 fxFlex.lt-lg=100 >
 
@@ -29,14 +29,15 @@
     
       <div fxLayout="row" fxLayoutAlign="end start"  fxLayoutGap="20px" fxFlexOffset=28> 
     
-        
-          <mat-form-field style="max-width: 100px;">
+          <button mat-raised-button class="mat-elevation-z1" (click)="createRTO()"> Create </button>
+
+          <!-- <mat-form-field style="max-width: 100px;">
               <mat-select  placeholder="Page Size"  [(ngModel)]="gridOptions.paginationPageSize" (selectionChange)="onPageSizeChanged()">
                 <mat-option *ngFor="let pageSize of pageSizes" [value]="pageSize" [attr.selected]="pageSize === gridOptions.paginationPageSize ? 'selected': null">
                   {{pageSize}}
                 </mat-option>
               </mat-select>
-            </mat-form-field>
+            </mat-form-field> -->
     
           <!-- <mat-form-field style="width:400px">
               
