@@ -9,7 +9,7 @@
           <mat-card-header>
              
               <mat-card-title>Filters</mat-card-title>
-              <mat-card-subtitle>Report queries summary timesheet acticity for the specified time ranges. </mat-card-subtitle>
+              <mat-card-subtitle>Timesheet summary activity for the specified time range. </mat-card-subtitle>
             </mat-card-header>
 
             <mat-card-content>
@@ -46,12 +46,12 @@
               </div>
               <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">  
                 <mat-form-field>
-                  <input matInput [(ngModel)]="startDate" [matDatepicker]="startDatePicker" placeholder="Start Date">
+                  <input matInput [(ngModel)]="startDate" [matDatepicker]="startDatePicker" placeholder="Start Date" (dateChange)="changeDates()">
                   <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
                   <mat-datepicker #startDatePicker></mat-datepicker>
                 </mat-form-field>
               <mat-form-field>
-                  <input matInput [(ngModel)]="endDate" [matDatepicker]="endDatePicker" placeholder="End Date">
+                  <input matInput [(ngModel)]="endDate" [matDatepicker]="endDatePicker" placeholder="End Date" (dateChange)="changeDates()">
                   <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
                   <mat-datepicker #endDatePicker></mat-datepicker>
                 </mat-form-field>
@@ -92,56 +92,56 @@
 
 </div>
 
-<div fxLayout="row" fxLayoutAlign="center center" fxFlex>
+  <div fxLayout="row" fxLayoutAlign="center center" fxFlex>
 
-
-  
-
-    <hot-table  
-    
-    *ngIf="fetchedReportLoaded"
-    class="hot"
-
-    [hotId]="id"
-    [settings]="hotTableSettings"
-    [licenseKey]="'non-commercial-and-evaluation'"  
-  
->
-
-
-        <hot-column data="employeeid" title="ID" read-only></hot-column>
-        <hot-column data="fullname" title="Name" read-only></hot-column>
-        <hot-column data="compensation" title="Compensation" read-only></hot-column>
-        <hot-column data="cto_bank_rate" title="CTO Bank Rate" read-only></hot-column>
-        <hot-column data="regular" title="Regular" read-only ></hot-column> 	
-        <hot-column data="stat" title="Stat" read-only ></hot-column>
-
-
-        <hot-column data="vacation_bank_start" title="Vacation Start" read-only ></hot-column>
-        <hot-column data="vacation" title="Vacation Used" read-only ></hot-column>
-        <hot-column data="vacation_payout" title="Vacation Change" read-only ></hot-column>
-        <hot-column data="vacation_bank_end" title="Vacation End" read-only ></hot-column>
-
-
-        <hot-column data="pto_bank_start" title="PTO Start" read-only ></hot-column>
-        <hot-column data="pto" title="PTO Used" read-only ></hot-column>
-        <hot-column data="pto_payout" title="PTO Change" read-only ></hot-column>
-        <hot-column data="pto_bank_end" title="PTO End" read-only ></hot-column>
-
-
-        <hot-column data="cto_bank_start" title="CTO Start" read-only ></hot-column> 	
-        <hot-column data="cto" title="CTO Used" read-only ></hot-column> 	
-        <hot-column data="bank" title="CTO Earned" read-only ></hot-column> 	
-        <hot-column data="cto_payout" title="CTO Change" read-only ></hot-column> 	
-        <hot-column data="cto_bank_end" title="CTO End" read-only ></hot-column> 	
-
-
-        <hot-column data="unpaid" title="Unpaid" read-only ></hot-column> 	
 
     
-    </hot-table>  
+
+      <hot-table  
+      
+      *ngIf="fetchedReportLoaded"
+      class="hot"
+
+      [hotId]="id"
+      [settings]="hotTableSettings"
+      [licenseKey]="'non-commercial-and-evaluation'"  
+    
+  >
+
+
+          <hot-column data="employeeid" title="ID" read-only></hot-column>
+          <hot-column data="fullname" title="Name" read-only></hot-column>
+          <hot-column data="compensation" title="Compensation" read-only></hot-column>
+          <hot-column data="cto_bank_rate" title="CTO Bank Rate" read-only></hot-column>
+          <hot-column data="regular" title="Regular" read-only ></hot-column> 	
+          <hot-column data="stat" title="Stat" read-only ></hot-column>
+
+
+          <hot-column data="vacation_bank_start" title="Vacation Start" read-only ></hot-column>
+          <hot-column data="vacation" title="Vacation Used" read-only ></hot-column>
+          <hot-column data="vacation_payout" title="Vacation Change" read-only ></hot-column>
+          <hot-column data="vacation_bank_end" title="Vacation End" read-only ></hot-column>
+
+
+          <hot-column data="pto_bank_start" title="PTO Start" read-only ></hot-column>
+          <hot-column data="pto" title="PTO Used" read-only ></hot-column>
+          <hot-column data="pto_payout" title="PTO Change" read-only ></hot-column>
+          <hot-column data="pto_bank_end" title="PTO End" read-only ></hot-column>
+
+
+          <hot-column data="cto_bank_start" title="CTO Start" read-only ></hot-column> 	
+          <hot-column data="cto" title="CTO Used" read-only ></hot-column> 	
+          <hot-column data="bank" title="CTO Earned" read-only ></hot-column> 	
+          <hot-column data="cto_payout" title="CTO Change" read-only ></hot-column> 	
+          <hot-column data="cto_bank_end" title="CTO End" read-only ></hot-column> 	
+
+
+          <hot-column data="unpaid" title="Unpaid" read-only ></hot-column> 	
+
+      
+      </hot-table>  
 
 
 
-</div>
+  </div>
 </div>

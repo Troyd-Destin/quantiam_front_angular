@@ -1,8 +1,8 @@
 
 import { Component, ChangeDetectorRef, OnInit, AfterViewInit, OnDestroy  } from '@angular/core';
-import {Location} from '@angular/common';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {MediaMatcher} from '@angular/cdk/layout';
+import { Location} from '@angular/common';
+import { FormBuilder, FormGroup} from '@angular/forms';
+import { MediaMatcher } from '@angular/cdk/layout';
 import { AuthService } from '../services/auth/auth.service';
 import { UserService } from '../services/user/user.service';
 
@@ -19,7 +19,7 @@ import { WebsocketService } from '../services/websocket/websocket.service';
 import { SettingsService } from '../services/settings/settings.service';
 
 
-import { faCoffee, faMicroscope, faBolt, faFlask, faXRay, faFireAlt, faPlaneDeparture, faHatWizard } from '@fortawesome/free-solid-svg-icons';
+import { faCoffee, faMicroscope, faBolt, faFlask, faXRay, faFireAlt, faPlaneDeparture, faHatWizard, faPaste, faCog } from '@fortawesome/free-solid-svg-icons';
 import { faCalendar, faClock } from '@fortawesome/free-regular-svg-icons';
 import { faAngular, faGithub, faFontAwesome, faLaravel } from '@fortawesome/free-brands-svg-icons';
 
@@ -63,6 +63,8 @@ export class CoreComponent implements OnInit, OnDestroy {
   faCalendar = faCalendar;
   faCoffee = faCoffee;
   faHatWizard = faHatWizard;
+  faPaste = faPaste;
+  faCog = faCog;
 
 
   title = 'app';

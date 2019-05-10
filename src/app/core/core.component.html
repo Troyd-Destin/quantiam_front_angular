@@ -129,7 +129,7 @@
 						</mat-expansion-panel>
 						
 					<mat-divider></mat-divider >
-						<mat-expansion-panel expanded="true" >
+						<mat-expansion-panel expanded="true"   *ngIf="userService.isActive()">
 						 <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
 							<mat-panel-title>
 								    Timesheet
@@ -159,6 +159,29 @@
 									 <button routerLink="/timesheet/rto/database" routerLinkActive="mat-list-item-button-active" mat-button  fxLayout="row" >  
 										<p>	RTO </p> 
 										<fa-icon [icon]="faPlaneDeparture" ></fa-icon>
+									</button>
+									 
+								</mat-list-item>
+								<mat-list-item 	 *ngIf="userService.hasPermission([24,25,37])"  > 
+										
+										<button 
+											routerLink="/timesheet/settings"  
+									 
+											routerLinkActive="mat-list-item-button-active" mat-button  fxLayout="row" >  
+										 <p>	Settings </p> 
+										 <fa-icon [icon]="faCog" ></fa-icon>
+									 </button>
+										
+								 </mat-list-item>
+
+								 <mat-list-item 	 *ngIf="userService.hasPermission(35)"  > 
+										
+									 <button 
+										 routerLink="/timesheet/report"  
+									
+										 routerLinkActive="mat-list-item-button-active" mat-button  fxLayout="row" >  
+										<p>	Reports </p> 
+										<fa-icon [icon]="faPaste" ></fa-icon>
 									</button>
 									 
 								</mat-list-item>

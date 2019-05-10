@@ -25,6 +25,7 @@ import { UserHoursComponent } from './timesheet-report/user-hours/user-hours.com
 import { ProjectUserHoursComponent } from './timesheet-report/project-user-hours/project-user-hours.component';
 import { UserRTOBankStatusComponent } from './timesheet-report/user-rtobank-status/user-rtobank-status.component';
 import { UserAbsenceSummaryComponent } from './timesheet-report/user-absence-summary/user-absence-summary.component';
+import { TimesheetSettingsComponent } from './timesheet-settings/timesheet-settings.component';
 
 @NgModule({
   imports: [
@@ -38,6 +39,6 @@ import { UserAbsenceSummaryComponent } from './timesheet-report/user-absence-sum
   ],
   declarations: [ NumericEditor, TimesheetIndexComponent, TimesheetComponent, 
     TimesheetBankComponent, TimesheetSimpleComponent, TimesheetCalendarComponent, TimesheetRtoComponent, TimesheetRtoViewComponent,
-     TimesheetProjectComponent, TimesheetHolidayComponent, TimesheetRtoAllocationComponent, TimesheetReportComponent, UserHoursComponent, ProjectUserHoursComponent, UserRTOBankStatusComponent, UserAbsenceSummaryComponent]
+     TimesheetProjectComponent, TimesheetHolidayComponent, TimesheetRtoAllocationComponent, TimesheetReportComponent, UserHoursComponent, ProjectUserHoursComponent, UserRTOBankStatusComponent, UserAbsenceSummaryComponent, TimesheetSettingsComponent]
 })
 export class TimesheetModule { }

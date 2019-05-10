@@ -17,6 +17,9 @@ import { ProjectUserHoursComponent } from './timesheet-report/project-user-hours
 import { UserRTOBankStatusComponent } from './timesheet-report/user-rtobank-status/user-rtobank-status.component';
 import { UserAbsenceSummaryComponent } from './timesheet-report/user-absence-summary/user-absence-summary.component';
 
+
+import { TimesheetSettingsComponent } from './timesheet-settings/timesheet-settings.component';
+
 import { UserHoursComponent } from './timesheet-report/user-hours/user-hours.component';
 
 const routes: Routes = [{
@@ -43,26 +46,36 @@ const routes: Routes = [{
       data: { key: 'timesheet-rto-database'},
       component: TimesheetRtoComponent,
     },
-    {
-      path: 'rto/allocation',
-      data: { key: 'timesheet-rto-allocation'},
-      pathMatch: 'full',
-      component: TimesheetRtoAllocationComponent,
-    },
+   
     {
       path: 'rto/:id',
       data: { key: 'timesheet-rto-view'},
       component: TimesheetRtoViewComponent,
     },
+   
     {
-      path: 'project',
-      data: { key: 'timesheet-project'},
-      component: TimesheetProjectComponent,
-    },
-    {
-      path: 'holiday',
-      data: { key: 'timesheet-holiday'},
-      component: TimesheetHolidayComponent,
+      path: 'settings',
+      data: { key: 'timesheet-settings'},
+      component: TimesheetSettingsComponent,
+      children:[
+        {
+          path: 'project',
+          data: { key: 'timesheet-project'},
+          component: TimesheetProjectComponent,
+        },
+        {
+          path: 'holiday',
+          data: { key: 'timesheet-holiday'},
+          component: TimesheetHolidayComponent,
+        },
+        {
+          path: 'rto-allocation',
+          data: { key: 'timesheet-rto-allocation'},
+          pathMatch: 'full',
+          component: TimesheetRtoAllocationComponent,
+        },
+
+      ]
     },
    
     {

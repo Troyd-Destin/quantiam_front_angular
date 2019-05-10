@@ -17,7 +17,7 @@ export class UserHoursComponent implements OnInit {
   salary = true;
   yearList: string[] = [];
   timesheetPayperoids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26];
-  
+
   selectedYear;
   fetchedPayperiod: any;
   requestPayperiod: any;
@@ -25,15 +25,15 @@ export class UserHoursComponent implements OnInit {
   startDate;
   selectedPayperiod;
 
-  fetchedReport:any; // stores rothe requested report 
+  fetchedReport: any; // stores rothe requested report
   fetchedReportLoaded = false;
 
-  ///HOT table
+  /// HOT table
   private hotRegisterer = new HotTableRegisterer();
   id = 'hotInstance';
-  hotTableSettings:any = {
+  hotTableSettings: any = {
     colHeaders: true,
-  }
+  };
 
   constructor(private http: HttpClient, private notification: NotificationsService) { }
 
@@ -58,7 +58,7 @@ calculatePayperoid () {
 
 	if (this.selectedPayperiod && this.selectedYear) {
 
-    
+
     const params: any = {'year': this.selectedYear};
     this.http.get(environment.apiUrl + '/timesheet/payperiod/' + this.selectedPayperiod + '/year/' + this.selectedYear, {params: params}).subscribe((response: any) => {
 
@@ -76,8 +76,6 @@ changeDates  () {
 		if (this.startDate && this.endDate) {
 			this.selectedPayperiod = null;
       this.selectedYear = null;
-      this.calculatePayperoid();
-			// this.fetchData();
 
 		}
 
@@ -98,11 +96,11 @@ fetchData() {
         console.log(response);
         this.fetchedReport = response;
         this.fetchedReportLoaded = true;
-       setTimeout((x)=>{ 
+       setTimeout((x) => {
         this.hotRegisterer.getInstance(this.id).loadData(response.results);
-       },200);
+       }, 200);
       // console.log(this.hotTableSettings);
-    }, (error)=>{
+    }, (error) => {
 
       this.notification.error('Error',  'Something went wrong here, let the developer know.', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
 

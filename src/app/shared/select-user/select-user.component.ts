@@ -42,7 +42,7 @@ export class SelectUserComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    console.log(this.selectedValue);
+    //console.log(this.selectedValue);
 
     this.showMachineItems();
     if (!this.restrictedAccessMode) {
@@ -79,7 +79,7 @@ export class SelectUserComponent implements OnInit, OnDestroy {
   showItems() {
 
     //check for all Options
-   // console.log(this.allItems);
+    //console.log(this.allItems);
     if(this.allOptions)
     {
      
@@ -122,7 +122,7 @@ export class SelectUserComponent implements OnInit, OnDestroy {
       this.items = this.user.subordinates.concat(this.user.machines);
       this.items.unshift(userObj);
       return this.activityFilter(this.items);
-      console.log(this.items);
+      //console.log(this.items);
       //return;
 
  
@@ -166,8 +166,8 @@ export class SelectUserComponent implements OnInit, OnDestroy {
 
   }
 
-  onChange(event) {this.change.emit(event);}
-  onRemove(event) { this.remove.emit(event); }
+  onChange(event) {this.change.emit(event); console.log(this.selectedValue); }
+  onRemove(event) { this.remove.emit(event);  }
   onClear(event) { this.clear.emit(event); }
 
   customSearchFn(term: string, item) {  // good for lists we store in their entirety

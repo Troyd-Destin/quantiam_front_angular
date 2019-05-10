@@ -14,6 +14,8 @@ export class SelectProjectComponent implements OnInit, OnDestroy {
   showActive = true;
   showInactive = false;
   virtualScroll = true;
+  
+  dropdownWidth = 400; // in pixels
 
 
   // Inputs
@@ -35,7 +37,7 @@ export class SelectProjectComponent implements OnInit, OnDestroy {
     this.projectService.list();
     this.list$ = this.projectService.list$.subscribe((r) => {
 
-      console.log(r);
+      //console.log(r);
           this.allItems = r;
           if (r[0]) { this.showItems(); }
 
@@ -44,7 +46,7 @@ export class SelectProjectComponent implements OnInit, OnDestroy {
   }
 
   showItems() {
-    console.log(this.showActive, this.showInactive);
+    //console.log(this.showActive, this.showInactive);
 
     if (this.showActive && !this.showInactive) {
 
@@ -75,7 +77,7 @@ export class SelectProjectComponent implements OnInit, OnDestroy {
   onClear(event) { this.change.emit(event); }
 
   customSearchFn(term: string, item) {  // good for lists we store in their entirety
-    console.log(term,item);
+  //  console.log(term,item);
     term = term.toLocaleLowerCase();
 
     item.id = String(item.id);
@@ -83,6 +85,19 @@ export class SelectProjectComponent implements OnInit, OnDestroy {
     || item.Description.toLocaleLowerCase().indexOf(term) > -1;
 
 }
+
+
+private onOpen() {
+
+  setTimeout((x) => {
+
+    const dropdown = document.querySelector('.total-padding');
+    dropdown.setAttribute('style', 'width:' + this.dropdownWidth + 'px !important;height: 1800px;'); // this changes the dropdown to be as wide as it's contents
+    // dropdown.setAttribute('style',''); //workaround
+
+  }, 100);
+
+  }
 
 
   ngOnDestroy() {

@@ -3,20 +3,23 @@
 <ng-select 
 	
 	[items]="items"
+	style="min-width: 200px;"
 	[(ngModel)]="selectedValue"
 	placeholder="Project"
 	[multiple]="multiple"
 
 	(change)="onChange($event)"
 	(clear)="onClear($event)"
+	
+	(open)="onOpen()"
 
 	groupBy="Category"
 	[selectableGroup]="selectableGroup"
 	[searchFn]="customSearchFn"
 
-		  
+	virtualScroll="true"
 >
-		<!-- [virtualScroll]="virtualScroll" -->
+		<!-- -->
 	
 			 <ng-template ng-header-tmp>
 				<div fxLayout="row" fxLayoutAlign="start center"  fxLayoutGap="10px">
