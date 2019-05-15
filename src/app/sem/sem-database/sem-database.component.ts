@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SemDatabaseService } from './sem-database.service';
-import { HttpClient,HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import {  environment} from '../../../environments/environment';
 
@@ -99,7 +99,7 @@ export class SemDatabaseComponent implements OnInit {
           filter: true,
           cellEditor: 'typeEditor',
           cellRenderer: (cell) => {
-            if(cell.hasOwnProperty('data') && cell.data.type){ return cell.data.type.type; }
+            if (cell.hasOwnProperty('data') && cell.data.type) { return cell.data.type.type; }
             return '';
           }
         },
@@ -109,10 +109,10 @@ export class SemDatabaseComponent implements OnInit {
           width: 80,
           filter: true,
           cellEditor: 'userEditor',
-          
+
           cellRenderer: (cell) => {
-          
-            if(cell.hasOwnProperty('data') && cell.data.operator){ return cell.data.operator.name_abbrev; }
+
+            if (cell.hasOwnProperty('data') && cell.data.operator) { return cell.data.operator.name_abbrev; }
             return '';
           }
         },
@@ -122,10 +122,10 @@ export class SemDatabaseComponent implements OnInit {
           width: 80,
           filter: true,
           cellEditor: 'userEditor',
-         
+
           cellRenderer: (cell) => {
            // console.log(cell);
-            if(cell.hasOwnProperty('data') && cell.data.requestor){ return cell.data.requestor.name_abbrev; }
+            if (cell.hasOwnProperty('data') && cell.data.requestor) { return cell.data.requestor.name_abbrev; }
             return '';
           }
         },
@@ -139,12 +139,11 @@ export class SemDatabaseComponent implements OnInit {
 
 
 
-             if(cell.hasOwnProperty('data') && cell.data.duration){
+             if (cell.hasOwnProperty('data') && cell.data.duration) {
 
                 let minutes = (cell.data.duration / 60);
 
-                if(minutes > 60)
-                {
+                if (minutes > 60) {
                     minutes = (minutes / 60);
                     return '~' + minutes.toFixed(2) + ' Hours';
                 }
@@ -180,7 +179,7 @@ export class SemDatabaseComponent implements OnInit {
         editable: true,
        };
 
-      
+
 
       this.gridOptions = {
         rowSelection: 'single',
@@ -193,7 +192,7 @@ export class SemDatabaseComponent implements OnInit {
         pagination: true,
         maxConcurrentDatasourceRequests: 1,
          paginationPageSize: 20,
-        //paginationAutoPageSize: true
+        // paginationAutoPageSize: true
       };
 
       this.frameworkComponents = {
@@ -215,13 +214,12 @@ export class SemDatabaseComponent implements OnInit {
     const datasource = this.fetchSemDatabase();
 
     params.api.setServerSideDatasource(datasource); // datasource needs to be a serverSide model
-    
+
   }
 
 
-  fetchSemDatabase ()
-  { 
-  
+  fetchSemDatabase () {
+
     return {
       getRows: (params2: any) => {
 
@@ -236,7 +234,7 @@ export class SemDatabaseComponent implements OnInit {
         .append('type', `${this.filteredSemrun}`)
         .append('page', `${page}`);
 
-          this.http.get(environment.apiUrl + '/instrument/sem/run', {params: requestParams}).subscribe((response:any) => {
+          this.http.get(environment.apiUrl + '/instrument/sem/run', {params: requestParams}).subscribe((response: any) => {
 
                params2.successCallback(response.data, response.total);
                this.totalRows = response.total;
@@ -245,84 +243,70 @@ export class SemDatabaseComponent implements OnInit {
           });
 
       }
-    }
+    };
 
   }
 
-  refreshDatabase()
-  {
+  refreshDatabase() {
 
     const datasource = this.fetchSemDatabase();
     this.gridApi.setServerSideDatasource(datasource);
   }
 
-  onTextFilterChanged()
-  {
+  onTextFilterChanged() {
       clearTimeout(this.timeoutTextFilter);
       this.timeoutTextFilter = setTimeout((x) => {
 
               this.refreshDatabase();
-      }, 500 )
+      }, 500 );
 
   }
 
-  onPageSizeChanged()
-  {
+  onPageSizeChanged() {
     this.gridOptions.paginationPageSize = this.gridOptions.cacheBlockSize;
     this.refreshDatabase();
-  
+
   }
 
-  filterProject(event)
-  {
-    if(event){  this.filteredProject = event.id;} 
+  filterProject(event) {
+    if (event) {  this.filteredProject = event.id; }
     else { this.filteredProject = ''; }
       this.refreshDatabase();
   }
-  clearFilterProject(event)
-  {
+  clearFilterProject(event) {
      this.filteredProject = '';
      this.refreshDatabase();
   }
 
 
-  filterOperator(event)
-  {
-    if(event){ this.filteredOperator = event.id; }
-    else { this.filteredOperator = ''; }
+  filterOperator(event) {
+    if (event) { this.filteredOperator = event.id; } else { this.filteredOperator = ''; }
 
       this.refreshDatabase();
   }
 
-  clearFilterOperator(event)
-  {
+  clearFilterOperator(event) {
      this.filteredOperator = '';
      this.refreshDatabase();
   }
 
 
-  filterRequestor(event)
-  {
-    if(event){ this.filteredRequestor = event.id; }
-    else { this.filteredRequestor = ''; }
+  filterRequestor(event) {
+    if (event) { this.filteredRequestor = event.id; } else { this.filteredRequestor = ''; }
     this.refreshDatabase();
   }
 
-  clearFilterRequestor(event)
-  {
+  clearFilterRequestor(event) {
      this.filteredRequestor = '';
      this.refreshDatabase();
   }
 
-  filterSemrun(event)
-  {
-    if(event){  this.filteredSemrun = event.type_id; }
-    else { this.filteredSemrun = ''; }
+  filterSemrun(event) {
+    if (event) {  this.filteredSemrun = event.type_id; } else { this.filteredSemrun = ''; }
     this.refreshDatabase();
   }
 
-  clearFilterSemrun(event)
-  {
+  clearFilterSemrun(event) {
      this.filteredSemrun = '';
      this.refreshDatabase();
   }
@@ -330,7 +314,7 @@ export class SemDatabaseComponent implements OnInit {
   onCellEditingStopped($event) {
 
     let value = $event.value;
-    if (value === "") { value = null; }
+    if (value === '') { value = null; }
     if (this.oldCellValue !== value ) {
       this.updateSemRun($event);
      }
@@ -341,22 +325,21 @@ export class SemDatabaseComponent implements OnInit {
         console.log($event);
         this.oldCellValue = $event.value;
         return;
-       
+
 
   }
 
-  updateSemRun(cell)
-  {
+  updateSemRun(cell) {
 
     console.log(cell);
 
     const params: any = {};
 
-    if(cell.column.colId === 'requestor') { params.requested_by = cell.data.requestor.id; }
-    if(cell.column.colId === 'operator') { params.operator_id = cell.data.operator.id; }
-    if(cell.column.colId === 'project_id') { params.project_id = cell.value; }
-    if(cell.column.colId === 'samplename') { params.samplename = cell.value; }
-    if(cell.column.colId === 'type') { params.type_id = cell.data.type.type_id; }
+    if (cell.column.colId === 'requestor') { params.requested_by = cell.data.requestor.id; }
+    if (cell.column.colId === 'operator') { params.operator_id = cell.data.operator.id; }
+    if (cell.column.colId === 'project_id') { params.project_id = cell.value; }
+    if (cell.column.colId === 'samplename') { params.samplename = cell.value; }
+    if (cell.column.colId === 'type') { params.type_id = cell.data.type.type_id; }
 
     console.log(params);
 
@@ -368,8 +351,8 @@ export class SemDatabaseComponent implements OnInit {
     },
     error => {
                 this.notification.error('Error', error.error.error, {showProgressBar: false, timeOut: 5000, clickToClose: true});
-               
-    }); 
+
+    });
 
 
   }

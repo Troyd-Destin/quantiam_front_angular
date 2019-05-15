@@ -50,6 +50,8 @@ export class SelectMaterialComponent implements OnInit {
   showActive = true;
   showInactive = false;
 
+  supressScrollEnd = false;
+
   constructor(public http: HttpClient, private _elementRef: ElementRef) {}
 
 
@@ -62,11 +64,10 @@ export class SelectMaterialComponent implements OnInit {
     // this._people3input.next(this.selectedPersons);
   }
 
-  onChange(event) { this.change.emit(event); }
+  onChange(event) {  this.change.emit(event); }
   onAdd(event) { }
   onRemove(event) { }
   onClear(event) {
-    console.log('test');
     this.itemsBuffer = this.allRetrievedItemsList;
     this.searchingTerm = false;
   }
@@ -78,8 +79,21 @@ export class SelectMaterialComponent implements OnInit {
         distinctUntilChanged(),
         switchMap((term) => {
 
+          this.supressScrollEnd = true;
           this.searchingTerm = true;
 
+          
+
+
+          if(!term) { 
+          
+            this.itemsBuffer = this.allRetrievedItemsList;
+            this.supressScrollEnd = false;
+            this.searchingTerm = false;
+
+            return [];
+          }
+         
           const params  = new HttpParams().set('like', term).set('limit', '' + this.bufferSize + '').set('active', '1').set('filterSpinner', 'true');
 
           return this.http.get<any>(environment.apiUrl + `${this.endpoint}`, { 'params': params } );
@@ -88,10 +102,11 @@ export class SelectMaterialComponent implements OnInit {
     )
     .subscribe((data) => {
 
+     
       this.allRetrievedItemsList = this.itemsBuffer;
       this.itemsBuffer = data;
 
-      if (!data[0]) {
+     if (!data[0]) {
         if (this.itemsBuffer.length < this.bufferSize) { this.itemsBuffer = this.allRetrievedItemsList; }
       }
 
@@ -106,7 +121,7 @@ export class SelectMaterialComponent implements OnInit {
 
 
     // use a service
-
+    console.log('loadItems');
     const params  = new HttpParams().set('page', this.page.toString());
 
     this.http.get<any>(environment.apiUrl + `${this.endpoint}`, { 'params': params } )
@@ -121,7 +136,7 @@ export class SelectMaterialComponent implements OnInit {
   }
 
   onScrollToEnd() {
-    if(!this.searchingTerm) {
+    if(!this.supressScrollEnd) {
     this.fetchMore();
     }
   }
@@ -144,7 +159,7 @@ export class SelectMaterialComponent implements OnInit {
   private fetchMore() {
 
       // use a service as well
-
+      console.log('fetchMore');
     this.loading = true;
     this.page = this.page + 1;
     // query the next page of results, and add them here

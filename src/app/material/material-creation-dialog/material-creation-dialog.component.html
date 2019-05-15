@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>MaterialCreation </h2>
 
-<mat-dialog-content >
+<mat-dialog-content style="min-height: 500px !important;" >
 	
 	<div *ngIf="materialCreationStep">
 	<form id="materialForm" fxLayout="column"  fxLayoutGap="10px" >
@@ -10,9 +10,9 @@
 				
 			
 					<p *ngIf="!selectedMaterial.id"> Select </p>
-					<app-select2-material
-						(selectedValue)="selectMaterial($event)"
-					></app-select2-material>
+					<app-select-material
+						(change)="selectMaterial($event)"
+					></app-select-material>
 					
 						<p *ngIf="!selectedMaterial.id"> or </p>
 				

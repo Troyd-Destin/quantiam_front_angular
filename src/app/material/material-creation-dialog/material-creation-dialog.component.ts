@@ -121,7 +121,7 @@ export class MaterialCreationDialogComponent implements OnInit, OnDestroy {
     selectMaterial(obj) {
 
 
-        this.selectedMaterial = obj.data[0];
+        this.selectedMaterial = obj;
         this.lot = {};
         this.selectedLot = {};
         this.materialStepComplete = false;
@@ -133,7 +133,7 @@ export class MaterialCreationDialogComponent implements OnInit, OnDestroy {
           this.materialStepComplete = false;
           this.material = {};
         }
-        console.log(this.selectedMaterial);
+      //  console.log(this.selectedMaterial);
 
       }
 

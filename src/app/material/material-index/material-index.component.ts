@@ -68,6 +68,8 @@ export class MaterialIndexComponent implements OnInit, OnDestroy {
           dialogConfig.disableClose = true;
           dialogConfig.autoFocus = true;
           dialogConfig.width = '1000px';
+          dialogConfig.height = '80vh';
+          dialogConfig.position = {'top': '50px'};
           this.dialog.open(MaterialCreationDialogComponent, dialogConfig);
       }
 }
