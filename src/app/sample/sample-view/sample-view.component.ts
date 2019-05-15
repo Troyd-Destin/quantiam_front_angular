@@ -19,36 +19,36 @@ import { SgxScaleWebsocketService } from '../../services/sgx-scale-websocket/sgx
 })
 export class SampleViewComponent implements OnInit {
 
-  private sample_: any;
-  private scanEvent_: any;
-  private sample: any = {};
-  private id:any;
-  private ws_:any;
-  private scanContainer: boolean = true;
-  private editContainer: boolean = false;
-  private containerDataSource;
+   sample_: any;
+   scanEvent_: any;
+   sample: any = {};
+   id:any;
+   ws_:any;
+   scanContainer: boolean = true;
+   editContainer: boolean = false;
+   containerDataSource;
   
   //Comments 
   
-  private commentContent:string;
-  private oldCommentContent:string;
+   commentContent:string;
+   oldCommentContent:string;
   
   //Measuring
   
-  private wasZero: boolean = false;
-  private measuredContainerIndex: any;
-  private activeContainer: any;
+   wasZero: boolean = false;
+   measuredContainerIndex: any;
+   activeContainer: any;
   
   //Scale Integration
   
-  private sgxScale: any;
-  private currentScaleValue: number;
-  private lastScaleResponse:any;
-  private scaleConnected: boolean = false;
-  private websocketScannerEventSubscription_:any;
+   sgxScale: any;
+   currentScaleValue: number;
+   lastScaleResponse:any;
+   scaleConnected: boolean = false;
+   websocketScannerEventSubscription_:any;
   
   
-  private displayedColumns = ['container','material','measured','measured_at', 'actions',];
+   displayedColumns = ['container','material','measured','measured_at', 'actions',];
 //
   //'measured_required','measured_tolerance','measured_by','measured_at']
   

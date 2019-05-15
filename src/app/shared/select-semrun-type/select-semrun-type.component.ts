@@ -47,8 +47,8 @@ export class SelectSemrunTypeComponent implements OnInit {
 
   onChange(event) { this.change.emit(event); }
   onClear(event) { this.clear.emit(event); }
-  onAdd() {}
-  onRemove() {}
+  onAdd(event) {}
+  onRemove(event) {}
 
   customSearchFn(term: string, item) {  // good for lists we store in their entirety
    console.log(term,item);
@@ -60,7 +60,7 @@ export class SelectSemrunTypeComponent implements OnInit {
 
 }
 
-private onOpen() {
+private onOpen(event) {
 
   setTimeout((x) => {
 

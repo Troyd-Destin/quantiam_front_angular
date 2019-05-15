@@ -15,24 +15,24 @@ import { catchError, map, tap, delay, shareReplay, publishReplay, refCount } fro
 })
 export class XpsViewComponent implements OnInit {
 
-  private xpsRun$: any; 
-  private xpsRun: Object;
-  private rowData: any;
-  private chart: any;
-  private edit: boolean = false;
-  private id: string;
-  private gridApi: any;
-  private gridColumnApi: any;
+   xpsRun$: any; 
+   xpsRun: Object;
+   rowData: any;
+   chart: any;
+   edit: boolean = false;
+   id: string;
+   gridApi: any;
+   gridColumnApi: any;
   
-  private sampleTypeList = [
+   sampleTypeList = [
 	  
       {id: 'Coupon'},
       {id: 'Powder'},
 
 	  ];
 
-   private scanTypeList = ['Wide', 'Narrow', 'Mulitplex'];
-   private anodTypeList = ['Mg', 'Al', 'Focussed', 'Diffuse'];
+    scanTypeList = ['Wide', 'Narrow', 'Mulitplex'];
+    anodTypeList = ['Mg', 'Al', 'Focussed', 'Diffuse'];
 
   constructor(
   private fb: FormBuilder,

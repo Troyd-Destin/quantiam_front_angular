@@ -10,30 +10,30 @@ import {  environment} from '../../../environments/environment';
 })
 export class XrdDatabaseComponent implements OnInit {
 
-  private gridApi;
-  private gridColumnApi;
+   gridApi;
+   gridColumnApi;
 
-  private pageSizes = [20, 25, 50, 100];
+   pageSizes = [20, 25, 50, 100];
 
 
-  private columnDefs;
-  private defaultColDef;
-  private rowData: [{id:100,semrun_id:'thing'}];
+   columnDefs;
+   defaultColDef;
+   rowData: [{id:100,semrun_id:'thing'}];
 
-  private gridOptions;
-  private rowModelType;
-  private rowSelection;
-  private maxBlocksInCache;
-  private cacheBlockSize;
+   gridOptions;
+   rowModelType;
+   rowSelection;
+   maxBlocksInCache;
+   cacheBlockSize;
 
-  private filteredOperator = '';
-  private filteredRequestor = '';
-  private filteredSampleType = '';
-  private filteredProject = '';
-  private filteredTextFilterName = '';
-  private timeoutTextFilter;
+   filteredOperator = '';
+   filteredRequestor = '';
+   filteredSampleType = '';
+   filteredProject = '';
+   filteredTextFilterName = '';
+   timeoutTextFilter;
 
-  private totalRows;
+   totalRows;
 
   constructor(private http: HttpClient) { 
 

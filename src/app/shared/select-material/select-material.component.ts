@@ -63,9 +63,9 @@ export class SelectMaterialComponent implements OnInit {
   }
 
   onChange(event) { this.change.emit(event); }
-  onAdd() { }
-  onRemove() { }
-  onClear() {
+  onAdd(event) { }
+  onRemove(event) { }
+  onClear(event) {
     console.log('test');
     this.itemsBuffer = this.allRetrievedItemsList;
     this.searchingTerm = false;
@@ -126,7 +126,7 @@ export class SelectMaterialComponent implements OnInit {
     }
   }
 
-  onScroll({ end }) {
+  onScroll() {
    
   }
 

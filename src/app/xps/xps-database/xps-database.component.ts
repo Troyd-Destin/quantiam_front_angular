@@ -10,11 +10,11 @@ import {  Router} from '@angular/router';
 export class XpsDatabaseComponent implements OnInit {
 
 
-  private gridApi;
-  private gridColumnApi;
-  private rowData: any[];
-  private paginationPageSize = 25;
-  private _xrdRuns: any;
+   gridApi;
+   gridColumnApi;
+   rowData: any[];
+   paginationPageSize = 25;
+   _xrdRuns: any;
 
   constructor(private http: HttpClient, private router: Router) {}
 

@@ -18,36 +18,36 @@ import { AgGridSemTypeComponent } from './ag-grid-sem-type/ag-grid-sem-type.comp
 })
 export class SemDatabaseComponent implements OnInit {
 
-  private gridApi;
-  private gridColumnApi;
+   gridApi;
+   gridColumnApi;
 
-  private pageSizes = [20, 25, 50, 100, 200];
+   pageSizes = [20, 25, 50, 100, 200];
 
 
-  private columnDefs;
-  private defaultColDef;
-  private rowData: [];
+   columnDefs;
+   defaultColDef;
+   rowData: [];
 
-  private editable = false;
+   editable = false;
 
-  private gridOptions;
-  private rowModelType;
-  private rowSelection;
-  private maxBlocksInCache;
-  private cacheBlockSize;
-  private oldCellValue;
+   gridOptions;
+   rowModelType;
+   rowSelection;
+   maxBlocksInCache;
+   cacheBlockSize;
+   oldCellValue;
 
-  private filteredOperator = '';
-  private filteredRequestor = '';
-  private filteredSampleType = '';
-  private filteredProject = '';
-  private filteredTextFilterName = '';
-  private filteredSemrun = '';
-  private timeoutTextFilter;
+   filteredOperator = '';
+   filteredRequestor = '';
+   filteredSampleType = '';
+   filteredProject = '';
+   filteredTextFilterName = '';
+   filteredSemrun = '';
+   timeoutTextFilter;
 
-  private frameworkComponents;
+   frameworkComponents;
 
-  private totalRows;
+   totalRows;
 
 
   constructor(
