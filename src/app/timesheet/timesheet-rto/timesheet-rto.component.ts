@@ -86,7 +86,7 @@ export class TimesheetRtoComponent implements OnInit {
 
             cell.data.time_requests.forEach(element => {
 
-              console.log(element);
+//              console.log(element);
 
               sum[element.type] = sum[element.type] + element.hours;
 
@@ -264,6 +264,18 @@ export class TimesheetRtoComponent implements OnInit {
   {
      // console.log(event);
       this.router.navigate(['/timesheet/rto/' + event.data.requestID]);
+  }
+
+  createRTO()
+  {
+      //test user for create RTO permissions
+
+      //popup if they can create RTOs for others
+
+
+      //create RTO for themself and redirect if they can't
+
+
   }
 
 }

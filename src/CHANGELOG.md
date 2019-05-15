@@ -11,8 +11,12 @@
 - Added a container expiry field
 - New info blurb about where Safety Data Sheets (SDS) are stored on the Q drive
 
-##RTO
+## RTO
 - User selection dropdown now respects permissions
+
+## RTO View
+- Added timerequest table, can add or remvoe requests
+  
 
 ## SEM
 - Data storage location now displayed

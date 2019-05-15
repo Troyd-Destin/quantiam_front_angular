@@ -8,7 +8,6 @@ import {  ContainerAggridService } from '../services/container-aggrid.service';
 import { LocationService } from '../../services/location/location.service';
 import {  environment} from '../../../environments/environment';
 
-import { AggridActiveParentComponent } from '../aggrid-active-parent/aggrid-active-parent.component';
 
 @Component({
   selector: 'app-material-container-database',
@@ -215,7 +214,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
     this.context = { componentParent: this };
     this.frameworkComponents = {
-      'aggridActiveParentComponent': AggridActiveParentComponent,
+     // 'aggridActiveParentComponent': AggridActiveParentComponent,
     };
 
 

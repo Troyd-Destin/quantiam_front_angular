@@ -27,9 +27,10 @@
     
       </div>
     
-      <div fxLayout="row" fxLayoutAlign="end start"  fxLayoutGap="20px" fxFlexOffset=28> 
+      <div fxLayout="row" fxLayoutAlign="end start"  fxLayoutGap="20px" fxFlexOffset=23> 
     
-          <button mat-raised-button class="mat-elevation-z1" (click)="createRTO()"> Create </button>
+          <button mat-raised-button (click)="refreshTable()" > Refresh </button>
+          <button mat-raised-button color="primary" (click)="createRTO()" matTooltip="Creates a new RTO"> Create </button>
 
           <!-- <mat-form-field style="max-width: 100px;">
               <mat-select  placeholder="Page Size"  [(ngModel)]="gridOptions.paginationPageSize" (selectionChange)="onPageSizeChanged()">

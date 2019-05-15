@@ -10,7 +10,6 @@ import { SampleRoutingModule } from './sample-routing.module';
 import { SampleIndexComponent } from './sample-index/sample-index.component';
 
 import { SampleListComponent } from './sample-list/sample-list.component';
-import { SampleComponent } from './sample/sample.component';
 import { SampleFormComponent } from './sample-form/sample-form.component';
 import { SampleDatabaseComponent } from './sample-database/sample-database.component';
 import { SgxScaleAuthComponent } from './sgx-scale-auth/sgx-scale-auth.component';
@@ -29,6 +28,6 @@ import { SampleCreationDialogComponent } from './sample-creation-dialog/sample-c
 
   ],
   entryComponents: [SampleCreationDialogComponent],
-  declarations: [SampleIndexComponent, SampleListComponent, SampleComponent, SampleFormComponent, SampleDatabaseComponent, SgxScaleAuthComponent, SampleViewComponent, SampleCreationDialogComponent]
+  declarations: [SampleIndexComponent, SampleListComponent,  SampleFormComponent, SampleDatabaseComponent, SgxScaleAuthComponent, SampleViewComponent, SampleCreationDialogComponent]
 })
 export class SampleModule { }
