@@ -20,12 +20,12 @@ export class TimesheetCalendarComponent implements OnInit {
   subordinatesOnly = false;
   selectedUser;
   minimumHours = 0;
-  
+
   constructor(private router: Router, private http: HttpClient, private userService: UserService) { }
 
   ngOnInit() {
 
-    
+
       setTimeout((x) => {
 
         console.log('test');
@@ -42,7 +42,7 @@ export class TimesheetCalendarComponent implements OnInit {
         height: 700,
         eventClick: (calEvent, jsEvent, view) => {
 
-          
+
           this.router.navigate(['/timesheet/rto/' + calEvent.rto_id]);
 
         },
@@ -59,14 +59,13 @@ export class TimesheetCalendarComponent implements OnInit {
 
   }
 
-  updateCalendar = function ()
-	{	
+  updateCalendar = function () {
     console.log(this.selectedUser);
     const eventSource = this.eventSourceQuantiam();
     console.log('updated');
 		 $('#calendar').fullCalendar( 'removeEventSource', eventSource.url );
 		 $('#calendar').fullCalendar( 'addEventSource',  this.eventSourceQuantiam());
-	}
+	};
 
   eventSourceQuantiam() {
 
@@ -74,13 +73,13 @@ export class TimesheetCalendarComponent implements OnInit {
       url: environment.apiUrl + '/rtocalendar',
       headers: {'Authorization': 'Bearer ' + localStorage.getItem('token'), },
      data: {
-                 
+
                   userID: this.selectedUser,
                   subordinates: this.subordinatesOnly,
                  'minimumHours': this.minimumHours
               },
      color: '#38536f',
-     //color: '#5c7a9a;',
+     // color: '#5c7a9a;',
     };
 
 
@@ -88,13 +87,11 @@ export class TimesheetCalendarComponent implements OnInit {
 
   }
 
-  updateSelectedUser(event)
-  {
-    if(!event) { this.selectedUser = null; }
-    else { this.selectedUser = event.employeeid; }
-    
+  updateSelectedUser(event) {
+    if (!event) { this.selectedUser = null; } else { this.selectedUser = event.employeeid; }
+
     this.updateCalendar();
-    //console.log(event);
+    // console.log(event);
   }
 
 

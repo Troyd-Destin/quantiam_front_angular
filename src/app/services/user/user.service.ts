@@ -8,7 +8,7 @@ import { catchError, map, tap, delay, shareReplay, publishReplay, refCount } fro
 import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
 import { NotificationsService } from 'angular2-notifications';
  //
-interface authedUser$ {}
+
 
 @Injectable({providedIn: 'root', })
 export class UserService  {
@@ -77,7 +77,7 @@ export class UserService  {
 
   deletePermission(id) {
 
-   return this.http.delete<authedUser$>(environment.apiUrl + `${this.endpoint}/permission/${id}`).pipe(
+   return this.http.delete(environment.apiUrl + `${this.endpoint}/permission/${id}`).pipe(
 			tap( r => {
 
 				}),
@@ -95,7 +95,7 @@ export class UserService  {
   }
 
   deleteRfid(id) {
-	   return this.http.delete<authedUser$>(environment.apiUrl + `${this.endpoint}/rfid/${id}`).pipe(
+	   return this.http.delete(environment.apiUrl + `${this.endpoint}/rfid/${id}`).pipe(
 			tap( r => {
 
 				}),
@@ -164,9 +164,9 @@ export class UserService  {
      try {
 
 
-      if(!id){ id = token.employeeID; }
- 
-    return this.http.get<authedUser$>(environment.apiUrl + `${this.endpoint}/${id}`).pipe(
+      if (!id) { id = token.employeeID; }
+
+    return this.http.get(environment.apiUrl + `${this.endpoint}/${id}`).pipe(
       //  delay(1000), // simulate slow network
         tap(
           x => {
@@ -192,34 +192,31 @@ export class UserService  {
 
      // console.log(this.authedUser$);
       let checked = false;
-      let Exception = {};
+      const Exception = {};
       const user = this.fetchAuthUserObj();
 
-      if(Array.isArray(permission_id))
-      {
-       
-        try{
+      if (Array.isArray(permission_id)) {
+
+        try {
         permission_id.forEach((p, index) => {
 
-          let result = user.permissions.filter(obj => {
+          const result = user.permissions.filter(obj => {
             return obj.permission_id === p;
-          })
+          });
 
          // console.log(result);
 
-          if(result[0]){
+          if (result[0]) {
             checked = true;
              throw Exception;
             }
 
-        })
-      } catch(e){  }
+        });
+      } catch (e) {  }
 
-        if(checked){ return true; }
+        if (checked) { return true; }
 
-      }
-      else
-      {      // console.log(user.permissions);
+      } else {      // console.log(user.permissions);
 
       for (let i = 0; i < user.permissions.length; i++) {
       // console.log(user.permissions[i]);
@@ -231,34 +228,30 @@ export class UserService  {
 
   }
 
-  public isActive()
-  {
+  public isActive() {
     const user = this.fetchAuthUserObj();
-    if( user.leavedate) { return false; }
+    if ( user.leavedate) { return false; }
     return true;
   }
 
-  public hasSubordinates()
-  {
+  public hasSubordinates() {
     const user = this.fetchAuthUserObj();
-    if( user.subordinates[0]) { return true; }
+    if ( user.subordinates[0]) { return true; }
     return false;
   }
 
-  public hasMachines()
-  {
+  public hasMachines() {
     const user = this.fetchAuthUserObj();
-    if( user.machines[0]) { return true; }
+    if ( user.machines[0]) { return true; }
     return false;
   }
 
-  public hasSupervsors()
-  {
+  public hasSupervsors() {
 
     const user = this.fetchAuthUserObj();
-    if( user.supervisors[0]) { return true; }
+    if ( user.supervisors[0]) { return true; }
     return false;
   }
-  
+
 
 }

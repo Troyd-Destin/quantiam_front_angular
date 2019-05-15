@@ -46,18 +46,18 @@ const routes: Routes = [{
       data: { key: 'timesheet-rto-database'},
       component: TimesheetRtoComponent,
     },
-   
+
     {
       path: 'rto/:id',
       data: { key: 'timesheet-rto-view'},
       component: TimesheetRtoViewComponent,
     },
-   
+
     {
       path: 'settings',
       data: { key: 'timesheet-settings'},
       component: TimesheetSettingsComponent,
-      children:[
+      children: [
         {
           path: 'project',
           data: { key: 'timesheet-project'},
@@ -77,32 +77,32 @@ const routes: Routes = [{
 
       ]
     },
-   
+
     {
       path: 'report',
-      //data: { key: 'timesheet-report'},
+      // data: { key: 'timesheet-report'},
       component: TimesheetReportComponent,
-      children:[
+      children: [
         {
-          path:'user-hours',
+          path: 'user-hours',
           data: { key: 'timesheet-report-user-hours'},
           component: UserHoursComponent
 
         },
         {
-          path:'project-user-hours',
+          path: 'project-user-hours',
           data: { key: 'timesheet-report-project-user-hours'},
           component: ProjectUserHoursComponent
 
         },
         {
-          path:'user-rto-bank-status',
+          path: 'user-rto-bank-status',
           data: { key: 'timesheet-report-user-rto-bank-status'},
           component: UserRTOBankStatusComponent
 
         },
         {
-          path:'user-absences-summary',
+          path: 'user-absences-summary',
           data: { key: 'timesheet-report-user-absences-summary'},
           component: UserAbsenceSummaryComponent
 

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TimesheetService } from './timesheetData.service';
+import { TimesheetService } from './timesheet.service';
 
 describe('TimesheetService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

@@ -104,10 +104,10 @@ export class ProjectUserHoursComponent implements OnInit {
             'employees': this.employees,
             'startDate': this.startDate,
             'endDate': this.endDate,
-            
+
 
         };
-        if(this.selectedUserList && this.selectedUserList.length > 0){
+        if (this.selectedUserList && this.selectedUserList.length > 0) {
 
             params.users = [];
             this.selectedUserList.forEach(element => {
@@ -117,7 +117,7 @@ export class ProjectUserHoursComponent implements OnInit {
             params.users = JSON.stringify(params.users);
         }
 
-        if(this.selectedProjectList && this.selectedProjectList.length > 0){
+        if (this.selectedProjectList && this.selectedProjectList.length > 0) {
 
           params.projects = [];
           this.selectedProjectList.forEach(element => {
@@ -126,7 +126,7 @@ export class ProjectUserHoursComponent implements OnInit {
           });
           params.projects = JSON.stringify(params.projects);
       }
-        
+
         console.log(params);
         this.http.get(environment.apiUrl + '/timesheet/report/UserProjectUsage', { params: params }).subscribe((response: any) => {
 

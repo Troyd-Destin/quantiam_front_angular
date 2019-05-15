@@ -30,7 +30,7 @@ export class UserRTOBankStatusComponent implements OnInit {
       // colHeaders: true,
       colHeaders: true,
       width: 480,
-      
+
   };
 
 
@@ -56,21 +56,20 @@ export class UserRTOBankStatusComponent implements OnInit {
         this.fetchData();
   }
 
-  updateDate()
-  {
-    this.date = new Date(this.selectedYear+'/12/31');
+  updateDate() {
+    this.date = new Date(this.selectedYear + '/12/31');
     this.fetchData();
   }
 
   fetchData() {
 
 
-      let params:any = {
+      const params: any = {
         'date': moment(this.date).format('YYYY-MM-DD'),
         'active': this.active
-      }
+      };
 
-      ///timesheet/report/rtobank
+      /// timesheet/report/rtobank
 
       this.http.get(environment.apiUrl + '/timesheet/report/rtobank', { 'params': params }).subscribe((response: any) => {
 

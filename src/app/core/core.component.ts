@@ -58,7 +58,7 @@ export class CoreComponent implements OnInit, OnDestroy {
   faMicroscope = faMicroscope;
   faFontAwesome = faFontAwesome;
   faGithub = faGithub;
-  faAngular= faAngular;
+  faAngular = faAngular;
   faClock = faClock;
   faCalendar = faCalendar;
   faCoffee = faCoffee;
@@ -82,7 +82,7 @@ export class CoreComponent implements OnInit, OnDestroy {
   timesheetUser = null;
   timesheetPayperiod = null;
   hasSwitchedUser = false;
- 
+
 
   currentYear = (new Date()).getFullYear();
   currentTimesheet = {userId: '', year: '', payperiod: ''};
@@ -135,7 +135,7 @@ export class CoreComponent implements OnInit, OnDestroy {
       this.userService.getAuthedUser().subscribe(res => {
 
 
-	
+
               this.user = res;
               this.userLoaded = true;
 
@@ -149,11 +149,11 @@ export class CoreComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    
+    // Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    // Add 'implements OnInit' to the class.
+
      this.loading = false;
-      this.timesheetService.currentTimesheet.subscribe(obj =>{
+      this.timesheetService.currentTimesheet.subscribe(obj => {
           this.currentTimesheet.userId = obj.userId;
           this.currentTimesheet.year = obj.year;
           this.currentTimesheet.payperiod = obj.payperiod;
@@ -218,7 +218,7 @@ export class CoreComponent implements OnInit, OnDestroy {
         this._location.forward();
     }
 
-    
+
 
   connectScannerService() {
     if (this.initializeScanner) {
@@ -248,10 +248,9 @@ export class CoreComponent implements OnInit, OnDestroy {
   }
 
 
-  changeUser(event)
-  {
+  changeUser(event) {
     console.log(event);
-    this.userService.getAuthedUser(event.id).subscribe(r=>{
+    this.userService.getAuthedUser(event.id).subscribe(r => {
 
 
      this.userService.fetchAuthUserObj();
@@ -260,11 +259,11 @@ export class CoreComponent implements OnInit, OnDestroy {
      this.hasSwitchedUser = true;
 
      this.http.get<any>(environment.apiUrl + `/user/token/${event.id}?filterSpinner`)
-		 .subscribe(r=>{
+		 .subscribe(r2 => {
 
-      console.log(r);//
+      console.log(r2); //
 
-     })
+     });
 
      this.adminCheck();
 

@@ -18,7 +18,7 @@ export class TimesheetIndexComponent implements OnInit {
 
   ngOnInit() {
 
-    this.timesheetService.currentTimesheet.subscribe(obj =>{
+    this.timesheetService.currentTimesheet.subscribe(obj => {
           this.currentTimesheet.userId = obj.userId;
           this.currentTimesheet.year = obj.year;
           this.currentTimesheet.payperiod = obj.payperiod;
@@ -26,8 +26,6 @@ export class TimesheetIndexComponent implements OnInit {
 
     // figure out current payperoid year
 
-
-     
   }
 
 

@@ -31,11 +31,11 @@ export class UserAbsenceSummaryComponent implements OnInit {
       // colHeaders: true,
       colHeaders: true,
       width: 300,
-      
+
   };
 
 
-  
+
   constructor(private http: HttpClient, private notification: NotificationsService) {}
 
   ngOnInit() {
@@ -54,31 +54,29 @@ export class UserAbsenceSummaryComponent implements OnInit {
 
   updateSelectedUserList(event) {
     this.selectedUser = event;
-    if(this.selectedUser && this.selectedYear){ this.fetchReport(); }
-  
+    if (this.selectedUser && this.selectedYear) { this.fetchReport(); }
+
 }
 
-updateYear()
-{ 
-  if(this.selectedUser && this.selectedYear){ this.fetchReport(); }
-  
+updateYear() {
+  if (this.selectedUser && this.selectedYear) { this.fetchReport(); }
+
 }
 
-  fetchReport()
-  {
-      
-  this.http.get(environment.apiUrl + '/timesheet/report/employee-absence-hours/'+this.selectedUser.id+'/year/'+this.selectedYear).subscribe((response: any) => {
+  fetchReport() {
+
+  this.http.get(environment.apiUrl + '/timesheet/report/employee-absence-hours/' + this.selectedUser.id + '/year/' + this.selectedYear).subscribe((response: any) => {
 
     console.log(response);
     this.fetchedReport = response;
     this.fetchedReportLoaded = true;
     this.totalHours = 0.00;
     response.forEach(element => {
-      console.log(element,parseFloat(element.pto), this.totalHours);
-      if(element.cto) { this.totalHours =  this.totalHours + parseFloat(element.cto); }
-        if(element.vacation) { this.totalHours =  this.totalHours + parseFloat(element.vacation); }
-          if(element.pto) { this.totalHours =  this.totalHours + parseFloat(element.pto); }
-            if(element.unpaid) { this.totalHours =  this.totalHours + parseFloat(element.unpaid); } 
+      console.log(element, parseFloat(element.pto), this.totalHours);
+      if (element.cto) { this.totalHours =  this.totalHours + parseFloat(element.cto); }
+        if (element.vacation) { this.totalHours =  this.totalHours + parseFloat(element.vacation); }
+          if (element.pto) { this.totalHours =  this.totalHours + parseFloat(element.pto); }
+            if (element.unpaid) { this.totalHours =  this.totalHours + parseFloat(element.unpaid); }
     });
 
     setTimeout((x) => {

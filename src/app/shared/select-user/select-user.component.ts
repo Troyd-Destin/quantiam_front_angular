@@ -33,7 +33,7 @@ export class SelectUserComponent implements OnInit, OnDestroy {
   @Input() allOptions = false;
 
   // Outputs
-  @Output() change = new EventEmitter<any>();  
+  @Output() change = new EventEmitter<any>();
   @Output() remove = new EventEmitter<any>();
   @Output() clear = new EventEmitter<any>();
 
@@ -42,7 +42,7 @@ export class SelectUserComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    //console.log(this.selectedValue);
+    // console.log(this.selectedValue);
 
     this.showMachineItems();
     if (!this.restrictedAccessMode) {
@@ -50,19 +50,19 @@ export class SelectUserComponent implements OnInit, OnDestroy {
     this.selectUserService.list(); // Make sure the service is initialized.
     this.list$ = this.selectUserService.list$.subscribe((r) => {
          this.allItems = r;
-         
+
           if (r[0]) { this.showItems(); }
       });
     }
 
-    
+
 
 
   }
 
   showMachineItems() {
 
-    
+
     if (!this.restrictedAccessMode) {
 
       this.selectUserService.listMachines(); // Make sure the service is initialized.
@@ -78,30 +78,28 @@ export class SelectUserComponent implements OnInit, OnDestroy {
 
   showItems() {
 
-    //check for all Options
-    //console.log(this.allItems);
-    if(this.allOptions)
-    {
-     
+    // check for all Options
+    // console.log(this.allItems);
+    if (this.allOptions) {
+
 
         const everything = this.allItems;
-     
+
        this.machineItems.forEach(element => {
               everything.push(element);
           });
-    
-   
+
+
       return this.activityFilter(everything);
     }
 
-     // check for  subordinate and supervisors 
+     // check for  subordinate and supervisors
 
-    if(this.showSubordinatesOnly)
-    {
+    if (this.showSubordinatesOnly) {
       this.user = this.userService.fetchAuthUserObj();
-      const userObj = this.allItems.find((x)=>{
+      const userObj = this.allItems.find((x) => {
 
-       return x.id == this.user.id;
+       return x.id === this.user.id;
 
       });
      this.items = this.user.subordinates;
@@ -109,36 +107,34 @@ export class SelectUserComponent implements OnInit, OnDestroy {
 
     }
 
-     if(this.authorizedSubordinatesOrMachines)
-     {
+     if (this.authorizedSubordinatesOrMachines) {
        this.user = this.userService.fetchAuthUserObj();
-       const userObj = this.allItems.find((x)=>{
+       const userObj = this.allItems.find((x) => {
 
-        return x.id == this.user.id;
+        return x.id === this.user.id;
 
        });
        /// loop through all items and filter those who are on the authedUser's subodrinates or machines arrays
-   
+
       this.items = this.user.subordinates.concat(this.user.machines);
       this.items.unshift(userObj);
       return this.activityFilter(this.items);
-      //console.log(this.items);
-      //return;
+      // console.log(this.items);
+      // return;
 
- 
+
      }
 
 
 
      return this.activityFilter(this.allItems);
-  
+
 
 
 
   }
 
-  activityFilter(items)
-  {
+  activityFilter(items) {
 
    // console.log(this.showActive, this.showInactive);
 

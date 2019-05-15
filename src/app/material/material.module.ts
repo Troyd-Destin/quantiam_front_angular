@@ -37,7 +37,7 @@ import { MaterialContainerDatabaseComponent } from './material-container-databas
     Select2Module,
   ],
   declarations: [MaterialCreationDialogComponent, MaterialIndexComponent, MaterialDatabaseComponent, MaterialViewComponent,
-	  MaterialComponent, MaterialContainerViewComponent, MaterialContainerDatabaseComponent,],
+	  MaterialComponent, MaterialContainerViewComponent, MaterialContainerDatabaseComponent, ],
   providers: [MaterialService, MaterialLotContainerService, MaterialDatatableService, MaterialLotContainerDatatableService],
   schemas: [NO_ERRORS_SCHEMA]
 })

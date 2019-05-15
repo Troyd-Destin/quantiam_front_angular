@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient,HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import {environment} from '../../../environments/environment';
 import * as moment from 'moment';
@@ -61,10 +61,10 @@ export class TimesheetRtoComponent implements OnInit {
         field: 'owner.name',
         width: 90,
         filter: false,
-        cellRenderer: (cell) => { 
-          try{
-            return '<b>'+cell.data.owner.name+'</b>'; 
-          } catch(e) {  return ''; }
+        cellRenderer: (cell) => {
+          try {
+            return '<b>' + cell.data.owner.name + '</b>';
+          } catch (e) {  return ''; }
           }
       },
       {
@@ -72,9 +72,9 @@ export class TimesheetRtoComponent implements OnInit {
         field: 'time_requests',
         width: 150,
         filter: false,
-        cellRenderer: (cell) => { 
+        cellRenderer: (cell) => {
 
-          let sum = {
+          const sum = {
 
             pto: 0,
             cto: 0,
@@ -82,7 +82,7 @@ export class TimesheetRtoComponent implements OnInit {
             unpaid: 0,
           };
 
-          if (cell.data.time_requests[0]){
+          if (cell.data.time_requests[0]) {
 
             cell.data.time_requests.forEach(element => {
 
@@ -90,16 +90,16 @@ export class TimesheetRtoComponent implements OnInit {
 
               sum[element.type] = sum[element.type] + element.hours;
 
-            })
+            });
 
           }
 
           return '<table class="rtoDatabaseTable"><thead ><tr><th> PTO </th><th> Vacation</th> <th> Unpaid </th> <th> CTO </th> </tr> </thead>\
           <tbody><tr>\
-          <td>'+ sum.pto +'</td>\
-          <td>'+ sum.vacation +'</td>\
-          <td>'+ sum.unpaid +'</td>\
-          <td>'+ sum.cto +'</td>\
+          <td>' + sum.pto + '</td>\
+          <td>' + sum.vacation + '</td>\
+          <td>' + sum.unpaid + '</td>\
+          <td>' + sum.cto + '</td>\
           </tr></tbody>\
           </table>';
 
@@ -110,22 +110,22 @@ export class TimesheetRtoComponent implements OnInit {
         field: 'time_requests',
         width: 280,
         filter: true,
-        cellRenderer: (cell) => { 
+        cellRenderer: (cell) => {
 
-          let str = ''; 
-          if (cell.data.time_requests[0]){
+          let str = '';
+          if (cell.data.time_requests[0]) {
 
             cell.data.time_requests.forEach(element => {
-             
+
               str = str + moment(element.date).format('dd') + '<b>' + moment(element.date).format(' MMM DD') + '</b>, ';
             });
 
             str = str.substring(0, str.length - 1);
-            return '<span class="padding">'+str+'</span>';
+            return '<span class="padding">' + str + '</span>';
 
           }
 
-          return ''; 
+          return '';
         }
       },
       {
@@ -133,12 +133,12 @@ export class TimesheetRtoComponent implements OnInit {
         field: 'status',
         width: 70,
         filter: false,
-      
-        cellRenderer: (cell) => { 
 
-            if(cell.data.status === 'pending'){  return '<button class="btn btn-warning btn-sm"> Pending </button>' }
-            if(cell.data.status === 'approved'){  return '<button class="btn btn-success btn-sm"> Approved </button>' }
-            if(cell.data.status === 'denied'){  return '<button class="btn btn-danger btn-sm"> Denied </button>' }
+        cellRenderer: (cell) => {
+
+            if (cell.data.status === 'pending') {  return '<button class="btn btn-warning btn-sm"> Pending </button>'; }
+            if (cell.data.status === 'approved') {  return '<button class="btn btn-success btn-sm"> Approved </button>'; }
+            if (cell.data.status === 'denied') {  return '<button class="btn btn-danger btn-sm"> Denied </button>'; }
 
         }
       },
@@ -150,7 +150,7 @@ export class TimesheetRtoComponent implements OnInit {
       editable: false,
      };
 
-    
+
 
     this.gridOptions = {
       rowSelection: 'single',
@@ -163,7 +163,7 @@ export class TimesheetRtoComponent implements OnInit {
        rowStyle: {
          cursor: 'pointer',
        }
-       //rowHeight: 25
+       // rowHeight: 25
     };
 
     this.frameworkComponents = {
@@ -183,15 +183,14 @@ export class TimesheetRtoComponent implements OnInit {
       console.log(params.api);
 
     const datasource = this.fetchDatabase();
-    
+
     params.api.setServerSideDatasource(datasource); // datasource needs to be a serverSide model
-    
+
   }
 
 
-  fetchDatabase ()
-  { 
-  
+  fetchDatabase () {
+
     return {
       getRows: (params2: any) => {
 
@@ -203,7 +202,7 @@ export class TimesheetRtoComponent implements OnInit {
         .append('status', `${this.filteredStatus}`)
         .append('page', `${page}`);
 
-          this.http.get(environment.apiUrl + '/rto', {params: requestParams}).subscribe((response:any) => {
+          this.http.get(environment.apiUrl + '/rto', {params: requestParams}).subscribe((response: any) => {
 
                params2.successCallback(response.data, response.total);
                this.totalRows = response.total;
@@ -212,68 +211,60 @@ export class TimesheetRtoComponent implements OnInit {
           });
 
       }
-    }
+    };
 
   }
 
-  refreshDatabase()
-  {
+  refreshDatabase() {
 
     const datasource = this.fetchDatabase();
     this.gridApi.setServerSideDatasource(datasource);
   }
 
-  onTextFilterChanged()
-  {
+  onTextFilterChanged() {
       clearTimeout(this.timeoutTextFilter);
       this.timeoutTextFilter = setTimeout((x) => {
 
               this.refreshDatabase();
-      }, 500 )
+      }, 500 );
 
   }
 
-  onPageSizeChanged()
-  {
+  onPageSizeChanged() {
     this.gridOptions.paginationPageSize = this.gridOptions.cacheBlockSize;
     this.refreshDatabase();
-  
+
   }
 
-  
-  filterRtoOwner(event)
-  {
+
+  filterRtoOwner(event) {
       this.filteredRtoOwner = event.id;
       this.refreshDatabase();
   }
-  clearRtoOwner(event)
-  {
+  clearRtoOwner(event) {
      this.filteredRtoOwner = '';
      this.refreshDatabase();
   }
 
-  statusChanged(event)
-  {
+  statusChanged(event) {
     this.filteredStatus = event.value;
     this.refreshDatabase();
       console.log(event);
   }
 
 
-  rowClicked(event)
-  {
+  rowClicked(event) {
      // console.log(event);
       this.router.navigate(['/timesheet/rto/' + event.data.requestID]);
   }
 
-  createRTO()
-  {
-      //test user for create RTO permissions
+  createRTO() {
+      // test user for create RTO permissions
 
-      //popup if they can create RTOs for others
+      // popup if they can create RTOs for others
 
 
-      //create RTO for themself and redirect if they can't
+      // create RTO for themself and redirect if they can't
 
 
   }

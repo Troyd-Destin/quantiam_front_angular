@@ -96,7 +96,7 @@ export class TimesheetComponent implements OnInit {
      // checkbox: true,
       padding: 20,
       innerRenderer: function(params) {
-  
+
 
         if (params.node.group) {
 
@@ -224,38 +224,38 @@ export class TimesheetComponent implements OnInit {
    onCellDoubleClicked($event) {}
    onCellEditingStopped($event) {
 
-     
+
      let value = $event.value;
 
      // tslint:disable-next-line:quotemark
-     if (value && value.length === 0) { 
-      
-      value = null; }
-    
+     if (value && value.length === 0) {
 
-     //console.log('Comaprison', value, 'against',this.oldCellValue[$event.column.colId]);
+      value = null; }
+
+
+     // console.log('Comaprison', value, 'against',this.oldCellValue[$event.column.colId]);
 
      if (this.oldCellValue[$event.column.colId] !== value ) {
         this.updateHours($event);
-       
+
       }
       delete this.oldCellValue[$event.column.colId];
       return;
    }
    onCellEditingStarted($event) {
 
-       
+
 
          // check for holiday
-         if($event.value && $event.value.length === 0 ){ $event.value = null; }
+         if ($event.value && $event.value.length === 0 ) { $event.value = null; }
          this.oldCellValue[$event.column.colId] = $event.value;
 
          const holidayCheck = this.timeSheetObj.holidays.find((holiday) => {
           return holiday.date === $event.column.colId;
         });
 
-     
-        
+
+
 
        // console.log(this.oldCellValue[$event.column.colId], holidayCheck, $event);
 
@@ -266,18 +266,17 @@ export class TimesheetComponent implements OnInit {
          return;
         }
 
-      
+
    }
 
 
   fetchTimesheet() {
-    //console.log(this.routeParams);
+    // console.log(this.routeParams);
 
     // Auth layer on fetching.
     let url = '';
 
-    if(this.routeParams.year.length > 0) { url = '/timesheet/' + this.routeParams.userId + '/year/' + this.routeParams.year + '/payperiod/' + this.routeParams.payperiod + ''; }
-    else { 
+    if (this.routeParams.year.length > 0) { url = '/timesheet/' + this.routeParams.userId + '/year/' + this.routeParams.year + '/payperiod/' + this.routeParams.payperiod + ''; } else {
       this.routeParams.userId = this.userService.currentUser.id;
       url = '/timesheet/' +  this.routeParams.userId;
      }
@@ -290,7 +289,7 @@ export class TimesheetComponent implements OnInit {
             this.timeSheetObj = response;
             this.routeParams.year = response.payPeriod.year;
             this.routeParams.payperiod = response.payPeriod.payPeriod;
-            window.history.replaceState({}, '',`/timesheet/${this.routeParams.userId}/year/${ this.routeParams.year}/payperiod/${ this.routeParams.payperiod }`);
+            window.history.replaceState({}, '', `/timesheet/${this.routeParams.userId}/year/${ this.routeParams.year}/payperiod/${ this.routeParams.payperiod }`);
             this.timesheetService.changeTimesheet(this.routeParams);
             this.displayTimesheet = true;
             setTimeout((x) => {this.constructTimesheet(); }, 100);
@@ -428,8 +427,8 @@ export class TimesheetComponent implements OnInit {
           //  'background-color': 'rgba(232, 242, 255,0.0)'
           };
 
-          let absenceCheck = false;
-        
+          const absenceCheck = false;
+
         // if (Array.isArray(this.timeSheetObj.rto) && this.timeSheetObj.rto.length > 0) {
         //     this.timeSheetObj.rto.forEach((rto) => {
 
@@ -449,7 +448,7 @@ export class TimesheetComponent implements OnInit {
 
         //     });
 
-           
+
         // }
 
         //   if (absenceCheck && !params.node.footer) {
@@ -461,10 +460,10 @@ export class TimesheetComponent implements OnInit {
             return holiday.date === params.column.colId;
           });
 
-          const dateString = params.column.colId.split("_");
+          const dateString = params.column.colId.split('_');
           const day = moment(dateString[0]).format('ddd');
           if ((holidayCheck || day === 'Sun' || day === 'Sat') && !params.node.footer) {
-      
+
         //    if(holidayCheck){ params.column.holiday = true;}
             cellStyle['background-color'] = 'rgba(232, 242, 255,0.50)';
 
@@ -485,7 +484,7 @@ export class TimesheetComponent implements OnInit {
 
             cellStyle['font-style'] = 'italic';
           }
-      
+
           return cellStyle;
         },
 
@@ -533,14 +532,13 @@ export class TimesheetComponent implements OnInit {
   rowDataChanged(event) {
 
 
-    if(this.gridApi)
-    {
+    if (this.gridApi) {
       this.gridApi.getRowStyle = function(params) {
 
         const rowStyle = {
           'border': '0px',
         };
-  
+
         return rowStyle;
 
       };
@@ -594,7 +592,7 @@ export class TimesheetComponent implements OnInit {
   checkIfTimesheetEditable() {
 
     if (this.userService.hasPermission(10)) {
-     
+
       this.timesheetEditable = true;
       this.defaultColDef['editable'] = true;
       return;
@@ -663,7 +661,7 @@ export class TimesheetComponent implements OnInit {
 
   selectedUserChanged(event) {
 
-  
+
     this.routeParams.userId = event.employeeid;
     this.router.navigate([`/timesheet/${event.id}/year/${this.routeParams.year}/payperiod/${this.routeParams.payperiod}`]);
     this.showSelectBox = false;
@@ -676,14 +674,12 @@ export class TimesheetComponent implements OnInit {
     }
   }
 
-  checkUserForSubordinatesAndMachines()
-  {
-    if((this.userService.hasMachines() && this.userService.hasSubordinates) || this.userService.hasPermission(1))
-    {
+  checkUserForSubordinatesAndMachines() {
+    if ((this.userService.hasMachines() && this.userService.hasSubordinates) || this.userService.hasPermission(1)) {
       this.canChangeTimesheetUser = true;
       this.showSelectBox = true;
     }
-  
+
     return true;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -26,7 +26,7 @@ class DataTablesMaterialResponse {
   templateUrl: './material-database.component.html',
   styleUrls: ['./material-database.component.css']
 })
-export class MaterialDatabaseComponent implements OnInit {
+export class MaterialDatabaseComponent implements OnInit, OnDestroy {
 
   // dtOptions: DataTables.Settings = {};
   materials: Material[];
