@@ -9,6 +9,8 @@ import {  Router} from '@angular/router';
 })
 export class XpsDatabaseComponent implements OnInit {
 
+  constructor(private http: HttpClient, private router: Router) {}
+
 
    gridApi;
    gridColumnApi;
@@ -16,22 +18,14 @@ export class XpsDatabaseComponent implements OnInit {
    paginationPageSize = 25;
    _xrdRuns: any;
 
-  constructor(private http: HttpClient, private router: Router) {}
-
-  ngOnInit() {
-
-
-
-  }
-
 
 
 
 
   private columnDefs = [
     /* {headerName: 'Actions',field: 'duration', valueGetter: function aPlusBValueGetter(params) {
-        
-          
+
+
            return '<button md-button>Test </button>';
         }}, */
     {
@@ -40,11 +34,11 @@ export class XpsDatabaseComponent implements OnInit {
       cellStyle: function (params) {
         return {
           cursor: 'pointer'
-        }
+        };
       }
 
     },
-    //{headerName: 'ID', field: 'id', width:100},
+    // {headerName: 'ID', field: 'id', width:100},
     {
       headerName: 'Run #',
       field: 'name',
@@ -52,7 +46,7 @@ export class XpsDatabaseComponent implements OnInit {
       cellStyle: function (params) {
         return {
           cursor: 'pointer'
-        }
+        };
       }
     },
     {
@@ -67,7 +61,7 @@ export class XpsDatabaseComponent implements OnInit {
       cellStyle: function (params) {
         return {
           cursor: 'text'
-        }
+        };
       }
     },
     {
@@ -77,12 +71,12 @@ export class XpsDatabaseComponent implements OnInit {
       cellEditorParams: {
         values: ['Coupon', 'Powder']
       },
-      cellEditor: "agRichSelectCellEditor",
+      cellEditor: 'agRichSelectCellEditor',
     },
     {
       headerName: 'Hours',
       field: 'duration',
-      type: "numericColumn",
+      type: 'numericColumn',
       width: 140,
       valueGetter: function aPlusBValueGetter(params) {
 
@@ -95,25 +89,25 @@ export class XpsDatabaseComponent implements OnInit {
     {
       headerName: 'Seconds',
       field: 'duration',
-      type: "numericColumn",
+      type: 'numericColumn',
       width: 140,
       hide: true
     },
     {
       headerName: 'Analyses',
       field: 'analyses',
-      type: "numericColumn",
+      type: 'numericColumn',
       width: 140
     },
     {
       headerName: 'Operator',
       field: 'operator',
       editable: true,
-      cellEditor: "agRichSelectCellEditor",
+      cellEditor: 'agRichSelectCellEditor',
       cellEditorParams: {
         values: [{
           'id': 30,
-          'text': "Peter Unwin"
+          'text': 'Peter Unwin'
         }]
       }
 
@@ -126,14 +120,20 @@ export class XpsDatabaseComponent implements OnInit {
 
   ];
 
+  ngOnInit() {
+
+
+
+  }
+
   onPageSizeChanged(newPageSize) {
-    let value = ( < HTMLInputElement > document.getElementById("page-size")).value;
+    const value = ( < HTMLInputElement > document.getElementById('page-size')).value;
     this.gridApi.paginationSetPageSize(Number(value));
   }
 
   onCellDoubleClicked(event) {
-    if (event.column.colId == 'created_at') this.router.navigate(['/xps/run/' + event.data.id]);
-    if (event.column.colId == 'name') this.router.navigate(['/xps/run/' + event.data.id]);
+    if (event.column.colId == 'created_at') { this.router.navigate(['/xps/run/' + event.data.id]); }
+    if (event.column.colId == 'name') { this.router.navigate(['/xps/run/' + event.data.id]); }
 
   }
 
@@ -153,20 +153,20 @@ export class XpsDatabaseComponent implements OnInit {
       }, 400);
     });
 
-    /* 
+    /*
                  this.sampleService.sampleDatabase$.subscribe((r)=>{
-    		
+
                   this.rowData = r;
-                  
-                  
+
+
                   })
          */
-    //params.api.sizeColumnsToFit();
+    // params.api.sizeColumnsToFit();
 
   }
 
   autoSizeAll() {
-    var allColumnIds = [];
+    let allColumnIds = [];
     this.gridColumnApi.getAllColumns().forEach(function (column) {
       allColumnIds.push(column.colId);
     });

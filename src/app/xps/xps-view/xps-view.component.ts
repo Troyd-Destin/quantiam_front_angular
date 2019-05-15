@@ -15,6 +15,17 @@ import { catchError, map, tap, delay, shareReplay, publishReplay, refCount } fro
 })
 export class XpsViewComponent implements OnInit {
 
+  constructor(
+  private fb: FormBuilder,
+  private xpsService: XpsService,
+  private route: ActivatedRoute,
+  public http: HttpClient,
+  ) {
+
+    this.chartBuilder();
+
+    }
+
    xpsRun$: any; 
    xpsRun: Object;
    rowData: any;
@@ -34,16 +45,40 @@ export class XpsViewComponent implements OnInit {
     scanTypeList = ['Wide', 'Narrow', 'Mulitplex'];
     anodTypeList = ['Mg', 'Al', 'Focussed', 'Diffuse'];
 
-  constructor(
-  private fb: FormBuilder,
-  private xpsService: XpsService,
-  private route: ActivatedRoute,
-  public http: HttpClient,
-  ) {
 
-    this.chartBuilder();
 
-    }
+   private columnDefs = [
+        {headerName: 'Created', field: 'created_at', width: 260},
+        {headerName: 'Filename', field: 'path',  valueGetter: function aPlusBValueGetter(params) {
+
+                let filename = params.data.path.replace(/^.*[\\\/]/, '');
+                return filename;
+        }, width: 300},
+        // {headerName: 'ID', field: 'id', width:100},
+        {headerName: 'Element', field: 'element', },
+        {headerName: 'Energy', field: 'energy', hide: true},
+        {headerName: 'Start', field: 'start_energy', },
+        {headerName: 'End', field: 'end_energy', },
+        {headerName: 'Anode', field: 'anode', },
+        {headerName: 'TPS', field: 'time_per_step', type: 'numericColumn'},
+        {headerName: 'Region', field: 'region', type: 'numericColumn'},
+        {headerName: 'Cycle', field: 'cycle', suppressMenu: true,  type: 'numericColumn'},
+        {headerName: 'Sweep', field: 'sweeps', type: 'numericColumn'},
+        {headerName: 'Steps', field: 'steps', type: 'numericColumn'},
+        {headerName: 'Duration (s)', field: 'duration', },
+
+        // {headerName: '', field: 'sample_name',},
+        /* {headerName: 'Hours',field: 'duration',  type: "numericColumn", valueGetter: function aPlusBValueGetter(params) {
+
+          if(params.data.duration)
+          {
+            return parseFloat((params.data.duration/60/24).toFixed(2));
+          }
+           return null;
+        }}, */
+
+
+    ];
 
   ngOnInit() {
 
@@ -151,41 +186,6 @@ export class XpsViewComponent implements OnInit {
 
 
   }
-
-
-
-   private columnDefs = [
-        {headerName: 'Created', field: 'created_at', width: 260},
-        {headerName: 'Filename', field: 'path',  valueGetter: function aPlusBValueGetter(params) {
-
-                let filename = params.data.path.replace(/^.*[\\\/]/, '');
-                return filename;
-        }, width: 300},
-        // {headerName: 'ID', field: 'id', width:100},
-        {headerName: 'Element', field: 'element', },
-        {headerName: 'Energy', field: 'energy', hide: true},
-        {headerName: 'Start', field: 'start_energy', },
-        {headerName: 'End', field: 'end_energy', },
-        {headerName: 'Anode', field: 'anode', },
-        {headerName: 'TPS', field: 'time_per_step', type: 'numericColumn'},
-        {headerName: 'Region', field: 'region', type: 'numericColumn'},
-        {headerName: 'Cycle', field: 'cycle', suppressMenu: true,  type: 'numericColumn'},
-        {headerName: 'Sweep', field: 'sweeps', type: 'numericColumn'},
-        {headerName: 'Steps', field: 'steps', type: 'numericColumn'},
-        {headerName: 'Duration (s)', field: 'duration', },
-
-        // {headerName: '', field: 'sample_name',},
-        /* {headerName: 'Hours',field: 'duration',  type: "numericColumn", valueGetter: function aPlusBValueGetter(params) {
-
-          if(params.data.duration)
-          {
-            return parseFloat((params.data.duration/60/24).toFixed(2));
-          }
-           return null;
-        }}, */
-
-
-    ];
 
   onPageSizeChanged(newPageSize) {
     let value = (<HTMLInputElement>document.getElementById('page-size')).value;
