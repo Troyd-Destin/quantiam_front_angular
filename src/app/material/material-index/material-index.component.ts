@@ -28,7 +28,7 @@ export class MaterialIndexComponent implements OnInit, OnDestroy {
   constructor(
     private dialog: MatDialog, private materialService: MaterialService, 
     private materialLotContainerService: MaterialLotContainerService, 
-    public router: Router, private userService: UserService) { }
+    public router: Router, public userService: UserService) { }
 
   ngOnInit() {
 

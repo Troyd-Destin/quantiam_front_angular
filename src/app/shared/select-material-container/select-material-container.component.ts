@@ -59,8 +59,8 @@ export class SelectMaterialContainerComponent implements OnInit {
   }
 
   onChange(event) { this.change.emit(event); }
-  onAdd() { }
-  onRemove() { }
+  onAdd(event) { }
+  onRemove(event) { }
   onClear() {
     console.log('test');
     this.itemsBuffer = this.allRetrievedItemsList;
@@ -136,7 +136,7 @@ export class SelectMaterialContainerComponent implements OnInit {
 }
 
 
-  private fetchMore() {
+   fetchMore() {
 
       // use a service as well
 
@@ -155,7 +155,7 @@ export class SelectMaterialContainerComponent implements OnInit {
   }
 
 
-  private onOpen() {
+   onOpen() {
 
   setTimeout((x) => {
 

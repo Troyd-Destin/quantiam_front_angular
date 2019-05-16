@@ -53,7 +53,7 @@
 				
 					<mat-form-field fxFlex >
 								<input matInput [matDatepicker]="myDatepicker1" 
-								placeholder="Run Date" [(ngModel)] ='xpsRun.created_at' (dateChange)="updateXpsRun($event.value,'startdate')" [disabled]="!edit">
+								placeholder="Run Date" [(ngModel)] ='xpsRun.created_at' (dateChange)="updateXpsRun($event.value)" [disabled]="!edit">
 							  <mat-datepicker-toggle matSuffix [for]="myDatepicker1"></mat-datepicker-toggle>
 							  <mat-datepicker #myDatepicker1></mat-datepicker>
 					</mat-form-field>

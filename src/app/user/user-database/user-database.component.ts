@@ -13,14 +13,14 @@ export class UserDatabaseComponent implements OnInit {
 
   private gridApi;
   private gridColumnApi;
-  private rowData: any;
+   rowData: any;
   private paginationPageSize = 25;
-  private searchBarValue: string;
+   searchBarValue: string;
 
 
 
 
-   private columnDefs = [
+    columnDefs = [
         {headerName: '#', sort: 'desc', field: 'employeeid',
         headerTooltip: '#',  filter: 'agTextColumnFilter', maxWidth: 90, },
         {headerName: 'Firstname', field: 'firstname',   maxWidth: 130, },
@@ -38,7 +38,7 @@ export class UserDatabaseComponent implements OnInit {
         {headerName: 'Leave Date', field: 'leavedate',  },
     ];
 
-    private defaultColDef = {
+     defaultColDef = {
 
      // maxWidth:120,
       sorting: true,

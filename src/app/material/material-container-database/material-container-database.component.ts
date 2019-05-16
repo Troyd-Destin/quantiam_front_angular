@@ -18,19 +18,19 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
   private gridApi;
   private gridColumnApi;
-  private rowData: any = [{}, {}];
+   rowData: any = [{}, {}];
 
   private components: any;
-  private columnDefs;
+   columnDefs;
   private statusBar: any;
-  private defaultColDef;
+   defaultColDef;
   private rowModelType;
   private cacheBlockSize;
   private maxBlocksInCache;
   private getRowNodeId;
   private icons;
   private cellOldValue;
-  private searchBarValue: string;
+   searchBarValue: string;
   private frameworkComponents;
   private context;
 

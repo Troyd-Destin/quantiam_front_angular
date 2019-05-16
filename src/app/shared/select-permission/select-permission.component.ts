@@ -15,6 +15,8 @@ export class SelectPermissionComponent implements OnInit, OnDestroy {
   virtualScroll = false;
   dropdownWidth = 500; // in pixels
 
+  loading;
+
   // Inputs
   @Input() selectedValue: any = null; // default value, object or ID
   @Input() multiple: any = false; // multi version
@@ -39,7 +41,7 @@ export class SelectPermissionComponent implements OnInit, OnDestroy {
       });
   }
 
-  private onOpen() {
+   onOpen() {
 
     // setTimeout((x) => {
   
@@ -52,8 +54,8 @@ export class SelectPermissionComponent implements OnInit, OnDestroy {
     }
 
     onChange(event) { this.change.emit(event); }
-    onAdd() { }
-    onRemove() { }
+    onAdd(event) { }
+    onRemove(event) { }
     onClear() {  }
 
   ngOnDestroy() {

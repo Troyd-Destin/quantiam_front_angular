@@ -28,19 +28,20 @@ class DataTablesMaterialResponse {
 })
 export class MaterialDatabaseComponent implements OnInit, OnDestroy {
 
+   constructor(private http: HttpClient, public router: Router, private materialDatatable: MaterialDatatableService) {}
+
   // dtOptions: DataTables.Settings = {};
   materials: Material[];
   _materialDatatable = null;
 
-   constructor(private http: HttpClient, public router: Router, private materialDatatable: MaterialDatatableService) {}
+
+  dtOptions;
 
   someClickHandler(info: any): void {
         // console.log(info);
        this.router.navigate(['/material/' + info.id]);
      // this.message = info.id + ' - ' + info.firstName;
   }
-
-
 
   ngOnInit() {
 

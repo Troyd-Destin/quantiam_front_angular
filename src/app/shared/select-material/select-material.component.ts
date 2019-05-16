@@ -175,7 +175,7 @@ export class SelectMaterialComponent implements OnInit {
   }
 
 
-  private onOpen() {
+   onOpen() {
 
   setTimeout((x) => {
 

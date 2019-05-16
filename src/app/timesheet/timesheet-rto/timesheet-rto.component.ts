@@ -21,14 +21,16 @@ export class TimesheetRtoComponent implements OnInit {
 
   private pageSizes = [10, 20, 25, 50, 100, 200];
 
-  private showSubordinatesOnly = true;
+   showSubordinatesOnly = true;
 
 
-  private columnDefs;
-  private defaultColDef;
-  private rowData: [];
+   columnDefs;
+   defaultColDef;
+   rowData: [];
 
-  private gridOptions;
+   gridOptions;
+   refreshTable; 
+   
   private rowModelType;
   private rowSelection;
   private maxBlocksInCache;
@@ -39,7 +41,7 @@ export class TimesheetRtoComponent implements OnInit {
   private filteredTextFilterName = '';
   private timeoutTextFilter;
 
-  private frameworkComponents;
+   frameworkComponents;
 
   private totalRows;
 

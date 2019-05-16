@@ -16,6 +16,8 @@ export class SelectTgarunComponent implements OnInit, OnDestroy {
   itemsBuffer: any = [];
   dropdownWidth: '1000'; // in Pixels
 
+  loading;
+
 
   // Inputs
   @Input() selectedValue: any = null; // default value, object or ID
@@ -44,7 +46,7 @@ export class SelectTgarunComponent implements OnInit, OnDestroy {
   }
 
   onChange(event) { this.change.emit(event); }
-  onAdd() { }
+  onAdd(event) { }
   onRemove(event) { this.remove.emit(event); }
   onClear(event) { this.clear.emit(event); }
   onScrollToEnd() {}
@@ -62,7 +64,7 @@ export class SelectTgarunComponent implements OnInit, OnDestroy {
 
 }
 
-  private onOpen() {
+   onOpen() {
 
     setTimeout((x) => {
 

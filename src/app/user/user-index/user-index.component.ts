@@ -8,7 +8,11 @@ import { Router  } from '@angular/router';
 })
 export class UserIndexComponent implements OnInit {
 
+  selectedUser;
+
   constructor( public router: Router, ) { }
+
+  
 
   ngOnInit() {
 

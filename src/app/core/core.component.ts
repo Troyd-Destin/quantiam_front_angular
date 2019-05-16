@@ -105,7 +105,7 @@ export class CoreComponent implements OnInit, OnDestroy {
 		fb: FormBuilder,
 		changeDetectorRef: ChangeDetectorRef,
 		media: MediaMatcher,
-		private userService: UserService,
+		public userService: UserService,
 		private auth: AuthService,
 		private websocketService: WebsocketService,
 		private settings: SettingsService,

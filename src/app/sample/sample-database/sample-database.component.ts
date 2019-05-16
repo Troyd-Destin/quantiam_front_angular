@@ -18,10 +18,10 @@ export class SampleDatabaseComponent implements OnInit {
 
   private gridApi;
   private gridColumnApi;
-  private rowData = [];
+   rowData = [];
 
-  private columnDefs;
-  private defaultColDef;
+   columnDefs;
+   defaultColDef;
   private rowModelType;
   private cacheBlockSize;
   private maxBlocksInCache;

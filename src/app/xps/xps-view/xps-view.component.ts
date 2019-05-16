@@ -15,6 +15,9 @@ import { catchError, map, tap, delay, shareReplay, publishReplay, refCount } fro
 })
 export class XpsViewComponent implements OnInit {
 
+
+
+
   constructor(
   private fb: FormBuilder,
   private xpsService: XpsService,
@@ -27,7 +30,7 @@ export class XpsViewComponent implements OnInit {
     }
 
    xpsRun$: any; 
-   xpsRun: Object;
+   xpsRun: any;
    rowData: any;
    chart: any;
    edit: boolean = false;
@@ -217,5 +220,8 @@ export class XpsViewComponent implements OnInit {
 
 
   }
+
+  updateXpsRun (sampleName) {}
+  updateContainerField (event, thing) {}
 
 }

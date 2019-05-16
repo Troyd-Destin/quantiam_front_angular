@@ -24,9 +24,9 @@ export class SgxCreationDialogComponent implements OnInit, OnDestroy {
     _ws: any;
     allowedScannerPrefixes = ['QCID', 'SGX'];
 
-    private sampleTypeList = ['5 % H2 Treatment (furnace)', 'Sintered Pellet', 'Carbon Impregnation', 'Post Cracking', 'Pellet Reduction', 'Carbon Physical Mixture'];
+     sampleTypeList = ['5 % H2 Treatment (furnace)', 'Sintered Pellet', 'Carbon Impregnation', 'Post Cracking', 'Pellet Reduction', 'Carbon Physical Mixture'];
 
-    private selected_type;
+     selected_type;
 
     private gridApi;
     private gridColumnApi;
@@ -34,7 +34,7 @@ export class SgxCreationDialogComponent implements OnInit, OnDestroy {
 
 
 
-    private ColumnDefs = [
+     ColumnDefs = [
       {
         headerName: 'Chemical',
         maxWidth: 250,
@@ -55,7 +55,7 @@ export class SgxCreationDialogComponent implements OnInit, OnDestroy {
       {headerName: 'Actual', editable: true,  field: 'actual', type: 'numericColumn' },
     ];
 
-    private DefaultColDef = {
+     DefaultColDef = {
     // maxWidth:120,
       suppressSorting: true,
       suppressMenu: true,

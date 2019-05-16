@@ -12,7 +12,8 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 })
 export class HeaderComponent implements OnInit {
 
-title = 'app';
+  sidenav;
+  title = 'app';
 	options: FormGroup;	
 	mobileQuery: MediaQueryList;
 	private _mobileQueryListener: () => void;	

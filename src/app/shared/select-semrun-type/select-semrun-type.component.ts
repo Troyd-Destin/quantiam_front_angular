@@ -60,7 +60,7 @@ export class SelectSemrunTypeComponent implements OnInit {
 
 }
 
-private onOpen(event) {
+ onOpen(event) {
 
   setTimeout((x) => {
 

@@ -42,14 +42,14 @@ export class SampleCreationDialogComponent implements OnInit, OnDestroy {
     ) {}
 
 
-
+  saveSample;
   scannedObj: any;
   selectedContainers = [];
   _ws: any;
   allowedScannerPrefixes = ['QCID', 'SGX'];
   private sampleTypeList = ['5 % H2 Treatment (furnace)', 'Sintered Pellet', 'Carbon Impregnation', 'Post Cracking', 'Pellet Reduction', 'Carbon Physical Mixture'];
   private newSample = { 'name': null, 'experiment': null, 'sample_experiment_type': null, 'experiment_sample': null };
-  private selectedExperiment = { has_materials: false, id: null, abbrev: null, next_sample: null };
+   selectedExperiment = { has_materials: false, id: null, abbrev: null, next_sample: null };
 
   private selected_type;
   private gridApi;

@@ -22,7 +22,7 @@ export class XpsDatabaseComponent implements OnInit {
 
 
 
-  private columnDefs = [
+   columnDefs = [
     /* {headerName: 'Actions',field: 'duration', valueGetter: function aPlusBValueGetter(params) {
 
 

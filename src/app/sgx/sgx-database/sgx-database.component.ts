@@ -18,10 +18,10 @@ export class SgxDatabaseComponent implements OnInit, OnDestroy {
 
 private gridApi;
 private gridColumnApi;
-private rowData: any[];
+ rowData: any[];
 
-private columnDefs;
-private defaultColDef;
+ columnDefs;
+ defaultColDef;
 private rowModelType;
 private cacheBlockSize;
 private maxBlocksInCache;

@@ -13,9 +13,9 @@ import { NotificationsService } from 'angular2-notifications';
 })
 export class ToolsScalebarComponent implements OnInit {
 
-  private toolOptions: any = {};
-  private enableLoadingGraphic: boolean = false;
-  private processResponse: any = []; 
+   toolOptions: any = {};
+   enableLoadingGraphic: boolean = false;
+   processResponse: any = []; 
 
   constructor(public http: HttpClient, 
 		public notification: NotificationsService,) { 

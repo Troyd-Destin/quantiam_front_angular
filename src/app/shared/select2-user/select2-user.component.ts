@@ -14,6 +14,9 @@ export class Select2UserComponent implements OnInit {
   public options: Select2Options;
   public value: number;
   public d;
+
+  uniqueID;
+  multiple = false;
   
   
    @Input() disabled: boolean = false; 

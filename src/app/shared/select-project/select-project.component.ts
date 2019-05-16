@@ -87,7 +87,7 @@ export class SelectProjectComponent implements OnInit, OnDestroy {
 }
 
 
-private onOpen() {
+ onOpen() {
 
   setTimeout((x) => {
 

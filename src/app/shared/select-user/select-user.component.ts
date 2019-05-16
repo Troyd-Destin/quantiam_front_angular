@@ -164,7 +164,7 @@ export class SelectUserComponent implements OnInit, OnDestroy {
 
   onChange(event) {this.change.emit(event); console.log(this.selectedValue); }
   onRemove(event) { this.remove.emit(event);  }
-  onClear(event) { this.clear.emit(event); }
+  onClear() { this.clear.emit(event); }
 
   customSearchFn(term: string, item) {  // good for lists we store in their entirety
    // console.log(term,item);

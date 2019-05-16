@@ -9,7 +9,7 @@ import { UserService } from '../../services/user/user.service';
 })
 export class TimesheetSettingsComponent implements OnInit {
 
-  constructor(private userService: UserService) { }
+  constructor(public userService: UserService) { }
 
   ngOnInit() {
   }

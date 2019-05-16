@@ -14,7 +14,7 @@ export class TimesheetIndexComponent implements OnInit {
   routeParams: any;
   currentTimesheet = {userId: '', year: '', payperiod: '', requestID: ''};
 
-  constructor(private router: Router, private route: ActivatedRoute, private timesheetService: TimesheetService, private userService: UserService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private timesheetService: TimesheetService, public userService: UserService) { }
 
   ngOnInit() {
 
