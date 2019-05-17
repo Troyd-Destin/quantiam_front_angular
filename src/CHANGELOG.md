@@ -9,6 +9,7 @@
 
 ## Material 
 - Adding a material now uses the new select-material component
+- Removed property Catalog, this will be changed into a container property 
 
 ## Material Container
 - Added a container expiry field
