@@ -15,7 +15,8 @@
 
   [(ngModel)]="selectedValue"	
 	bindValue="id"
-	bindLabel="name"
+  bindLabel="name"
+  appendTo="body"
 >   
   <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm" >
       <div fxLayout="row"  fxLayoutAlign="start center"  >

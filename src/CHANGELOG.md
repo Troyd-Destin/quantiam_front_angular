@@ -1,3 +1,7 @@
+## Known Issues
+
+- Material Suppler dropdown, does not clear properly when declining to create a new tag
+
 ## [0.19.5] May 2019
 
 ## Timesheet

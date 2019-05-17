@@ -528,7 +528,7 @@ color: rgb(255, 255, 255);
 
 .ng-dropdown-panel {
 	/* width: auto !important; */
-	min-width: 100% !important;
+	/* min-width: 100% !important; */
 	width: inherit !important;
 }
 

@@ -95,13 +95,7 @@ export class SelectMaterialSupplierComponent implements OnInit, OnDestroy {
 
  onOpen() {
 
-    setTimeout((x) => {
-
-      const dropdown = document.querySelector('.total-padding');
-      dropdown.setAttribute('style', 'width:' + this.dropdownWidth + 'px !important;height: 1800px;'); // this changes the dropdown to be as wide as it's contents
-      // dropdown.setAttribute('style',''); //workaround
-
-    }, 100);
+    
 
   }
 
