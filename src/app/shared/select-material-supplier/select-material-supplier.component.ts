@@ -5,6 +5,7 @@ import { environment } from '../../../environments/environment';
 
 import {  HttpClient} from '@angular/common/http';
 
+
 @Component({
   selector: 'app-select-material-supplier',
   templateUrl: './select-material-supplier.component.html',
@@ -14,9 +15,9 @@ export class SelectMaterialSupplierComponent implements OnInit, OnDestroy {
 
   list$: any;
   items: any = [];
-  
+
   virtualScroll = true;
-  
+
   dropdownWidth = 250; // in pixels
 
 
@@ -46,22 +47,19 @@ export class SelectMaterialSupplierComponent implements OnInit, OnDestroy {
 
   }
 
-  
 
-  onChange(event) { 
-    
-    if(this.addTag)
-    {
+
+  onChange(event) {
+
+    if (typeof(event) !== 'undefined' && this.addTag && !event.hasOwnProperty('supplier_id')) {
      // console.log(event);
-      this.createSupplier(event)
-    }
-    else
-    {
+      this.createSupplier(event);
+    } else {
       this.change.emit(event);
     }
-    
-   
-  
+
+
+
   }
   onClear(event) { this.change.emit(event); }
 
@@ -75,16 +73,22 @@ export class SelectMaterialSupplierComponent implements OnInit, OnDestroy {
 
   }
 
-  createSupplier(obj)
-  { 
-    if(confirm('Do you want to create this supplier?')){
-      return this.http.post(environment.apiUrl + '/material/supplier', obj).subscribe((r)=>{
+  createSupplier(obj) {
+    if (confirm('Do you want to create this supplier?')) {
+      return this.http.post(environment.apiUrl + '/material/supplier', obj).subscribe((r) => {
 
          // console.log(r);
           this.change.emit(r);
 
-      })
+      });
+    } else {
+
+     
+
+      this.selectedValue = null;
+     
     }
+
   }
 
 
