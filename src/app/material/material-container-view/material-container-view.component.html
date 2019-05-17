@@ -62,7 +62,7 @@
 							  <input #Catalog [disabled]="!editMaterial" (change)="updateMaterial(Catalog)"  type="text" matInput placeholder="Catalog #" [(ngModel)] ='container.lot.material.catalog' name="catalog" >
 							  <mat-hint> Product Number eg. "2332A-DDS2" </mat-hint>
 						 </mat-form-field> --> 
-						  <mat-form-field   class="full-width" fxFlex >
+						  <mat-form-field   class="full-width" fxFlex fxFlex.gt-md="20" >
 							  <input   #ForumlaWeight [disabled]="!editMaterial" (change)="updateMaterial(ForumlaWeight)" type="number" matInput placeholder="Forumla Weight" [(ngModel)] ='container.lot.material.formula_weight' name="formula_weight" >
 						 </mat-form-field>
 						   <mat-form-field class="full-width" fxFlex >

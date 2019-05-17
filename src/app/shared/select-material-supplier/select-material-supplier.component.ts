@@ -1,6 +1,10 @@
 import { Component, OnInit, Input, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { SelectMaterialSupplierService } from './select-material-supplier.service';
 
+import { environment } from '../../../environments/environment';
+
+import {  HttpClient} from '@angular/common/http';
+
 @Component({
   selector: 'app-select-material-supplier',
   templateUrl: './select-material-supplier.component.html',
@@ -18,14 +22,15 @@ export class SelectMaterialSupplierComponent implements OnInit, OnDestroy {
 
   // Inputs
   @Input() selectedValue: any = null; // default value, object or ID
-  @Input() multiple: any = false; // multi version
-  @Input() selectableGroup: any = false; // multi version
+  @Input() multiple = false; // multi version
+  @Input() selectableGroup = false; // multi version
+  @Input() addTag = false; // multi version
 
   // Outputs
   @Output() change = new EventEmitter<any>();
   @Output() clear = new EventEmitter<any>();
 
-  constructor(private service: SelectMaterialSupplierService) { }
+  constructor(private service: SelectMaterialSupplierService, private http: HttpClient) { }
 
   ngOnInit() {
 
@@ -43,7 +48,21 @@ export class SelectMaterialSupplierComponent implements OnInit, OnDestroy {
 
   
 
-  onChange(event) { this.change.emit(event); }
+  onChange(event) { 
+    
+    if(this.addTag)
+    {
+     // console.log(event);
+      this.createSupplier(event)
+    }
+    else
+    {
+      this.change.emit(event);
+    }
+    
+   
+  
+  }
   onClear(event) { this.change.emit(event); }
 
   customSearchFn(term: string, item) {  // good for lists we store in their entirety
@@ -55,6 +74,19 @@ export class SelectMaterialSupplierComponent implements OnInit, OnDestroy {
     || item.Description.toLocaleLowerCase().indexOf(term) > -1;
 
   }
+
+  createSupplier(obj)
+  { 
+    if(confirm('Do you want to create this supplier?')){
+      return this.http.post(environment.apiUrl + '/material/supplier', obj).subscribe((r)=>{
+
+         // console.log(r);
+          this.change.emit(r);
+
+      })
+    }
+  }
+
 
 
  onOpen() {

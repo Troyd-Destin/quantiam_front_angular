@@ -140,7 +140,7 @@ export class MaterialCreationDialogComponent implements OnInit, OnDestroy {
 
 	  selectSupplier(obj) {
 
-
+					console.log(obj);
           this.material.supplier_id = obj.supplier_id;
 
 
