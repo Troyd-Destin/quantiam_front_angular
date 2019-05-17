@@ -30,7 +30,8 @@
 				<div fxLayoutGap="20px" fxLayout="row" fxLayout.xs="column"  fxFlex="1 2 100px">
 				
 						<mat-form-field class="full-width">
-							<input matInput placeholder="Supplier" [(ngModel)] ='material.supplier.supplier_name' name="supplier_name" disabled>
+						
+							<app-select-material-supplier placeholder="Supplier" [(ngModel)] ='material.supplier.supplier_id' name="supplier_name"></app-select-material-supplier>
 						  </mat-form-field>
 
 						  <mat-form-field class="full-width">

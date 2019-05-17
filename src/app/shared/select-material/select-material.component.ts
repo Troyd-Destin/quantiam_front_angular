@@ -38,7 +38,7 @@ export class SelectMaterialComponent implements OnInit {
   items = [];
   itemsBuffer = [];
   allRetrievedItemsList = [];
-  dropdownWidth = 650; // in pixels
+  dropdownWidth = 600; // in pixels
   bufferSize = 150;
   virtualScroll = true;
   numberOfItemsFromEndBeforeFetchingMore = 50;

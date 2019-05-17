@@ -220,7 +220,7 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
   }
 
   changedSupplier(obj) {
-	const supplier_obj = obj.data[0];
+	const supplier_obj = obj;
 
 	console.log(supplier_obj);
 	if (supplier_obj.isNew) {

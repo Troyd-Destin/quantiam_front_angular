@@ -44,8 +44,8 @@ style="min-width: 120px;"
 
     <div style="width:60px; font-size: 8px;" >{{item.identifier}}</div>
 
-     <div style="width:400px; font-size: 13px; margin-right:5px;"  [ngOptionHighlight]="search" fxLayout="column">
-      <b>{{ (item.name.length>6)? (item.name | slice:0:70)+'...':(item.name)}}</b>  
+     <div style="width:300px; font-size: 13px; margin-right:5px;"  [ngOptionHighlight]="search" fxLayout="column">
+      <b>{{ (item.name.length>30)? (item.name | slice:0:30)+'...':(item.name)}}</b>  
       <small style="font-size: 11px;">{{item.grade}}</small>     
      
     </div>

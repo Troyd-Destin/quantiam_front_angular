@@ -1,12 +1,12 @@
 <h2 mat-dialog-title>MaterialCreation </h2>
 
-<mat-dialog-content style="min-height: 500px !important;" >
+<mat-dialog-content style="min-height: 400px !important;" fxLayout="column" >
 	
-	<div *ngIf="materialCreationStep">
+	<div *ngIf="materialCreationStep" fxFlex>
 	<form id="materialForm" fxLayout="column"  fxLayoutGap="10px" >
 	
 			<h3 style="margin-top:0px !important;">1. Material Information </h3>	
-			<div *ngIf="!newMaterial" fxLayout="row"  fxLayoutGap="5px" fxLayoutAlign="start center" >
+			<div *ngIf="!newMaterial" fxLayout="row"  fxLayoutGap="20px" fxLayoutAlign="start center" >
 				
 			
 					<p *ngIf="!selectedMaterial.id"> Select </p>
@@ -42,7 +42,8 @@
 							  <input  type="text" matInput placeholder="Supplier" [value] ='material.supplier_name' name="supplier" disabled>
 						 </mat-form-field>  
 						 
-						 
+							
+				 
 						 
 						 
 						   <mat-form-field class="full-width" fxFlex>
@@ -60,9 +61,18 @@
 
 						 
 					</div>
-					<div fxLayoutGap="5px"  fxLayout="row" fxLayout.sm="column" fxLayoutAlign="center center" >
+					<div fxLayoutGap="10px"  fxLayout="row" fxLayout.sm="column" fxLayoutAlign="center center" >
 					
 					
+						<app-select-material-supplier 
+								style="min-width: 200px;"
+								name="supplier_name"
+								*ngIf="creatingMaterial"
+								(change)="selectSupplier($event)"
+								>
+						</app-select-material-supplier>
+					
+
 						 <mat-form-field class="full-width" fxFlex>
 							  <input #Density type="text" matInput placeholder="Density (g/ml)" [(ngModel)] ='material.density' name="density"   [disabled]="!creatingMaterial">
 							  <mat-hint> Optional </mat-hint>
@@ -74,11 +84,9 @@
 						 </mat-form-field> 
 					
 					
-					<app-select2-material-supplier
-							*ngIf="creatingMaterial"
-							(selectedValue)="selectSupplier($event)"
-						></app-select2-material-supplier>
-					
+				
+
+							
 					</div>
 			</div>
 	
@@ -113,7 +121,7 @@
 		</div>
 	</form> 
   
-	<form id="containerForm" *ngIf="lot.lot_name">
+	<form id="containerForm" *ngIf="lot.lot_name" style="margin-top:20px;">
 	
 		<h3>3. Container Information </h3>
 		<div fxLayoutGap="20px" fxLayout="column"  fxLayoutAlign="start stretch">
@@ -202,7 +210,7 @@
 	</form>
 	</div>
 	
-	<div *ngIf="codeRegistryStep">
+	<div *ngIf="codeRegistryStep" fxLayoutAlign="start center">
 		<h3>4. Code Registry, Label Creation. </h3>
 		<div fxLayout="row" fxLayoutGap="50px" fxLayoutAlign="center center" style="padding-bottom:50px;"> 
 				

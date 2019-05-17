@@ -9,7 +9,7 @@
 	<div fxLayoutGap="20px" fxLayout="row"  fxLayout.xl="row wrap"  fxLayout.lg="row wrap" fxLayoutAlign="start stretch">
 			
 		<mat-accordion  multi="true" fxFlex.lg=40 fxFlex.xl=40>
-			<mat-expansion-panel expanded="true">
+			<mat-expansion-panel expanded="true" style="display: table-row;">
 				<mat-expansion-panel-header>
 					<mat-panel-title>
 						<b>	Material Information </b>
@@ -32,17 +32,18 @@
 							  <input  type="text" matInput placeholder="Supplier" [(ngModel)] ='container.lot.material.supplier.supplier_name' name="supplier" disabled>
 						 </mat-form-field>  
 						 
-						 <app-select2-material-supplier
-								fxLayoutAlign="start center"
-								[placeholder]="container.lot.material.supplier.supplier_name" 
-								*ngIf="editMaterial"
-								enable_create="true"
-								(selectedValue)="changedSupplier($event)"
-								[default_lot]="container.lot.material.supplier_id"
-						
-						
-						></app-select2-material-supplier>
-						
+
+						 <app-select-material-supplier 
+						 		style="min-width: 150px;"
+								 placeholder="Supplier" 
+								 [selectedValue]='container.lot.material.supplier.supplier_id' 
+								 name="supplier_name"
+								 [hidden]="!editMaterial"
+								 (change)="changedSupplier($event)"
+								 >
+						</app-select-material-supplier>
+						 
+					
 						 
 						 
 					</div>		

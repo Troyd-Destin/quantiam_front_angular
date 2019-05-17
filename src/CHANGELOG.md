@@ -29,6 +29,7 @@
 - Ag grid updated to 20.1.0
 - HandsOnTable added in for quick tabular display, stil can't figure out how to copy with headers. 
 - Select MAterial component now works as intended
+- Replaced select2 supplier dropdown, with ng select, to fix display bug
 
 ## [0.19.4] April 2019
 
