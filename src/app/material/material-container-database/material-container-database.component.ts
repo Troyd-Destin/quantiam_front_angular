@@ -88,10 +88,10 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         width: 80,
         field: 'size'
       },
-      {
-        width: 90,
-        field: 'catalog'
-      },
+      // {
+      //   width: 90,
+      //   field: 'catalog'
+      // },
       {
         width: 90,
         field: 'cas',
