@@ -19,6 +19,7 @@ export class SelectProjectComponent implements OnInit, OnDestroy {
 
 
   // Inputs
+  @Input() placeholder: any = 'Select Project'; // default value, object or ID
   @Input() selectedValue: any = null; // default value, object or ID
   @Input() multiple: any = false; // multi version
   @Input() selectableGroup: any = false; // multi version

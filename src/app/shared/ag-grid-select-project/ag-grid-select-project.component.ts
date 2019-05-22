@@ -10,6 +10,8 @@ import {ICellEditorAngularComp} from 'ag-grid-angular';
 })
 export class AgGridSelectProjectEditorComponent implements ICellEditorAngularComp, AfterViewInit {
 
+
+
   private params: any;
 
   public selectedValue: any;
@@ -17,22 +19,23 @@ export class AgGridSelectProjectEditorComponent implements ICellEditorAngularCom
 
   private input: any;
 
-  @ViewChild('projectEditor', {read: ViewContainerRef}) public container;  // reference the container 
+  @ViewChild('projectEditor', {read: ViewContainerRef}) public container;  // reference the container
 
-  constructor() { }
+  constructor() {
 
- 
+  }
+
+
 
   ngAfterViewInit() {
-    window.setTimeout(() => {    
-   //   console.log(this.container.element.nativeElement.firstChild.firstChild.firstChild.children[1].firstChild);
+    window.setTimeout(() => {
+
        this.input = this.container.element.nativeElement.firstChild.firstChild.firstChild.children[1].firstChild;
-       
-       //console.log(this.input);
+
        this.input.value = this.params.charPress;
        this.input.focus();
 
-    },100);
+    }, 100);
   }
 
   isPopup(): boolean {
@@ -43,39 +46,38 @@ export class AgGridSelectProjectEditorComponent implements ICellEditorAngularCom
     console.log(params);
     this.params = params;
     this.previousValue = params.value;
-    
-
-    //this.container.element.nativeElement.firstChild.firstChild.firstChild.children[1].firstChild.val('7');
   }
 
   getValue(): any {
 
-    if(typeof this.selectedValue === 'undefined'){ return this.previousValue; }
-    
+    if (typeof this.selectedValue === 'undefined') { return this.previousValue; }
+
     return this.selectedValue.id;
   }
 
-  selectValue(event)
-  {
+  selectValue(event) {
     console.log(event);
     this.selectedValue = event;
     this.params.api.stopEditing();
     this.params.api.tabToNextCell();
+    this.params.api.tabToPreviousCell();
   }
 
 
-  
+
   onKeyDown(event): void {
     const key = event.which || event.keyCode;
     console.log(event.keyCode);
     if (key === 37 ||  // left
         key === 39 || key === 27 ) {  // right
-       // this.toggleMood();
+
+      const element: any = document.activeElement;
+      element.blur();
        this.params.api.stopEditing();
-       
+
     }
 
-    if(key === 39){ this.params.api.tabToNextCell(); }
-    if(key === 37){ this.params.api.tabToPreviousCell(); }
+    if (key === 39) { this.params.api.tabToNextCell(); }
+    if (key === 37) { this.params.api.tabToPreviousCell(); }
   }
 }

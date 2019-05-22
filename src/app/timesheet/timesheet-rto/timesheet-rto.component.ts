@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material';
+import { CreateRtoDialogComponent } from '../create-rto-dialog/create-rto-dialog.component';
 
 import {environment} from '../../../environments/environment';
 import * as moment from 'moment';
 
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute,  } from '@angular/router';
 
 import { AgGridSelectProjectEditorComponent } from '../../shared/ag-grid-select-project/ag-grid-select-project.component';
 
@@ -29,8 +31,8 @@ export class TimesheetRtoComponent implements OnInit {
    rowData: [];
 
    gridOptions;
-   refreshTable; 
-   
+   refreshTable;
+
   private rowModelType;
   private rowSelection;
   private maxBlocksInCache;
@@ -45,9 +47,13 @@ export class TimesheetRtoComponent implements OnInit {
 
   private totalRows;
 
+  private queryParams;
+
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog, 
+    private route: ActivatedRoute,
   ) {
 
     this.columnDefs = [
@@ -176,13 +182,24 @@ export class TimesheetRtoComponent implements OnInit {
    }
 
   ngOnInit() {
+
+    
+     this.route
+      .queryParams
+      .subscribe(params => {
+        // Defaults to 0 if no query param provided.
+        console.log(params);
+        if(params.refresh){
+          this.refreshDatabase();
+        }
+      });
   }
 
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
 
-      console.log(params.api);
+     
 
     const datasource = this.fetchDatabase();
 
@@ -267,7 +284,22 @@ export class TimesheetRtoComponent implements OnInit {
 
 
       // create RTO for themself and redirect if they can't
+      const dialogRef = this.dialog.open(CreateRtoDialogComponent, {
+       
+      // disableClose: true,
+        width: 'auto',
+        autoFocus: true,
+        position: {'top': '50px'},
+      // data: {name: this.name, animal: this.animal}
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
 
+
+
+        console.log('The dialog was closed',result);
+  
+      });
 
   }
 

@@ -25,7 +25,7 @@ const routes: Routes = [
         data: {key: 'SemDatabase'}
       },
       {
-        path: ':id',
+        path: 'run/:id',
         component: SemRunComponent,
         data: {key: 'SemRun'}
       }

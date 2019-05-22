@@ -4,44 +4,46 @@
 
 ## [0.19.5] May 2019
 
-## Timesheet
+### Timesheet
 
 - Fixed stat holiday editing bug
 - User selection dropdown now respects permissions.
 - Built Projects, Holidays, RTO Allocation, Reports tabs
 - User Summary Usage Report is now functional
 
-## Material 
+### Material 
 - Adding a material now uses the new select-material component
 - Removed property Catalog, this will be changed into a container property 
 
-## Material Container
+### Material Container
 - Added a container expiry field
 - New info blurb about where Safety Data Sheets (SDS) are stored on the Q drive
 
-## RTO
+### RTO
 - User selection dropdown now respects permissions
 
-## RTO View
+### RTO View
 - Added timerequest table, can add or remvoe requests
-  
+- deleting a request now navigates back to the database and refreshes the RTO table
 
-## SEM
+### SEM
 - Data storage location now displayed
+- Image data is now displayed
 
-## Other
+### Other
 - fixed tab CSS to better handle overflows
 - Ag grid updated to 20.1.0
 - HandsOnTable added in for quick tabular display, stil can't figure out how to copy with headers. 
 - Select MAterial component now works as intended
 - Replaced select2 supplier dropdown, with ng select, to fix display bug
+- Auth screen font resized
 
 ## [0.19.4] April 2019
 
-## Users
+### Users
 - Can add permissions to individual users now
 
-## Timesheet 
+### Timesheet 
 - Fixed navigation to remember what time sheet you were on when you click the timesheet
 - Known issue: timesheet category does not highligh using dynamic router link
 - Weekends now properly highlight regardless of timesheet state

@@ -32,7 +32,9 @@ markdown ::ng-deep h4 {
 }
 
 markdown ::ng-deep h2 {
-    margin-top: 50px; 
-    margin-bottom: 5px;
+    margin-top: 25px; 
+    margin-bottom: 15px;
+    font-size: 1.0rem;
+    font-weight: 600;
 }
 

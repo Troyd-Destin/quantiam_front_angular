@@ -15,6 +15,8 @@ export class AgGridSelectUserComponent implements ICellEditorAngularComp, AfterV
   public selectedValue: any;
   public previousValue: any;
 
+  placeholder = "Select User"
+
   private input: any;
 
   @ViewChild('userEditor', {read: ViewContainerRef}) public container;  // reference the container 
@@ -68,6 +70,8 @@ export class AgGridSelectUserComponent implements ICellEditorAngularComp, AfterV
         key === 39 ) {  // right
        // this.toggleMood();
        this.params.api.stopEditing();
+       this.params.api.tabToNextCell();
+       this.params.api.tabToPreviousCell();
        
     }
 

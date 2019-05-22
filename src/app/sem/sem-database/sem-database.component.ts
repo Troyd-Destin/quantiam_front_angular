@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SemDatabaseService } from './sem-database.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 import {  environment} from '../../../environments/environment';
 
@@ -10,6 +11,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { AgGridSelectProjectEditorComponent } from '../../shared/ag-grid-select-project/ag-grid-select-project.component';
 import { AgGridSelectUserComponent } from '../../shared/ag-grid-select-user/ag-grid-select-user.component';
 import { AgGridSemTypeComponent } from './ag-grid-sem-type/ag-grid-sem-type.component';
+import { AgGridDurationComponent } from '../../shared/ag-grid-duration/ag-grid-duration.component';
 
 @Component({
   selector: 'app-sem-database',
@@ -54,6 +56,7 @@ export class SemDatabaseComponent implements OnInit {
     private semDatabaseService: SemDatabaseService,
     private http: HttpClient,
     private notification: NotificationsService,
+    public router: Router,
   ) {
 
       this.columnDefs = [
@@ -69,7 +72,8 @@ export class SemDatabaseComponent implements OnInit {
           headerName: 'SEM',
           field: 'sem',
           width: 80,
-          filter: false,
+          hide: true,
+          filter: true,
           editable: false,
         },
         {
@@ -134,7 +138,8 @@ export class SemDatabaseComponent implements OnInit {
           field: 'duration',
           width: 100,
           filter: false,
-          editable: false,
+         // editable: false,
+          cellEditor: 'durationEditor',
           cellRenderer: (cell) => {
 
 
@@ -160,15 +165,29 @@ export class SemDatabaseComponent implements OnInit {
           editable: false,
         },
         {
-          headerName: 'Actions',
+          headerName: 'View',
           field: 'id',
-         // width: 100,
+          width: 60,
           filter: false,
           editable: false,
-          cellRenderer: (cell) => {
+          onCellClicked: (cell ) => {
 
+            if (cell.data) {
+              this.router.navigate(['/sem/run/'+cell.data.semrun_id]);
+             }
+            //  console.log('worked');
+  
+          },
+          cellRenderer: function(cell) {
+
+            // console.log(cell);
+             if (cell.value) {
+               return '<p style="color:green; cursor:pointer;">View</p>';
+             }
+   
+   
              return '';
-           }
+           },
         },
 
       ];
@@ -199,6 +218,7 @@ export class SemDatabaseComponent implements OnInit {
         projectEditor: AgGridSelectProjectEditorComponent,
         userEditor: AgGridSelectUserComponent,
         typeEditor: AgGridSemTypeComponent,
+        durationEditor: AgGridDurationComponent
       };
    }
 
@@ -340,6 +360,7 @@ export class SemDatabaseComponent implements OnInit {
     if (cell.column.colId === 'project_id') { params.project_id = cell.value; }
     if (cell.column.colId === 'samplename') { params.samplename = cell.value; }
     if (cell.column.colId === 'type') { params.type_id = cell.data.type.type_id; }
+    if (cell.column.colId === 'duration') { params.duration = cell.value; }
 
     console.log(params);
 

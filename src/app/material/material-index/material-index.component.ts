@@ -46,7 +46,7 @@ export class MaterialIndexComponent implements OnInit, OnDestroy {
        });
 
       // Default Nav Pane
-      this.router.navigate(['material/container/database']);
+      //this.router.navigate(['material/container/database']);
 
 
 

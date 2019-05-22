@@ -2,7 +2,7 @@
     <app-select-user
     #userEditor 
         (change)="selectValue($event)"
-        placeholder="Select Employee"
+        [placeholder]="previousValue.name"
     ></app-select-user>
   
   </div>

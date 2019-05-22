@@ -1,4 +1,11 @@
-<div fxLayout="column" fxLayoutGap="10px">
+<div *ngIf="!rto?.user.id" fxLayout="row" fxLayoutAlign="center center">
+
+    <h3> This RTO does not exist. </h3>
+
+</div>
+
+
+<div fxLayout="column" fxLayoutGap="10px" *ngIf="rto?.user.id">
     <div fxLayout="row" fxFlex>
 
         <div class="status-bar-pending" *ngIf="rto?.status !== 'approved'" fxFlex>PENDING</div>
@@ -39,7 +46,7 @@
                             </div>
                         </div>
                     </mat-card-title>
-                    <mat-card-subtitle> A list of everything you want to take time off for. </mat-card-subtitle>
+                    <mat-card-subtitle> Is asking for the following time off. </mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content>
 

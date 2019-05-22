@@ -1,9 +1,8 @@
 
 <div class="background" (keydown)="onKeyDown($event)">
   <app-select-project
-  #projectEditor 
+      #projectEditor 
       (change)="selectValue($event)"
-      placeholder="previousValue"
+      [placeholder]="previousValue"
   ></app-select-project>
-
 </div>

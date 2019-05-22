@@ -1,7 +1,7 @@
 <ng-select 
 
-  [items]="itemsBuffer"
-  [virtualScroll]="virtualScroll"
+  [items]="items"
+  
   [loading]="loading"
 	
 	[multiple]="multiple"
@@ -10,13 +10,15 @@
   (change)="onChange($event)"
   (add)="onAdd($event)"
   (remove)="onRemove($event)"
-  (open)="onOpen($event)"
-  (clear)="onClear($event)"
+  (open)="onOpen()"
+  (clear)="onClear()"
 
   [searchFn]="customSearchFn" 
   [(ngModel)]="selectedValue"	
 	bindValue="type_id"
-	bindLabel="type"
+  bindLabel="type"
+
+  appendTo="body"
 >   
   <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm" >
       <div fxLayout="row"  fxLayoutAlign="start center"  >

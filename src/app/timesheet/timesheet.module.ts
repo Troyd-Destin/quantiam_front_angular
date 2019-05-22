@@ -26,6 +26,7 @@ import { ProjectUserHoursComponent } from './timesheet-report/project-user-hours
 import { UserRTOBankStatusComponent } from './timesheet-report/user-rtobank-status/user-rtobank-status.component';
 import { UserAbsenceSummaryComponent } from './timesheet-report/user-absence-summary/user-absence-summary.component';
 import { TimesheetSettingsComponent } from './timesheet-settings/timesheet-settings.component';
+import { CreateRtoDialogComponent } from './create-rto-dialog/create-rto-dialog.component';
 
 @NgModule({
   imports: [
@@ -37,8 +38,9 @@ import { TimesheetSettingsComponent } from './timesheet-settings/timesheet-setti
     MaterialDesignModule,
     SharedModule
   ],
+  entryComponents:[ CreateRtoDialogComponent ],
   declarations: [ NumericEditor, TimesheetIndexComponent, TimesheetComponent, 
     TimesheetBankComponent, TimesheetSimpleComponent, TimesheetCalendarComponent, TimesheetRtoComponent, TimesheetRtoViewComponent,
-     TimesheetProjectComponent, TimesheetHolidayComponent, TimesheetRtoAllocationComponent, TimesheetReportComponent, UserHoursComponent, ProjectUserHoursComponent, UserRTOBankStatusComponent, UserAbsenceSummaryComponent, TimesheetSettingsComponent]
+     TimesheetProjectComponent, TimesheetHolidayComponent, TimesheetRtoAllocationComponent, TimesheetReportComponent, UserHoursComponent, ProjectUserHoursComponent, UserRTOBankStatusComponent, UserAbsenceSummaryComponent, TimesheetSettingsComponent, CreateRtoDialogComponent]
 })
 export class TimesheetModule { }

@@ -46,11 +46,19 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
   this.locationList = [];
 
-  this.columnDefs = [{
+  this.columnDefs = [
+      {
         field: 'container_id',
         width: 100,
         hide: true,
-        headerName: 'ID',
+        headerName: 'Container ID',
+
+      },
+      {
+        field: 'material_id',
+        width: 100,
+        hide: true,
+        headerName: 'Material ID',
 
       },
       {

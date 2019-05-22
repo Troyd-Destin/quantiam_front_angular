@@ -1,3 +1,91 @@
-<p>
-  sem-run works!
-</p>
+<div fxLayout="row" fxLayoutAlign="center center" *ngIf="!Semrun">
+
+    <h5> This Semrun does not exist, or failed to load. </h5>
+
+
+</div>
+
+
+<div fxLayout="column" fxLayoutGap="20px" *ngIf="Semrun">
+
+    <div fxLayout="column" *ngIf="Semrun?.q_path">
+
+        <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center" fxFlex>
+            <div fxFlex=30>
+                <h4> {{Semrun.samplename}} </h4>
+            </div>
+            <div fxLayoutAlign="start center" fxFlex>
+                <ngb-alert type="info" [dismissible]="false" style="margin-top:7px; margin-bottom:0px;">
+                    <b> Data Storage Location: </b>
+                    <a style="margin-left:10px;" target="_blank" [href]="Semrun?.q_path"> {{Semrun.q_path}} </a>
+                </ngb-alert>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="10px" fxFlex=20>
+                <button mat-raised-button *ngIf="Semrun.previous"  [routerLink]="[ '/sem/run/', Semrun.previous ]"> Previous </button>
+                <button mat-raised-button *ngIf="Semrun.next"  [routerLink]="[ '/sem/run/', Semrun.next ]"> Next </button>
+               
+
+            </div>
+
+
+        </div>
+
+
+
+
+    </div>
+
+    <div fxLayout="row wrap" fxLayoutGap="20px" *ngIf="Semrun?.images">
+
+        <div *ngFor="let img of Semrun.images" fxFlex=10 (click)="selectImage(img)" class="clickable image-wrapper">
+
+
+
+            <img *ngIf="img.base64" width=100% [src]="domSanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,'+img.base64)" />
+            <span class="image_label"> {{img.name}}
+
+                <mat-chip color="accent" *ngIf="img.assoc_files[0]" selected>More</mat-chip>
+            </span>
+
+        </div>
+       
+
+    </div>
+
+
+    <div fxLayout="row" fxLayoutGap="10px" *ngIf="selectedImage?.base64" fxLayoutAlign="center start">
+
+        <div fxLayout="column" fxFlex.gt-md=40 fxLayoutAlign="center center" fxLayoutGap="10px">
+            <div fxLayout="column" fxLayoutAlign="center center">
+                <h5>{{selectedImage.name}}</h5>
+                <small>{{selectedImage.CM_SIGNAL}} {{selectedImage.CM_MAG}}x {{selectedImage.CM_ACCEL_VOLT}}kV</small>
+            </div>
+
+            <img *ngIf="selectedImage?.base64" width=90% [src]="domSanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,'+selectedImage.base64)" />
+        </div>
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" *ngIf="selectedImage.assoc_files[0]">
+            <div fxLayout="column" fxLayoutAlign="center center">
+                <h5>Associated</h5>
+                <small> Points, Maps, etc</small>
+            </div>
+            <div fxLayout="row wrap" fxFlex.gt-md=20 fxLayoutGap="5px" fxLayoutAlign="center center">
+                <div *ngFor="let img of selectedImage.assoc_files" class="clickable image-wrapper" [hidden]="img.type !== 'image'" (click)="selectedSubImage = img">
+                    <img *ngIf="img.base64" width=150px [src]="domSanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,'+img.base64)" />
+                    <span class="image_label"> {{img.name}}</span>
+                </div>
+            </div>
+        </div>
+        <div fxLayout="column" fxFlex.gt-md=40 fxLayoutAlign="center center" fxLayoutGap="10px" *ngIf="selectedImage.assoc_files[0]">
+            <div fxLayout="column" fxLayoutAlign="center center">
+                <h5>{{selectedSubImage.name}}</h5>
+                <small> Selected associated Image </small>
+            </div>
+            <img *ngIf="selectedSubImage?.base64" width=90% [src]="domSanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,'+selectedSubImage.base64)" />
+
+        </div>
+
+    </div>
+
+
+</div>

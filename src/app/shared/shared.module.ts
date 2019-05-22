@@ -8,15 +8,18 @@ import { FormsModule } from '@angular/forms';
 import { FileDropModule } from 'ngx-file-drop';
 import { AgGridModule } from 'ag-grid-angular';
 
-import {FlexLayoutModule} from '@angular/flex-layout';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import {
-  MatIconModule,
-  MatButtonModule,
-  MatCardModule,
-   MatCheckboxModule,
+    MatIconModule,
+    MatButtonModule,
+    MatCardModule,
+    MatCheckboxModule,
+
 
 } from '@angular/material';
+
+import { MatInputModule } from '@angular/material/input';
 
 import { Select2Module } from 'ng2-select2';
 import { Select2MaterialComponent } from './select2-material/select2-material.component';
@@ -42,64 +45,68 @@ import { SelectSemrunTypeComponent } from './select-semrun-type/select-semrun-ty
 import { AgGridSemTypeComponent } from '../sem/sem-database/ag-grid-sem-type/ag-grid-sem-type.component';
 import { SelectMaterialComponent } from './select-material/select-material.component';
 import { SelectMaterialSupplierComponent } from './select-material-supplier/select-material-supplier.component';
+import { AgGridDurationComponent } from './ag-grid-duration/ag-grid-duration.component';
 
 @NgModule({
-  imports: [
-    AgGridModule.withComponents([AgGridSelectProjectEditorComponent,AgGridSelectUserComponent, AgGridSemTypeComponent]),
-    CommonModule,
-    Select2Module,
-    NgSelectModule,
-    FormsModule,
-    FlexLayoutModule,
-    MatIconModule,
-    MatCardModule,
-    MatButtonModule,
-    MatCheckboxModule,
-    FileDropModule,
-  ],
-  declarations: [
-    SelectProjectComponent,
-    Select2MaterialComponent,
-    Select2MaterialLotComponent,
-    Select2LocationComponent,
-    Select2MaterialSupplierComponent,
-    Select2UserComponent,
-    Select2MaterialLotContainerComponent,
-    SelectUserComponent,
-    SelectExperimentComponent,
-    SelectMaterialContainerComponent,
-    SelectSampleComponent,
-    SelectExperimentTypeComponent,
-    SelectTgarunComponent,
-    SelectPermissionComponent,
-    SelectGroupComponent,
-    AgGridSelectProjectEditorComponent,
-    AgGridSelectUserComponent,
-    AgGridSemTypeComponent,
-    SelectSemrunTypeComponent,
-    SelectMaterialComponent,
-    SelectMaterialSupplierComponent
-  ],
-  exports: [
-    SelectMaterialSupplierComponent,
-    SelectMaterialComponent,
-    SelectSemrunTypeComponent,
-    Select2MaterialComponent,
-    Select2MaterialLotComponent,
-    Select2MaterialSupplierComponent,
-    Select2LocationComponent,
-    Select2UserComponent,
-    SelectProjectComponent,
-    SelectUserComponent,
-    SelectExperimentComponent,
-    SelectMaterialContainerComponent,
-    SelectSampleComponent,
-    SelectTgarunComponent,
-    SelectPermissionComponent,
-    FileDropModule,
-    AgGridModule
+    imports: [
+        AgGridModule.withComponents([AgGridSelectProjectEditorComponent, AgGridSelectUserComponent, AgGridSemTypeComponent, AgGridDurationComponent]),
+        CommonModule,
+        Select2Module,
+        NgSelectModule,
+        FormsModule,
+        FlexLayoutModule,
+        MatIconModule,
+        MatCardModule,
+        MatButtonModule,
+        MatCheckboxModule,
+        MatInputModule,
+        FileDropModule,
+    ],
+    declarations: [
+        SelectProjectComponent,
+        Select2MaterialComponent,
+        Select2MaterialLotComponent,
+        Select2LocationComponent,
+        Select2MaterialSupplierComponent,
+        Select2UserComponent,
+        Select2MaterialLotContainerComponent,
+        SelectUserComponent,
+        SelectExperimentComponent,
+        SelectMaterialContainerComponent,
+        SelectSampleComponent,
+        SelectExperimentTypeComponent,
+        SelectTgarunComponent,
+        SelectPermissionComponent,
+        SelectGroupComponent,
+        AgGridSelectProjectEditorComponent,
+        AgGridSelectUserComponent,
+        AgGridSemTypeComponent,
+        SelectSemrunTypeComponent,
+        SelectMaterialComponent,
+        SelectMaterialSupplierComponent,
+        AgGridDurationComponent,
+        
+    ],
+    exports: [
+        SelectMaterialSupplierComponent,
+        SelectMaterialComponent,
+        SelectSemrunTypeComponent,
+        Select2MaterialComponent,
+        Select2MaterialLotComponent,
+        Select2MaterialSupplierComponent,
+        Select2LocationComponent,
+        Select2UserComponent,
+        SelectProjectComponent,
+        SelectUserComponent,
+        SelectExperimentComponent,
+        SelectMaterialContainerComponent,
+        SelectSampleComponent,
+        SelectTgarunComponent,
+        SelectPermissionComponent,
+        FileDropModule,
+        AgGridModule
 
-  ],
-  schemas: [NO_ERRORS_SCHEMA]
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
 })
-export class SharedModule { }
+export class SharedModule {}

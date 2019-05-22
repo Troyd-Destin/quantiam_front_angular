@@ -5,7 +5,7 @@
 	[items]="items"
 	style="min-width: 200px;"
 	[(ngModel)]="selectedValue"
-	placeholder="Project"
+	[placeholder]="placeholder"
 	[multiple]="multiple"
 
 	(change)="onChange($event)"
