@@ -6,7 +6,8 @@
 /* Style Overwrites  */
 
 .mat-form-field-infix {
-    width: 100% !important;
+	width: 100% !important;
+	min-width: 100px !important;
 }
 
 .mat-select-panel {

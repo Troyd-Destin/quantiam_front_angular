@@ -12,6 +12,11 @@
 - User Summary Usage Report is now functional
 - Fixed Display of Machines in the user list, navigating to machines and downloading timesheets
 
+### Timesheet Statistics
+- Added a Company view, which breaks down timesheet hours on a categorical basis
+- Fancy pie chart
+- Fancy monthly hours as a percent time chart. 
+
 ### Material 
 - Adding a material now uses the new select-material component
 - Removed property Catalog, this will be changed into a container property 

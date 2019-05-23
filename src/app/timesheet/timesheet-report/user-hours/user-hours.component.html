@@ -42,7 +42,7 @@
 
               </div>
               <div fxLayout="row" fxLayoutAlign="center center">  
-                  <h1> Or </h1>
+                  <h5> Or </h5>
               </div>
               <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">  
                 <mat-form-field>
@@ -65,7 +65,7 @@
               <mat-checkbox [(ngModel)]="salary"> Salary </mat-checkbox>
             </div>
            
-              <div fxLayout="row"  fxLayoutAlign="end center" (click)="fetchData()" fxFlex> <button mat-button> Fetch Report </button> </div>
+              <div fxLayout="row"  fxLayoutAlign="end center" (click)="fetchData()" fxFlex> <button mat-raised-button color="primary" [disabled]="!endDate && !startDate"> Fetch Report </button> </div>
            
            
           </mat-card-actions>
