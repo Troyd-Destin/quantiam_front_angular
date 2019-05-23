@@ -128,7 +128,7 @@
 							
 						</mat-expansion-panel>
 						
-					<mat-divider></mat-divider >
+						<mat-divider *ngIf="userService.isActive()"></mat-divider >
 						<mat-expansion-panel expanded="true"   *ngIf="userService.isActive()">
 						 <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
 							<mat-panel-title>

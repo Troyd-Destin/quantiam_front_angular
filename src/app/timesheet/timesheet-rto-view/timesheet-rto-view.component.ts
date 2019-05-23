@@ -211,6 +211,11 @@ export class TimesheetRtoViewComponent implements OnInit {
         this.http.post(environment.apiUrl + '/mail/send', params).subscribe((r) => {
 
             // Notified Supervisor
+
+            this.selectedSupervisorToNotifyId = null; 
+
+            this.notification.info('Email Sent', 'We notified the Supervisor', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
+             
         });
     }
 

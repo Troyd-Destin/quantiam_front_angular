@@ -23,7 +23,7 @@
 
         <div  fxLayout="row"  >   
           
-          <p [hidden]="showSelectBox" >{{timeSheetObj?.fullname}} </p> 
+          <p [hidden]="showSelectBox" >{{timeSheetObj.userID}} - <b>{{timeSheetObj?.fullname}}</b> </p> 
 
           <app-select-user 
                 [placeholder]="timeSheetObj?.fullname"
@@ -32,6 +32,7 @@
                 [selectedValue]="timeSheetObj?.userID" 
                 [authorizedSubordinatesOrMachines]=true
                 [allOptions]="userService.hasPermission([43,1])"
+                appendTo=''
           ></app-select-user>
         </div>
         <p> Pay Period {{routeParams.payperiod}}, {{routeParams.year}} </p>
@@ -46,8 +47,8 @@
           <table class="" style=" font-size:12px;">
               <tbody>
               <tr>
-              <td style="padding-right:10px">Absence</td>
-              <td style="background-color: #E8FAFF;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+              <!-- <td style="padding-right:10px">Absence</td>
+              <td style="background-color: #E8FAFF;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td> -->
               <td style="padding-right:10px; padding-left:10px;">Weekend / Holiday </td>
               <td style="background-color: #E8F2FF;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
               </tr>
@@ -221,7 +222,7 @@
           <h3 class="page-header" *ngIf="timeSheetObj.rto"> Time Off Requests 
           
           </h3>
-          <table  *ngIf="timeSheetObj.rto" class="stattable table table-stats table-condensed table-striped table-shadow"> 
+          <table  *ngIf="timeSheetObj.rto" class="stattable table table-hover table-stats table-condensed table-striped table-shadow"> 
             <thead> 
                 <tr>
                   <th> ID </th>
@@ -235,7 +236,7 @@
                 </tr>
             </thead>
             <tbody *ngFor="let rto of timeSheetObj?.rto">
-                <tr  *ngFor="let time of rto.requested_time" style="cursor:pointer;">
+                <tr  *ngFor="let time of rto.requested_time" style="cursor:pointer;" [routerLink]="[ '/timesheet/rto', rto.requestID ]">
                  
                   <td > {{rto.requestID}}</td>
                   <td > {{time.date}}</td>

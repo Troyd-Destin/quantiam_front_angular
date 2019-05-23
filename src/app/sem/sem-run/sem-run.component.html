@@ -41,8 +41,8 @@
         <div *ngFor="let img of Semrun.images" fxFlex=10 (click)="selectImage(img)" class="clickable image-wrapper">
 
 
-
-            <img *ngIf="img.base64" width=100% [src]="domSanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,'+img.base64)" />
+         
+            <img [class.active-image]="img?.name === selectedImage?.name" *ngIf="img.base64" width=100% [src]="domSanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,'+img.base64)" />
             <span class="image_label"> {{img.name}}
 
                 <mat-chip color="accent" *ngIf="img.assoc_files[0]" selected>More</mat-chip>

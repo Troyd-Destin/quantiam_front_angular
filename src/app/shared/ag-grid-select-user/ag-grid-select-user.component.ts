@@ -15,26 +15,26 @@ export class AgGridSelectUserComponent implements ICellEditorAngularComp, AfterV
   public selectedValue: any;
   public previousValue: any;
 
-  placeholder = "Select User"
+  placeholder = 'Select User'
 
   private input: any;
 
-  @ViewChild('userEditor', {read: ViewContainerRef}) public container;  // reference the container 
+  @ViewChild('userEditor', {read: ViewContainerRef}) public container;  // reference the container
 
   constructor() { }
 
   ngAfterViewInit() {
-    window.setTimeout(() => {    
+    window.setTimeout(() => {
    //   console.log(this.container.element.nativeElement.firstChild.firstChild.firstChild.children[1].firstChild);
        this.input = this.container.element.nativeElement.firstChild.firstChild.firstChild.children[1].firstChild;
-       
-       //console.log(this.input);
+
+       // console.log(this.input);
        this.input.value = this.params.charPress;
-      
+
        this.input.focus();
     //   this.params.api.clearFocusedCell();
 
-    },100);
+    }, 100);
   }
 
   isPopup(): boolean {
@@ -49,13 +49,12 @@ export class AgGridSelectUserComponent implements ICellEditorAngularComp, AfterV
 
   getValue(): any {
 
-    if(typeof this.selectedValue === 'undefined'){ return this.previousValue; }
-    
+    if (typeof this.selectedValue === 'undefined') { return this.previousValue; }
+
     return this.selectedValue;
   }
 
-  selectValue(event)
-  {
+  selectValue(event) {
     console.log(event);
     this.selectedValue = event;
     this.params.api.stopEditing();
@@ -72,11 +71,11 @@ export class AgGridSelectUserComponent implements ICellEditorAngularComp, AfterV
        this.params.api.stopEditing();
        this.params.api.tabToNextCell();
        this.params.api.tabToPreviousCell();
-       
+
     }
 
-    if(key === 39){ this.params.api.tabToNextCell(); }
-    if(key === 37){ this.params.api.tabToPreviousCell(); }
+    if (key === 39) { this.params.api.tabToNextCell(); }
+    if (key === 37) { this.params.api.tabToPreviousCell(); }
   }
 
 }

@@ -276,6 +276,7 @@ export class TimesheetComponent implements OnInit {
     // Auth layer on fetching.
     let url = '';
 
+
     if (this.routeParams.year.length > 0) { url = '/timesheet/' + this.routeParams.userId + '/year/' + this.routeParams.year + '/payperiod/' + this.routeParams.payperiod + ''; } else {
       this.routeParams.userId = this.userService.currentUser.id;
       url = '/timesheet/' +  this.routeParams.userId;
@@ -661,9 +662,11 @@ export class TimesheetComponent implements OnInit {
 
   selectedUserChanged(event) {
 
+    this.routeParams.userId = event.id;
 
-    this.routeParams.userId = event.employeeid;
-    this.router.navigate([`/timesheet/${event.id}/year/${this.routeParams.year}/payperiod/${this.routeParams.payperiod}`]);
+
+
+    this.router.navigate([`/timesheet/${this.routeParams.userId}/year/${this.routeParams.year}/payperiod/${this.routeParams.payperiod}`]);
     this.showSelectBox = false;
 
   }

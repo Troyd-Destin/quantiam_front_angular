@@ -10,6 +10,7 @@
 - User selection dropdown now respects permissions.
 - Built Projects, Holidays, RTO Allocation, Reports tabs
 - User Summary Usage Report is now functional
+- Fixed Display of Machines in the user list, navigating to machines and downloading timesheets
 
 ### Material 
 - Adding a material now uses the new select-material component

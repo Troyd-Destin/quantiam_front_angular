@@ -8,12 +8,12 @@
     text-align: center;
 }
 
-.image-wrapper :focus{
+.active-image{
 
-    border: 3px solid #dadada;
+    border: 2px solid #dadada;
     outline: none;
     border-color: #9ecaed;
-    box-shadow: 0 0 10px #9ecaed;
+    box-shadow: 0 0 5px #9ecaed;
 }
 
 small{

@@ -99,7 +99,19 @@
                 <mat-card id="requested_time_card">
                     <mat-card-header>
 
-                        <mat-card-title>Create a Time Request</mat-card-title>
+                        <mat-card-title fxLayout="row" fxFlex>
+
+                                <div fxFlex>  Create Time Request </div>
+                            
+                               
+
+                                <div fxFlex fxLayoutAlign="end start" font-size="11px;">
+
+                                        <mat-icon  class="clickable" (click)="showTimeOffRequestForm = false">close</mat-icon>
+
+                                </div>
+                               
+                        </mat-card-title>
                         <!-- <mat-card-subtitle> Add all of your unique requests here. </mat-card-subtitle> -->
                     </mat-card-header>
                     <mat-card-content>
@@ -123,7 +135,7 @@
                                 </mat-select>
                             </mat-form-field>
 
-                            <div *ngIf="requestTime.hours < 8 && requestTime.hours" fxLayoutGap="10px" fxLayout="row" fxFlex=50>
+                            <div *ngIf="requestTime.hours < 8 && requestTime.type" fxLayoutGap="10px" fxLayout="row" fxFlex=50>
 
                                 <mat-form-field>
                                     <input type="text" matInput name="start_hour" [(ngModel)]="requestTime.start_hour" [matAutocomplete]="auto" placeholder="Start Hour">

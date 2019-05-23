@@ -16,12 +16,14 @@
             <a mat-tab-link  routerLink="rto/database" routerLinkActive="mat-tab-link-active"> RTO </a>
             <a mat-tab-link *ngIf="currentTimesheet.requestID.length > 0" [routerLink]="['/timesheet/rto', this.currentTimesheet.requestID]"
                  routerLinkActive="mat-tab-link-active"> RTO - {{this.currentTimesheet.requestID}} </a>
+            <a mat-tab-link  routerLink="statistics" routerLinkActive="mat-tab-link-active"> Statistics </a>
+            
             <a mat-tab-link *ngIf="userService.hasPermission([24,25,37])" routerLink="settings" routerLinkActive="mat-tab-link-active"> Settings </a>
             <!-- <a mat-tab-link *ngIf="userService.hasPermission(24)" routerLink="project" routerLinkActive="mat-tab-link-active"> Project </a>
             <a mat-tab-link *ngIf="userService.hasPermission(25)" routerLink="holiday" routerLinkActive="mat-tab-link-active"> Holidays </a>
             <a mat-tab-link *ngIf="userService.hasPermission(37)" routerLink="rto/allocation" routerLinkActive="mat-tab-link-active"> RTO Allocation </a> -->
             <a mat-tab-link *ngIf="userService.hasPermission(35)" routerLink="report" routerLinkActive="mat-tab-link-active"> Reports </a>
-            
+           
             
             
             

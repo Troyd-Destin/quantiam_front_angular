@@ -31,6 +31,7 @@ export class SelectUserComponent implements OnInit, OnDestroy {
   @Input() authorizedSubordinatesOrMachines = false;
   @Input() showSubordinatesOnly = false;
   @Input() allOptions = false;
+  @Input() appendTo = 'body';
 
   // Outputs
   @Output() change = new EventEmitter<any>();
@@ -79,13 +80,13 @@ export class SelectUserComponent implements OnInit, OnDestroy {
   showItems() {
 
     // check for all Options
-    // console.log(this.allItems);
-    if (this.allOptions) {
-
+  
+    if (this.allOptions === true) {
 
         const everything = this.allItems;
 
        this.machineItems.forEach(element => {
+              element.id = element.id + 'm';
               everything.push(element);
           });
 
@@ -114,13 +115,11 @@ export class SelectUserComponent implements OnInit, OnDestroy {
         return x.id === this.user.id;
 
        });
-       /// loop through all items and filter those who are on the authedUser's subodrinates or machines arrays
-
+    
       this.items = this.user.subordinates.concat(this.user.machines);
       this.items.unshift(userObj);
       return this.activityFilter(this.items);
-      // console.log(this.items);
-      // return;
+     
 
 
      }

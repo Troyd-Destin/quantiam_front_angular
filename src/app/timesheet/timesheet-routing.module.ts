@@ -18,6 +18,10 @@ import { UserRTOBankStatusComponent } from './timesheet-report/user-rtobank-stat
 import { UserAbsenceSummaryComponent } from './timesheet-report/user-absence-summary/user-absence-summary.component';
 
 
+import { TimesheetStatisticsComponent } from './timesheet-statistics/timesheet-statistics.component';
+import { TimesheetStatisticsUserComponent } from './timesheet-statistics/timesheet-statistics-user/timesheet-statistics-user.component';
+import { TimesheetStatisticsCompanyComponent } from './timesheet-statistics/timesheet-statistics-company/timesheet-statistics-company.component';
+
 import { TimesheetSettingsComponent } from './timesheet-settings/timesheet-settings.component';
 
 import { UserHoursComponent } from './timesheet-report/user-hours/user-hours.component';
@@ -73,6 +77,33 @@ const routes: Routes = [{
           data: { key: 'timesheet-rto-allocation'},
           pathMatch: 'full',
           component: TimesheetRtoAllocationComponent,
+        },
+
+      ]
+    },
+    {
+      path: 'statistics',
+      data: { key: 'timesheet-statistics'},
+      component: TimesheetStatisticsComponent,
+      children: [
+        {
+          path: '',
+          pathMatch: 'full',
+          redirectTo: 'user'
+        },
+        {
+          path: 'company',
+          data: { key: 'timesheet-statistics-company'},
+          component: TimesheetStatisticsCompanyComponent,
+        },
+        {
+          path: 'user',
+          redirectTo: 'user/',
+        },
+        {
+          path: 'user/:id',
+          data: { key: 'timesheet-statistics-user'},
+          component: TimesheetStatisticsUserComponent,
         },
 
       ]

@@ -5,6 +5,25 @@
 
 /* Style Overwrites  */
 
+.mat-form-field-infix {
+    width: 100% !important;
+}
+
+.mat-select-panel {
+    min-width: 112px;
+    max-width: 280px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-top: 0;
+    padding-bottom: 0;
+    max-height: 256px;
+    min-width: 100%;
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #dcdcdc4d;
+}
+
 body {
 
 	font-size: 0.8rem;
@@ -16,6 +35,9 @@ small{
     color: #909090;
 }
 
+.padding{
+	padding: 10px;
+}
 
 /* Ag Grid Overwrites */
 
@@ -253,7 +275,7 @@ color: rgb(255, 255, 255);
 }
 .simple-notification
 {
-	border-radius: 25px !important;
+	
 	padding: 5px 0px 5px 20px !important;
 	min-height: inherit !important;
 	z-index:9000;

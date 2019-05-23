@@ -15,11 +15,11 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class SemRunComponent implements OnInit {
 
   private semrunID;
-  
+
   Semrun;
-  selectedImage:any;
-  selectedSubImage:any;
-  
+  selectedImage: any;
+  selectedSubImage: any;
+
   constructor(
     private http: HttpClient,
     private notification: NotificationsService,
@@ -44,42 +44,40 @@ ngOnInit() {
 
 }
 
-    clearView()
-    {
+    clearView() {
 
       this.Semrun = null;
       this.selectedImage = null;
-      this.selectedSubImage = null; 
+      this.selectedSubImage = null;
 
     }
 
-    fetchSemrunData(){
+    fetchSemrunData() {
 
           this.clearView();
 
-          this.http.get(environment.apiUrl + '/instrument/sem/run/' + this.semrunID).subscribe((r)=>{
+          this.http.get(environment.apiUrl + '/instrument/sem/run/' + this.semrunID).subscribe((r) => {
 
               console.log(r);
               this.Semrun = r;
 
           },
-          (error)=>{
+          (error) => {
 
             this.notification.error('Error', 'This Semrun failed to load.', {timeOut: 2000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
 
 
-          })
+          });
 
     }
 
 
-    selectImage(img)
-    {
+    selectImage(img) {
       this.selectedImage = img;
-      
+
       this.selectedImage.assoc_files.forEach(element => {
-        
-        if(element.type == 'image') this.selectedSubImage = element;
+
+        if (element.type == 'image') { this.selectedSubImage = element; }
 
         return;
       });

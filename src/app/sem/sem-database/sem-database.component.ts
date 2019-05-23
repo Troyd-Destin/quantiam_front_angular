@@ -173,10 +173,10 @@ export class SemDatabaseComponent implements OnInit {
           onCellClicked: (cell ) => {
 
             if (cell.data) {
-              this.router.navigate(['/sem/run/'+cell.data.semrun_id]);
+              this.router.navigate(['/sem/run/' + cell.data.semrun_id]);
              }
             //  console.log('worked');
-  
+
           },
           cellRenderer: function(cell) {
 
@@ -184,8 +184,8 @@ export class SemDatabaseComponent implements OnInit {
              if (cell.value) {
                return '<p style="color:green; cursor:pointer;">View</p>';
              }
-   
-   
+
+
              return '';
            },
         },
@@ -289,8 +289,7 @@ export class SemDatabaseComponent implements OnInit {
   }
 
   filterProject(event) {
-    if (event) {  this.filteredProject = event.id; }
-    else { this.filteredProject = ''; }
+    if (event) {  this.filteredProject = event.id; } else { this.filteredProject = ''; }
       this.refreshDatabase();
   }
   clearFilterProject(event) {

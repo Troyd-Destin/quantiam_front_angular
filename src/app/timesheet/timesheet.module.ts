@@ -2,8 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FullCalendarModule } from 'ng-fullcalendar';
 
+
 import { HotTableModule } from '@handsontable/angular';
 
+import { HighchartsChartModule } from 'highcharts-angular';
 
 import { SharedModule } from '../shared/shared.module';
 import { MaterialDesignModule } from '../material-design/material-design.module';
@@ -27,12 +29,15 @@ import { UserRTOBankStatusComponent } from './timesheet-report/user-rtobank-stat
 import { UserAbsenceSummaryComponent } from './timesheet-report/user-absence-summary/user-absence-summary.component';
 import { TimesheetSettingsComponent } from './timesheet-settings/timesheet-settings.component';
 import { CreateRtoDialogComponent } from './create-rto-dialog/create-rto-dialog.component';
+import { TimesheetStatisticsComponent } from './timesheet-statistics/timesheet-statistics.component';
+import { TimesheetStatisticsUserComponent } from './timesheet-statistics/timesheet-statistics-user/timesheet-statistics-user.component';
+import { TimesheetStatisticsCompanyComponent } from './timesheet-statistics/timesheet-statistics-company/timesheet-statistics-company.component';
 
 @NgModule({
   imports: [
     CommonModule,
     TimesheetRoutingModule,
-    
+    HighchartsChartModule,
     HotTableModule.forRoot(),
     
     MaterialDesignModule,
@@ -41,6 +46,9 @@ import { CreateRtoDialogComponent } from './create-rto-dialog/create-rto-dialog.
   entryComponents:[ CreateRtoDialogComponent ],
   declarations: [ NumericEditor, TimesheetIndexComponent, TimesheetComponent, 
     TimesheetBankComponent, TimesheetSimpleComponent, TimesheetCalendarComponent, TimesheetRtoComponent, TimesheetRtoViewComponent,
-     TimesheetProjectComponent, TimesheetHolidayComponent, TimesheetRtoAllocationComponent, TimesheetReportComponent, UserHoursComponent, ProjectUserHoursComponent, UserRTOBankStatusComponent, UserAbsenceSummaryComponent, TimesheetSettingsComponent, CreateRtoDialogComponent]
+     TimesheetProjectComponent, TimesheetHolidayComponent, TimesheetRtoAllocationComponent, TimesheetReportComponent, UserHoursComponent,
+      ProjectUserHoursComponent, UserRTOBankStatusComponent, UserAbsenceSummaryComponent, TimesheetSettingsComponent, CreateRtoDialogComponent, TimesheetStatisticsComponent, TimesheetStatisticsUserComponent, TimesheetStatisticsCompanyComponent,
+      
+      ]
 })
 export class TimesheetModule { }
