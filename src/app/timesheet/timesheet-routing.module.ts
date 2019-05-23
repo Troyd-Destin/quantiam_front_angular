@@ -89,7 +89,7 @@ const routes: Routes = [{
         {
           path: '',
           pathMatch: 'full',
-          redirectTo: 'user'
+          redirectTo: 'company'
         },
         {
           path: 'company',
