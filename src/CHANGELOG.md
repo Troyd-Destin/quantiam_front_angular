@@ -34,6 +34,7 @@
 
 ### SEM
 - Data storage location now displayed
+- Auto refresh functionality, with computer sepecific settings toggle.
 - Image data is now displayed
 
 ### Other

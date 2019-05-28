@@ -13,6 +13,9 @@ import { AgGridSelectUserComponent } from '../../shared/ag-grid-select-user/ag-g
 import { AgGridSemTypeComponent } from './ag-grid-sem-type/ag-grid-sem-type.component';
 import { AgGridDurationComponent } from '../../shared/ag-grid-duration/ag-grid-duration.component';
 
+import { SettingsService } from '../../services/settings/settings.service';
+
+
 @Component({
   selector: 'app-sem-database',
   templateUrl: './sem-database.component.html',
@@ -52,11 +55,18 @@ export class SemDatabaseComponent implements OnInit {
    totalRows;
 
 
+   componentSettings = {
+
+    autoRefreshTable: false,
+   }
+
+
   constructor(
     private semDatabaseService: SemDatabaseService,
     private http: HttpClient,
     private notification: NotificationsService,
     public router: Router,
+    private settings: SettingsService
   ) {
 
       this.columnDefs = [
@@ -223,7 +233,15 @@ export class SemDatabaseComponent implements OnInit {
    }
 
   ngOnInit() {
+
+     this.settings.get(this.constructor.name) ? this.componentSettings = this.settings.get(this.constructor.name) : this.settings.set(this.constructor.name, this.componentSettings);
+
+    setInterval(()=>{
+
+      if(this.componentSettings.autoRefreshTable){ this.refreshDatabase(); }
+    },60000)
   }
+
 
   onGridReady(params) {
     this.gridApi = params.api;
@@ -374,6 +392,13 @@ export class SemDatabaseComponent implements OnInit {
 
     });
 
+
+  }
+
+  toggleAutoUpdate(){
+
+    this.componentSettings.autoRefreshTable = !this.componentSettings.autoRefreshTable;
+    this.settings.set(this.constructor.name,this.componentSettings);
 
   }
 

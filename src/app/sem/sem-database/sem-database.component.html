@@ -5,6 +5,12 @@
         <b> Data Storage Location: </b>
          <a style="margin-left:10px;" target="_blank" href="file:///Q:/Equipment/Analytical/SEM" > Q:/Equipment/Analytical/SEM </a>
     </ngb-alert>
+
+    <div fxLayoutAlign="end start" fxFlex>
+
+        <mat-slide-toggle [checked]="componentSettings?.autoRefreshTable" (toggleChange)="toggleAutoUpdate()">Auto Refresh</mat-slide-toggle>
+      
+    </div>
 </div>
 <div fxLayout="row"  >
   

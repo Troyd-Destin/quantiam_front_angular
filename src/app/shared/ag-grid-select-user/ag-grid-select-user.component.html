@@ -2,8 +2,9 @@
     <app-select-user
         #userEditor 
         (change)="selectValue($event)"
-        [placeholder]="previousValue.name"
+        [placeholder]="previousValue?.name"
         allOptions="false"
+        appendTo=""
     ></app-select-user>
   
   </div>

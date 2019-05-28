@@ -11,6 +11,7 @@ import { LocationService } from '../../services/location/location.service';
 import { WebsocketService } from '../../services/websocket/websocket.service';
 import { Router } from '@angular/router';
 
+import * as _moment from 'moment';
 
 
 @Component({
@@ -286,6 +287,7 @@ export class MaterialCreationDialogComponent implements OnInit, OnDestroy {
 
 		///// Only new container.
 		this.container.lot_id = this.lot.id;
+		if(this.container.container_received){ this.container.container_received = _moment(this.container.container_received).format('YYYY-MM-DD'); }
 		this.materialLotContainerService.create(this.container).subscribe((response) => {
 
 			this.container = response;

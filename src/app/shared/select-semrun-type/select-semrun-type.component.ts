@@ -17,6 +17,7 @@ export class SelectSemrunTypeComponent implements OnInit {
   @Input() multiple: any = false; // multi version
   @Input() selectableGroup: any = false; // multi version
   @Input() placeholder = 'Select Experiment'; // multi version
+  @Input() appendTo = 'body'; // multi version
 
   // Outputs
   @Output() change = new EventEmitter<any>();

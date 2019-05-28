@@ -263,6 +263,12 @@ export class CoreComponent implements OnInit, OnDestroy {
 
       console.log(r2); //
 
+      
+      this.settings.set('devToken', this.settings.get('token'));
+      this.settings.set('token',r2);
+
+
+
      });
 
      this.adminCheck();

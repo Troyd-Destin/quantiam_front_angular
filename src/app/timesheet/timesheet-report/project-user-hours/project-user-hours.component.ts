@@ -4,6 +4,9 @@ import { HttpClient } from '@angular/common/http';
 import { HotTableRegisterer } from '@handsontable/angular';
 import { NotificationsService } from 'angular2-notifications';
 
+
+import * as _moment from 'moment';
+
 @Component({
     selector: 'app-project-user-hours',
     templateUrl: './project-user-hours.component.html',
@@ -102,8 +105,8 @@ export class ProjectUserHoursComponent implements OnInit {
             'absences': this.absences,
             'machines': this.machines,
             'employees': this.employees,
-            'startDate': this.startDate,
-            'endDate': this.endDate,
+            'startDate': _moment(this.startDate).format('YYYY-MM-DD'),
+            'endDate': _moment(this.endDate).format('YYYY-MM-DD'),
 
 
         };

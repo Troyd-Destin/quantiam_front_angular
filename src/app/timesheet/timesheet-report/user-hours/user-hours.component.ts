@@ -6,6 +6,8 @@ import { HotTableRegisterer } from '@handsontable/angular';
 
 import { NotificationsService } from 'angular2-notifications';
 
+import * as _moment from 'moment';
+
 @Component({
   selector: 'app-user-hours',
   templateUrl: './user-hours.component.html',
@@ -86,8 +88,8 @@ fetchData() {
 
 
     const params: any = {
-      'startdate': this.startDate,
-      'enddate': this.endDate,
+      'startdate': _moment(this.startDate).format('YYYY-MM-DD'),
+      'enddate': _moment(this.endDate).format('YYYY-MM-DD'),
       'hourly': this.hourly,
       'salary': this.salary,
     };
