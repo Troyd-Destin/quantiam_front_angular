@@ -17,7 +17,7 @@ export class AgGridSemTypeComponent implements ICellEditorAngularComp, AfterView
 
   private input: any;
 
-  @ViewChild('semTypeEditor', {read: ViewContainerRef}) public container;  // reference the container 
+  @ViewChild('semTypeEditor', { read: ViewContainerRef, static: true }) public container;  // reference the container 
 
   constructor() { }
 

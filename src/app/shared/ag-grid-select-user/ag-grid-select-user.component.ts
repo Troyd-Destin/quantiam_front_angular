@@ -19,7 +19,7 @@ export class AgGridSelectUserComponent implements ICellEditorAngularComp, AfterV
 
   private input: any;
 
-  @ViewChild('userEditor', {read: ViewContainerRef}) public container;  // reference the container
+  @ViewChild('userEditor', { read: ViewContainerRef, static: true }) public container;  // reference the container
 
   constructor() { }
 

@@ -11,7 +11,7 @@ import {ICellEditorAngularComp} from 'ag-grid-angular';
 export class AgGridSelectSteelOrContainerComponent implements ICellEditorAngularComp, AfterViewInit {
 
 
-  @ViewChild('materialOrContainerEditor', {read: ViewContainerRef}) public container;  // reference the container
+  @ViewChild('materialOrContainerEditor', { read: ViewContainerRef, static: false }) public container;  // reference the container
 
   params;
   previousValue;

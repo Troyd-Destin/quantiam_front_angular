@@ -25,7 +25,7 @@ export class AgGridDurationComponent implements ICellEditorAngularComp, AfterVie
   private input: any;
   private focused: boolean = false;
 
-  @ViewChild('durationMinutes', {read: ViewContainerRef}) public minuteInput: any;  // reference the container 
+  @ViewChild('durationMinutes', { read: ViewContainerRef, static: true }) public minuteInput: any;  // reference the container 
 
   constructor() { 
 

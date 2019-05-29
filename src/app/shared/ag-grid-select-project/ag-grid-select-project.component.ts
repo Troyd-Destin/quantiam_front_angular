@@ -19,7 +19,7 @@ export class AgGridSelectProjectEditorComponent implements ICellEditorAngularCom
 
   private input: any;
 
-  @ViewChild('projectEditor', {read: ViewContainerRef}) public container;  // reference the container
+  @ViewChild('projectEditor', { read: ViewContainerRef, static: true }) public container;  // reference the container
 
   constructor() {
 
