@@ -12,7 +12,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular-devkit/build-angular": "^0.12.4",
+    "@angular-devkit/build-angular": "~0.800.0",
     "@angular-devkit/build-optimizer": "^0.12.4",
     "@angular/animations": "7.2.14",
     "@angular/cdk": "^7.3.7",
@@ -21,7 +21,6 @@
     "@angular/core": "^7.2.14",
     "@angular/flex-layout": "^7.0.0-beta.24",
     "@angular/forms": "7.2.14",
-    "@angular/http": "7.2.14",
     "@angular/material": "^7.3.7",
     "@angular/platform-browser": "7.2.14",
     "@angular/platform-browser-dynamic": "7.2.14",
@@ -34,7 +33,6 @@
     "@fortawesome/free-brands-svg-icons": "^5.8.2",
     "@fortawesome/free-regular-svg-icons": "^5.8.2",
     "@fortawesome/free-solid-svg-icons": "^5.8.2",
-    "@fullcalendar/angular": "^4.1.0",
     "@fullcalendar/core": "^4.1.0",
     "@fullcalendar/daygrid": "^4.1.0",
     "@handsontable/angular": "^4.0.0",
@@ -59,7 +57,6 @@
     "jquery": "^3.4.1",
     "ml-savitzky-golay": "^3.0.0",
     "moment": "^2.24.0",
-    "ng-fullcalendar": "^1.7.5",
     "ng-http-loader": "^5.1.0",
     "ng2-select2": "^1.0.0-beta.16",
     "ngx-cacheable": "^1.2.2",
@@ -72,10 +69,10 @@
     "select2-bootstrap-theme": "0.1.0-beta.10",
     "sweetalert2": "^8.10.7",
     "tslib": "^1.9.3",
-    "zone.js": "^0.8.29"
+    "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular/cli": "^7.3.8",
+    "@angular/cli": "^8.0.0",
     "@angular/compiler-cli": "7.2.14",
     "@angular/language-service": "7.2.14",
     "@types/datatables.net": "^1.10.17",
@@ -84,7 +81,7 @@
     "@types/jasminewd2": "^2.0.6",
     "@types/jquery": "^3.3.29",
     "@types/node": "^10.14.6",
-    "codelyzer": "^4.5.0",
+    "codelyzer": "^5.0.1",
     "jasmine-core": "~3.3.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "^4.1.0",
@@ -95,6 +92,6 @@
     "protractor": "^5.4.2",
     "ts-node": "^8.1.0",
     "tslint": "~5.12.1",
-    "typescript": "3.2.4"
+    "typescript": "^3.2.4"
   }
 }

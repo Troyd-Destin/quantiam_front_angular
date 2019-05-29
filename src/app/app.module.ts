@@ -43,7 +43,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    loadChildren: './core/core.module#CoreModule',
+    loadChildren: () => import('./core/core.module').then(m => m.CoreModule),
    // pathMatch: 'prefix',
     canLoad: [AuthGuardService],
   },

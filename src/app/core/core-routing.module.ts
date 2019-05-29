@@ -20,53 +20,53 @@ const routes: Routes = [
 			},
 			{
 				path: 'material',
-				loadChildren: '../material/material.module#MaterialModule',
+				loadChildren: () => import('../material/material.module').then(m => m.MaterialModule),
 				// pathMatch: 'prefix',
 			},
 			{
 				path: 'sample',
-				loadChildren: '../sample/sample.module#SampleModule',
+				loadChildren: () => import('../sample/sample.module').then(m => m.SampleModule),
 			// 	pathMatch: 'prefix',
 			},
 			{
 				path: 'user',
-				loadChildren: '../user/user.module#UserModule',
+				loadChildren: () => import('../user/user.module').then(m => m.UserModule),
 			// 	pathMatch: 'prefix',
 			},
 			{
 				path: 'sem',
-				loadChildren: '../sem/sem.module#SemModule',
+				loadChildren: () => import('../sem/sem.module').then(m => m.SemModule),
 			// 	pathMatch: 'prefix',
 			},
 			{
 				path: 'xps',
-				loadChildren: '../xps/xps.module#XpsModule',
+				loadChildren: () => import('../xps/xps.module').then(m => m.XpsModule),
 			// 	pathMatch: 'prefix',
 			},
 			{
 				path: 'xrd',
-				loadChildren: '../xrd/xrd.module#XrdModule',
+				loadChildren: () => import('../xrd/xrd.module').then(m => m.XrdModule),
 			// 	pathMatch: 'prefix',
 			},
 			{
 				path: 'tga',
-				loadChildren: '../tga/tga.module#TgaModule',
+				loadChildren: () => import('../tga/tga.module').then(m => m.TgaModule),
 			// 	pathMatch: 'prefix',
 			},
 			{
 				path: 'tools',
-				loadChildren: '../tools/tools.module#ToolsModule',
+				loadChildren: () => import('../tools/tools.module').then(m => m.ToolsModule),
 				// pathMatch: 'prefix',
 			},
 			{
 				path: 'timesheet',
-				loadChildren: '../timesheet/timesheet.module#TimesheetModule',
+				loadChildren: () => import('../timesheet/timesheet.module').then(m => m.TimesheetModule),
 				// pathMatch: 'prefix',
 
 			},
 			{
 				path: 'sgx',
-				loadChildren: '../sgx/sgx.module#SgxModule',
+				loadChildren: () => import('../sgx/sgx.module').then(m => m.SgxModule),
 				// pathMatch: 'prefix',
 
 			},

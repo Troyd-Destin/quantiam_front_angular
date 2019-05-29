@@ -97,7 +97,19 @@ export class SemDatabaseComponent implements OnInit {
           headerName: 'Project',
           field: 'project_id',
           width: 70,
-          filter: true,
+          filter: false,
+          cellEditor: 'projectEditor',
+        },
+        {
+          headerName: 'Steel',
+          field: 'manu_inventory_id',
+          width: 70,
+        //  cellEditor: 'projectEditor',
+        },
+        {
+          headerName: 'Container',
+          field: 'container_id',
+          width: 70,
           cellEditor: 'projectEditor',
         },
         {
@@ -105,6 +117,11 @@ export class SemDatabaseComponent implements OnInit {
           field: 'samplename',
           minwidth: 250,
           filter: false,
+          cellRenderer: (cell) => {
+            //console.log(cell);
+            if (cell.hasOwnProperty('data') && cell.data.samplename) { return '<b>' + cell.data.samplename + '</b>'; }
+            return '';
+          }
         },
         {
           headerName: 'Type',
@@ -120,7 +137,7 @@ export class SemDatabaseComponent implements OnInit {
         {
           headerName: 'Operator',
           field: 'operator',
-          width: 80,
+          width: 70,
           filter: true,
           cellEditor: 'userEditor',
 
@@ -133,7 +150,7 @@ export class SemDatabaseComponent implements OnInit {
         {
           headerName: 'Requested',
           field: 'requestor',
-          width: 80,
+          width: 70,
           filter: true,
           cellEditor: 'userEditor',
 
@@ -146,7 +163,7 @@ export class SemDatabaseComponent implements OnInit {
         {
           headerName: 'Duration',
           field: 'duration',
-          width: 100,
+          width: 80,
           filter: false,
          // editable: false,
           cellEditor: 'durationEditor',

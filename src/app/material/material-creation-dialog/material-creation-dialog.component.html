@@ -5,7 +5,7 @@
 	<div *ngIf="materialCreationStep" fxFlex>
 	<form id="materialForm" fxLayout="column"  fxLayoutGap="10px" >
 	
-			<h3 style="margin-top:0px !important;">1. Material Information </h3>	
+			<h4 style="margin-top:0px !important;">1. Material Information </h4>	
 			<div *ngIf="!newMaterial" fxLayout="row"  fxLayoutGap="20px" fxLayoutAlign="start center" >
 				
 			
@@ -99,7 +99,7 @@
 	
 	 <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center" style="margin-top:20px;">
 			
-							<h3>2. Lot Information </h3>
+							<h4>2. Lot Information </h4>
 						  <app-select2-material-lot 
 								
 								
@@ -124,7 +124,7 @@
   
 	<form id="containerForm" *ngIf="lot.lot_name" style="margin-top:20px;">
 	
-		<h3>3. Container Information </h3>
+		<h4>3. Container Information </h4>
 		<div fxLayoutGap="20px" fxLayout="column"  fxLayoutAlign="start stretch">
 	
 			<div fxLayoutGap="20px"  fxLayout="row" fxLayout.sm="column"  >	
@@ -150,12 +150,8 @@
 							
 					 </mat-form-field>   
 							 
-					  <mat-form-field  fxFlex="15">
-						  <input  #Denomination id="container_denomination" type="text" required matInput placeholder="Denomination" [(ngModel)] ='container.denomination' name="denomination" value="g" >
-						     <mat-hint>g,ml,L</mat-hint>
-							   <mat-error *ngIf="!container.denomination">Required  g,ml,L</mat-error>
-					 </mat-form-field> 	
-					<mat-form-field  fxFlex>
+					
+					<mat-form-field  fxFlex=15>
 						  <input #AmountOrdered    type="number"  required matInput placeholder="Amount Ordered {{container.denomination}}"
 						  [(ngModel)] ='container.amount_ordered' 
 						  name="amount_ordered" >
@@ -164,6 +160,11 @@
 						 
 						   <mat-hint> "500g","500ml", "5L","6kg" </mat-hint>
 					 </mat-form-field>
+					 <mat-form-field  fxFlex="15">
+						  <input  #Denomination id="container_denomination" type="text" required matInput placeholder="Denomination" [(ngModel)] ='container.denomination' name="denomination" value="g" >
+						     <mat-hint>g,ml,L</mat-hint>
+							   <mat-error *ngIf="!container.denomination">Required  g,ml,L</mat-error>
+					 </mat-form-field> 	
 					
 					 
 					 
@@ -198,10 +199,11 @@
 					 </mat-form-field>  
 					
 					 <mat-form-field  fxFlex>
-							<input #ContainerReceived matInput [matDatepicker]="myDatepicker2" placeholder="Date Received" [(ngModel)] ='container.container_received' >
-							<mat-datepicker-toggle matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
-							<mat-datepicker #myDatepicker2></mat-datepicker>
+							<input #ContainerReceived matInput [matDatepicker]="myDatepicker40" placeholder="Date Received" name="container_received" [(ngModel)] ='container.container_received' >
+							<mat-datepicker-toggle matSuffix [for]="myDatepicker40"></mat-datepicker-toggle>
+							<mat-datepicker #myDatepicker40></mat-datepicker>
 					</mat-form-field>
+					{{container.container_received}}
 					
 		   </div>
 					   
@@ -211,11 +213,11 @@
 	</form>
 	</div>
 	
-	<div *ngIf="codeRegistryStep" fxLayoutAlign="start center">
-		<h3>4. Code Registry, Label Creation. </h3>
-		<div fxLayout="row" fxLayoutGap="50px" fxLayoutAlign="center center" style="padding-bottom:50px;"> 
+	<div *ngIf="codeRegistryStep" fxLayoutAlign="start start" fxLayout="column">
+		<h4>4. Code Registry, Label Creation. </h4>
+		<div fxLayout="row" fxLayoutGap="50px" fxLayoutAlign="start center" style="padding-bottom:50px;"> 
 				
-				<div fxLayout="column" fxFlex="30">
+				
 					<mat-form-field  fxFlex>
 						  <input  id="qcid_entry" #Qcid type="text" (change)="updateContainer(Qcid)" matInput placeholder="QCID #" [(ngModel)] ='container.qcid' name="qcid" >
 						   <mat-hint>Scan or type a datamarix code. "QCID-1234" </mat-hint>
@@ -225,12 +227,11 @@
 						 <button mat-button  class="mat-raised-button mat-primary" (click)="updateQCID()">Confirm</button>
 					</div>
 				
-					 
-				</div>
+			
 				
-				<div fxLayout="column" fxFlex="20">
-					<button mat-button class="mat-raised-button" disabled >Print Large Label</button>					
-				</div>
+			
+				<!-- 	<button mat-button class="mat-raised-button" disabled >Print Large Label</button>					 -->
+			
 				 
 		</div>
 	

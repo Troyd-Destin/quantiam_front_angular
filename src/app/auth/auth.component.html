@@ -1,7 +1,7 @@
 
 
 
-<div class="docs-example-viewer-wrapper">
+<div class="docs-example-viewer-wrapper" id="auth_screen">
   <div class="docs-example-viewer-title">
     <div class="docs-example-viewer-title-spacer">Authentication</div>
 	
@@ -9,7 +9,7 @@
 
 
 	<form (submit)="login(username.value,password.value,{})"  class="auth-form-content">
-	  <mat-form-field>
+	  <mat-form-field >
 		<input [disabled]="loginHappening" matInput placeholder="Quantiam Username" #username>
 	  </mat-form-field>
 

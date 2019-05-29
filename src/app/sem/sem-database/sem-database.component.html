@@ -6,9 +6,11 @@
          <a style="margin-left:10px;" target="_blank" href="file:///Q:/Equipment/Analytical/SEM" > Q:/Equipment/Analytical/SEM </a>
     </ngb-alert>
 
-    <div fxLayoutAlign="end start" fxFlex>
+    <div fxLayoutAlign="end start" fxFlex fxLayoutGap="10px">
 
         <mat-slide-toggle [checked]="componentSettings?.autoRefreshTable" (toggleChange)="toggleAutoUpdate()">Auto Refresh</mat-slide-toggle>
+        <button class="mat-elevation-z1" mat-raised-button (click)="refreshDatabase()"> Refresh </button>
+        
       
     </div>
 </div>
@@ -19,13 +21,13 @@
 
 
       <app-select-project
-        style="min-width:150px;"
+        style="min-width:125px;"
         (change)="filterProject($event)"
         (clear)="clearFilterProject($event)"
       ></app-select-project>
 
       <app-select-semrun-type
-        style="min-width:150px;" 
+        style="min-width:125px;" 
         
         (change)="filterSemrun($event)"
         (clear)="clearFilterSemrun($event)"
@@ -33,7 +35,7 @@
       ></app-select-semrun-type>
 
       <app-select-user
-         style="min-width:150px;"
+         style="min-width:125px;"
         (change)="filterOperator($event)"
         (clear)="clearFilterOperator($event)"
         placeholder="Operator"
@@ -41,12 +43,17 @@
 
 
       <app-select-user
-        style="min-width:150px;" 
+        style="min-width:125px;" 
         
         (change)="filterRequestor($event)"
         (clear)="clearFilterRequestor($event)"
         placeholder="Requested by"
       ></app-select-user>
+
+
+      <app-select-material-container
+      style="min-width:125px;" 
+      ></app-select-material-container>
 
       
 
@@ -56,7 +63,7 @@
 
   <div fxLayout="row" fxLayoutAlign="end center" fxFlex fxLayoutGap="20px">
 
-      <button class="mat-elevation-z1" mat-raised-button (click)="refreshDatabase()"> Refresh </button>
+    
       <mat-form-field style="max-width: 100px;">
           <mat-select  placeholder="Page Size"  [(ngModel)]="gridOptions.cacheBlockSize" (selectionChange)="onPageSizeChanged()">
             <mat-option *ngFor="let pageSize of pageSizes" [value]="pageSize" [attr.selected]="pageSize === gridOptions.cacheBlockSize ? 'selected': null">
@@ -65,7 +72,7 @@
           </mat-select>
         </mat-form-field>
 
-      <mat-form-field style="width:400px">
+      <mat-form-field style="width:300px">
           <!--   <span matPrefix>+1 &nbsp;</span> -->
           <input id="semDatabaseSearchBar" type="text" matInput (keyup)="onTextFilterChanged()"  [(ngModel)]="filteredTextFilterName"  placeholder="Search">
           <mat-icon matSuffix>search</mat-icon>

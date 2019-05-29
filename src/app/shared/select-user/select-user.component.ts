@@ -32,6 +32,7 @@ export class SelectUserComponent implements OnInit, OnDestroy {
   @Input() showSubordinatesOnly = false;
   @Input() allOptions = false;
   @Input() appendTo = 'body';
+  @Input() style = 'min-width:200px;';
 
   // Outputs
   @Output() change = new EventEmitter<any>();

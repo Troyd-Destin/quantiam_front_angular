@@ -267,8 +267,10 @@ export class MaterialCreationDialogComponent implements OnInit, OnDestroy {
 
 							this.materialLotService.create(this.lot).subscribe((response) => {
 
-										console.log(response);
+									
 										this.container.lot_id = response.id;
+										if(this.container.container_received){ this.container.container_received = _moment(this.container.container_received).format('YYYY-MM-DD'); }
+								//		console.log(this.container);
 										this.materialLotContainerService.create(this.container).subscribe((container) => {
 
 											this.container = container;
@@ -288,6 +290,7 @@ export class MaterialCreationDialogComponent implements OnInit, OnDestroy {
 		///// Only new container.
 		this.container.lot_id = this.lot.id;
 		if(this.container.container_received){ this.container.container_received = _moment(this.container.container_received).format('YYYY-MM-DD'); }
+		console.log(this.container);
 		this.materialLotContainerService.create(this.container).subscribe((response) => {
 
 			this.container = response;

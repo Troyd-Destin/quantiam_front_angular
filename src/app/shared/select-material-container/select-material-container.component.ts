@@ -24,7 +24,7 @@ export class SelectMaterialContainerComponent implements OnInit {
   @Input() selectedValue: any = null; // default value, object or ID
   @Input() multiple: any = false; // multi version
   @Input() selectableGroup: any = false; // multi version
-  @Input() placeholder = 'Select Container'; // multi version
+  @Input() placeholder = 'Container'; // multi version
 
   // Outputs
   @Output() change = new EventEmitter<any>();
@@ -35,8 +35,8 @@ export class SelectMaterialContainerComponent implements OnInit {
   items = [];
   itemsBuffer = [];
   allRetrievedItemsList = [];
-  dropdownWidth = 900; // in pixels
-  bufferSize = 75;
+  dropdownWidth = 950; // in pixels
+  bufferSize = 100;
   virtualScroll = true;
   numberOfItemsFromEndBeforeFetchingMore = 40;
   totalResults;
@@ -45,6 +45,9 @@ export class SelectMaterialContainerComponent implements OnInit {
 
   showActive = true;
   showInactive = false;
+
+  supressScrollEnd = false;
+  searchingTerm = false;
 
   constructor(public http: HttpClient, private _elementRef: ElementRef) {}
 
@@ -73,6 +76,17 @@ export class SelectMaterialContainerComponent implements OnInit {
         distinctUntilChanged(),
         switchMap((term) => {
 
+          this.supressScrollEnd = true;
+          this.searchingTerm = true;
+
+          if(!term) { 
+          
+            this.itemsBuffer = this.allRetrievedItemsList;
+            this.supressScrollEnd = false;
+            this.searchingTerm = false;
+            return [];
+          }
+
           const params  = new HttpParams().set('like', term).set('limit', '' + this.bufferSize + '').set('active', '1').set('filterSpinner', 'true');
 
           return this.http.get<any>(environment.apiUrl + `${this.endpoint}`, { 'params': params } );
@@ -87,6 +101,8 @@ export class SelectMaterialContainerComponent implements OnInit {
       if (!data[0]) {
         if (this.itemsBuffer.length < this.bufferSize) { this.itemsBuffer = this.allRetrievedItemsList; }
       }
+
+      this.searchingTerm = false;
 
     });
 
@@ -112,11 +128,14 @@ export class SelectMaterialContainerComponent implements OnInit {
   }
 
   onScrollToEnd() {
-    this.fetchMore();
+    if(!this.supressScrollEnd) {
+      this.fetchMore();
+      }
   }
 
   onScroll({ end }) {
-    if (this.loading || this.totalResults === this.itemsBuffer.length) {
+  //  console.log(end);
+    if (this.loading || this.totalResults === this.itemsBuffer.length || this.supressScrollEnd) {
         return;
     }
 

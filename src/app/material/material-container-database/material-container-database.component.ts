@@ -163,7 +163,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
          // console.log(cell);
           if (cell.value) {
-            return '<p style="color:green">View</p>';
+            return '<p style="color:green"> SDS </p>';
           }
 
           if (cell.data.active) { return '<p style="color:red">Missing</p>'; }

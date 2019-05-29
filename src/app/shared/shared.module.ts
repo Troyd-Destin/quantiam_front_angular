@@ -46,6 +46,7 @@ import { AgGridSemTypeComponent } from '../sem/sem-database/ag-grid-sem-type/ag-
 import { SelectMaterialComponent } from './select-material/select-material.component';
 import { SelectMaterialSupplierComponent } from './select-material-supplier/select-material-supplier.component';
 import { AgGridDurationComponent } from './ag-grid-duration/ag-grid-duration.component';
+import { AgGridSelectSteelOrContainerComponent } from './ag-grid-select-steel-or-container/ag-grid-select-steel-or-container.component';
 
 @NgModule({
     imports: [
@@ -85,6 +86,7 @@ import { AgGridDurationComponent } from './ag-grid-duration/ag-grid-duration.com
         SelectMaterialComponent,
         SelectMaterialSupplierComponent,
         AgGridDurationComponent,
+        AgGridSelectSteelOrContainerComponent,
         
     ],
     exports: [
