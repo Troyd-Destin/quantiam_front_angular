@@ -12,10 +12,6 @@ import { environment } from '../../../environments/environment';
 import { HttpClient  } from '@angular/common/http';
 import { TgaRunService } from '../services/tga-run.service';
 import { NotificationsService } from 'angular2-notifications';
-import { RendererAnimationPlayer } from '@angular/platform-browser/animations/src/animation_builder';
-import { NgMultiLabelTemplateDirective } from '@ng-select/ng-select/ng-select/ng-templates.directive';
-import { splitClasses } from '@angular/compiler';
-import { DomSanitizerImpl, DomSanitizer } from '@angular/platform-browser/src/security/dom_sanitization_service';
 
 import { SelectTgarunService } from './../../shared/select-tgarun/select-tgarun.service';
 

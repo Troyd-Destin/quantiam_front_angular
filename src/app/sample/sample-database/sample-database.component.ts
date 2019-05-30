@@ -6,7 +6,7 @@ import {  SampleService } from '../../services/sample/sample.service';
 
 import { SampleCreationDialogComponent } from '../sample-creation-dialog/sample-creation-dialog.component';
 
-import {MatDialog} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-sample-database',

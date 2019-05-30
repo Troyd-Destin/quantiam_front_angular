@@ -41,6 +41,7 @@ export class TimesheetComponent implements OnInit {
   timesheetEditable = false;
   displayTimesheet = false;
   showSelectBox = false;
+  showSelectBox2 = false;
   canChangeTimesheetUser = false;
 
   oldCellValue = {};
@@ -672,12 +673,17 @@ export class TimesheetComponent implements OnInit {
   }
 
  hideSelectBox() {
-    if (this.showSelectBox) {
-    setTimeout((x) => {this.showSelectBox = false; }, 200);
-    }
+  this.showSelectBox2 = false;
+  setTimeout((x) => {
+    if (!this.showSelectBox2) {
+        this.showSelectBox = false; 
+      }
+    
+     } , 1000 );
   }
 
   checkUserForSubordinatesAndMachines() {
+    this.showSelectBox2 = true;
     if ((this.userService.hasMachines() && this.userService.hasSubordinates) || this.userService.hasPermission(1)) {
       this.canChangeTimesheetUser = true;
       this.showSelectBox = true;

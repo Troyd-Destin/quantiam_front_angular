@@ -1,8 +1,17 @@
 ## Known Issues
 
 - Material Suppler dropdown, does not clear properly when declining to create a new tag
+- Lot selection dropdown is old and get's stuck "open"
 
-## [0.19.5] May 2019
+## [2019.06] June 2019
+
+### General 
+
+- Updated to Angular 8,
+
+
+
+## [2019.05] May 2019
 
 ### Timesheet
 
@@ -45,7 +54,7 @@
 - Replaced select2 supplier dropdown, with ng select, to fix display bug
 - Auth screen font resized
 
-## [0.19.4] April 2019
+## [2019.04] April 2019
 
 ### Users
 - Can add permissions to individual users now
@@ -62,7 +71,7 @@
 - eliminated caps lock bug when scanning materials
 
 
-## [0.19.3] March 2019
+## [2019.03] March 2019
 
 ### SEM
 - Can now select run types
@@ -72,7 +81,7 @@
 ### Misc
 - User select box will now hard check for employee ID, typing 1 will now select Robert
 
-## [0.19.2] February 2019
+## [2019.02] February 2019
 
 ### TGA
 - Peak tool now has "previous" and "next" buttons for navigating single runs easier
@@ -114,7 +123,7 @@
 - Select2 boxes now have proper padding for placeholder text
 
 
-## [19.1.0] January 2019
+## [2019.01] January 2019
 
 ### Misc
 -  Auth screen no longer locks you out when you fail your password.
@@ -134,7 +143,7 @@
 
 
 
-## [18.12.0] December 2018
+## [2018.12.0] December 2018
 ### General
 - When the application is "thinking", a loading bar will be displayed at the top of the screen. 
 - The select scanner box is now hidden by default, but can be toggled with the target button by the user's name.
@@ -142,7 +151,7 @@
 
 
 
-## [18.11.0] November 2018
+## [2018.11.0] November 2018
 ### Angular 
 - Updated from Angular 7.0 to 7.1  
 

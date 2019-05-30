@@ -1,12 +1,10 @@
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { MaterialLotContainerService } from '../../services/material-lot-container/material-lot-container.service';
 import { MaterialService } from '../../services/material/material.service';
 
 import { WebsocketService } from '../../services/websocket/websocket.service';
-import { materialize } from 'rxjs/operators';
-import { InternalNgModuleRef } from '@angular/core/src/linker/ng_module_factory';
 
 import { NotificationsService } from 'angular2-notifications';
 

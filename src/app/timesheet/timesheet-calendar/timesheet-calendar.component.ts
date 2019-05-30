@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild  } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import {  HttpClient} from '@angular/common/http';
+import {  HttpClient } from '@angular/common/http';
 
-import {  environment} from '../../../environments/environment';
-import { LoadedRouterConfig } from '@angular/router/src/config';
+import {  environment } from '../../../environments/environment';
 
 
 import { UserService } from '../../services/user/user.service';
@@ -30,7 +29,7 @@ export class TimesheetCalendarComponent implements OnInit {
 
         console.log('test');
 
-        $('#calendar').fullCalendar({
+        (<any>$('#calendar')).fullCalendar({
 
         eventLimit: 5,
 				aspectRatio: 10,
@@ -63,8 +62,8 @@ export class TimesheetCalendarComponent implements OnInit {
     console.log(this.selectedUser);
     const eventSource = this.eventSourceQuantiam();
     console.log('updated');
-		 $('#calendar').fullCalendar( 'removeEventSource', eventSource.url );
-		 $('#calendar').fullCalendar( 'addEventSource',  this.eventSourceQuantiam());
+    (<any>$('#calendar')).fullCalendar( 'removeEventSource', eventSource.url );
+    (<any>$('#calendar')).fullCalendar( 'addEventSource',  this.eventSourceQuantiam());
 	};
 
   eventSourceQuantiam() {

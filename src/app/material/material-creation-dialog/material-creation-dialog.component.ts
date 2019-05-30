@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import {ErrorStateMatcher} from '@angular/material/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MaterialLotContainerService } from '../../services/material-lot-container/material-lot-container.service';
 import { MaterialLotService } from '../../services/material-lot/material-lot.service';

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FullCalendarModule } from 'ng-fullcalendar';
+//import { FullCalendarModule } from 'ng-fullcalendar';
 
 
 import { HotTableModule } from '@handsontable/angular';
