@@ -13,7 +13,12 @@ import { NumericEditor } from './numeric-editor.component';
 import { NotificationsService } from 'angular2-notifications';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 
+
+import { AgGridTimesheetValueEditorComponent } from './ag-grid-timesheet-value-editor/ag-grid-timesheet-value-editor.component';
+
 import * as moment from 'moment';
+
+import {  delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-timesheet',
@@ -161,7 +166,7 @@ export class TimesheetComponent implements OnInit {
   };
 
   frameworkComponents = {
-    numericEditor: NumericEditor
+    numericEditor: AgGridTimesheetValueEditorComponent
   };
 
   getRowHeight = function(params) {
@@ -197,7 +202,7 @@ export class TimesheetComponent implements OnInit {
       this.routeParams.year = params.get('year');
       this.routeParams.payperiod = params.get('payperiod');
 
-      this.fetchTimesheet();
+      setTimeout((x)=>{ this.fetchTimesheet(); },500);
 
     });
 
@@ -223,21 +228,22 @@ export class TimesheetComponent implements OnInit {
   }
 
    onCellDoubleClicked($event) {}
-   onCellEditingStopped($event) {
 
+
+   onCellEditingStopped($event) {
 
      let value = $event.value;
 
-     // tslint:disable-next-line:quotemark
-     if (value && value.length === 0) {
+     if(!$event.value) { $event.value = ''; }
+    if(this.oldCellValue[$event.column.colId] == null ){ this.oldCellValue[$event.column.colId] = ''; }
 
-      value = null; }
+     if ("" + this.oldCellValue[$event.column.colId] + "" !== value ) {
 
 
-     // console.log('Comaprison', value, 'against',this.oldCellValue[$event.column.colId]);
+     //$event.value = this.toNearest($event.value,0.25);
 
-     if (this.oldCellValue[$event.column.colId] !== value ) {
-        this.updateHours($event);
+      console.log($event.value, this.oldCellValue[$event.column.colId]);
+      this.updateHours($event);
 
       }
       delete this.oldCellValue[$event.column.colId];
@@ -286,6 +292,7 @@ export class TimesheetComponent implements OnInit {
     this.timesheetLoaded = false;
 
     this.http.get<any>(environment.apiUrl + url)
+    //.pipe(delay(500))
     .subscribe(response => {
       console.log(response);
             this.timeSheetObj = response;
@@ -294,7 +301,7 @@ export class TimesheetComponent implements OnInit {
             window.history.replaceState({}, '', `/timesheet/${this.routeParams.userId}/year/${ this.routeParams.year}/payperiod/${ this.routeParams.payperiod }`);
             this.timesheetService.changeTimesheet(this.routeParams);
             this.displayTimesheet = true;
-            setTimeout((x) => {this.constructTimesheet(); }, 100);
+            setTimeout((x) => { this.constructTimesheet();   }, 100);
             setTimeout((x) => { this.timesheetLoaded = true; }, 1000);
          });
 
@@ -367,7 +374,7 @@ export class TimesheetComponent implements OnInit {
         // editable: false,
         lockPosition: true,
         type: 'numericColumn',
-        // cellEditor: NumericEditor,
+        cellEditor: 'numericEditor',
         cellRenderer:  (params) => {
 
 
@@ -531,6 +538,19 @@ export class TimesheetComponent implements OnInit {
 
   }
 
+  onRowClicked(event) {
+    
+    if(event.node.group)
+    {
+      event.node.setExpanded(!event.node.expanded); 
+      
+    }
+
+
+  }
+
+
+
   rowDataChanged(event) {
 
 
@@ -679,7 +699,7 @@ export class TimesheetComponent implements OnInit {
         this.showSelectBox = false; 
       }
     
-     } , 1000 );
+     } , 500 );
   }
 
   checkUserForSubordinatesAndMachines() {
@@ -691,4 +711,7 @@ export class TimesheetComponent implements OnInit {
 
     return true;
   }
+
+
+ 
 }

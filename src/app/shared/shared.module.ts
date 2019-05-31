@@ -44,9 +44,12 @@ import { SelectMaterialSupplierComponent } from './select-material-supplier/sele
 import { AgGridDurationComponent } from './ag-grid-duration/ag-grid-duration.component';
 import { AgGridSelectSteelOrContainerComponent } from './ag-grid-select-steel-or-container/ag-grid-select-steel-or-container.component';
 
+import { AgGridTimesheetValueEditorComponent } from '../timesheet/timesheet/ag-grid-timesheet-value-editor/ag-grid-timesheet-value-editor.component';
+
+
 @NgModule({
     imports: [
-        AgGridModule.withComponents([AgGridSelectProjectEditorComponent, AgGridSelectUserComponent, AgGridSemTypeComponent, AgGridDurationComponent]),
+        AgGridModule.withComponents([AgGridSelectProjectEditorComponent, AgGridSelectUserComponent, AgGridSemTypeComponent, AgGridDurationComponent,AgGridTimesheetValueEditorComponent]),
         CommonModule,
         Select2Module,
         NgSelectModule,
@@ -83,6 +86,7 @@ import { AgGridSelectSteelOrContainerComponent } from './ag-grid-select-steel-or
         SelectMaterialSupplierComponent,
         AgGridDurationComponent,
         AgGridSelectSteelOrContainerComponent,
+        AgGridTimesheetValueEditorComponent,
         
     ],
     exports: [

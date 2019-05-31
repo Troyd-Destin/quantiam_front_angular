@@ -10,6 +10,12 @@
 - Updated to Angular 8,
 
 
+### Timesheet
+
+- rows expand when clicked on
+- should no longer get "blank" timesheet bug 
+- editor should now have a popup which gives context for which cell you are editing
+
 
 ## [2019.05] May 2019
 

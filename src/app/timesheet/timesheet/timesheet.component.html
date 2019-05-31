@@ -19,9 +19,9 @@
 
   <div fxLayout="row" style="font-size: 1.25em;" >
 
-      <div fxLayout="column" (mouseenter)="checkUserForSubordinatesAndMachines();"  (mouseleave) ="hideSelectBox()" fxFlex=20 fxLayoutAlign="start start" >
+      <div fxLayout="column" fxFlex=20 fxLayoutAlign="start start" >
 
-        <div  fxLayout="row"  >   
+        <div  fxLayout="row" (mouseenter)="checkUserForSubordinatesAndMachines();"  (mouseleave) ="hideSelectBox()"  >   
           
           <p [hidden]="showSelectBox" >{{timeSheetObj.userID}} - <b>{{timeSheetObj?.fullname}}</b> </p> 
 
@@ -137,6 +137,7 @@
     (cellEditingStarted)="onCellEditingStarted($event)"
     (rowGroupOpened)="onRowGroupOpened($event)"
     (rowDataChanged)="rowDataChanged($event)"
+    (rowClicked)="onRowClicked($event)"
 
     [enableRangeSelection]="false"
     [suppressCellSelection]="false"
@@ -222,7 +223,7 @@
           <h3 class="page-header" *ngIf="timeSheetObj.rto"> Time Off Requests 
           
           </h3>
-          <table  *ngIf="timeSheetObj.rto" class="stattable table table-hover table-stats table-condensed table-striped table-shadow"> 
+          <table  *ngIf="timeSheetObj.rto" class="stattable table table-hover table-stats table-condensed table-shadow"> 
             <thead> 
                 <tr>
                   <th> ID </th>

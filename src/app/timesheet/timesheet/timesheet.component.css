@@ -110,3 +110,16 @@
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
  font-size: inherit; 
 }
+
+
+.table-hover tr td{
+
+    background: transparent;
+
+}
+
+.table-hover tr:hover{
+
+    background: #f7f7f7;
+    
+}

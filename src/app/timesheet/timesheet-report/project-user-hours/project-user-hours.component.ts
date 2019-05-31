@@ -69,7 +69,7 @@ export class ProjectUserHoursComponent implements OnInit {
         if (this.selectedPayperiod && this.selectedYear) {
 
             const params: any = { 'year': this.selectedYear };
-            this.http.get(environment.apiUrl + '/timesheet/payperiod/' + this.selectedPayperiod + '/year/' + this.selectedYear, { params: params }).subscribe((response: any) => {
+            this.http.get(environment.apiUrl + '/timesheet/payperiod/' + this.selectedPayperiod + '/year/' + this.selectedYear + '?filterSpinner', { params: params }).subscribe((response: any) => {
 
                 this.endDate = response.endDate;
                 this.startDate = response.startDate;

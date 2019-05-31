@@ -38,10 +38,10 @@ export class TokenInterceptor implements HttpInterceptor {
                     newParams[key] = request.params.get(key);
                 }
             });
-            console.log(newParams, request.params.keys());
+           // console.log(newParams, request.params.keys());
             const params = new HttpParams({fromObject : newParams});
         
-            console.log(params);
+          //  console.log(params);
             const headers = new HttpHeaders({ Authorization: 'Bearer ' + localStorage.getItem('token'), });
 
             request = request.clone({ headers, params });
@@ -50,7 +50,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
         }
 
-        console.log(request);
+      //  console.log(request);
         return next.handle(request).pipe(catchError((error, caught) => {
             // intercept the respons error and displace it to the console
             console.log(error);
