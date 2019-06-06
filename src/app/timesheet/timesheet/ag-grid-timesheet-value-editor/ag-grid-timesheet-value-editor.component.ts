@@ -13,7 +13,7 @@ import * as moment from 'moment';
 export class AgGridTimesheetValueEditorComponent implements ICellEditorAngularComp, AfterViewInit {
 
 
-  private params: any;
+  params: any;
 
   longDate;
   dayOfWeek;
@@ -31,7 +31,7 @@ export class AgGridTimesheetValueEditorComponent implements ICellEditorAngularCo
 
   constructor() { 
 
-      console.log(this.value);
+      //console.log(this.value);
 
   }
 
@@ -67,7 +67,7 @@ export class AgGridTimesheetValueEditorComponent implements ICellEditorAngularCo
     this.value = params.value;
 
     if(this.params.charPress && !isNaN(this.params.charPress)){ this.value = this.params.charPress; }
-    console.log(this.params);
+   // console.log(this.params);
    
     this.longDate = moment(params.column.colDef.field).format("ddd - MMM Do, YYYY");
     //this.dayOfWeek = moment(params.column.colDef.field).format("ddd");

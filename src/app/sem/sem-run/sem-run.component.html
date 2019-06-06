@@ -41,8 +41,11 @@
         <div *ngFor="let img of Semrun.images" fxFlex=10 (click)="selectImage(img)" class="clickable image-wrapper">
 
 
-         
-            <img [class.active-image]="img?.name === selectedImage?.name" *ngIf="img.base64" width=100% [src]="domSanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,'+img.base64)" />
+            <img [class.active-image]="img?.name === selectedImage?.name" 
+            *ngIf="img.fullpath"
+             width=100%  src="http://api.edm.quantiam.com/file?server_path={{img.fullpath}}" />
+
+             <!-- <div [src]="domSanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,'+img.base64)"></div> -->
             <span class="image_label"> {{img.name}}
 
                 <mat-chip color="accent" *ngIf="img.assoc_files[0]" selected>More</mat-chip>
@@ -54,7 +57,7 @@
     </div>
 
 
-    <div fxLayout="row" fxLayoutGap="10px" *ngIf="selectedImage?.base64" fxLayoutAlign="center start">
+    <div fxLayout="row" fxLayoutGap="10px" *ngIf="selectedImage?.fullpath" fxLayoutAlign="center start">
 
         <div fxLayout="column" fxFlex.gt-md=40 fxLayoutAlign="center center" fxLayoutGap="10px">
             <div fxLayout="column" fxLayoutAlign="center center">
@@ -62,7 +65,7 @@
                 <small>{{selectedImage.CM_SIGNAL}} {{selectedImage.CM_MAG}}x {{selectedImage.CM_ACCEL_VOLT}}kV</small>
             </div>
 
-            <img *ngIf="selectedImage?.base64" width=90% [src]="domSanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,'+selectedImage.base64)" />
+            <img *ngIf="selectedImage?.fullpath" width=90% src="http://api.edm.quantiam.com/file?server_path={{selectedImage.fullpath}}" />
         </div>
         <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" *ngIf="selectedImage.assoc_files[0]">
             <div fxLayout="column" fxLayoutAlign="center center">
@@ -71,7 +74,7 @@
             </div>
             <div fxLayout="row wrap" fxFlex.gt-md=20 fxLayoutGap="5px" fxLayoutAlign="center center">
                 <div *ngFor="let img of selectedImage.assoc_files" class="clickable image-wrapper" [hidden]="img.type !== 'image'" (click)="selectedSubImage = img">
-                    <img *ngIf="img.base64" width=150px [src]="domSanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,'+img.base64)" />
+                    <img *ngIf="img.fullpath" width=150px  src="http://api.edm.quantiam.com/file?server_path={{img.fullpath}}"  />
                     <span class="image_label"> {{img.name}}</span>
                 </div>
             </div>
@@ -81,7 +84,7 @@
                 <h5>{{selectedSubImage.name}}</h5>
                 <small> Selected associated Image </small>
             </div>
-            <img *ngIf="selectedSubImage?.base64" width=90% [src]="domSanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,'+selectedSubImage.base64)" />
+            <img *ngIf="selectedSubImage?.fullpath" width=90% src="http://api.edm.quantiam.com/file?server_path={{selectedSubImage.fullpath}}" />
 
         </div>
 

@@ -11,7 +11,7 @@
     <div fxLayout="row" fxLayoutGap="30px">
 
         <app-select-user (change)="selectUser($event)"></app-select-user>
-        <button mat-raised-button *ngIf="selectedUser" [disabled]="!selectedUser" color='primary'> Create for {{selectedUser.firstname}} </button>
+        <button mat-raised-button *ngIf="selectedUser" [disabled]="!selectedUser"  (click)="createRto(selectedUser.id)" color='primary'> Create for {{selectedUser.firstname}} </button>
     </div>
    
 

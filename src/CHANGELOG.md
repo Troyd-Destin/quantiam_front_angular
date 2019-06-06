@@ -1,21 +1,38 @@
+## Beta Disclaimer
+
+- Until "official" adoption, version numbers will only contain major increments using date semantics. 
+- Minor and hotfixes will added after launch
+- Stuff may not work as expected 
+
 ## Known Issues
 
 - Material Suppler dropdown, does not clear properly when declining to create a new tag
 - Lot selection dropdown is old and get's stuck "open"
+- "Blank" Timesheet bug
 
 ## [2019.06] June 2019
 
+### Dev Tools
+- You can now browse application as another user
+
 ### General 
 
-- Updated to Angular 8,
+- Updated to Angular 8
+- Prototype pop up for hovering over steel objects 
 
 
 ### Timesheet
 
-- rows expand when clicked on
-- should no longer get "blank" timesheet bug 
+- Category rows expand when clicked on
 - editor should now have a popup which gives context for which cell you are editing
 
+### RTO 
+
+- Should properly care about the user's permissions for subordinates/viewing
+
+### SEM
+
+- Moved back to fetching images individually, route was sending every image encoded via the api
 
 ## [2019.05] May 2019
 

@@ -12,6 +12,8 @@ import { AgGridSelectProjectEditorComponent } from '../../shared/ag-grid-select-
 import { AgGridSelectUserComponent } from '../../shared/ag-grid-select-user/ag-grid-select-user.component';
 import { AgGridSemTypeComponent } from './ag-grid-sem-type/ag-grid-sem-type.component';
 import { AgGridDurationComponent } from '../../shared/ag-grid-duration/ag-grid-duration.component';
+import { AgGridSemContainerSteelCellDisplayComponent } from './ag-grid-sem-container-steel-cell-display/ag-grid-sem-container-steel-cell-display.component';
+import { AgGridSemContainerSteelEditComponent } from './ag-grid-sem-container-steel-edit/ag-grid-sem-container-steel-edit.component';
 
 import { SettingsService } from '../../services/settings/settings.service';
 
@@ -101,17 +103,18 @@ export class SemDatabaseComponent implements OnInit {
           cellEditor: 'projectEditor',
         },
         {
-          headerName: 'Steel',
+          headerName: 'Steel / Container',
           field: 'manu_inventory_id',
-          width: 70,
-        //  cellEditor: 'projectEditor',
+          width: 100,
+          cellRenderer: 'steelContainerDisplay',
+          cellEditor: 'steelContainerEdit',
         },
-        {
+       /*  {
           headerName: 'Container',
           field: 'container_id',
           width: 70,
           cellEditor: 'projectEditor',
-        },
+        }, */
         {
           headerName: 'Sample Name',
           field: 'samplename',
@@ -245,7 +248,9 @@ export class SemDatabaseComponent implements OnInit {
         projectEditor: AgGridSelectProjectEditorComponent,
         userEditor: AgGridSelectUserComponent,
         typeEditor: AgGridSemTypeComponent,
-        durationEditor: AgGridDurationComponent
+        durationEditor: AgGridDurationComponent,
+        steelContainerDisplay: AgGridSemContainerSteelCellDisplayComponent,
+        steelContainerEdit: AgGridSemContainerSteelEditComponent,
       };
    }
 

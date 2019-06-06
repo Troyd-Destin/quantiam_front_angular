@@ -7,7 +7,7 @@ import { LocationService } from '../../services/location/location.service';
 import * as moment from 'moment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user/user.service';
-import { UploadEvent, UploadFile, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
+import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import { NotificationsService } from 'angular2-notifications';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -42,7 +42,7 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 	SDSurl;
 	firstLoad = true;
 
-	public files: UploadFile[] = [];
+	public files: NgxFileDropEntry[] = [];
 	
 	MsdsSearch = {
 
@@ -324,13 +324,13 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
  		 win.focus();
 	}
 
-	public dropped(event: UploadEvent) {
+	public dropped(files: NgxFileDropEntry[]) {
    // this.files = event.files;
-    for (const droppedFile of event.files) {
+    for (const droppedFile of files) {
 
 			// Is it a file?
 			console.log(droppedFile);
-      if (droppedFile.fileEntry.isFile && droppedFile.fileEntry.name.includes('.pdf')) {
+      if (droppedFile.fileEntry.isFile) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         fileEntry.file((file: File) => {
 

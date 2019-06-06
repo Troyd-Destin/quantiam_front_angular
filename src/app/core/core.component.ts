@@ -82,6 +82,7 @@ export class CoreComponent implements OnInit, OnDestroy {
   timesheetUser = null;
   timesheetPayperiod = null;
   hasSwitchedUser = false;
+  devTokenFound = false;
 
 
   currentYear = (new Date()).getFullYear();
@@ -158,6 +159,12 @@ export class CoreComponent implements OnInit, OnDestroy {
           this.currentTimesheet.year = obj.year;
           this.currentTimesheet.payperiod = obj.payperiod;
     });
+
+
+    if(localStorage.getItem('devToken'))
+    {
+      this.devTokenFound = true;
+    }
   }
 
   prepareRoute(outlet) {
@@ -263,9 +270,12 @@ export class CoreComponent implements OnInit, OnDestroy {
 
       console.log(r2); //
 
+      localStorage.setItem('devToken', localStorage.getItem('token'));
+      localStorage.setItem('token', r2.token);
+      window.location.reload();
       
-      this.settings.set('devToken', this.settings.get('token'));
-      this.settings.set('token',r2);
+     // this.settings.set('devToken', this.settings.get('token'));
+     // this.settings.set('token',r2);
 
 
 

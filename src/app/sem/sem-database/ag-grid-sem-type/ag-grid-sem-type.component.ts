@@ -37,7 +37,7 @@ export class AgGridSemTypeComponent implements ICellEditorAngularComp, AfterView
 
 
   agInit(params: any): void {
-    console.log(params);
+    
     this.params = params;
     this.previousValue = params.value;
   }

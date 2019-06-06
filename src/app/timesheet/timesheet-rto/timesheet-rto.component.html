@@ -1,9 +1,10 @@
 
-<div fxLayout="column" fxLayoutGap="20px">
+<div fxLayout="row"  fxFlex fxLayoutAlign="center center" >
 
-    <div fxLayout="row"   fxLayoutAlign="start start" fxFlex=60 fxFlex.lt-lg=100 >
+  <div fxFlex.gt-md=60 fxLayout="column" fxFlex fxLayoutGap="20px">
+    <div fxLayout="row"    >
 
-      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlexOffset=20 fxFlexOffset.lt-lg=0 >
+      <div fxLayout="row" fxFlex fxLayoutAlign="start center" fxLayoutGap="10px"  >
     
     
           <app-select-user
@@ -12,6 +13,7 @@
             (clear)="clearRtoOwner($event)"
             placeholder="Employee"
             [showSubordinatesOnly]="showSubordinatesOnly"
+            *ngIf="(userService.hasSubordinates()) || userService.hasPermission(3)"
           
           ></app-select-user>
 
@@ -27,7 +29,7 @@
     
       </div>
     
-      <div fxLayout="row" fxLayoutAlign="end start"  fxLayoutGap="20px" fxFlexOffset=22> 
+      <div fxLayout="row" fxFlex fxLayoutAlign="end end"  fxLayoutGap="10px" > 
     
           <button mat-raised-button (click)="refreshDatabase()" > Refresh </button>
           <button mat-raised-button color="primary" (click)="createRTO()" matTooltip="Creates a new RTO"> Create </button>
@@ -51,8 +53,8 @@
   </div>
   
   
-    <div fxLayout="row" fxLayoutAlign="center start">
-        <ag-grid-angular fxFlex=60 fxFlex.lt-lg=100
+    <div fxLayout="row" fxFlex.gt-md=60  fxLayoutAlign="center start">
+        <ag-grid-angular fxFlex  
         #agGrid 
         
         id="rtoDatabase"
@@ -72,4 +74,5 @@
         >
         </ag-grid-angular>
   </div>
+</div>
 </div>

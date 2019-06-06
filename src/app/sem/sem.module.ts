@@ -36,7 +36,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [SemIndexComponent, SemDatabaseComponent, SemRunComponent],
+  declarations: [SemIndexComponent, SemDatabaseComponent, SemRunComponent,],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,

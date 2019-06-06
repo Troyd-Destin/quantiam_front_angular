@@ -253,5 +253,12 @@ export class UserService  {
     return false;
   }
 
+  public get(property)
+  {
+    const user = this.fetchAuthUserObj();
+    return user[property];
+
+  }
+
 
 }

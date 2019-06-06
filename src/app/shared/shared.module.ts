@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 
-import { FileDropModule } from 'ngx-file-drop';
+import { NgxFileDropModule  } from 'ngx-file-drop';
 import { AgGridModule } from 'ag-grid-angular';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -39,6 +39,9 @@ import { AgGridSelectUserComponent } from './ag-grid-select-user/ag-grid-select-
 import { SelectSemrunTypeComponent } from './select-semrun-type/select-semrun-type.component';
 
 import { AgGridSemTypeComponent } from '../sem/sem-database/ag-grid-sem-type/ag-grid-sem-type.component';
+import { AgGridSemContainerSteelCellDisplayComponent } from '../sem/sem-database/ag-grid-sem-container-steel-cell-display/ag-grid-sem-container-steel-cell-display.component';
+import { AgGridSemContainerSteelEditComponent } from '../sem/sem-database/ag-grid-sem-container-steel-edit/ag-grid-sem-container-steel-edit.component';
+
 import { SelectMaterialComponent } from './select-material/select-material.component';
 import { SelectMaterialSupplierComponent } from './select-material-supplier/select-material-supplier.component';
 import { AgGridDurationComponent } from './ag-grid-duration/ag-grid-duration.component';
@@ -46,10 +49,17 @@ import { AgGridSelectSteelOrContainerComponent } from './ag-grid-select-steel-or
 
 import { AgGridTimesheetValueEditorComponent } from '../timesheet/timesheet/ag-grid-timesheet-value-editor/ag-grid-timesheet-value-editor.component';
 
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { SelectSteelComponent } from './select-steel/select-steel.component';
+import { PopUpSteelCardComponent } from './pop-up-steel-card/pop-up-steel-card.component';
 
 @NgModule({
     imports: [
-        AgGridModule.withComponents([AgGridSelectProjectEditorComponent, AgGridSelectUserComponent, AgGridSemTypeComponent, AgGridDurationComponent,AgGridTimesheetValueEditorComponent]),
+        AgGridModule.withComponents([
+            AgGridSelectProjectEditorComponent, AgGridSelectUserComponent,
+             AgGridSemTypeComponent, AgGridDurationComponent,
+             AgGridSemContainerSteelCellDisplayComponent, AgGridSemContainerSteelEditComponent,
+             AgGridTimesheetValueEditorComponent]),
         CommonModule,
         Select2Module,
         NgSelectModule,
@@ -60,7 +70,8 @@ import { AgGridTimesheetValueEditorComponent } from '../timesheet/timesheet/ag-g
         MatButtonModule,
         MatCheckboxModule,
         MatInputModule,
-        FileDropModule,
+        NgxFileDropModule ,
+        NgbModule,
     ],
     declarations: [
         SelectProjectComponent,
@@ -87,6 +98,10 @@ import { AgGridTimesheetValueEditorComponent } from '../timesheet/timesheet/ag-g
         AgGridDurationComponent,
         AgGridSelectSteelOrContainerComponent,
         AgGridTimesheetValueEditorComponent,
+        AgGridSemContainerSteelCellDisplayComponent,
+        AgGridSemContainerSteelEditComponent,
+        SelectSteelComponent,
+        PopUpSteelCardComponent,
         
     ],
     exports: [
@@ -105,8 +120,10 @@ import { AgGridTimesheetValueEditorComponent } from '../timesheet/timesheet/ag-g
         SelectSampleComponent,
         SelectTgarunComponent,
         SelectPermissionComponent,
-        FileDropModule,
-        AgGridModule
+        SelectSteelComponent,
+        NgxFileDropModule ,
+        AgGridModule,
+        PopUpSteelCardComponent
 
     ],
     schemas: [NO_ERRORS_SCHEMA]

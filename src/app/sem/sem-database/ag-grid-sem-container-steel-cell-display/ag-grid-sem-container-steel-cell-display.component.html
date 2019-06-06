@@ -1,0 +1,31 @@
+
+
+
+
+<div
+
+  *ngIf="params.data.manu_inventory_id || params.data.steel_id" 
+  matTooltip="Info about the action"
+  (mouseenter)="steelPopUp.show(params.data.steel)"
+  (mouseleave)="steelPopUp.hide()"
+>
+  
+<button mat-raised-button class="mat-small"  
+     
+      color="quantiam"
+      (click)="goToSteel(params)"
+      matTooltip="Info about the action"
+        aria-label="Button that displays a tooltip when focused or hovered over">
+      
+       {{params.data.steel.heat_id}} </button>
+
+
+      
+
+      
+</div>
+
+
+<div>
+    <button mat-button class="mat-small"  *ngIf="params.data.container_id"  color="primary"> Container </button>
+</div>

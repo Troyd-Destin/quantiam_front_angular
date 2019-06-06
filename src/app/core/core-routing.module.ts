@@ -39,6 +39,11 @@ const routes: Routes = [
 			// 	pathMatch: 'prefix',
 			},
 			{
+				path: 'steel',
+				loadChildren: () => import('../steel/steel.module').then(m => m.SteelModule),
+			// 	pathMatch: 'prefix',
+			},
+			{
 				path: 'xps',
 				loadChildren: () => import('../xps/xps.module').then(m => m.XpsModule),
 			// 	pathMatch: 'prefix',

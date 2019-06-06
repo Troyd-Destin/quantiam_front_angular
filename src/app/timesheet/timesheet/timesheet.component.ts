@@ -48,6 +48,7 @@ export class TimesheetComponent implements OnInit {
   showSelectBox = false;
   showSelectBox2 = false;
   canChangeTimesheetUser = false;
+  firstLoad = true;
 
   oldCellValue = {};
 
@@ -242,7 +243,7 @@ export class TimesheetComponent implements OnInit {
 
      //$event.value = this.toNearest($event.value,0.25);
 
-      console.log($event.value, this.oldCellValue[$event.column.colId]);
+     // console.log($event.value, this.oldCellValue[$event.column.colId]);
       this.updateHours($event);
 
       }
@@ -301,7 +302,13 @@ export class TimesheetComponent implements OnInit {
             window.history.replaceState({}, '', `/timesheet/${this.routeParams.userId}/year/${ this.routeParams.year}/payperiod/${ this.routeParams.payperiod }`);
             this.timesheetService.changeTimesheet(this.routeParams);
             this.displayTimesheet = true;
-            setTimeout((x) => { this.constructTimesheet();   }, 100);
+            setTimeout((x) => { this.constructTimesheet(); 
+              
+              if(this.firstLoad) {
+                 // this.gridApi.redrawRows(); 
+                  this.firstLoad = !this.firstLoad;
+              }
+            }, 400);
             setTimeout((x) => { this.timesheetLoaded = true; }, 1000);
          });
 

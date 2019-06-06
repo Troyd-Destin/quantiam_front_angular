@@ -8,7 +8,8 @@ import * as moment from 'moment';
 
 import { Router,ActivatedRoute,  } from '@angular/router';
 
-import { AgGridSelectProjectEditorComponent } from '../../shared/ag-grid-select-project/ag-grid-select-project.component';
+
+import { UserService } from '../../services/user/user.service';
 
 
 @Component({
@@ -52,8 +53,9 @@ export class TimesheetRtoComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private dialog: MatDialog, 
+    private dialog: MatDialog,
     private route: ActivatedRoute,
+    public userService: UserService
   ) {
 
     this.columnDefs = [
@@ -282,8 +284,10 @@ export class TimesheetRtoComponent implements OnInit {
 
       // popup if they can create RTOs for others
 
-
       // create RTO for themself and redirect if they can't
+
+      if(this.userService.hasPermission(4))
+      {
       const dialogRef = this.dialog.open(CreateRtoDialogComponent, {
        
       // disableClose: true,
@@ -300,7 +304,26 @@ export class TimesheetRtoComponent implements OnInit {
         console.log('The dialog was closed',result);
   
       });
+    }
+    else
+    {
+      
+        const params = {
+            user: this.userService.get('id')
 
-  }
+        };
 
+        this.http.post(environment.apiUrl + '/rto', params).subscribe((response: any) => {
+
+            this.router.navigate(['/timesheet/rto/', response.id]);
+
+        })
+
+    }
+
+
+    }
+    
 }
+
+
