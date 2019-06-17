@@ -269,7 +269,7 @@ export class SemDatabaseComponent implements OnInit {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
 
-      console.log(params.api);
+    //  console.log(params.api);
 
     const datasource = this.fetchSemDatabase();
 
@@ -299,7 +299,7 @@ export class SemDatabaseComponent implements OnInit {
                params2.successCallback(response.data, response.total);
                this.totalRows = response.total;
                this.gridApi.sizeColumnsToFit();
-               console.log(params2);
+             ///  console.log(params2);
           });
 
       }
@@ -381,7 +381,7 @@ export class SemDatabaseComponent implements OnInit {
   }
   onCellEditingStarted($event) {
 
-        console.log($event);
+      //  console.log($event);
         this.oldCellValue = $event.value;
         return;
 
@@ -390,7 +390,7 @@ export class SemDatabaseComponent implements OnInit {
 
   updateSemRun(cell) {
 
-    console.log(cell);
+   // console.log(cell);
 
     const params: any = {};
 

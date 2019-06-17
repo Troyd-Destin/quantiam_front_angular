@@ -4,6 +4,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { catchError, map, tap, delay, debounceTime, distinctUntilChanged, switchMap, shareReplay, publishReplay, refCount } from 'rxjs/operators';
 import { Subject, Observable, of, concat, BehaviorSubject } from 'rxjs';
 
+import { SelectMaterialContainerService } from './select-material-container.service';
+
 @Component({
   selector: 'app-select-material-container',
   templateUrl: './select-material-container.component.html',
@@ -49,7 +51,9 @@ export class SelectMaterialContainerComponent implements OnInit {
   supressScrollEnd = false;
   searchingTerm = false;
 
-  constructor(public http: HttpClient, private _elementRef: ElementRef) {}
+  firstLoad = true;
+
+  constructor(public http: HttpClient, private _elementRef: ElementRef, private service: SelectMaterialContainerService) {}
 
 
 
@@ -114,14 +118,26 @@ export class SelectMaterialContainerComponent implements OnInit {
 
     // use a service
 
+    if(!this.service.isEmpty() && this.firstLoad)
+    { 
+      console.log(this.service.isEmpty());
+      this.itemsBuffer = this.service.getList();
+      this.totalResults = this.service.getTotal();
+      this.firstLoad = false;
+      return;
+    }
+
     const params  = new HttpParams().set('page', this.page.toString());
 
     this.http.get<any>(environment.apiUrl + `${this.endpoint}`, { 'params': params } )
     .subscribe(items => {
-            console.log(items);
+          //  console.log(items);
            // this.items = items.data;
             this.totalResults = items.total;
             this.itemsBuffer = items.data;
+
+           // this.service.appendList(this.itemsBuffer);
+            this.service.update(items);
         });
 
 
@@ -161,6 +177,10 @@ export class SelectMaterialContainerComponent implements OnInit {
 
     this.loading = true;
     this.page = this.page + 1;
+
+    /// Check which page the service is on, then decide whether or not to call new http request 
+
+
     // query the next page of results, and add them here
     const params = new HttpParams().set('page', this.page.toString()).set('filterSpinner', 'true');
 

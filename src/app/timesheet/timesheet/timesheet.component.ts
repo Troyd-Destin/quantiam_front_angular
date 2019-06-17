@@ -657,9 +657,12 @@ export class TimesheetComponent implements OnInit {
     this.http.put<any>(environment.apiUrl + url + '?filterSpinner', payload)
     .subscribe(response => {
 
-            this.timeSheetObj.bank = response.bank;
-            this.timeSheetObj.overhours[response.week - 1].daily_sum = response.totaldaily_overhours;
-            this.timeSheetObj.overhours[response.week - 1].weekly_sum = response.totalweekly_overhours;
+          if('overhours' in response){
+
+                this.timeSheetObj.bank = response.bank;
+                this.timeSheetObj.overhours[response.week - 1].daily_sum = response.totaldaily_overhours;
+                this.timeSheetObj.overhours[response.week - 1].weekly_sum = response.totalweekly_overhours;
+          }
             this.notification.success('Saved ', response.projectid + ', ' + response[this.timeSheetObj.denomination.toLowerCase()] + ' ' + this.timeSheetObj.denomination + ' on ' + response.date, {timeOut: 2000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
 
          },

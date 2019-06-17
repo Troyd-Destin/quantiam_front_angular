@@ -21,6 +21,9 @@
 - Prototype pop up for hovering over steel objects 
 
 
+### Calendar
+- now no longer displays time off booked beyond an employee's leave date
+
 ### Timesheet
 
 - Category rows expand when clicked on
