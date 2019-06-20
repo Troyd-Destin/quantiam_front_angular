@@ -23,6 +23,10 @@ export class TimesheetRtoViewComponent implements OnInit {
 
     showSelectBox = false;
     rto;
+    rtoBank;
+    typeTotals;
+    existingAbsences;
+    
     routeParams: any;
 
     requestTime = { date: null, end_hour: null, hours: null, requestID: null, rtotimeID: null, start_hour: null, type: null, };
@@ -92,6 +96,12 @@ export class TimesheetRtoViewComponent implements OnInit {
 
             this.rto = r;
             this.canEdit();
+            this.fetchExistingAbsences();
+
+            if(this.rto.status === 'pending')
+            {
+                this.fetchRtobank();
+            }
         });
 
 
@@ -133,7 +143,7 @@ export class TimesheetRtoViewComponent implements OnInit {
 
                 this.rto.requested_time.push(r);
                 this.previousTimeRequest = params;
-
+                this.calculateTypeTotals();
             });
 
 
@@ -162,6 +172,7 @@ export class TimesheetRtoViewComponent implements OnInit {
 
                     this.rto.requested_time = this.rto.requested_time.filter(obj => obj !== timeRequest); // filter for objects that aren't the one we removed
                     // Swal.fire( 'Deleted!',    'Your file has been deleted.',  'success');
+                    this.calculateTypeTotals();
 
                 });
             }
@@ -239,6 +250,53 @@ export class TimesheetRtoViewComponent implements OnInit {
                     });
                   }
                 });
+
+    }
+
+
+    fetchRtobank (){
+
+        this.http.get(environment.apiUrl + '/user/' + this.rto.employeeID + '/rtobank').subscribe((r)=>{
+
+            this.rtoBank = r;
+            this.calculateTypeTotals();
+        
+        })
+    }
+
+    fetchExistingAbsences(){
+
+        const params = {dateArray: []};
+
+        this.rto.requested_time.forEach((time)=>{
+            
+            params.dateArray.push(time.date);
+
+        });
+       
+        this.http.post(environment.apiUrl + '/rto/existingabsences',params).subscribe((r:any)=>{
+
+            this.existingAbsences = r;
+
+
+            this.rto.requested_time.forEach((time) => {
+                
+                if(r[time.date])
+                {
+                    time.conflicts = r[time.date].length;
+                }
+            });
+
+        })
+
+    }
+
+    calculateTypeTotals()
+    {
+        this.typeTotals = {vacation: 0, pto:0, cto:0, ppl:0};
+        this.rto.requested_time.forEach((time)=>{
+            this.typeTotals[time.type] = this.typeTotals[time.type] + (time.hours * -1);
+        })
 
     }
 }

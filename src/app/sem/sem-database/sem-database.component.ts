@@ -91,34 +91,28 @@ export class SemDatabaseComponent implements OnInit {
         {
           headerName: 'ID',
           field: 'semrun_id',
-          width: 80,
+          width: 60,
           filter: false,
           editable: false,
         },
         {
           headerName: 'Project',
           field: 'project_id',
-          width: 70,
+          width: 60,
           filter: false,
           cellEditor: 'projectEditor',
         },
         {
-          headerName: 'Steel / Container',
+          headerName: 'Steel / Container / Sample',
           field: 'manu_inventory_id',
           width: 100,
           cellRenderer: 'steelContainerDisplay',
           cellEditor: 'steelContainerEdit',
         },
-       /*  {
-          headerName: 'Container',
-          field: 'container_id',
-          width: 70,
-          cellEditor: 'projectEditor',
-        }, */
         {
           headerName: 'Sample Name',
           field: 'samplename',
-          minwidth: 250,
+          minwidth: 270,
           filter: false,
           cellRenderer: (cell) => {
             //console.log(cell);

@@ -6,14 +6,15 @@
 
   *ngIf="params.data.manu_inventory_id || params.data.steel_id" 
   matTooltip="Info about the action"
-  (mouseenter)="steelPopUp.show(params.data.steel)"
-  (mouseleave)="steelPopUp.hide()"
+  
 >
   
 <button mat-raised-button class="mat-small"  
      
       color="quantiam"
       (click)="goToSteel(params)"
+      (mouseenter)="steelPopUp.show(params.data.steel)"
+      (mouseleave)="steelPopUp.hide()"
       matTooltip="Info about the action"
         aria-label="Button that displays a tooltip when focused or hovered over">
       

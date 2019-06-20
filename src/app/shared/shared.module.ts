@@ -50,8 +50,11 @@ import { AgGridSelectSteelOrContainerComponent } from './ag-grid-select-steel-or
 import { AgGridTimesheetValueEditorComponent } from '../timesheet/timesheet/ag-grid-timesheet-value-editor/ag-grid-timesheet-value-editor.component';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 import { SelectSteelComponent } from './select-steel/select-steel.component';
 import { PopUpSteelCardComponent } from './pop-up-steel-card/pop-up-steel-card.component';
+
+import { AutoFocusDirective } from '../directives/auto-focus.directive';
 
 @NgModule({
     imports: [
@@ -74,6 +77,7 @@ import { PopUpSteelCardComponent } from './pop-up-steel-card/pop-up-steel-card.c
         NgbModule,
     ],
     declarations: [
+        AutoFocusDirective,
         SelectProjectComponent,
         Select2MaterialComponent,
         Select2MaterialLotComponent,
@@ -123,7 +127,8 @@ import { PopUpSteelCardComponent } from './pop-up-steel-card/pop-up-steel-card.c
         SelectSteelComponent,
         NgxFileDropModule ,
         AgGridModule,
-        PopUpSteelCardComponent
+        PopUpSteelCardComponent,
+        NgbModule,
 
     ],
     schemas: [NO_ERRORS_SCHEMA]

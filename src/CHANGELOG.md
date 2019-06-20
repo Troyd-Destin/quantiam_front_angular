@@ -6,9 +6,10 @@
 
 ## Known Issues
 
-- Material Suppler dropdown, does not clear properly when declining to create a new tag
+- Material Supplier dropdown, does not clear properly when declining to create a new tag
 - Lot selection dropdown is old and get's stuck "open"
-- "Blank" Timesheet bug
+- "Blank" Timesheet bug, reload to workaround
+- When using a dropdown specifically in a database table, the active/inactive filters will close the dropdown (event propgation issues)
 
 ## [2019.06] June 2019
 
@@ -31,11 +32,17 @@
 
 ### RTO 
 
-- Should properly care about the user's permissions for subordinates/viewing
+- Database table should properly care about the user's permissions for subordinates/viewing
+- When creating an RTO, it should care about the user's subordinates/permissions
 
 ### SEM
 
-- Moved back to fetching images individually, route was sending every image encoded via the api
+- Moved back to fetching images individually, route was sending every image encoded via the api, performance increase
+
+### Container Select Dropdown
+
+- No longer deletes options when cleared
+- No longer queries for container pages that aren't there. 
 
 ## [2019.05] May 2019
 

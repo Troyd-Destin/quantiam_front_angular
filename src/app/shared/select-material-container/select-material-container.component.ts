@@ -30,6 +30,7 @@ export class SelectMaterialContainerComponent implements OnInit {
 
   // Outputs
   @Output() change = new EventEmitter<any>();
+  @Output() clear = new EventEmitter<any>();
 
   private endpoint = '/material/lot/container';
   // private modelName = 'User';
@@ -50,6 +51,8 @@ export class SelectMaterialContainerComponent implements OnInit {
 
   supressScrollEnd = false;
   searchingTerm = false;
+  justCleared = false;
+  lastPage = 9999999;
 
   firstLoad = true;
 
@@ -69,8 +72,8 @@ export class SelectMaterialContainerComponent implements OnInit {
   onAdd(event) { }
   onRemove(event) { }
   onClear() {
-    console.log('test');
-    this.itemsBuffer = this.allRetrievedItemsList;
+    this.justCleared = true;
+    this.clear.emit();
   }
 
   onSearch() {
@@ -79,12 +82,16 @@ export class SelectMaterialContainerComponent implements OnInit {
          debounceTime(500),
         distinctUntilChanged(),
         switchMap((term) => {
-
+          
+         
+          
           this.supressScrollEnd = true;
           this.searchingTerm = true;
 
-          if(!term) { 
-          
+          if(this.justCleared) { this.justCleared = false; return this.allRetrievedItemsList; }
+
+          if (!term) {
+
             this.itemsBuffer = this.allRetrievedItemsList;
             this.supressScrollEnd = false;
             this.searchingTerm = false;
@@ -92,7 +99,7 @@ export class SelectMaterialContainerComponent implements OnInit {
           }
 
           const params  = new HttpParams().set('like', term).set('limit', '' + this.bufferSize + '').set('active', '1').set('filterSpinner', 'true');
-
+          this.loading = true;
           return this.http.get<any>(environment.apiUrl + `${this.endpoint}`, { 'params': params } );
 
         })
@@ -107,6 +114,7 @@ export class SelectMaterialContainerComponent implements OnInit {
       }
 
       this.searchingTerm = false;
+      this.loading = false;
 
     });
 
@@ -118,8 +126,7 @@ export class SelectMaterialContainerComponent implements OnInit {
 
     // use a service
 
-    if(!this.service.isEmpty() && this.firstLoad)
-    { 
+    if (!this.service.isEmpty() && this.firstLoad) {
       console.log(this.service.isEmpty());
       this.itemsBuffer = this.service.getList();
       this.totalResults = this.service.getTotal();
@@ -127,7 +134,11 @@ export class SelectMaterialContainerComponent implements OnInit {
       return;
     }
 
+    if (this.page <=  this.lastPage) {
+
     const params  = new HttpParams().set('page', this.page.toString());
+
+
 
     this.http.get<any>(environment.apiUrl + `${this.endpoint}`, { 'params': params } )
     .subscribe(items => {
@@ -135,16 +146,17 @@ export class SelectMaterialContainerComponent implements OnInit {
            // this.items = items.data;
             this.totalResults = items.total;
             this.itemsBuffer = items.data;
+            this.lastPage = items.last_page;
 
            // this.service.appendList(this.itemsBuffer);
             this.service.update(items);
         });
-
+    }
 
   }
 
   onScrollToEnd() {
-    if(!this.supressScrollEnd) {
+    if (!this.supressScrollEnd) {
       this.fetchMore();
       }
   }
@@ -174,11 +186,12 @@ export class SelectMaterialContainerComponent implements OnInit {
    fetchMore() {
 
       // use a service as well
-
+    if (this.page <= this.lastPage) {
     this.loading = true;
     this.page = this.page + 1;
 
-    /// Check which page the service is on, then decide whether or not to call new http request 
+    /// Check which page the service is on, then decide whether or not to call new http request
+
 
 
     // query the next page of results, and add them here
@@ -191,6 +204,8 @@ export class SelectMaterialContainerComponent implements OnInit {
 
             this.itemsBuffer = this.itemsBuffer.concat(items.data);
         });
+    }
+
   }
 
 

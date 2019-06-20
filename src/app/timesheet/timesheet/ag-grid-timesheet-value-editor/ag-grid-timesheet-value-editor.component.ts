@@ -81,6 +81,7 @@ export class AgGridTimesheetValueEditorComponent implements ICellEditorAngularCo
   getValue(): any {
   //  console.log(this.value);
     if(this.value){ return '' + this.toNearest(this.value,0.25) + ''; }
+    //if(!this.value || this.value === '') { return 0; }
     return '';
   }
 

@@ -25,6 +25,7 @@ import { TokenInterceptor } from '../auth/token.interceptor';
 	MaterialDesignModule,
 	Select2Module,
 	SharedModule,
+
 	MarkdownModule.forRoot({ loader: HttpClient }),
 	HttpClientModule,
 

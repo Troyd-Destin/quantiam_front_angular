@@ -651,8 +651,9 @@ export class TimesheetComponent implements OnInit {
 
     };
 
+    if(params.value === ''){ params.value = 0;}
     payload[this.timeSheetObj.denomination.toLowerCase()] = '' + params.value + '';
-
+    
     const url = '/timesheet/' + this.routeParams.userId + '/process';
     this.http.put<any>(environment.apiUrl + url + '?filterSpinner', payload)
     .subscribe(response => {

@@ -1,11 +1,26 @@
-<div fxFlex fxLayout="row" class="background">
+<div id="containerSteelEditor" #editor tabindex="-1"  fxFlex fxLayout="row" class="background" fxLayoutAlign="center start" fxLayoutGap="20px">
 
 
    <!--  <app-select-steel></app-select-steel> -->
 
+    <div fxLayout="column" fxLayoutGap="10px" [hidden]="selectedSample?.id && selectedSteel?.id">
+        <h3> Powder? </h3>
+        <app-select-material-container
+            #containerEditor
+            style="min-width:125px;" 
+            (change)="selectContainer($event)"
+            (clear)="clearSelectedContainer()"
+            ></app-select-material-container> 
 
-    <app-select-material-container
-    style="min-width:125px;" 
-    ></app-select-material-container>
 
+           
+    </div>
+    <div fxLayout="column" fxLayoutGap="10px" *ngIf="!selectedContainer?.id && !selectedSample?.id">
+            <h3>  Steel ? </h3>
+            <app-select-user></app-select-user>
+        </div>
+    <div fxLayout="column" fxLayoutGap="10px"  *ngIf="!selectedContainer?.id && !selectedSteel?.id">
+            <h3> Sample? </h3>
+            <app-select-sample></app-select-sample>
+        </div>
 </div>

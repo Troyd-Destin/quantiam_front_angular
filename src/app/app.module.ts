@@ -31,9 +31,9 @@ import { CustomReuseStrategy } from './reuse-strategy';
 
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
-import { CoreModule } from './core/core.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { MaterialDesignModule } from './material-design/material-design.module';
+import { AutoFocusDirective } from './directives/auto-focus.directive';
 
 const routes: Routes = [
   {
@@ -59,6 +59,7 @@ export function gettoken () {
   declarations: [
     AppComponent,
     AuthComponent,
+  //  AutoFocusDirective,
   ],
   imports: [
     RouterModule.forRoot(routes),

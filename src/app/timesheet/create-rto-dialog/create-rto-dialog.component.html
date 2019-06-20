@@ -10,7 +10,11 @@
 
     <div fxLayout="row" fxLayoutGap="30px">
 
-        <app-select-user (change)="selectUser($event)"></app-select-user>
+        <app-select-user 
+        placeholder="For Someone else"
+        (change)="selectUser($event)"
+        [showSubordinatesOnly]="(userService.hasPermission(3) ? false: true)"
+        ></app-select-user>
         <button mat-raised-button *ngIf="selectedUser" [disabled]="!selectedUser"  (click)="createRto(selectedUser.id)" color='primary'> Create for {{selectedUser.firstname}} </button>
     </div>
    

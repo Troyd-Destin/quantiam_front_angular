@@ -30,7 +30,8 @@
   (scroll)="onScroll($event)" -->
 
 <ng-template ng-label-tmp let-item="item">
-    {{item.qcid || item.identifier}} {{item.lot.material.name}} {{item.lot.material.grade}}
+    <small> {{item.qcid || item.identifier}} </small> {{item.lot.material?.name}} {{item.lot.material?.grade}} 
+    <small [hidden]="!item.container_name"> ({{item.container_name}}) </small>
  </ng-template>
 
 <ng-template ng-header-tmp>
@@ -78,7 +79,7 @@
       
 
       <div style="width:110px; font-size: 11px;">
-          {{item.location.name}}
+          {{item.location?.name}}
         </div> 
     
       
