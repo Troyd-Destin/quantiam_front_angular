@@ -19,9 +19,9 @@ export class AgGridSemContainerSteelEditComponent implements ICellEditorAngularC
   steel = false;
   sample = false;
 
-  selectedContainer = {};
-  selectedSteel = {};
-  selectedSample = {};
+  selectedContainer:any = {};
+  selectedSteel:any = {};
+  selectedSample:any = {};
 
   private input: any;
 

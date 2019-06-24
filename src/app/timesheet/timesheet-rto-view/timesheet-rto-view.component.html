@@ -8,7 +8,7 @@
 <div fxLayout="column" fxLayoutGap="10px" *ngIf="rto?.user.id">
     <div fxLayout="row" fxFlex>
 
-        <div class="status-bar-pending" *ngIf="rto?.status !== 'approved'" fxFlex>PENDING</div>
+        <div class="status-bar-pending" *ngIf="rto?.status === 'pending'" fxFlex>PENDING</div>
         <div class="status-bar-approved" *ngIf="rto?.status === 'approved'" fxFlex>APPROVED</div>
         <div class="status-bar-denied" *ngIf="rto?.status === 'denied'" fxFlex>DENIED</div>
 
@@ -212,13 +212,24 @@
         <div fxLayout="column" id="right-column" fxFlex fxFlex.gt-md=50 fxGrow="0" fxLayoutGap="20px">
 
             <div fxLayout="row" fxLayoutAlign="end start">
-                <mat-card id="approval_card" fxFlex=50>
+                <mat-card id="approval_card" fxFlex=60>
                     <mat-card-header>
 
-                        <mat-card-title *ngIf="!rto?.approvals[0]">Notify </mat-card-title>
-                        <mat-card-title *ngIf="rto?.approvals[0]">Approvals</mat-card-title>
+                   
+                        <mat-card-title>
+                            <div fxLayout="row" fxFlex fxLayoutGap="10px">
+                                <span *ngIf="rto?.approvals[0]" >Approvals</span>
+                                <span *ngIf="!rto?.approvals[0]" >Notification</span>
+
+                                <div fxLayout="row" fxLayoutAlign="end start"  fxFlex fxLayoutGap="10px" *ngIf="canApprove && rto?.status === 'pending'">
+                                    <button mat-button color="success" class="mat-small"(click)="checkApproval()"> Approve </button>    
+                                    <button mat-button color="warn" class="mat-small" (click)="denyApproval()"> Deny </button>    
+                                </div>
+                            </div>
+                            </mat-card-title>
+                      
                         <mat-card-subtitle *ngIf="!rto?.approvals[0]">
-                        Notify a supervisor via email to approve your request.  </mat-card-subtitle> 
+                        Notify reviewers to approve this request.  </mat-card-subtitle> 
                     </mat-card-header>
                     <mat-card-content>
 
@@ -226,9 +237,9 @@
                         <div fxLayout="row" *ngIf="!rto?.approvals[0]" fxLayoutGap="10px" fxLayoutAlign="center center">
 
                             <mat-form-field >
-                                <mat-select name="type" placeholder="Supervisor" matNativeControl [(ngModel)]="selectedSupervisorToNotifyId">
-
-                                    <mat-option value="pto" *ngFor="let supervisor of rto?.user.supervisors" [value]="supervisor.id"> {{supervisor.name_abbrev}} </mat-option>
+                                <mat-select name="type" placeholder="Supervisor" matNativeControl [(ngModel)]="selectedSupervisorToNotifyId" style="min-width: 200px;">
+                                    <mat-option></mat-option>
+                                    <mat-option value="pto" *ngFor="let supervisor of rto?.user.rtoadmin" [value]="supervisor.employeeid"> {{supervisor.firstname}} {{supervisor.lastname}} </mat-option>
                                 </mat-select>
                             </mat-form-field>
                             <div>
@@ -255,8 +266,8 @@
                                     <td *ngIf="approval.approval !== 'approved'"><button mat-raised-button class="mat-small" color="warn">{{approval.approval | titlecase}}</button></td>
                                     <td>{{approval.created}}</td>
                                     <td style="text-align: center;">
-                                        <button mat-icon-button color="warn" class="clickable" (click)="deleteApproval(approval)">
-                                            <mat-icon aria-label="Example icon-button with a heart icon">delete</mat-icon>
+                                        <button mat-icon-button color="warn" class="clickable" [disabled]="approval.employeeID !== userService.get('id')"  (click)="deleteApproval(approval)">
+                                            <mat-icon aria-label="Example icon-button with a heart icon" >delete</mat-icon>
                                         </button>
                                     </td>
                                 </tr>
@@ -293,20 +304,20 @@
                                             <tr>
                                                 <td><b>PTO</b></td>
                                                 <td>{{rtoBank.remaining.pto }}</td>
-                                                <td><span *ngIf="typeTotals.pto != 0">{{typeTotals.pto}}</span></td>
-                                                <td><span *ngIf="typeTotals.pto != 0">{{rtoBank.remaining.pto + typeTotals.pto }}</span></td>
+                                                <td><span *ngIf="typeTotals.pto != 0" [style.color]="typeTotals.pto < 0 ? 'red' : 'green'">{{typeTotals.pto}}</span></td>
+                                                <td><span *ngIf="typeTotals.pto != 0" [style.color]="(rtoBank.remaining.pto + typeTotals.pto) < 0 ? 'red' : ''">{{rtoBank.remaining.pto + typeTotals.pto }}</span></td>
                                             </tr>
                                             <tr>
                                                 <td><b>Vacation</b></td>
                                                 <td>{{rtoBank.remaining.vacation }}</td>
-                                                <td><span *ngIf="typeTotals.vacation != 0">{{typeTotals.vacation}}</span></td>
-                                                <td><span *ngIf="typeTotals.vacation != 0">{{rtoBank.remaining.vacation + typeTotals.vacation }}</span></td>
+                                                <td><span *ngIf="typeTotals.vacation != 0" [style.color]="typeTotals.vacation < 0 ? 'red' : 'green'">{{typeTotals.vacation}}</span></td>
+                                                <td><span *ngIf="typeTotals.vacation != 0" [style.color]="(rtoBank.remaining.vacation + typeTotals.vacation) < 0 ? 'red' : ''">{{rtoBank.remaining.vacation + typeTotals.vacation }}</span></td>
                                             </tr>
                                             <tr>
                                                 <td><b>CTO</b></td>
                                                 <td>{{rtoBank.remaining.cto }}</td>
-                                                <td> <span *ngIf="typeTotals.cto != 0">{{typeTotals.cto}}</span></td>
-                                                <td><span *ngIf="typeTotals.cto != 0">{{rtoBank.remaining.cto + typeTotals.cto }}</span></td>
+                                                <td> <span *ngIf="typeTotals.cto != 0" [style.color]="typeTotals.cto < 0 ? 'red' : 'green'">{{typeTotals.cto}}</span></td>
+                                                <td><span *ngIf="typeTotals.cto != 0" [style.color]="(rtoBank.remaining.cto + typeTotals.cto) < 0 ? 'red' : ''">{{rtoBank.remaining.cto + typeTotals.cto }}</span></td>
                                             </tr>
                                         </tbody>
                                 </table>

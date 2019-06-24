@@ -29,11 +29,16 @@
 
 - Category rows expand when clicked on
 - editor should now have a popup which gives context for which cell you are editing
+- Machine timesheet printouts now display the denomination in cell B4
+- In the Footer, Total now displays the denomination in brackets after it
 
 ### RTO 
 
 - Database table should properly care about the user's permissions for subordinates/viewing
 - When creating an RTO, it should care about the user's subordinates/permissions
+- Approvals now work as expected
+- Rto Bank Impact added
+- Conflicts are no longer cards, and instead a column in the table with a popover to show which ones.
 
 ### SEM
 

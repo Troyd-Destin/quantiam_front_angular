@@ -295,7 +295,7 @@ export class TimesheetComponent implements OnInit {
     this.http.get<any>(environment.apiUrl + url)
     //.pipe(delay(500))
     .subscribe(response => {
-      console.log(response);
+     // console.log(response);
             this.timeSheetObj = response;
             this.routeParams.year = response.payPeriod.year;
             this.routeParams.payperiod = response.payPeriod.payPeriod;
@@ -536,7 +536,12 @@ export class TimesheetComponent implements OnInit {
       this.gridApi.sizeColumnsToFit();
     }
 
-
+    setTimeout((x)=>{
+       let test = document.getElementsByClassName("ag-group-value");
+       let last = test[test.length-1];
+       last.innerHTML   = '<b>Total</b> ( ' + this.timeSheetObj.denomination + ' )';
+       console.log(last);
+    },200);
     console.log(this.timeSheetFramework);
   }
 

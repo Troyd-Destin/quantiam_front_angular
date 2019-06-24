@@ -55,6 +55,8 @@ import { SelectSteelComponent } from './select-steel/select-steel.component';
 import { PopUpSteelCardComponent } from './pop-up-steel-card/pop-up-steel-card.component';
 
 import { AutoFocusDirective } from '../directives/auto-focus.directive';
+import { CommentsComponent } from './comments/comments.component';
+import { LogsComponent } from './logs/logs.component';
 
 @NgModule({
     imports: [
@@ -106,6 +108,8 @@ import { AutoFocusDirective } from '../directives/auto-focus.directive';
         AgGridSemContainerSteelEditComponent,
         SelectSteelComponent,
         PopUpSteelCardComponent,
+        CommentsComponent,
+        LogsComponent,
         
     ],
     exports: [
@@ -129,6 +133,8 @@ import { AutoFocusDirective } from '../directives/auto-focus.directive';
         AgGridModule,
         PopUpSteelCardComponent,
         NgbModule,
+        CommentsComponent,
+        LogsComponent,
 
     ],
     schemas: [NO_ERRORS_SCHEMA]
