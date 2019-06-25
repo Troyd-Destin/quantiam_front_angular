@@ -14,8 +14,9 @@
              routerLinkActive="mat-tab-link-active"> Timesheet </a>
             <a mat-tab-link  routerLink="calendar" routerLinkActive="mat-tab-link-active"> Calendar </a>
             <a mat-tab-link  routerLink="rto/database" routerLinkActive="mat-tab-link-active"> RTO </a>
-            <a mat-tab-link *ngIf="currentTimesheet.requestID.length > 0" [routerLink]="['/timesheet/rto', this.currentTimesheet.requestID]"
-                 routerLinkActive="mat-tab-link-active"> RTO - {{this.currentTimesheet.requestID}} </a>
+            <a mat-tab-link  routerLink="['/timesheet',this.currentTimesheet.bankHistoryUserId, 'bank-history', this.currentTimesheet.bankType]" routerLinkActive="mat-tab-link-active"> Bank History </a>
+          <!--   <a mat-tab-link *ngIf="currentTimesheet.requestId.length > 0" [routerLink]="['/timesheet/rto', this.currentTimesheet.requestId]"
+                 routerLinkActive="mat-tab-link-active"> RTO - {{this.currentTimesheet.requestId}} </a> -->
             <a mat-tab-link  routerLink="statistics" routerLinkActive="mat-tab-link-active"> Statistics </a>
             
             <a mat-tab-link *ngIf="userService.hasPermission([24,25,37])" routerLink="settings" routerLinkActive="mat-tab-link-active"> Settings </a>

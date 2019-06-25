@@ -171,10 +171,10 @@ export class TimesheetComponent implements OnInit {
   };
 
   getRowHeight = function(params) {
-    if (params.node.level === 0) {
+    if (params.node.level === 0 || params.node.footer) {
       return 48;
     } else {
-      return 35;
+      return 25;
     }
   };
 
@@ -418,7 +418,7 @@ export class TimesheetComponent implements OnInit {
           if (params.data.category.categoryName === 'Absence' &&   !(params.data.project.projectID === 5 && holidayCheck)
            ||  (!this.timesheetEditable)) { disabled = 'disabled'; }
 
-           return '<input class="form-control timesheet" style="width:60px; height:25px; margin-top: 5px;" value="' + $.trim(params.value) + '" \
+           return '<input class="form-control timesheet timesheet-input"  value="' + $.trim(params.value) + '" \
            \
            min="0"\
            step="0.25"\

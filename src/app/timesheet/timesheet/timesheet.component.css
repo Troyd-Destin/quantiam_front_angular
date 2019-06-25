@@ -24,17 +24,24 @@
 
 /deep/ .ag-theme-material .normal-row .ag-cell {
 
-    line-height: 35px !important;
+    line-height: 25px !important;
   
+}
+
+/deep/ .timesheet-input{
+
+    width:50px;
+     height:20px;
+      margin-top: 1px;
 }
 
 /deep/ .ag-theme-material .normal-row {
 
    
-    height: 35px !important;
+    height: 25px !important;
     font-size: 11px;
     border: 0px;
-    line-height: 35px !important;
+    line-height: 25px !important;
 }
 
 /deep/ #timesheetPage .ag-theme-material .group-row {

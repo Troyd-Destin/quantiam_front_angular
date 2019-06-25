@@ -12,7 +12,7 @@ import { UserService } from '../../services/user/user.service';
 export class TimesheetIndexComponent implements OnInit {
 
   routeParams: any;
-  currentTimesheet = {userId: '', year: '', payperiod: '', requestID: ''};
+  currentTimesheet = {userId: '', year: '', payperiod: '', requestId: '', bankHistoryUserId: ''};
 
   constructor(private router: Router, private route: ActivatedRoute, private timesheetService: TimesheetService, public userService: UserService) { }
 
@@ -22,6 +22,8 @@ export class TimesheetIndexComponent implements OnInit {
           this.currentTimesheet.userId = obj.userId;
           this.currentTimesheet.year = obj.year;
           this.currentTimesheet.payperiod = obj.payperiod;
+          this.currentTimesheet.requestId = obj.requestId;
+          this.currentTimesheet.bankHistoryUserId = obj.bankHistoryUserId;
     });
 
     // figure out current payperoid year

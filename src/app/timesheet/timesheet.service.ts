@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class TimesheetService {
 
-  private defaultTimesheetParams = {userId: '', year: '', payperiod: '', requestID: ''};
+  private defaultTimesheetParams = {userId: '', year: '', payperiod: '', requestId: '', bankHistoryUserId: ''};
   private messageSource = new BehaviorSubject(this.defaultTimesheetParams);
   currentTimesheet = this.messageSource.asObservable();
 

@@ -36,7 +36,7 @@ const routes: Routes = [{
       component: TimesheetComponent,
     },
     {
-      path: 'bank/:type/:user',
+      path: ':user/bank-history/:type',
       data: { key: 'timesheet-bank'},
       component: TimesheetBankComponent,
     },
