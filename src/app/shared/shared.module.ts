@@ -58,6 +58,9 @@ import { AutoFocusDirective } from '../directives/auto-focus.directive';
 import { CommentsComponent } from './comments/comments.component';
 import { LogsComponent } from './logs/logs.component';
 
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+
+
 @NgModule({
     imports: [
         AgGridModule.withComponents([
@@ -77,6 +80,7 @@ import { LogsComponent } from './logs/logs.component';
         MatInputModule,
         NgxFileDropModule ,
         NgbModule,
+        CKEditorModule,
     ],
     declarations: [
         AutoFocusDirective,

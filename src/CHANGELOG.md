@@ -21,6 +21,10 @@
 - Updated to Angular 8
 - Prototype pop up for hovering over steel objects 
 
+### Comments
+- Comment componenent with Ckeditor5 WSYWIG
+- Can edit, delete comments
+- Can only delete own comments. 
 
 ### Calendar
 - now no longer displays time off booked beyond an employee's leave date
@@ -39,6 +43,7 @@
 - Approvals now work as expected
 - Rto Bank Impact added
 - Conflicts are no longer cards, and instead a column in the table with a popover to show which ones.
+- Comment Box added
 
 ### SEM
 
