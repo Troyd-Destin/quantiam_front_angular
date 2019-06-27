@@ -1,12 +1,12 @@
 # Change Log - Quantiam Apps 2019
 
-## Disclaimers
+### Disclaimers
 
 - Until "official" adoption, version numbers will only contain major increments using date semantics. 
 - Minor and hotfixes will added after launch
 - Stuff may not work as expected 
 
-## Known Issues
+### Known Issues
 
 - Material Supplier dropdown, does not clear properly when declining to create a new tag
 - Lot selection dropdown is old and get's stuck "open", this needs to be replaced with the new dropdown

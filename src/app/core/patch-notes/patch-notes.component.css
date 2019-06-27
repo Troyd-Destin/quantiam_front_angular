@@ -22,9 +22,15 @@ markdown ::ng-deep li {
     font-size: 12px;
 }
 
+markdown ::ng-deep h1 {
+
+    border-bottom: 1px solid #eaecef;
+    padding-bottom: .3em;
+
+}
 markdown ::ng-deep h3 {
-    font-size:14px;
-    margin-bottom: 10px;
+    margin-top: 24px;
+    margin-bottom: 16px;
 }
 
 markdown ::ng-deep h4 {
@@ -32,9 +38,7 @@ markdown ::ng-deep h4 {
 }
 
 markdown ::ng-deep h2 {
-    margin-top: 25px; 
-    margin-bottom: 15px;
-    font-size: 1.0rem;
-    font-weight: 600;
+    margin-top: 24px;
+    margin-bottom: 16px;
 }
 
