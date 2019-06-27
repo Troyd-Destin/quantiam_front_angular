@@ -20,13 +20,14 @@ export class SelectUserComponent implements OnInit, OnDestroy {
 
 
   // Inputs
-  @Input() selectedValue: any = null; // default value, object or ID
+  @Input() selectedValue: number = null; // default value, object or ID
   @Input() multiple: any = false; // multi version
   @Input() selectableGroup: any = false;
   @Input() placeholder = 'Select Somebody';
   @Input() showMachines = false;
   @Input() restrictedAccessMode = false;
   @Input() subordinates = false;
+  @Input() clearable = true;
   @Input() supervisors = false;
   @Input() authorizedSubordinatesOrMachines = false;
   @Input() showSubordinatesOnly = false;
@@ -162,7 +163,7 @@ export class SelectUserComponent implements OnInit, OnDestroy {
 
   }
 
-  onChange(event) {this.change.emit(event); console.log(this.selectedValue); }
+  onChange(event) {this.change.emit(event);  }
   onRemove(event) { this.remove.emit(event);  }
   onClear() { this.clear.emit(event); }
 

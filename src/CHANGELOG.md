@@ -1,4 +1,6 @@
-## Beta Disclaimer
+# Change Log - Quantiam Apps 2019
+
+## Disclaimers
 
 - Until "official" adoption, version numbers will only contain major increments using date semantics. 
 - Minor and hotfixes will added after launch
@@ -7,11 +9,11 @@
 ## Known Issues
 
 - Material Supplier dropdown, does not clear properly when declining to create a new tag
-- Lot selection dropdown is old and get's stuck "open"
-- "Blank" Timesheet bug, reload to workaround
-- When using a dropdown specifically in a database table, the active/inactive filters will close the dropdown (event propgation issues)
+- Lot selection dropdown is old and get's stuck "open", this needs to be replaced with the new dropdown
+- When using the Steel/Container/Sample ag-grid dropdown, the active/inactive filters will close the dropdown (event propgation issues)
+- Navigation for Bank History tabs is a bit off
 
-## [2019.06] June 2019
+# [2019.06] June 2019
 
 ### Dev Tools
 - You can now browse application as another user
@@ -20,9 +22,10 @@
 
 - Updated to Angular 8
 - Prototype pop up for hovering over steel objects 
+- Quantiam Theme Tables now have softer edges
 
 ### Comments
-- Comment componenent with Ckeditor5 WSYWIG
+- Comment component with Ckeditor5 WSYWIG
 - Can edit, delete comments
 - Can only delete own comments. 
 
@@ -35,6 +38,16 @@
 - editor should now have a popup which gives context for which cell you are editing
 - Machine timesheet printouts now display the denomination in cell B4
 - In the Footer, Total now displays the denomination in brackets after it
+- User/Machine selection is no longer clearable
+
+
+### Timesheet Bank
+
+- Constructed the timesheet Bank
+- Navigate to timesheetes & RTOs
+- Conduct payouts with proper permissions
+- Edit Comments
+- Filter by indvidiual & rto type
 
 ### RTO 
 
@@ -54,7 +67,11 @@
 - No longer deletes options when cleared
 - No longer queries for container pages that aren't there. 
 
-## [2019.05] May 2019
+### Tools 
+
+- Button no longer stays disabled after a processing run.
+
+# [2019.05] May 2019
 
 ### Timesheet
 
@@ -114,7 +131,7 @@
 - eliminated caps lock bug when scanning materials
 
 
-## [2019.03] March 2019
+# [2019.03] March 2019
 
 ### SEM
 - Can now select run types
@@ -124,7 +141,7 @@
 ### Misc
 - User select box will now hard check for employee ID, typing 1 will now select Robert
 
-## [2019.02] February 2019
+# [2019.02] February 2019
 
 ### TGA
 - Peak tool now has "previous" and "next" buttons for navigating single runs easier
@@ -166,7 +183,7 @@
 - Select2 boxes now have proper padding for placeholder text
 
 
-## [2019.01] January 2019
+# [2019.01] January 2019
 
 ### Misc
 -  Auth screen no longer locks you out when you fail your password.
@@ -186,7 +203,7 @@
 
 
 
-## [2018.12.0] December 2018
+# [2018.12.0] December 2018
 ### General
 - When the application is "thinking", a loading bar will be displayed at the top of the screen. 
 - The select scanner box is now hidden by default, but can be toggled with the target button by the user's name.
@@ -194,7 +211,7 @@
 
 
 
-## [2018.11.0] November 2018
+# [2018.11.0] November 2018
 ### Angular 
 - Updated from Angular 7.0 to 7.1  
 

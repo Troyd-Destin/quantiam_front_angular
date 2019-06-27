@@ -32,6 +32,7 @@ import { CreateRtoDialogComponent } from './create-rto-dialog/create-rto-dialog.
 import { TimesheetStatisticsComponent } from './timesheet-statistics/timesheet-statistics.component';
 import { TimesheetStatisticsUserComponent } from './timesheet-statistics/timesheet-statistics-user/timesheet-statistics-user.component';
 import { TimesheetStatisticsCompanyComponent } from './timesheet-statistics/timesheet-statistics-company/timesheet-statistics-company.component';
+import { CreatePayoutComponent } from './create-payout/create-payout.component';
 
 @NgModule({
   imports: [
@@ -43,11 +44,11 @@ import { TimesheetStatisticsCompanyComponent } from './timesheet-statistics/time
     MaterialDesignModule,
     SharedModule
   ],
-  entryComponents:[ CreateRtoDialogComponent ],
+  entryComponents:[ CreateRtoDialogComponent,CreatePayoutComponent ],
   declarations: [ NumericEditor, TimesheetIndexComponent, TimesheetComponent, 
     TimesheetBankComponent, TimesheetSimpleComponent, TimesheetCalendarComponent, TimesheetRtoComponent, TimesheetRtoViewComponent,
      TimesheetProjectComponent, TimesheetHolidayComponent, TimesheetRtoAllocationComponent, TimesheetReportComponent, UserHoursComponent,
-      ProjectUserHoursComponent, UserRTOBankStatusComponent, UserAbsenceSummaryComponent, TimesheetSettingsComponent, CreateRtoDialogComponent, TimesheetStatisticsComponent, TimesheetStatisticsUserComponent, TimesheetStatisticsCompanyComponent,
+      ProjectUserHoursComponent, UserRTOBankStatusComponent, UserAbsenceSummaryComponent, TimesheetSettingsComponent, CreateRtoDialogComponent, TimesheetStatisticsComponent, TimesheetStatisticsUserComponent, TimesheetStatisticsCompanyComponent, CreatePayoutComponent,
       
       ]
 })

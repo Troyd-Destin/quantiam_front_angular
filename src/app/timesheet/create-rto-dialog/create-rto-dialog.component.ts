@@ -19,7 +19,7 @@ export class CreateRtoDialogComponent implements OnInit {
 
   selectedUser;
   currentUser;
-  
+
 
   constructor(
     public dialogRef: MatDialogRef<CreateRtoDialogComponent>,
@@ -31,38 +31,31 @@ export class CreateRtoDialogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    
+
 
     this.userService.getAuthedUser().subscribe(r => {
 
 
-    
+
       this.currentUser = r;
       console.log('service fire');
-    })
-  
-  }
+    });
 
-  ngOnDestroy(): void {
-
-
-    
   }
 
 
-  selectUser(event){
+  selectUser(event) {
 
       this.selectedUser = event;
   }
 
-  createRtoForUser()
-  {
+  createRtoForUser() {
     this.createRto(this.selectedUser.id);
 
   }
 
 
-  createRto(userId){
+  createRto(userId) {
 
     const params = {
         user: userId
@@ -74,7 +67,7 @@ export class CreateRtoDialogComponent implements OnInit {
         this.dialogRef.close();
          this.router.navigate(['/timesheet/rto/', response.id]);
 
-    })
+    });
 
   }
 

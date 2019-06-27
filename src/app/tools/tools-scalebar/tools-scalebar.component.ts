@@ -50,6 +50,7 @@ export class ToolsScalebarComponent implements OnInit {
                   this.enableLoadingGraphic = false;
                   this.notification.success('Success','We processed '+r.length+' images.',{showProgressBar:false,timeOut:4000,clickToClose: true});
                   this.processResponse = r;
+                  this.toolOptions.path.length = '';
       }
       );
    }

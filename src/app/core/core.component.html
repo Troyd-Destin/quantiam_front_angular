@@ -146,6 +146,12 @@
 										<fa-icon [icon]="faClock"></fa-icon>
 									</button>
 								</mat-list-item>	
+								<mat-list-item > 
+										<button   [routerLink]="['/timesheet', this.currentTimesheet.userId, 'bank-history','vacation']" 
+										routerLinkActive="mat-list-item-button-active" mat-button> <p>Bank History</p>
+										   <fa-icon [icon]="faPiggyBank"></fa-icon>
+									   </button>
+								   </mat-list-item>
 								 <mat-list-item > 
 									 
 									 <button routerLink="/timesheet/calendar" routerLinkActive="mat-list-item-button-active" mat-button  fxLayout="row" >  
@@ -336,12 +342,12 @@
 											<fa-icon  [icon]="faMicroscope" ></fa-icon>
 										</button>
 								</mat-list-item>
-								<mat-list-item  > 
+								<mat-list-item  *ngIf="userService.hasPermission(39,44)"> 
 										<button routerLink="/tga/database" routerLinkActive="mat-list-item-button-active" mat-button> <p>TGA</p>
 											<fa-icon  [icon]="faFireAlt" ></fa-icon>
 										</button>
 								</mat-list-item>
-								<mat-list-item  > 
+								<mat-list-item *ngIf="userService.hasPermission(39)" > 
 										 <button routerLink="/xps/database" routerLinkActive="mat-list-item-button-active" mat-button> <p>XPS </p>
 											<fa-icon  [icon]="faBolt" ></fa-icon>
 										</button>
@@ -363,7 +369,7 @@
 
 
 						<mat-divider ></mat-divider>
-						<mat-expansion-panel expanded="false" >
+						<mat-expansion-panel expanded="false" *ngIf="userService.hasPermission(44,39)">
 							  <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
 								<mat-panel-title>
 								    SGX
@@ -392,7 +398,7 @@
 							  </mat-expansion-panel-header>
 								<mat-list>
 								
-								 <mat-list-item  > 
+								 <mat-list-item *ngIf="userService.hasPermission(38)" > 
 										 <button routerLink="/sample/sgx-scale-auth" routerLinkActive="mat-list-item-button-active" mat-button>Scale Auth</button>
 								</mat-list-item>
 								 <mat-list-item  > 

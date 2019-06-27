@@ -5,7 +5,7 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
   // tslint:disable-next-line:no-trailing-whitespace
   routesToCache: string[] = [
    'userDatabase', 'userView', 
-   'timesheet','timesheet-calendar','timesheet-report','timesheet-project','timesheet-holiday','timesheet-rto-allocation','timesheet-rto-database',  
+   'timesheet','timesheet-calendar','timesheet-report','timesheet-project', 'timesheet-bank', 'timesheet-holiday','timesheet-rto-allocation','timesheet-rto-database',  
    'timesheet-report-user-hours','timesheet-report-project-user-hours','timesheet-report-user-rto-bank-status','timesheet-report-user-absences-summary',
    'tgaDatabase', 'tgaPeakTool',
     'MaterialContainerDatabase','MaterialContainerView',

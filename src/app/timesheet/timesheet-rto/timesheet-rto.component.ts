@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { CreateRtoDialogComponent } from '../create-rto-dialog/create-rto-dialog.component';
 
 import {environment} from '../../../environments/environment';

@@ -1,9 +1,9 @@
 
 
-<div fxFlex fxLayout="column" fxLayoutGap="10px" style="height:100%" id="timesheetPage" *ngIf="displayTimesheet">
+<div fxFlex fxLayout="column" fxLayoutGap="5px" style="height:100%" id="timesheetPage" *ngIf="displayTimesheet">
 
 
-  <div id="alerts">
+  <div id="alerts" >
 
 
     <ngb-alert [dismissible]="false" type="info" *ngIf="timeSheetObj?.payPeriod?.locked && !userService.hasPermission(10)">
@@ -17,13 +17,13 @@
 
   </div>
 
-  <div fxLayout="row" style="font-size: 1.25em;" >
+  <div fxLayout="row" style="font-size: 1.25em;" fxLayoutAlign="start end" >
 
       <div fxLayout="column" fxFlex=20 fxLayoutAlign="start start" >
 
-        <div  fxLayout="row" (mouseenter)="checkUserForSubordinatesAndMachines();"  (mouseleave) ="hideSelectBox()"  >   
+        <div style="height:36px;" fxLayout="row"  fxLayoutAlign="start end" (mouseenter)="checkUserForSubordinatesAndMachines();"  (mouseleave) ="hideSelectBox()"  >   
           
-          <p [hidden]="showSelectBox" >{{timeSheetObj.userID}} - <b>{{timeSheetObj?.fullname}}</b> </p> 
+          <p [hidden]="showSelectBox"  >{{timeSheetObj.userID}} - <b>{{timeSheetObj?.fullname}}</b> </p> 
 
           <app-select-user 
                 [placeholder]="timeSheetObj?.fullname"
@@ -32,6 +32,7 @@
                 [selectedValue]="timeSheetObj?.userID" 
                 [authorizedSubordinatesOrMachines]=true
                 [allOptions]="userService.hasPermission([43,1])"
+                [clearable]="false"
                 appendTo=''
           ></app-select-user>
         </div>

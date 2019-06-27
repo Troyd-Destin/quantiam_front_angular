@@ -32,7 +32,7 @@ export class TimesheetComponent implements OnInit {
   private gridApi;
   private gridColumnApi;
 
-  private rowData = [];
+  public rowData = [];
 
   timesheetStartYear = 2014;
   timesheetEndYear;
@@ -183,7 +183,7 @@ export class TimesheetComponent implements OnInit {
     private route: ActivatedRoute,
     private http: HttpClient,
     private router: Router,
-    private userService: UserService,
+    public userService: UserService,
     private notification: NotificationsService,
     private timesheetService: TimesheetService,
     ) {  }
@@ -203,7 +203,7 @@ export class TimesheetComponent implements OnInit {
       this.routeParams.year = params.get('year');
       this.routeParams.payperiod = params.get('payperiod');
 
-      setTimeout((x)=>{ this.fetchTimesheet(); },500);
+      setTimeout((x) => { this.fetchTimesheet(); }, 500);
 
     });
 
@@ -233,15 +233,15 @@ export class TimesheetComponent implements OnInit {
 
    onCellEditingStopped($event) {
 
-     let value = $event.value;
+     const value = $event.value;
 
-     if(!$event.value) { $event.value = ''; }
-    if(this.oldCellValue[$event.column.colId] == null ){ this.oldCellValue[$event.column.colId] = ''; }
+     if (!$event.value) { $event.value = ''; }
+    if (this.oldCellValue[$event.column.colId] == null ) { this.oldCellValue[$event.column.colId] = ''; }
 
-     if ("" + this.oldCellValue[$event.column.colId] + "" !== value ) {
+     if ('' + this.oldCellValue[$event.column.colId] + '' !== value ) {
 
 
-     //$event.value = this.toNearest($event.value,0.25);
+     // $event.value = this.toNearest($event.value,0.25);
 
      // console.log($event.value, this.oldCellValue[$event.column.colId]);
       this.updateHours($event);
@@ -293,7 +293,7 @@ export class TimesheetComponent implements OnInit {
     this.timesheetLoaded = false;
 
     this.http.get<any>(environment.apiUrl + url)
-    //.pipe(delay(500))
+    // .pipe(delay(500))
     .subscribe(response => {
      // console.log(response);
             this.timeSheetObj = response;
@@ -302,10 +302,10 @@ export class TimesheetComponent implements OnInit {
             window.history.replaceState({}, '', `/timesheet/${this.routeParams.userId}/year/${ this.routeParams.year}/payperiod/${ this.routeParams.payperiod }`);
             this.timesheetService.changeTimesheet(this.routeParams);
             this.displayTimesheet = true;
-            setTimeout((x) => { this.constructTimesheet(); 
-              
-              if(this.firstLoad) {
-                 // this.gridApi.redrawRows(); 
+            setTimeout((x) => { this.constructTimesheet();
+
+              if (this.firstLoad) {
+                 // this.gridApi.redrawRows();
                   this.firstLoad = !this.firstLoad;
               }
             }, 400);
@@ -536,12 +536,12 @@ export class TimesheetComponent implements OnInit {
       this.gridApi.sizeColumnsToFit();
     }
 
-    setTimeout((x)=>{
-       let test = document.getElementsByClassName("ag-group-value");
-       let last = test[test.length-1];
+    setTimeout((x) => {
+       const test = document.getElementsByClassName('ag-group-value');
+       const last = test[test.length - 1];
        last.innerHTML   = '<b>Total</b> ( ' + this.timeSheetObj.denomination + ' )';
        console.log(last);
-    },200);
+    }, 200);
     console.log(this.timeSheetFramework);
   }
 
@@ -551,11 +551,10 @@ export class TimesheetComponent implements OnInit {
   }
 
   onRowClicked(event) {
-    
-    if(event.node.group)
-    {
-      event.node.setExpanded(!event.node.expanded); 
-      
+
+    if (event.node.group) {
+      event.node.setExpanded(!event.node.expanded);
+
     }
 
 
@@ -656,14 +655,14 @@ export class TimesheetComponent implements OnInit {
 
     };
 
-    if(params.value === ''){ params.value = 0;}
+    if (params.value === '') { params.value = 0; }
     payload[this.timeSheetObj.denomination.toLowerCase()] = '' + params.value + '';
-    
+
     const url = '/timesheet/' + this.routeParams.userId + '/process';
     this.http.put<any>(environment.apiUrl + url + '?filterSpinner', payload)
     .subscribe(response => {
 
-          if('overhours' in response){
+          if ('overhours' in response) {
 
                 this.timeSheetObj.bank = response.bank;
                 this.timeSheetObj.overhours[response.week - 1].daily_sum = response.totaldaily_overhours;
@@ -712,9 +711,9 @@ export class TimesheetComponent implements OnInit {
   this.showSelectBox2 = false;
   setTimeout((x) => {
     if (!this.showSelectBox2) {
-        this.showSelectBox = false; 
+        this.showSelectBox = false;
       }
-    
+
      } , 500 );
   }
 
@@ -729,5 +728,5 @@ export class TimesheetComponent implements OnInit {
   }
 
 
- 
+
 }

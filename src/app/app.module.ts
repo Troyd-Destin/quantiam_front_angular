@@ -12,7 +12,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { HighchartsChartModule } from 'highcharts-angular';
 
+
 import {LicenseManager} from 'ag-grid-enterprise/main';
+
 // tslint:disable-next-line:max-line-length
 LicenseManager.setLicenseKey('Evaluation_License-_Not_For_Production_Valid_Until_7_July_2019__MTU2MjQ1NDAwMDAwMA==fed960679205b68cd00195b0aaf9b162');
 

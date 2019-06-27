@@ -14,35 +14,34 @@ export class TimesheetHolidayComponent implements OnInit {
   private hotRegisterer = new HotTableRegisterer();
   year = new Date().getFullYear();
 
-  //Hot table
+  // Hot table
   id = 'hotInstance';
-  hotTableSettings:any = {
+  hotTableSettings: any = {
     colHeaders: true,
-    afterChange: (hotInstance, changes, source) =>{
+    afterChange: (hotInstance, changes, source) => {
 
       console.log(changes);
     }
-  }
+  };
 
-   constructor(private http: HttpClient,) { }
+   constructor(private http: HttpClient, ) { }
 
 
    ngOnInit() {
 
-    
+
     this.fetchHolidayList();
   }
 
 
-  fetchHolidayList()
-	{
+  fetchHolidayList() {
 		  const params: any = {'year': this.year};
-      this.http.get(environment.apiUrl + '/holiday', {params: params}).subscribe((response:any) => {
+      this.http.get(environment.apiUrl + '/holiday', {params: params}).subscribe((response: any) => {
 
          // console.log(response);
           this.hotRegisterer.getInstance(this.id).loadData(response);
           console.log(this.hotTableSettings);
-      })
+      });
 	}
 
 

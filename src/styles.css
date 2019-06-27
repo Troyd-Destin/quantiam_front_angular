@@ -76,9 +76,33 @@ padding-right:12px !important;
 /* ag-grid Balham overwrites */
 
 .ag-theme-balham .ag-header{
-background-color: #557796;
+background-color: #3c658a;;
 color: rgb(255, 255, 255);
 }
+
+.ag-theme-balham .ag-root {
+    border: 1px solid #BDC3C7;
+    border-radius: 10px;
+}
+
+.ag-theme-balham .ag-side-bar {
+    background-color: #f5f7f7;
+	 border-right: 0px solid #BDC3C7;
+     border-top: 0px solid #BDC3C7; 
+    position: relative;
+}
+
+.ag-theme-balham .ag-status-bar {
+    
+     border: 0px solid #BDC3C7; 
+   
+}
+
+.ag-theme-balham .ag-paging-panel {
+    align-items: center;
+	border-top: 0px solid #BDC3C7;
+}
+
 /* Angular Fixes */
 
 [hidden] {
