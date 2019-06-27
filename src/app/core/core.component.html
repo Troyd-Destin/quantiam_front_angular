@@ -342,7 +342,7 @@
 											<fa-icon  [icon]="faMicroscope" ></fa-icon>
 										</button>
 								</mat-list-item>
-								<mat-list-item  *ngIf="userService.hasPermission(39,44)"> 
+								<mat-list-item  *ngIf="userService.hasPermission([39,44])"> 
 										<button routerLink="/tga/database" routerLinkActive="mat-list-item-button-active" mat-button> <p>TGA</p>
 											<fa-icon  [icon]="faFireAlt" ></fa-icon>
 										</button>
@@ -369,7 +369,7 @@
 
 
 						<mat-divider ></mat-divider>
-						<mat-expansion-panel expanded="false" *ngIf="userService.hasPermission(44,39)">
+						<mat-expansion-panel expanded="false" *ngIf="userService.hasPermission([44,39])">
 							  <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
 								<mat-panel-title>
 								    SGX
