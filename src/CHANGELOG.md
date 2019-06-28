@@ -22,7 +22,12 @@
 
 - Updated to Angular 8
 - Prototype pop up for hovering over steel objects 
-- Quantiam Theme Tables now have softer edges
+- Quantiam Themed Tables now have softer edges
+
+### Users
+- Table changed into Quantiam style
+- Added Direct Line property
+
 
 ### Comments
 - Comment component with Ckeditor5 WSYWIG
@@ -73,6 +78,8 @@
 
 # [2019.05] May 2019
 
+
+
 ### Timesheet
 
 - Fixed stat holiday editing bug
@@ -114,7 +121,7 @@
 - Replaced select2 supplier dropdown, with ng select, to fix display bug
 - Auth screen font resized
 
-## [2019.04] April 2019
+# [2019.04] April 2019
 
 ### Users
 - Can add permissions to individual users now

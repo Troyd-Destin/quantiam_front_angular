@@ -107,18 +107,7 @@
 					   >
 				   </mat-form-field >
 
-				   <mat-form-field  fxFlex=10>
-						<input  #Extension 
-						(change)="updateUser(Extension)"
-						disabled
-						type="number" 
-						matInput 
-						placeholder="Extension" 
-						[disabled]="!editUser" 
-						[(ngModel)] ='user.extension'
-						name="extension"
-				>
-				</mat-form-field >
+				 
 
 					<mat-form-field  fxFlex>
 							<input  #Email 
@@ -132,7 +121,31 @@
 					>
 					</mat-form-field >
 
-				
+					<mat-form-field  fxFlex>
+							<input  #Phone 
+							(change)="updateUser(Phone)"
+							disabled
+							type="text" 
+							matInput 
+							placeholder="Phone" 
+							[(ngModel)] ='user.direct_line'
+							[disabled]="!editUser" 
+							name="direct_line"
+					>
+					</mat-form-field >
+
+					<mat-form-field  fxFlex=10>
+							<input  #Extension 
+							(change)="updateUser(Extension)"
+							disabled
+							type="number" 
+							matInput 
+							placeholder="Extension" 
+							[disabled]="!editUser" 
+							[(ngModel)] ='user.extension'
+							name="extension"
+					>
+					</mat-form-field >
 			
 
 			</div>

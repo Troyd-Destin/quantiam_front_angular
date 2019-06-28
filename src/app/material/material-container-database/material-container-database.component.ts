@@ -62,7 +62,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
       },
       {
-        width: 75,
+        width: 70,
         field: 'qcid',
         headerName: 'QCID',
         suppressMenu: true,

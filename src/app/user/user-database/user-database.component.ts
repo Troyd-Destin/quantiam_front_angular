@@ -25,17 +25,19 @@ export class UserDatabaseComponent implements OnInit {
         headerTooltip: '#',  filter: 'agTextColumnFilter', maxWidth: 90, },
         {headerName: 'Firstname', field: 'firstname',   maxWidth: 130, },
         {headerName: 'Lastname', field: 'lastname', maxWidth: 130, },
+        { headerName: 'Title', field: 'title',  },
+        {headerName: 'Direct Line', field: 'direct_line',  maxWidth: 130,  },
         {headerName: 'Ext.', field: 'extension',  maxWidth: 100, },
         {headerName: 'Email', field: 'email',   },
         {headerName: 'Username', field: 'ldap_username', hide: true,  },
-        {headerName: 'Title', field: 'title',  },
-        {headerName: 'Compensation', field: 'compensation', maxWidth: 130, },
+       
+       
         {headerName: 'Supervisor', field: 'employeeid', maxWidth: 150, valueGetter: function aPlusBValueGetter(params) {
             return params.data.supervisor.name;
         },  },
-       
-        {headerName: 'Start Date', field: 'startdate',  },
-        {headerName: 'Leave Date', field: 'leavedate',  },
+        {headerName: 'Compensation', field: 'compensation', maxWidth: 130, },
+        {headerName: 'Start Date', field: 'startdate', maxWidth: 130,   },
+        {headerName: 'Leave Date', field: 'leavedate', maxWidth: 130,  },
     ];
 
      defaultColDef = {

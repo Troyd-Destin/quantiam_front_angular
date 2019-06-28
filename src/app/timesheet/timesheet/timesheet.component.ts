@@ -307,7 +307,9 @@ export class TimesheetComponent implements OnInit {
               if (this.firstLoad) {
                  // this.gridApi.redrawRows();
                   this.firstLoad = !this.firstLoad;
+                 
               }
+              this.checkIfTimesheetEditable();
             }, 400);
             setTimeout((x) => { this.timesheetLoaded = true; }, 1000);
          });
@@ -624,13 +626,18 @@ export class TimesheetComponent implements OnInit {
 
   checkIfTimesheetEditable() {
 
-    if (this.userService.hasPermission(10)) {
+    if(this.timeSheetObj)
+    {
+    if (this.userService.hasPermission(10) || !this.timeSheetObj.payPeriod.locked) {
 
       this.timesheetEditable = true;
       this.defaultColDef['editable'] = true;
       return;
     }
 
+      this.timesheetEditable = false;
+      this.defaultColDef['editable'] = false;
+    }
     return;
 
   }

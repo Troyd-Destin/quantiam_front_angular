@@ -106,6 +106,7 @@ export class SelectUserComponent implements OnInit, OnDestroy {
 
       });
      this.items = this.user.subordinates;
+     this.items.unshift(userObj);
      return this.activityFilter(this.items);
 
     }

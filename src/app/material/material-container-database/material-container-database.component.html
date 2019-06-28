@@ -7,13 +7,15 @@
        
     <div fxLayout="row"  fxLayoutGap="20px"    >
 
-        <div fxFlex fxLayout="column" fxLayoutAlign="center start"> 
-                <!-- <mat-slide-toggle  (click)="toggleCellsEditable()"> Edit Table </mat-slide-toggle> -->
+        <div fxFlex fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px"> 
+               
                <!--  <app-select-material></app-select-material> -->
                
                     <ngb-alert   type="info"  [dismissible]="false" style="margin-top:7px; margin-bottom:0px;">
                             <b> SDS Storage </b> <a target="_blank" href="File:///Q:/Administration - All Staff/SDS"> Q:\Administration - All Staff\SDS </a>
                     </ngb-alert>
+
+                    <mat-slide-toggle  (click)="toggleCellsEditable()"> Edit Table </mat-slide-toggle> 
                
                <!-- <app-select-material-supplier></app-select-material-supplier>  -->
         </div>
@@ -48,7 +50,7 @@
            
               
         style="width: calc(100%); height:calc(78vh); margin-top:10px;" 
-        class="ag-theme-material"
+        class="ag-theme-balham"
         animateRows="true"
         
        
