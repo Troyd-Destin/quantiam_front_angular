@@ -110,15 +110,15 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         headerName: 'PO #',
       },
       {
-        width: 150,
+        width: 100,
         field: 'container_name',
-        headerName: 'Container Name',
+        headerName: 'Name',
       },
-      {
+      /* {
         width: 80,
         field: 'container_number',
         headerName: '#',
-      },
+      }, */
       {
         width: 120,
         field: 'location',

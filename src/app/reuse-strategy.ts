@@ -7,6 +7,7 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
    'userDatabase', 'userView', 
    'timesheet','timesheet-calendar','timesheet-report','timesheet-project', 'timesheet-bank', 'timesheet-holiday','timesheet-rto-allocation','timesheet-rto-database',  
    'timesheet-report-user-hours','timesheet-report-project-user-hours','timesheet-report-user-rto-bank-status','timesheet-report-user-absences-summary',
+   'timesheet-statistics-company','timesheet-statistics-user',
    'tgaDatabase', 'tgaPeakTool',
     'MaterialContainerDatabase','MaterialContainerView',
     'SemDatabase','SemRun',

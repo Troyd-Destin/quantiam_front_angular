@@ -1,6 +1,19 @@
 
 <div fxLayout="column" fxFlexOffset.gt-md="20vw">
 
+  <div fxlayout="row">
+
+      <mat-form-field>
+          <mat-label>Year</mat-label>
+      
+          <mat-select [(ngModel)]="selectedYear" matNativeControl (selectionChange)="fetchList()">
+            
+              <mat-option *ngFor="let year of yearList" [value]="year">
+                  {{year}}
+                </mat-option>
+          </mat-select>
+        </mat-form-field>
+  </div>
   <hot-table  
     
     class="hot"
@@ -12,15 +25,15 @@
   
 >
 
-      <hot-column data="employee_id" title="ID" read-only></hot-column>
+      <hot-column data="employee_id" title="ID" readOnly="true"></hot-column>
       <!--  <hot-column data="year" title="'Year'" read-only></hot-column> -->
-      <hot-column data="employee.name_abbrev" title="Name" read-only></hot-column>
-      <hot-column data="vacation" title="Vacation" ></hot-column>
-      <hot-column data="pto" title="PTO" ></hot-column>
-      <hot-column data="ppl" title="PPL" ></hot-column>
-      <hot-column data="employee.startdate" title="Started"  read-only></hot-column>
-      <hot-column data="employee.leavedate" title="Left"  read-only></hot-column>
-      <hot-column data="comment" title="Comment"  width="300"></hot-column>
+      <hot-column data="employee.name_abbrev" title="Name" readOnly="true" ></hot-column>
+      <hot-column data="vacation"   type="numeric" title="Vacation" [readOnly]="userService.hasPermission(37)? false: true"></hot-column>
+      <hot-column data="pto" type="numeric" title="PTO" [readOnly]="userService.hasPermission(37)? false: true"></hot-column>
+      <hot-column data="ppl"  type="numeric" title="PPL" [readOnly]="userService.hasPermission(37)? false: true"></hot-column>
+      <hot-column data="employee.startdate" title="Started"  readOnly="true"></hot-column>
+      <hot-column data="employee.leavedate" title="Left"  readOnly="true"></hot-column>
+      <hot-column data="comment" title="Comment"  width="300" [readOnly]="userService.hasPermission(37)? false: true"></hot-column>
     
     </hot-table>  
 

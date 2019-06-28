@@ -34,11 +34,11 @@ export class TimesheetBankComponent implements OnInit {
     colHeaders: true,
     afterChange: (changes, source) => {
 
-      if(this.dataLoaded && changes[0]){
+      if (this.dataLoaded && changes[0]) {
 
 
-      const data:any = this.hotRegisterer.getInstance('hotInstance').getSourceDataAtRow(changes[0][0]);
-    
+      const data: any = this.hotRegisterer.getInstance('hotInstance').getSourceDataAtRow(changes[0][0]);
+
 
       console.log(data);
 
@@ -47,8 +47,8 @@ export class TimesheetBankComponent implements OnInit {
 
       this.updateComment(data);
       }
-     
-      
+
+
     },
     columns: [
     {
@@ -77,20 +77,20 @@ export class TimesheetBankComponent implements OnInit {
       title: 'Timesheet',
       readOnly: true,
       allowHtml: true,
-      renderer:  (instance, td,row,col,prop,value, cellProperties) =>{
+      renderer:  (instance, td, row, col, prop, value, cellProperties) => {
 
-        const data:any = instance.getSourceDataAtRow(row);
+        const data: any = instance.getSourceDataAtRow(row);
         Handsontable.dom.empty(td);
         const btn = document.createElement('button');
         btn.append('Timesheet');
         btn.classList.add('mat-raised-button');
         btn.classList.add('mat-primary');
         btn.classList.add('mat-small');
-        btn.setAttribute("style", "margin: 3px");
-        btn.addEventListener('click',(r)=>{
-          this.router.navigate(['/timesheet/'+ this.routeParams.userId +'/year/'+data.year+'/payperiod/'+data.payperiod]);
+        btn.setAttribute('style', 'margin: 3px');
+        btn.addEventListener('click', (r) => {
+          this.router.navigate(['/timesheet/' + this.routeParams.userId + '/year/' + data.year + '/payperiod/' + data.payperiod]);
 
-        })
+        });
         td.append(btn);
         return td;
 
@@ -100,28 +100,27 @@ export class TimesheetBankComponent implements OnInit {
       title: 'RTO',
       readOnly: true,
       allowHtml: true,
-      width: "80px",
-      renderer:  (instance, td,row,col,prop,value, cellProperties) =>{
+      width: '80px',
+      renderer:  (instance, td, row, col, prop, value, cellProperties) => {
         Handsontable.dom.empty(td);
-        const data:any = instance.getSourceDataAtRow(row);
-        if(data.requestID)
-        {
-       
+        const data: any = instance.getSourceDataAtRow(row);
+        if (data.requestID) {
+
         const btn = document.createElement('button');
         btn.append('RTO');
         btn.classList.add('mat-raised-button');
         btn.classList.add('mat-accent');
         btn.classList.add('mat-small');
-        btn.setAttribute("style", "margin: 3px");
-        btn.addEventListener('click',(r)=>{
-          this.router.navigate(['/timesheet/rto/'+ data.requestID]);
+        btn.setAttribute('style', 'margin: 3px');
+        btn.addEventListener('click', (r) => {
+          this.router.navigate(['/timesheet/rto/' + data.requestID]);
 
-        })
+        });
         td.append(btn);
       }
 
-      
-     
+
+
       return td;
 
       }
@@ -143,14 +142,14 @@ export class TimesheetBankComponent implements OnInit {
   bankHistory;
 
   constructor(
-    private http: HttpClient, 
-    private route: ActivatedRoute, 
-    public userService: UserService, 
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    public userService: UserService,
     private location: Location,
-    private dialog: MatDialog, 
+    private dialog: MatDialog,
     private notification: NotificationsService,
-    private router: Router, 
-     
+    private router: Router,
+
      ) { }
 
   ngOnInit() {
@@ -162,7 +161,7 @@ export class TimesheetBankComponent implements OnInit {
   }
 
   decideUserAndType() {
-    
+
 
     this.route.paramMap.subscribe(params => {
 
@@ -189,7 +188,7 @@ export class TimesheetBankComponent implements OnInit {
 
       this.location.go(`/timesheet/${this.routeParams.userId}/bank-history/${this.routeParams.type}`);
       this.hotRegisterer.getInstance(this.hotTableId).loadData(r);
-      setTimeout((r)=>{this.dataLoaded = true}, 200);
+      setTimeout((r) => {this.dataLoaded = true; }, 200);
 
     });
 
@@ -206,48 +205,43 @@ export class TimesheetBankComponent implements OnInit {
     this.fetchBankHistory();
   }
 
-  createPayout()
-  {
+  createPayout() {
 
     console.log(this.routeParams.userId);
 
     const dialogRef = this.dialog.open(CreatePayoutComponent, {
-       
+
       // disableClose: true,
         width: 'auto',
         autoFocus: true,
         position: {'top': '50px'},
         data: { userId: this.routeParams.userId, }
       });
-  
+
       dialogRef.afterClosed().subscribe(result => {
 
-            
-            if(result){
+
+            if (result) {
               this.fetchBankHistory();
             }
-           
+
 
       });
 
   }
 
 
-  updateComment(hour)
-  {
-    if(hour.entryid)
-    {
-      this.http.put(environment.apiUrl + `/timesheet/hour/${hour.entryid}`, hour).subscribe((r)=>{
+  updateComment(hour) {
+    if (hour.entryid) {
+      this.http.put(environment.apiUrl + `/timesheet/hour/${hour.entryid}`, hour).subscribe((r) => {
 
-        this.notification.success('Success','Comment was saved',{timeOut: 4000});
+        this.notification.success('Success', 'Comment was saved', {timeOut: 4000});
 
-      })
+      });
+    } else {
+      this.notification.error('Oops', 'We can\'t save a comment to this entry.', {timeOut: 4000});
     }
-    else
-    {
-      this.notification.error('Oops', 'We can\'t save a comment to this entry.', {timeOut:4000});
-    }
-     
+
 
   }
 

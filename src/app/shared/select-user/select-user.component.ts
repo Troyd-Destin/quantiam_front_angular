@@ -83,7 +83,7 @@ export class SelectUserComponent implements OnInit, OnDestroy {
 
     // check for all Options
   
-    if (this.allOptions === true) {
+    if (this.allOptions) {
 
         const everything = this.allItems;
 

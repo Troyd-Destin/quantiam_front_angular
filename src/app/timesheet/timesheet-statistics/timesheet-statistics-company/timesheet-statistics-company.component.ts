@@ -53,15 +53,15 @@ export class TimesheetStatisticsCompanyComponent implements OnInit {
     allMonthlyStackedChartOptions: any = {
         chart: {
 
-            type: "area"
+            type: 'area'
         },
         title: {
 
-            text: "Percentage of All Time Monthly Hours by Category "
+            text: 'Percentage of All Time Monthly Hours by Category '
 
         },
         subtitle: {
-            text: 'Quantiam Technologies Inc. 2015 to '+ this.currentYear,
+            text: 'Quantiam Technologies Inc. 2015 to ' + this.currentYear,
         },
         yAxis: {
             title: {
@@ -69,7 +69,7 @@ export class TimesheetStatisticsCompanyComponent implements OnInit {
             }
         },
         xAxis: {
-          //categories: ['1750', '1800', '1850', '1900', '1950', '1999', '2050'],
+          // categories: ['1750', '1800', '1850', '1900', '1950', '1999', '2050'],
           tickmarkPlacement: 'on',
           title: {
               enabled: false
@@ -89,7 +89,7 @@ export class TimesheetStatisticsCompanyComponent implements OnInit {
                 enabled: false,
                 lineColor: '#ffffff'
             }
-       
+
         }
       }
     };
@@ -118,6 +118,8 @@ export class TimesheetStatisticsCompanyComponent implements OnInit {
         this.createYearSelection();
         this.getYearlyChartData();
         this.getAllTimePercentageData();
+
+        
 
     }
 
@@ -162,11 +164,11 @@ export class TimesheetStatisticsCompanyComponent implements OnInit {
             this.allMonthlyStackedChartOptions.xAxis.categories = r.monthList;
            // this.allMonthlyStackedChartOptions.title.text = 'Quantiam Technologies, ' + this.selectedYear;
            setTimeout((x) => {
-            
+
             this.renderStackedMontlyChart = true;
 
         }, 100);
-          
+
             this.updateFlag2 = true;
 
             console.log(this.allMonthlyStackedChartOptions);

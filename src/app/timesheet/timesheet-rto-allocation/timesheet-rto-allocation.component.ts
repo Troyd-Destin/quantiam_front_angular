@@ -1,51 +1,86 @@
-
 import { Component, OnInit } from '@angular/core';
-import {  environment} from '../../../environments/environment';
-import {  HttpClient} from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 import { HotTableRegisterer } from '@handsontable/angular';
+import { UserService } from '../../services/user/user.service';
+import { NotificationsService } from 'angular2-notifications';
 
 
 
 @Component({
-  selector: 'app-timesheet-rto-allocation',
-  templateUrl: './timesheet-rto-allocation.component.html',
-  styleUrls: ['./timesheet-rto-allocation.component.css']
+    selector: 'app-timesheet-rto-allocation',
+    templateUrl: './timesheet-rto-allocation.component.html',
+    styleUrls: ['./timesheet-rto-allocation.component.css']
 })
 export class TimesheetRtoAllocationComponent implements OnInit {
 
-  private hotRegisterer = new HotTableRegisterer();
-  year = new Date().getFullYear();
-
-  //Hot table
-  id = 'hotInstance';
-  hotTableSettings:any = {
-    colHeaders: true,
-    afterChange: (hotInstance, changes, source) =>{
-
-      console.log(changes);
-    }
-  }
-
-   constructor(private http: HttpClient,) { }
-
-
-   ngOnInit() {
-
     
-    this.fetchList();
-  }
+
+    constructor(private http: HttpClient, public userService:UserService, private notify: NotificationsService ) {}
+
+    selectedYear = ''+ new Date().getFullYear() + '';
+    yearList: string[] = [];
+
+    private hotRegisterer = new HotTableRegisterer();
+    
+
+    //Hot table
+    id = 'hotInstance';
+    hotTableSettings: any = {
+        colHeaders: true,
+        afterChange: (changes, source) => {
+          
+          console.log(changes,source);
+          if(changes)
+          {
+           const rowProp: any = this.hotRegisterer.getInstance('hotInstance').getSourceDataAtRow(changes[0][0]);
+           
+
+            const payload:any = {};
+            payload[changes[0][1]] = changes[0][3];
+            payload.employee_id = rowProp.employee_id;
+            this.updateList(rowProp.entry_id, payload);
+          }
+        }
+    }
+
+    ngOnInit() {
 
 
-  fetchList()
-	{
-		  const params: any = {'year': this.year};
-      this.http.get(environment.apiUrl + '/rto/allocation/list', {params: params}).subscribe((response:any) => {
+        this.fetchList();
+        this.createYearSelection();
+    }
 
-         // console.log(response);
-          this.hotRegisterer.getInstance(this.id).loadData(response);
-          console.log(this.hotTableSettings);
+    createYearSelection() {
+        let i;
+        const startingYear = 2015;
+        const currentYear = new Date().getFullYear();
+        for (i = startingYear; i <= currentYear + 1; i++) {
+            this.yearList.push('' + i + '');
+        }
+        console.log(this.yearList);
+    }
+
+    fetchList() {
+        const params: any = { 'year': this.selectedYear };
+        this.http.get(environment.apiUrl + '/rto/allocation/list', { params: params }).subscribe((response: any) => {
+
+            // console.log(response);
+            this.hotRegisterer.getInstance(this.id).loadData(response);
+            console.log(this.hotTableSettings);
+        })
+    }
+
+    updateList(allocationId, params){
+
+
+      this.http.put(environment.apiUrl + `/rto/allocation/${allocationId}?filterSpinner`,params).subscribe((r)=>{
+
+
+          this.notify.success('Sucess','Updated entry',{timeOut:4000});
       })
-	}
+
+    }
 
 
 }

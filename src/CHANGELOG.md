@@ -54,6 +54,15 @@
 - Edit Comments
 - Filter by indvidiual & rto type
 
+### Timesheet Statistics User
+- Can now query your own data into the past
+- Can now query for your subordinates / machines in the past
+- Fancy Pie Charts
+- Raw, and Aggregate Tables
+- Adjust for start Date and end Date
+- Defaults query is start of current year and current date.
+- Added Statistics option to side menu
+
 ### RTO 
 
 - Database table should properly care about the user's permissions for subordinates/viewing

@@ -168,6 +168,14 @@
 									</button>
 									 
 								</mat-list-item>
+								 <mat-list-item > 
+									 
+									 <button routerLink="/timesheet/statistics/company" routerLinkActive="mat-list-item-button-active" mat-button  fxLayout="row" >  
+										<p>	Statistics </p> 
+										<fa-icon [icon]="faChartLine" ></fa-icon>
+									</button>
+									 
+								</mat-list-item>
 								<mat-list-item 	 *ngIf="userService.hasPermission([24,25,37])"  > 
 										
 										<button 
