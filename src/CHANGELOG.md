@@ -13,6 +13,15 @@
 - When using the Steel/Container/Sample ag-grid dropdown, the active/inactive filters will close the dropdown (event propgation issues)
 - Navigation for Bank History tabs is a bit off
 
+# July 2019
+
+### Machines
+
+- Navigation: Timesheet -> Settings -> Machines\
+- Can view machines with appropriate permissions
+- Can edit machines with appropriate permissions
+- Can create machines with appropriate permissions
+
 # [2019.06] June 2019
 
 ### Dev Tools

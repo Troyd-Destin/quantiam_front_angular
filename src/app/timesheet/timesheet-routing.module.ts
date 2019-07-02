@@ -12,6 +12,7 @@ import { TimesheetProjectComponent } from './timesheet-project/timesheet-project
 import { TimesheetHolidayComponent } from './timesheet-holiday/timesheet-holiday.component';
 import { TimesheetReportComponent } from './timesheet-report/timesheet-report.component';
 import { TimesheetRtoAllocationComponent } from './timesheet-rto-allocation/timesheet-rto-allocation.component';
+import { TimesheetMachinesComponent } from './timesheet-machines/timesheet-machines.component';
 
 import { ProjectUserHoursComponent } from './timesheet-report/project-user-hours/project-user-hours.component';
 import { UserRTOBankStatusComponent } from './timesheet-report/user-rtobank-status/user-rtobank-status.component';
@@ -66,6 +67,11 @@ const routes: Routes = [{
           path: 'project',
           data: { key: 'timesheet-project'},
           component: TimesheetProjectComponent,
+        },
+        {
+          path: 'machines',
+          data: { key: 'timesheet-machines'},
+          component: TimesheetMachinesComponent,
         },
         {
           path: 'holiday',

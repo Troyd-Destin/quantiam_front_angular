@@ -39,7 +39,9 @@ export class TimesheetRtoAllocationComponent implements OnInit {
             const payload:any = {};
             payload[changes[0][1]] = changes[0][3];
             payload.employee_id = rowProp.employee_id;
+            if(changes[0][2] !== changes [0][3]){ // only trigger if different 
             this.updateList(rowProp.entry_id, payload);
+            }
           }
         }
     }

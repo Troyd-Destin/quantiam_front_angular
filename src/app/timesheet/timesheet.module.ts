@@ -33,6 +33,8 @@ import { TimesheetStatisticsComponent } from './timesheet-statistics/timesheet-s
 import { TimesheetStatisticsUserComponent } from './timesheet-statistics/timesheet-statistics-user/timesheet-statistics-user.component';
 import { TimesheetStatisticsCompanyComponent } from './timesheet-statistics/timesheet-statistics-company/timesheet-statistics-company.component';
 import { CreatePayoutComponent } from './create-payout/create-payout.component';
+import { TimesheetEquipmentComponent } from './timesheet-equipment/timesheet-equipment.component';
+import { TimesheetMachinesComponent } from './timesheet-machines/timesheet-machines.component';
 
 @NgModule({
   imports: [
@@ -48,7 +50,7 @@ import { CreatePayoutComponent } from './create-payout/create-payout.component';
   declarations: [ NumericEditor, TimesheetIndexComponent, TimesheetComponent, 
     TimesheetBankComponent, TimesheetSimpleComponent, TimesheetCalendarComponent, TimesheetRtoComponent, TimesheetRtoViewComponent,
      TimesheetProjectComponent, TimesheetHolidayComponent, TimesheetRtoAllocationComponent, TimesheetReportComponent, UserHoursComponent,
-      ProjectUserHoursComponent, UserRTOBankStatusComponent, UserAbsenceSummaryComponent, TimesheetSettingsComponent, CreateRtoDialogComponent, TimesheetStatisticsComponent, TimesheetStatisticsUserComponent, TimesheetStatisticsCompanyComponent, CreatePayoutComponent,
+      ProjectUserHoursComponent, UserRTOBankStatusComponent, UserAbsenceSummaryComponent, TimesheetSettingsComponent, CreateRtoDialogComponent, TimesheetStatisticsComponent, TimesheetStatisticsUserComponent, TimesheetStatisticsCompanyComponent, CreatePayoutComponent, TimesheetEquipmentComponent, TimesheetMachinesComponent,
       
       ]
 })
