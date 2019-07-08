@@ -90,8 +90,10 @@
 <ag-grid-angular
 #agGrid
 
+style="width: calc(100%);  margin-top:10px;" 
 id="semDatabase"
 class="ag-theme-balham"
+domLayout='autoHeight'
 [columnDefs]="columnDefs"
 [gridOptions]="gridOptions"
 [defaultColDef]="defaultColDef"

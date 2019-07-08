@@ -33,18 +33,22 @@
               ></ckeditor>
   
           </div>
-          <div fxLayout="row" fxFlex.gt-lg=10 fxFlex=20 fxLayoutAlign="center center">    
-            <!--   <button mat-icon-button color="primary" class="clickable" (click)="">
-                  <mat-icon  matTooltip="Edit Comment">create</mat-icon>
+          <div fxLayout="row" fxFlex.gt-lg=10 fxFlex=30 fxLayoutAlign="end center">    
+            
 
-               
-              </button> -->
+              <button mat-icon-button color="primary" class="clickable" 
+              [hidden]="!showCommentOptions[comment.id]" matTooltip="Finish Editing"
+              [disabled]="userService.get('id') !== comment.comment_employee_id"
+              > 
+                 <mat-icon   >check</mat-icon>
+             </button>
                 <button mat-icon-button color="warn" class="clickable" (click)="deleteComment(comment)"
                  [hidden]="!showCommentOptions[comment.id]" matTooltip="Delete this comment."
                  [disabled]="userService.get('id') !== comment.comment_employee_id"
                  > 
                     <mat-icon   >delete</mat-icon>
                 </button>
+               
            </div>
        </div>
       </mat-card>

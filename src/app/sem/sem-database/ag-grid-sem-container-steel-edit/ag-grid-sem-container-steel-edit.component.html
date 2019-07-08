@@ -1,26 +1,37 @@
-<div id="containerSteelEditor" #editor tabindex="-1"  fxFlex fxLayout="row" class="background" fxLayoutAlign="center start" fxLayoutGap="20px">
+<div id="containerSteelEditor" #editor tabindex="-1"  fxFlex fxLayout="row" class="background" 
+fxLayoutAlign="center center" fxLayoutGap="20px">
 
 
    <!--  <app-select-steel></app-select-steel> -->
 
-    <div fxLayout="column" fxLayoutGap="10px" [hidden]="selectedSample?.id && selectedSteel?.id">
+    <div fxLayout="column" fxLayoutGap="10px" [hidden]="selectedSample?.id || selectedSteel?.id">
         <h3> Powder? </h3>
         <app-select-material-container
             #containerEditor
             style="min-width:125px;" 
             (change)="selectContainer($event)"
             (clear)="clearSelectedContainer()"
+          
             ></app-select-material-container> 
 
 
            
     </div>
-    <div fxLayout="column" fxLayoutGap="10px" *ngIf="!selectedContainer?.id && !selectedSample?.id">
+    <div fxLayout="column" fxLayoutGap="10px" [hidden]="selectedContainer?.id || selectedSample?.id">
             <h3>  Steel ? </h3>
-            <app-select-user></app-select-user>
+            <app-select-steel
+            #steelEditor
+            style="min-width:125px;" 
+            (change)="selectSteel($event)"
+            (clear)="clearSelectedSteel()"
+          
+            ></app-select-steel>
         </div>
-    <div fxLayout="column" fxLayoutGap="10px"  *ngIf="!selectedContainer?.id && !selectedSteel?.id">
+    <div fxLayout="column" fxLayoutGap="10px"  [hidden]="selectedContainer?.id || selectedSteel?.id">
             <h3> Sample? </h3>
             <app-select-sample></app-select-sample>
         </div>
+
+        <button mat-raised-button color="primary" style="margin-top:15px;" (click)="confirmChoice()" 
+        [hidden]="!selectedContainer?.id && !selectedSample?.id && !selectedSteel?.id">Confirm</button>
 </div>

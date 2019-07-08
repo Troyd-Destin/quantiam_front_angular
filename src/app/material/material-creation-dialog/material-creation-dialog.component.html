@@ -9,20 +9,20 @@
 			<div *ngIf="!newMaterial" fxLayout="row"  fxLayoutGap="20px" fxLayoutAlign="start center" >
 				
 			
-					<p *ngIf="!selectedMaterial.id"> Select </p>
+					<p *ngIf="!selectedMaterial?.id"> Select </p>
 					<app-select-material
 						(change)="selectMaterial($event)"
 					></app-select-material>
 					
-						<p *ngIf="!selectedMaterial.id"> or </p>
+						<p *ngIf="!selectedMaterial?.id"> or </p>
 				
-				<button mat-raised-button  (click)="createMaterialAttrs()" *ngIf="!selectedMaterial.id"> Create Material </button>
+				<button mat-raised-button  (click)="createMaterialAttrs()" *ngIf="!selectedMaterial?.id"> Create Material </button>
 				
 			</div>
 			<div fxLayoutGap="5px" fxLayout="row">
 				<button mat-raised-button  (click)="selectingMaterialAttrs()" *ngIf="creatingMaterial" fxFlex="20"> Select Material Instead </button>
 			</div>
-			<div *ngIf="newMaterial || selectedMaterial.id" fxLayout="column"  fxLayoutGap="10px" >
+			<div *ngIf="newMaterial || selectedMaterial?.id" fxLayout="column"  fxLayoutGap="10px" >
 			
 						<div fxLayoutGap="5px" fxLayout="row" fxLayout.sm="column"  fxLayoutAlign="start stretch"  >	
 						  <mat-form-field class="full-width"  fxFlex>

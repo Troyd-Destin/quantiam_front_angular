@@ -58,7 +58,7 @@ export class SelectMaterialComponent implements OnInit {
 
   ngOnInit() {
 
-    this.loadItems();
+    this.loadItems(this.page);
     this.onSearch();
 
     // this._people3input.next(this.selectedPersons);
@@ -81,7 +81,7 @@ export class SelectMaterialComponent implements OnInit {
 
           this.supressScrollEnd = true;
           this.searchingTerm = true;
-
+          this.loading = true;
           
 
 
@@ -109,7 +109,7 @@ export class SelectMaterialComponent implements OnInit {
      if (!data[0]) {
         if (this.itemsBuffer.length < this.bufferSize) { this.itemsBuffer = this.allRetrievedItemsList; }
       }
-
+      this.loading = false;
       this.searchingTerm = false;
 
     });
@@ -117,19 +117,19 @@ export class SelectMaterialComponent implements OnInit {
   }
 
 
-  loadItems() {
+  loadItems(page) {
 
 
-    // use a service
-    console.log('loadItems');
-    const params  = new HttpParams().set('page', this.page.toString());
+    const params  = new HttpParams().set('page', page.toString()).set('filterSpinner', 'true');
 
     this.http.get<any>(environment.apiUrl + `${this.endpoint}`, { 'params': params } )
     .subscribe(items => {
             console.log(items);
+            this.page = items.current_page;
+            this.loading = false;
            // this.items = items.data;
             this.totalResults = items.total;
-            this.itemsBuffer = items.data;
+            this.itemsBuffer = this.itemsBuffer.concat(items.data);
         });
 
 
@@ -145,33 +145,12 @@ export class SelectMaterialComponent implements OnInit {
    
   }
 
-  customSearchFn(term: string, item) {  // good for lists we store in their entirety
-    // console.log(term,item);
-    term = term.toLocaleLowerCase();
-
-    return item.lot.material.name.toLocaleLowerCase().indexOf(term) > -1
-    || item.lot.lot_name.toLocaleLowerCase().indexOf(term) > -1
-    || item.identifier.toLocaleLowerCase().indexOf(term) > -1;
-
-}
-
 
   private fetchMore() {
 
-      // use a service as well
-      console.log('fetchMore');
     this.loading = true;
-    this.page = this.page + 1;
-    // query the next page of results, and add them here
-    const params = new HttpParams().set('page', this.page.toString()).set('filterSpinner', 'true');
-
-    this.http.get<any>(environment.apiUrl + `${this.endpoint}`, { params: params } )
-    .subscribe(items => {
-            this.page = items.current_page;
-            this.loading = false;
-
-            this.itemsBuffer = this.itemsBuffer.concat(items.data);
-        });
+    this.loadItems(this.page + 1);
+  
   }
 
 

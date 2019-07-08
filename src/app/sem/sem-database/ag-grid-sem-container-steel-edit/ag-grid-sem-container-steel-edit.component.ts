@@ -33,7 +33,7 @@ export class AgGridSemContainerSteelEditComponent implements ICellEditorAngularC
   public onKeydown(event: any): void
   {
      
-      event.stopPropagation();
+     // event.stopPropagation();
       const key = event.which || event.keyCode;
       console.log(event.keyCode);
       
@@ -125,8 +125,6 @@ export class AgGridSemContainerSteelEditComponent implements ICellEditorAngularC
   clearSelectedContainer()
   {
     this.selectedContainer = null;
-    console.log('test');
-
   }
 
   selectSample(obj)
@@ -152,5 +150,10 @@ export class AgGridSemContainerSteelEditComponent implements ICellEditorAngularC
 
   }
 
+
+  confirmChoice()
+  {
+
+  }
 
 }

@@ -77,7 +77,10 @@ export class TimesheetStatisticsUserComponent implements OnInit {
     }
 
     fetchData() {
-        const params = { startDate: this.startDate, endDate: this.endDate };
+        const params = { 
+            startDate: moment(this.startDate).format('YYYY-MM-DD'), 
+            endDate: moment(this.endDate).format('YYYY-MM-DD') 
+        };
 
         this.http.get(environment.apiUrl + `/timesheet/statistics/${this.user.id}`, { params: params }).subscribe((r: any) => {
 

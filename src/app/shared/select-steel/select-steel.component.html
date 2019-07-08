@@ -1,3 +1,88 @@
-<p>
-  select-steel works!
-</p>
+
+<ng-select 
+
+  
+  
+[items]="itemsBuffer"
+[loading]="loading"
+
+[multiple]="multiple"
+[placeholder]="placeholder"
+[hideSelected]="true"
+[virtualScroll]="true"
+[appendTo]="appendTo"
+(change)="onChange($event)"
+(add)="onAdd($event)"
+(remove)="onRemove($event)"
+(scrollToEnd)="onScrollToEnd()"
+(scroll)="onScroll($event)"
+(clear)="onClear()"
+(open)="onOpen()"
+
+
+
+[(ngModel)]="selectedValue"	 
+[(typeahead)]="input$" 
+
+
+>
+<!-- scroll-host & scrollable-content  [searchFn]="customSearchFn" 
+(scroll)="onScroll($event)" -->
+
+<ng-template ng-label-tmp let-item="item">
+  <small> {{ item.identifier}} </small> {{item.heat_id}} 
+</ng-template>
+
+<ng-template ng-header-tmp>
+  <small class="form-text text-muted">Loaded {{itemsBuffer.length}} of {{totalResults}}</small>
+</ng-template>
+
+
+<ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm" style="width:1000px !important;">
+<div fxLayout="row" fxLayoutAlign="center center"  fxLayoutGap="10px" style="height:50px;">
+  <div fxLayout="row" class="dropdown-options"  fxLayoutAlign="start center" fxFlex >
+  
+
+    <div style="width:70px; font-size: 10px;" >
+      <div fxLayout="column" fxLayoutGap="2px">
+          <div style="font-size: 9px;">  {{item.id}}</div>
+         <div style="font-size: 8px;"> {{item.identifier}}</div>
+         
+      </div>
+    
+    </div>
+
+     <div style="width:125px; margin-right:5px;" fxLayout="column"  [ngOptionHighlight]="search">
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+        <b>{{item.heat_id || ''}}</b>     
+     </div>
+    </div>
+    <div style="width:100px; font-size: 11px;" [ngOptionHighlight]="search" >
+        {{item.steel_type.part_name || 'Unknown'}}
+      </div>
+    <div style="width:80px; font-size: 11px;"  >
+        {{item.cut}}
+      </div>
+    <div style="width:80px; font-size: 11px;"  >
+        {{item.rework}}
+      </div>
+    <div style="width:100px; font-size: 11px;" [ngOptionHighlight]="search" >
+        {{item.campaign.campaign_shortname}}
+      </div>
+   
+  
+    
+  </div>
+  <!-- <div>
+    <a *ngIf="item.active" mat-button  color="primary"   > Active </a>
+    <a *ngIf="!item.active" mat-button  color="warn"   > Inactive </a>
+  </div> -->
+</div> 
+
+
+
+  
+</ng-template>
+
+
+</ng-select>

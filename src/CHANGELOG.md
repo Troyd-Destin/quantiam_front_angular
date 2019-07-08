@@ -12,8 +12,14 @@
 - Lot selection dropdown is old and get's stuck "open", this needs to be replaced with the new dropdown
 - When using the Steel/Container/Sample ag-grid dropdown, the active/inactive filters will close the dropdown (event propgation issues)
 - Navigation for Bank History tabs is a bit off
+- ng Select 2.20 does not play nice 
 
 # July 2019
+
+
+### General
+
+- Drop downs were reverted to a previous working version
 
 ### Machines
 
@@ -21,6 +27,13 @@
 - Can view machines with appropriate permissions
 - Can edit machines with appropriate permissions
 - Can create machines with appropriate permissions
+
+### Statistics 
+- User statistic dates now work as expected. 
+
+### Users 
+
+- Display issues for RTO and groups fixed
 
 # [2019.06] June 2019
 

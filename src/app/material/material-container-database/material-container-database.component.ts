@@ -165,7 +165,9 @@ export class MaterialContainerDatabaseComponent implements OnInit {
           if (cell.value) {
             return '<p style="color:green"> SDS </p>';
           }
-
+          if (cell.data.active && cell.data.supplier == 'Quantiam' && !cell.value){
+            return '<p style="color:orange">Internal</p>';
+          }
           if (cell.data.active) { return '<p style="color:red">Missing</p>'; }
 
           return '';
@@ -181,7 +183,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
       {
         width: 100,
         field: 'sds_updated_at',
-        headerName: 'Updated',
+        headerName: 'SDS Updated',
         hide: true,
       },
     ];

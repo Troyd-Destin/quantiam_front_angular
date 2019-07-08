@@ -104,7 +104,7 @@ export class SemDatabaseComponent implements OnInit {
         },
         {
           headerName: 'Steel / Container / Sample',
-          field: 'manu_inventory_id',
+          field: 'id',
           width: 100,
           cellRenderer: 'steelContainerDisplay',
           cellEditor: 'steelContainerEdit',
@@ -276,7 +276,7 @@ export class SemDatabaseComponent implements OnInit {
 
     return {
       getRows: (params2: any) => {
-
+        console.log(params2);
         const page = (this.gridApi.paginationGetCurrentPage() + 1);
 
         const requestParams: HttpParams = new HttpParams()

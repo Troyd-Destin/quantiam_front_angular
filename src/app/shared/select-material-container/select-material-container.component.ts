@@ -16,9 +16,6 @@ export class SelectMaterialContainerComponent implements OnInit {
 
   selectedPersons = [{ name: 'Karyn Wright' }, { name: 'Other' }];
 
-  public _people3input = new BehaviorSubject({});
-  public people3$: Observable<any> = this._people3input.asObservable();
-
   input$ = new Subject<string>();
 
 
@@ -27,6 +24,7 @@ export class SelectMaterialContainerComponent implements OnInit {
   @Input() multiple: any = false; // multi version
   @Input() selectableGroup: any = false; // multi version
   @Input() placeholder = 'Container'; // multi version
+  @Input() appendTo; // multi version
 
   // Outputs
   @Output() change = new EventEmitter<any>();
@@ -56,7 +54,16 @@ export class SelectMaterialContainerComponent implements OnInit {
 
   firstLoad = true;
 
-  constructor(public http: HttpClient, private _elementRef: ElementRef, private service: SelectMaterialContainerService) {}
+  
+  people3$: Observable<[]>;
+  people3Loading = false;
+  people3input$ = new Subject<string>();
+
+  constructor(public http: HttpClient, private _elementRef: ElementRef, private service: SelectMaterialContainerService) {
+
+    
+
+  }
 
 
 
@@ -64,8 +71,6 @@ export class SelectMaterialContainerComponent implements OnInit {
 
     this.loadItems();
     this.onSearch();
-
-    // this._people3input.next(this.selectedPersons);
   }
 
   onChange(event) { this.change.emit(event); }
@@ -82,13 +87,14 @@ export class SelectMaterialContainerComponent implements OnInit {
          debounceTime(500),
         distinctUntilChanged(),
         switchMap((term) => {
-          
-         
-          
+
           this.supressScrollEnd = true;
           this.searchingTerm = true;
 
-          if(this.justCleared) { this.justCleared = false; return this.allRetrievedItemsList; }
+          if(this.justCleared) { this.justCleared = false; 
+            
+            this.itemsBuffer = this.allRetrievedItemsList;
+            return []; }
 
           if (!term) {
 
@@ -108,7 +114,7 @@ export class SelectMaterialContainerComponent implements OnInit {
 
       this.allRetrievedItemsList = this.itemsBuffer;
       this.itemsBuffer = data;
-
+      console.log(this.itemsBuffer);
       if (!data[0]) {
         if (this.itemsBuffer.length < this.bufferSize) { this.itemsBuffer = this.allRetrievedItemsList; }
       }
@@ -127,7 +133,7 @@ export class SelectMaterialContainerComponent implements OnInit {
     // use a service
 
     if (!this.service.isEmpty() && this.firstLoad) {
-      console.log(this.service.isEmpty());
+     
       this.itemsBuffer = this.service.getList();
       this.totalResults = this.service.getTotal();
       this.firstLoad = false;
@@ -142,7 +148,7 @@ export class SelectMaterialContainerComponent implements OnInit {
 
     this.http.get<any>(environment.apiUrl + `${this.endpoint}`, { 'params': params } )
     .subscribe(items => {
-          //  console.log(items);
+         
            // this.items = items.data;
             this.totalResults = items.total;
             this.itemsBuffer = items.data;
@@ -162,7 +168,7 @@ export class SelectMaterialContainerComponent implements OnInit {
   }
 
   onScroll({ end }) {
-  //  console.log(end);
+ 
     if (this.loading || this.totalResults === this.itemsBuffer.length || this.supressScrollEnd) {
         return;
     }
@@ -173,7 +179,7 @@ export class SelectMaterialContainerComponent implements OnInit {
   }
 
   customSearchFn(term: string, item) {  // good for lists we store in their entirety
-    // console.log(term,item);
+   
     term = term.toLocaleLowerCase();
 
     return item.lot.material.name.toLocaleLowerCase().indexOf(term) > -1

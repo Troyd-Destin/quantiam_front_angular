@@ -32,7 +32,7 @@ export class SelectUserComponent implements OnInit, OnDestroy {
   @Input() authorizedSubordinatesOrMachines = false;
   @Input() showSubordinatesOnly = false;
   @Input() allOptions = false;
-  @Input() appendTo = 'body';
+  @Input() appendTo;
   @Input() style = 'min-width:200px;';
 
   // Outputs
@@ -82,6 +82,7 @@ export class SelectUserComponent implements OnInit, OnDestroy {
   showItems() {
 
     // check for all Options
+    console.log('Show Items');
   
     if (this.allOptions) {
 

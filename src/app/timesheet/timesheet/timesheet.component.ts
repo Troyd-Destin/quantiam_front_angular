@@ -7,7 +7,6 @@ import { UserService } from '../../services/user/user.service';
 import { TimesheetService } from '../timesheet.service';
 
 
-import { NumericEditor } from './numeric-editor.component';
 
 
 import { NotificationsService } from 'angular2-notifications';
@@ -18,7 +17,6 @@ import { AgGridTimesheetValueEditorComponent } from './ag-grid-timesheet-value-e
 
 import * as moment from 'moment';
 
-import {  delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-timesheet',
@@ -65,7 +63,7 @@ export class TimesheetComponent implements OnInit {
 
   defaultColDef = {
     resizable: false,
-    editable: false,
+    editable: true,
   };
 
 
@@ -73,7 +71,7 @@ export class TimesheetComponent implements OnInit {
   autoGroupColumnDef = {
     headerName: 'Category',
     lockPosition: true,
-    width: 380,
+    maxWidth: 380,
     suppressMenu: true,
     lockPinned: true,
     pinned: 'left',
@@ -83,8 +81,6 @@ export class TimesheetComponent implements OnInit {
       const cellStyle = {};
 
       if (params.node.footer) {
-
-        // cellStyle['font-weight'] = 'bold !important';
         cellStyle['border-right'] = '0px !important';
       } else {
 
@@ -92,9 +88,6 @@ export class TimesheetComponent implements OnInit {
       }
 
       return cellStyle;
-
-
-
 
     },
 
@@ -196,7 +189,7 @@ export class TimesheetComponent implements OnInit {
 
     // update these params if they change
 
-    this.checkIfTimesheetEditable();
+    
 
     this.route.paramMap.subscribe(params => {
       this.routeParams.userId = params.get('user');
@@ -302,7 +295,9 @@ export class TimesheetComponent implements OnInit {
             window.history.replaceState({}, '', `/timesheet/${this.routeParams.userId}/year/${ this.routeParams.year}/payperiod/${ this.routeParams.payperiod }`);
             this.timesheetService.changeTimesheet(this.routeParams);
             this.displayTimesheet = true;
-            setTimeout((x) => { this.constructTimesheet();
+            setTimeout((x) => { 
+              
+              this.constructTimesheet();
 
               if (this.firstLoad) {
                  // this.gridApi.redrawRows();
@@ -542,13 +537,14 @@ export class TimesheetComponent implements OnInit {
        const test = document.getElementsByClassName('ag-group-value');
        const last = test[test.length - 1];
        last.innerHTML   = '<b>Total</b> ( ' + this.timeSheetObj.denomination + ' )';
-       console.log(last);
+       //console.log(last);
     }, 200);
     console.log(this.timeSheetFramework);
+    console.log(this.columnDefs);
   }
 
   onRowGroupOpened(event) {
-    console.log(event);
+   // console.log(event);
 
   }
 
@@ -626,18 +622,32 @@ export class TimesheetComponent implements OnInit {
 
   checkIfTimesheetEditable() {
 
+
     if(this.timeSheetObj)
     {
-    if (this.userService.hasPermission(10) || !this.timeSheetObj.payPeriod.locked) {
+      if (this.userService.hasPermission(10) || !this.timeSheetObj.payPeriod.locked) {
+      
 
-      this.timesheetEditable = true;
-      this.defaultColDef['editable'] = true;
-      return;
-    }
+        this.timesheetEditable = true;
 
+        this.columnDefs.forEach((element:any) => {
+            element.editable = true;
+        });
+        this.gridApi.setColumnDefs(this.columnDefs);
+      //  this.defaultColDef['editable'] = true;
+
+        return;
+      }
+      console.log('test');
       this.timesheetEditable = false;
-      this.defaultColDef['editable'] = false;
+        this.columnDefs.forEach((element:any) => {
+          element.editable = false;
+      });
+      this.gridApi.setColumnDefs(this.columnDefs);
+      //this.defaultColDef['editable'] = false;
     }
+
+ 
     return;
 
   }

@@ -12,4 +12,10 @@ export class SteelDatabaseComponent implements OnInit {
   ngOnInit() {
   }
 
+
+  fetchSteelDatabase(){
+
+    
+  }
+
 }

@@ -228,21 +228,21 @@
 					
 				
 				<mat-tab-group>
-						<mat-tab label="RTO">
+						<mat-tab label="RTO" >
 								<div *ngIf="userService.hasPermission(37)" fxLayout="row" fxLayoutAlign="start center" >
 										<button mat-stroked-button color="primary" (click)="createRtoAllotment()">Create</button>
 	
 									
 								</div>
-							<div fxLayout="column"  fxLayoutAlign="start center">
+							<div fxLayout="column"  fxLayoutAlign="start center"  >
 								
 							
 								<ag-grid-angular  
 						
 								
-								#rto_agrid	
+								#rto_agrid
 								*ngIf="user.rto_allotment[0]"							
-								class="ag-theme-material"
+								class="ag-theme-material width-100"
 								style="min-height:200px"
 								[rowData]="user.rto_allotment" 
 								[columnDefs]="rtoColumnDefs"
@@ -256,13 +256,13 @@
 								[defaultColDef]="rtoDefaultColDef"
 	
 								
-								[domLayout]='autoHeight'
+								domLayout='autoHeight'
 								
 								>
 							</ag-grid-angular>
 
-							<div 	*ngIf="!user.rto_allotment[0]"	> This user does not have any rto allotments.</div>
-						
+									<div 	*ngIf="!user.rto_allotment[0]"	> This user does not have any rto allotments.</div>
+							
 							
 							</div>
 						</mat-tab>
@@ -375,7 +375,7 @@
 				
 						
 						#rto_agrid								
-						class="ag-theme-material"
+						class="ag-theme-material width-100"
 					
 						[rowData]="user.groups" 
 						[columnDefs]="groupColumnDefs"
@@ -385,7 +385,7 @@
 					
 						[enableRangeSelection]="true"						
 						[defaultColDef]="groupDefaultColDef"
-						[domLayout]='autoHeight'
+						domLayout='autoHeight'
 						
 						>
 					</ag-grid-angular>

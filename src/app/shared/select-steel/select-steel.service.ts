@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class SelectSteelService {
 
+ 
   storage = {
     data: [],
     total: 0,
@@ -53,6 +54,7 @@ export class SelectSteelService {
     //console.log(this.storage);
     if(this.storage.data.length > 0){ return false;}
     return true;
-
   }
+
+
 }

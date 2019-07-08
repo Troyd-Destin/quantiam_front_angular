@@ -127,7 +127,7 @@ export class MaterialCreationDialogComponent implements OnInit, OnDestroy {
         this.selectedLot = {};
         this.materialStepComplete = false;
 
-        if (this.selectedMaterial.id) {
+        if (this.selectedMaterial && this.selectedMaterial.id) {
           this.materialStepComplete = true;
           this.material = this.selectedMaterial;
         } else {

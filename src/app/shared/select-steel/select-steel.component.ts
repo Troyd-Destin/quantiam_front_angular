@@ -18,31 +18,31 @@ export class SelectSteelComponent implements OnInit {
  
   selectedPersons = [{ name: 'Karyn Wright' }, { name: 'Other' }];
 
-  public _people3input = new BehaviorSubject({});
-  public people3$: Observable<any> = this._people3input.asObservable();
 
   input$ = new Subject<string>();
 
 
     // Inputs
-  @Input() selectedValue: any = null; // default value, object or ID
-  @Input() multiple: any = false; // multi version
-  @Input() selectableGroup: any = false; // multi version
-  @Input() placeholder = 'Container'; // multi version
+    @Input() selectedValue: any = null; // default value, object or ID
+    @Input() multiple: any = false; // multi version
+    @Input() selectableGroup: any = false; // multi version
+    @Input() placeholder = 'Container'; // multi version
+    @Input() appendTo; // multi version
+  
+    // Outputs
+    @Output() change = new EventEmitter<any>();
+    @Output() clear = new EventEmitter<any>();
 
-  // Outputs
-  @Output() change = new EventEmitter<any>();
-
-  private endpoint = '/material/lot/container';
+  private endpoint = '/steel';
   // private modelName = 'User';
 
   items = [];
   itemsBuffer = [];
   allRetrievedItemsList = [];
-  dropdownWidth = 950; // in pixels
+  dropdownWidth = 600; // in pixels
   bufferSize = 100;
   virtualScroll = true;
-  numberOfItemsFromEndBeforeFetchingMore = 40;
+  numberOfItemsFromEndBeforeFetchingMore = 20;
   totalResults;
   loading = false;
   page = 1;
@@ -52,6 +52,8 @@ export class SelectSteelComponent implements OnInit {
 
   supressScrollEnd = false;
   searchingTerm = false;
+  justCleared = false;
+  lastPage = 9999999;
 
   firstLoad = true;
 
@@ -71,8 +73,9 @@ export class SelectSteelComponent implements OnInit {
   onAdd(event) { }
   onRemove(event) { }
   onClear() {
-    console.log('test');
-    this.itemsBuffer = this.allRetrievedItemsList;
+    
+    this.justCleared = true;
+    this.clear.emit();
   }
 
   onSearch() {
@@ -81,12 +84,16 @@ export class SelectSteelComponent implements OnInit {
          debounceTime(500),
         distinctUntilChanged(),
         switchMap((term) => {
-
+          
+         
+          
           this.supressScrollEnd = true;
           this.searchingTerm = true;
 
-          if(!term) { 
-          
+          if(this.justCleared) { this.justCleared = false; return this.allRetrievedItemsList; }
+
+          if (!term) {
+
             this.itemsBuffer = this.allRetrievedItemsList;
             this.supressScrollEnd = false;
             this.searchingTerm = false;
@@ -94,7 +101,7 @@ export class SelectSteelComponent implements OnInit {
           }
 
           const params  = new HttpParams().set('like', term).set('limit', '' + this.bufferSize + '').set('active', '1').set('filterSpinner', 'true');
-
+          this.loading = true;
           return this.http.get<any>(environment.apiUrl + `${this.endpoint}`, { 'params': params } );
 
         })
@@ -109,6 +116,7 @@ export class SelectSteelComponent implements OnInit {
       }
 
       this.searchingTerm = false;
+      this.loading = false;
 
     });
 
@@ -120,33 +128,36 @@ export class SelectSteelComponent implements OnInit {
 
     // use a service
 
-    if(!this.service.isEmpty() && this.firstLoad)
-    { 
-      console.log(this.service.isEmpty());
+    if (!this.service.isEmpty() && this.firstLoad) {
       this.itemsBuffer = this.service.getList();
       this.totalResults = this.service.getTotal();
       this.firstLoad = false;
       return;
     }
 
+    if (this.page <=  this.lastPage) {
+
     const params  = new HttpParams().set('page', this.page.toString());
+
+
 
     this.http.get<any>(environment.apiUrl + `${this.endpoint}`, { 'params': params } )
     .subscribe(items => {
-          //  console.log(items);
+         
            // this.items = items.data;
             this.totalResults = items.total;
             this.itemsBuffer = items.data;
+            this.lastPage = items.last_page;
 
            // this.service.appendList(this.itemsBuffer);
             this.service.update(items);
         });
-
+    }
 
   }
 
   onScrollToEnd() {
-    if(!this.supressScrollEnd) {
+    if (!this.supressScrollEnd) {
       this.fetchMore();
       }
   }
@@ -176,14 +187,10 @@ export class SelectSteelComponent implements OnInit {
    fetchMore() {
 
       // use a service as well
-
+    if (this.page <= this.lastPage) {
     this.loading = true;
     this.page = this.page + 1;
 
-    /// Check which page the service is on, then decide whether or not to call new http request 
-
-
-    // query the next page of results, and add them here
     const params = new HttpParams().set('page', this.page.toString()).set('filterSpinner', 'true');
 
     this.http.get<any>(environment.apiUrl + `${this.endpoint}`, { params: params } )
@@ -193,6 +200,8 @@ export class SelectSteelComponent implements OnInit {
 
             this.itemsBuffer = this.itemsBuffer.concat(items.data);
         });
+    }
+
   }
 
 
@@ -207,6 +216,5 @@ export class SelectSteelComponent implements OnInit {
   }, 100);
 
   }
-
 
 }
