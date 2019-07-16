@@ -18,98 +18,72 @@ export class AgGridTimesheetValueEditorComponent implements ICellEditorAngularCo
   longDate;
   dayOfWeek;
 
-  value : any;
+  value: any;
+  oldValue: any;
   node: any;
 
   public selectedValue: any;
   public previousValue: any;
+  public infoString: string;
 
   private input: any;
-  private focused: boolean = false;
+  private focused = false;
 
-  @ViewChild('valueField', { read: ViewContainerRef, static: true }) public minuteInput: any;  // reference the container 
+  @ViewChild('valueField', { read: ViewContainerRef, static: true }) public minuteInput: any;  // reference the container
 
-  constructor() { 
 
-      //console.log(this.value);
+  constructor() { }
 
-  }
+
 
   ngAfterViewInit() {
-
-
-
-        setTimeout(() => {
-            this.minuteInput.element.nativeElement.select();
-            this.minuteInput.element.nativeElement.focus();
-
-
-            if(this.params.keyPress === 8)
-            {
-              this.value = null;
-              this.params.api.stopEditing();
-              this.params.api.tabToNextCell();
-              this.params.api.tabToPreviousCell(); 
-            }
-        }, 0);
-     
+    setTimeout(() => {   this.minuteInput.element.nativeElement.select(); }, 0);
 
   }
 
-  
+  isCancelBeforeStart(): boolean {
+      if (this.params.node.data.category.absence) { return true; }  // if not a holiday needs to added
+      return false;
+  }
+
+  isCancelAfterEnd(): boolean {
+    if (this.value === this.oldValue) { return true; }
+    return false;
+  }
+
+
   isPopup(): boolean {
     return true;
   }
 
   agInit(params: any): void {
-    
+    console.log(params);
     this.params = params;
     this.value = params.value;
+    this.oldValue = params.value;
 
-    if(this.params.charPress && !isNaN(this.params.charPress)){ this.value = this.params.charPress; }
-   // console.log(this.params);
-   
-    this.longDate = moment(params.column.colDef.field).format("ddd - MMM Do, YYYY");
-    //this.dayOfWeek = moment(params.column.colDef.field).format("ddd");
-    //this.minutes = Math.floor(this.previousValue / 60);
+    if (this.params.keyPress === 8) {
 
+      this.value = '';
+      setTimeout(() => {this.params.api.stopEditing(); });
+      return;
 
-   
-
+    }
+    if (this.params.charPress && !isNaN(this.params.charPress)) { this.value = this.params.charPress; }
+    this.longDate = moment(params.column.colDef.field).format('ddd - MMM Do, YYYY');
+    this.infoString = params.node.data.project.projectID + ' - ' + this.longDate;
   }
 
   getValue(): any {
-  //  console.log(this.value);
-    if(this.value){ return '' + this.toNearest(this.value,0.25) + ''; }
-    //if(!this.value || this.value === '') { return 0; }
+    console.log('test');
+    if (this.value) { return '' + this.toNearest(this.value, 0.25) + ''; }
     return '';
   }
 
-  selectValue(event)
-  {
-    
-    this.selectedValue = event;
-    this.params.api.stopEditing();
-    this.params.api.tabToNextCell();
-    this.params.api.tabToPreviousCell(); 
-  }
 
-
-  
-  onKeyDown(event): void {
+  onKeyDown(event) {
+  console.log(event);
     const key = event.which || event.keyCode;
-    //console.log(event.keyCode);
-    if (key === 37 ||  // left
-        key === 39 || key === 27 ) {  // right
-          this.params.api.stopEditing(true);       
-          this.params.api.tabToNextCell();
-          this.params.api.tabToPreviousCell(); 
-       
-       
-    }
-
-    if(key === 39){ this.params.api.tabToNextCell(); }
-    if(key === 37){ this.params.api.tabToPreviousCell(); }
   }
 
   toNearest(num, frac) {

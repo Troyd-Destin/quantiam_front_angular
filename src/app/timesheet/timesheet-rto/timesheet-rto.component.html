@@ -12,7 +12,7 @@
             (change)="filterRtoOwner($event)"
             (clear)="clearRtoOwner($event)"
             placeholder="Employee"
-            [showSubordinatesOnly]="(userService.hasPermission(3) ? false: showSubordinatesOnly)"
+            [showSubordinatesOnly]="(userService.hasPermission(3) ? false: true)"
             *ngIf="(userService.hasSubordinates()) || userService.hasPermission(3)"
           
           ></app-select-user>

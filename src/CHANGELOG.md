@@ -1,18 +1,12 @@
+
 # Change Log - Quantiam Apps 2019
-
-### Disclaimers
-
-- Until "official" adoption, version numbers will only contain major increments using date semantics. 
-- Minor and hotfixes will added after launch
-- Stuff may not work as expected 
 
 ### Known Issues
 
 - Material Supplier dropdown, does not clear properly when declining to create a new tag
 - Lot selection dropdown is old and get's stuck "open", this needs to be replaced with the new dropdown
 - When using the Steel/Container/Sample ag-grid dropdown, the active/inactive filters will close the dropdown (event propgation issues)
-- Navigation for Bank History tabs is a bit off
-- ng Select 2.20 does not play nice 
+- ng Select 2.20+ does not play nice 
 
 # July 2019
 
@@ -21,9 +15,26 @@
 
 - Drop downs were reverted to a previous working version
 
+### RTO View
+- Extraneous decimals revmoed on RTO Bank Impact card
+
+### Timesheet
+
+- Revised the time entering popup to be more minimalist
+- Pressing enter now navigates "down" after entering a value
+- Can no longer edit project names
+- Fixes for cases of the dropdown not showing what was selected
+
+### Timesheet Projects
+- Can now create new projects
+- Can now edit existing projects
+
+### Timesheet Bank History
+- UI fixes for scrolling and person dropdown
+
 ### Machines
 
-- Navigation: Timesheet -> Settings -> Machines\
+- Navigation: Timesheet -> Settings -> Machines
 - Can view machines with appropriate permissions
 - Can edit machines with appropriate permissions
 - Can create machines with appropriate permissions
@@ -35,7 +46,7 @@
 
 - Display issues for RTO and groups fixed
 
-# [2019.06] June 2019
+#  June 2019
 
 ### Dev Tools
 - You can now browse application as another user
@@ -107,7 +118,7 @@
 
 - Button no longer stays disabled after a processing run.
 
-# [2019.05] May 2019
+# May 2019
 
 
 
@@ -152,7 +163,7 @@
 - Replaced select2 supplier dropdown, with ng select, to fix display bug
 - Auth screen font resized
 
-# [2019.04] April 2019
+# April 2019
 
 ### Users
 - Can add permissions to individual users now
@@ -221,7 +232,7 @@
 - Select2 boxes now have proper padding for placeholder text
 
 
-# [2019.01] January 2019
+# January 2019
 
 ### Misc
 -  Auth screen no longer locks you out when you fail your password.
@@ -241,7 +252,7 @@
 
 
 
-# [2018.12.0] December 2018
+#  December 2018
 ### General
 - When the application is "thinking", a loading bar will be displayed at the top of the screen. 
 - The select scanner box is now hidden by default, but can be toggled with the target button by the user's name.

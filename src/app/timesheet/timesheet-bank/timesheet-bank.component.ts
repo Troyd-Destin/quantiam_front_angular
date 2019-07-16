@@ -25,7 +25,7 @@ import { NotificationsService } from 'angular2-notifications';
 })
 export class TimesheetBankComponent implements OnInit {
 
-
+  loadedUserId = false;
   private hotRegisterer = new HotTableRegisterer();
   hotTableId = 'hotInstance';
   hotTableSettings: Handsontable.GridSettings = {
@@ -175,6 +175,7 @@ export class TimesheetBankComponent implements OnInit {
             this.routeParams.userId = parseInt(this.userService.get('id'));
 
         }
+        this.loadedUserId = true;
         this.fetchBankHistory();
     });
 

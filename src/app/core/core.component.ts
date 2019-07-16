@@ -70,7 +70,7 @@ export class CoreComponent implements OnInit, OnDestroy {
 
 
   title = 'app';
-  user: {};
+  user: any = {};
   userLoaded = false;
   userTitle: null;
   userName: null;
@@ -163,8 +163,7 @@ export class CoreComponent implements OnInit, OnDestroy {
     });
 
 
-    if(localStorage.getItem('devToken'))
-    {
+    if (localStorage.getItem('devToken')) {
       this.devTokenFound = true;
     }
   }
@@ -275,7 +274,7 @@ export class CoreComponent implements OnInit, OnDestroy {
       localStorage.setItem('devToken', localStorage.getItem('token'));
       localStorage.setItem('token', r2.token);
       window.location.reload();
-      
+
      // this.settings.set('devToken', this.settings.get('token'));
      // this.settings.set('token',r2);
 

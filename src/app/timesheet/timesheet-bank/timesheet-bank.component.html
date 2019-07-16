@@ -5,12 +5,12 @@
 
           <div>
 
-            <h5   *ngIf="!userService.hasPermission(1) && !userService.hasSubordinates()"> {{userService.get('name_abbrev')}}</h5>
+            <h5   [hidden]="userService.hasPermission(1) && userService.hasSubordinates()"> {{userService.get('name_abbrev')}}</h5>
               <app-select-user
-              
-              *ngIf="userService.hasPermission(1) || userService.hasSubordinates()"
+              *ngIf="loadedUserId"
+              [hidden]="!userService.hasPermission(1) || !userService.hasSubordinates()"
               [selectedValue]="routeParams?.userId"
-              [showSubordinatesOnly]="userService.hasSubordinates()"
+              [showSubordinatesOnly]="(userService.hasPermission(1) ? false: showSubordinatesOnly)"
               [clearable]="false"
               style="min-width: 200px;"
 
@@ -31,7 +31,7 @@
 
                <div fxFlex fxLayoutAlign="end start">
 
-                    <button mat-button  (click)="createPayout()"
+                    <button mat-raised-button  (click)="createPayout()"
                     *ngIf="userService.hasPermission(23)"
                     color="primary"
                     > Create Payout </button>
@@ -41,7 +41,11 @@
         </div>
 
 
-        <hot-table fxFLex=50 class="hot" [hotId]="hotTableId" [settings]="hotTableSettings" [licenseKey]="'non-commercial-and-evaluation'">
+        <hot-table
+        
+        height="700px"
+        width="750px"
+        fxFLex=50 class="hot" [hotId]="hotTableId" [settings]="hotTableSettings" [licenseKey]="'non-commercial-and-evaluation'">
 
 
         </hot-table>

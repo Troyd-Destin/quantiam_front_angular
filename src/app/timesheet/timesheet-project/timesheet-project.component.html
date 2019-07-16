@@ -1,15 +1,15 @@
 
-  <div fxLayout="column" fxFlexOffset.gt-md="20%">
+  <div fxLayout="column"  fxLayoutGap="10px" fxLayoutAlign="center center">
 
-    <div fxlayout="row">
-
-    </div>
-    <div fxlayout="row">
-
+      <div fxLayout="column" fxLayoutGap="10px" >
+          <div fxLayout="row" fxFlex fxLayoutAlign="end start">
+              <button mat-raised-button color="primary" (click)="addTableRow()" *ngIf="userService.hasPermission(9)" > Create Project </button>
+          </div>
         <hot-table 
         fxFLex=50
         class="hot"
-      
+        height="700px"
+        width="1050px"
       [hotId]="id"
       [settings]="hotTableSettings"
       [licenseKey]="'non-commercial-and-evaluation'"  
@@ -27,8 +27,8 @@
     <!--  <hot-column data="billable" title="'Billable'" type="'numeric'" >
         
       </hot-column> -->
-      <hot-column date-format="'YYYY-MM-DD'" data="start_date" title="Start Date" type="date" ></hot-column>
-      <hot-column date-format="'YYYY-MM-DD'" data="retire_date" title="Retire Date" type="date" ></hot-column>
+      <hot-column  data="start_date" title="Start Date" type="date" ></hot-column>
+      <hot-column  data="retire_date" title="Retire Date" type="date" ></hot-column>
     
 
 

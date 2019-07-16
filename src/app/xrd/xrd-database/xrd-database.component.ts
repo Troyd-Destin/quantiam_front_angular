@@ -41,58 +41,58 @@ export class XrdDatabaseComponent implements OnInit {
       {
         headerName: 'ID',
         field: 'id',
-        width: 80,
+        width: 60,
         hidden: true,
       },
-      {
+     /*  {
         headerName: 'XRD',
         field: 'instrument_name',
         width: 60,
         filter: false
-      },
+      }, */
       {
         headerName: 'Run',
-        field: 'xrdrun_id',
+        field: 'xrd_run.xrdrun_id',
         width: 100,
       },
       {
         headerName: 'Project',
-        field: 'project_id',
-        width: 70,
+        field: 'xrd_run.project_id',
+        width: 80,
         filter: true
       },
       {
-        headerName: 'Sample Name',
+        headerName: 'Analysis Name',
         field: 'name',
-        minwidth: 250,
-       
+        width: 400,
+        
       },
       {
         headerName: 'Sample Type',
-        field: 'type.id',
+        field: 'xrd_run.type.id',
        // width: 100,
         filter: true
       },
       {
         headerName: 'Operator',
-        field: 'operator.id',
+        field: 'xrd_run.operator.id',
        // width: 100,
         filter: true
       },
       {
         headerName: 'Requested',
-        field: 'requestor.id',
+        field: 'xrd_run.requestor.id',
        // width: 100,
         filter: true
       },
       {
         headerName: 'Duration',
-        field: 'duration',
+        field: 'xrd_run.duration',
         width: 100,
       
       },
       {
-        headerName: 'Date',
+        headerName: 'Run Date',
         field: 'analyzed_date',
        // width: 100,
        
@@ -103,6 +103,7 @@ export class XrdDatabaseComponent implements OnInit {
     this.defaultColDef = {
       filter: false,
       sorting: true,
+      resizable: true,
      };
 
     this.gridOptions = {
@@ -149,7 +150,7 @@ ngOnInit() {
         .append('like', `${this.filteredTextFilterName}`)
         .append('page', `${page}`);
 
-          this.http.get(environment.apiUrl + '/instrument/xrd/run', {params: requestParams}).subscribe((response:any) => {
+          this.http.get(environment.apiUrl + '/instrument/xrd/analysis', {params: requestParams}).subscribe((response:any) => {
 
               params2.successCallback(response.data, response.total);
               this.totalRows = response.total;

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, OnDestroy, ChangeDetectorRef  } from '@angular/core';
 import { SelectUserService } from './select-user.service';
 import { UserService } from '../../services/user/user.service';
 
@@ -20,7 +20,7 @@ export class SelectUserComponent implements OnInit, OnDestroy {
 
 
   // Inputs
-  @Input() selectedValue: number = null; // default value, object or ID
+  @Input() selectedValue: string; // default value, object or ID
   @Input() multiple: any = false; // multi version
   @Input() selectableGroup: any = false;
   @Input() placeholder = 'Select Somebody';
@@ -41,18 +41,21 @@ export class SelectUserComponent implements OnInit, OnDestroy {
   @Output() clear = new EventEmitter<any>();
 
 
-  constructor(private selectUserService: SelectUserService, private userService: UserService) { }
+
+  constructor(private selectUserService: SelectUserService, private userService: UserService, ) { }
 
   ngOnInit() {
 
-    // console.log(this.selectedValue);
-
+    console.log('select user started', this.selectedValue);
+   // this.selectedValue = this.selectedValue.toString();
     this.showMachineItems();
     if (!this.restrictedAccessMode) {
 
     this.selectUserService.list(); // Make sure the service is initialized.
     this.list$ = this.selectUserService.list$.subscribe((r) => {
          this.allItems = r;
+
+         console.log(this.allItems);
 
           if (r[0]) { this.showItems(); }
       });
@@ -82,17 +85,18 @@ export class SelectUserComponent implements OnInit, OnDestroy {
   showItems() {
 
     // check for all Options
-    console.log('Show Items');
-  
+    // console.log('Show Items', this.selectedValue);
+
     if (this.allOptions) {
 
         const everything = this.allItems;
 
-       this.machineItems.forEach(element => {
-              element.id = element.id + 'm';
+       if (this.machineItems.length > 0) {
+         this.machineItems.forEach((element: any) => {
+              element.id = parseInt(element.id) + 'm';
               everything.push(element);
           });
-
+      }
 
       return this.activityFilter(everything);
     }
@@ -119,53 +123,56 @@ export class SelectUserComponent implements OnInit, OnDestroy {
         return x.id === this.user.id;
 
        });
-    
+
       this.items = this.user.subordinates.concat(this.user.machines);
       this.items.unshift(userObj);
       return this.activityFilter(this.items);
-     
+
 
 
      }
 
 
-
+     setTimeout(() => { this.selectedValue = this.selectedValue; console.log('check'); }, 200);
      return this.activityFilter(this.allItems);
 
 
-
+      
 
   }
 
   activityFilter(items) {
 
    // console.log(this.showActive, this.showInactive);
+  try {
+      if (this.showActive && !this.showInactive) {
 
-    if (this.showActive && !this.showInactive) {
+      this.items = items.filter((obj) => {
 
-    this.items = items.filter((obj) => {
+          return obj.active;
 
-        return obj.active;
+        });
+      }
 
-      });
-    }
+      if (!this.showActive && this.showInactive) {
 
-    if (!this.showActive && this.showInactive) {
+      this.items = items.filter((obj) => {
 
-    this.items = items.filter((obj) => {
+          return !obj.active;
 
-        return !obj.active;
-
-      });
-    }
+        });
+      }
 
 
-   if (!this.showActive && !this.showInactive) { this.items = []; }
-   if (this.showActive && this.showInactive) {this.items = items; }
+    if (!this.showActive && !this.showInactive) { this.items = []; }
+    if (this.showActive && this.showInactive) {this.items = items; }
+    } catch (e) {}
+
+
 
   }
 
-  onChange(event) {this.change.emit(event);  }
+  onChange(event) {  this.change.emit(event);  }
   onRemove(event) { this.remove.emit(event);  }
   onClear() { this.clear.emit(event); }
 
@@ -173,7 +180,7 @@ export class SelectUserComponent implements OnInit, OnDestroy {
    // console.log(term,item);
     term = term.toLocaleLowerCase();
 
-    item.id = String(item.id);
+    item.id = item.id;
     return item.id === term
     || item.name.toLocaleLowerCase().indexOf(term) > -1;
 

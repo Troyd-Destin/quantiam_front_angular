@@ -8,6 +8,12 @@
 	
 		 <mat-toolbar-row>
 			<button mat-button style="font-size: 14px;padding-left: 10px;text-align:left" routerLink="/home" >Quantiam Technologies Inc.</button>
+
+			<a mat-button 
+			style="font-size: 14px;padding-left: 10px;text-align:left"
+			 target="_blank" href="http://old.edm.quantiam.com"
+			 matTooltip="Go to the old website."
+			  > Old Website</a>
 			<span class="header-spacer"></span>
 			<!-- <mat-icon class="example-icon">favorite</mat-icon>
 			<mat-icon class="example-icon">delete</mat-icon> -->
@@ -22,7 +28,7 @@
 
 			<app-select-user 
 				style="color:black; font-size: 0.8em;" 
-				[hidden]="!showUserSwitch"
+				*ngIf="showUserSwitch"
 				(change)="changeUser($event)"
       
 				></app-select-user>

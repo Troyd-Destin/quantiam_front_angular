@@ -4,7 +4,6 @@
 
 </div>
 
-
 <div fxLayout="column" fxLayoutGap="10px" *ngIf="rto?.user.id">
     <div fxLayout="row" fxFlex>
 
@@ -305,19 +304,19 @@
                                                 <td><b>PTO</b></td>
                                                 <td>{{rtoBank.remaining.pto }}</td>
                                                 <td><span *ngIf="typeTotals.pto != 0" [style.color]="typeTotals.pto < 0 ? 'red' : 'green'">{{typeTotals.pto}}</span></td>
-                                                <td><span *ngIf="typeTotals.pto != 0" [style.color]="(rtoBank.remaining.pto + typeTotals.pto) < 0 ? 'red' : ''">{{rtoBank.remaining.pto + typeTotals.pto }}</span></td>
+                                                <td><span *ngIf="typeTotals.pto != 0" [style.color]="(rtoBank.remaining.pto + typeTotals.pto) < 0 ? 'red' : ''">{{(rtoBank.remaining.pto + typeTotals.pto).toFixed(2) }}</span></td>
                                             </tr>
                                             <tr>
                                                 <td><b>Vacation</b></td>
                                                 <td>{{rtoBank.remaining.vacation }}</td>
                                                 <td><span *ngIf="typeTotals.vacation != 0" [style.color]="typeTotals.vacation < 0 ? 'red' : 'green'">{{typeTotals.vacation}}</span></td>
-                                                <td><span *ngIf="typeTotals.vacation != 0" [style.color]="(rtoBank.remaining.vacation + typeTotals.vacation) < 0 ? 'red' : ''">{{rtoBank.remaining.vacation + typeTotals.vacation }}</span></td>
+                                                <td><span *ngIf="typeTotals.vacation != 0" [style.color]="(rtoBank.remaining.vacation + typeTotals.vacation) < 0 ? 'red' : ''">{{(rtoBank.remaining.vacation + typeTotals.vacation).toFixed(2) }}</span></td>
                                             </tr>
                                             <tr>
                                                 <td><b>CTO</b></td>
                                                 <td>{{rtoBank.remaining.cto }}</td>
                                                 <td> <span *ngIf="typeTotals.cto != 0" [style.color]="typeTotals.cto < 0 ? 'red' : 'green'">{{typeTotals.cto}}</span></td>
-                                                <td><span *ngIf="typeTotals.cto != 0" [style.color]="(rtoBank.remaining.cto + typeTotals.cto) < 0 ? 'red' : ''">{{rtoBank.remaining.cto + typeTotals.cto }}</span></td>
+                                                <td><span *ngIf="typeTotals.cto != 0" [style.color]="(rtoBank.remaining.cto + typeTotals.cto) < 0 ? 'red' : ''">{{(rtoBank.remaining.cto + typeTotals.cto).toFixed(2) }}</span></td>
                                             </tr>
                                         </tbody>
                                 </table>

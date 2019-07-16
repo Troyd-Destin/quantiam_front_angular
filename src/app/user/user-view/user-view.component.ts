@@ -24,7 +24,7 @@ export class UserViewComponent implements OnInit, OnDestroy {
 
   constructor(
   private fb: FormBuilder,
-  private userService: UserService,
+  public userService: UserService,
   private route: ActivatedRoute,
   private location: Location,
   public http: HttpClient,
@@ -63,7 +63,7 @@ export class UserViewComponent implements OnInit, OnDestroy {
   private groupGridColumnApi;
   private groupGridApi;
 
-  private groupColumnDefs = [
+   groupColumnDefs = [
 
     {headerName: 'ID', field: 'group_id',  width: 80, },
     {headerName: 'Name', field: 'group_name', width: 250,   },
@@ -81,7 +81,7 @@ export class UserViewComponent implements OnInit, OnDestroy {
   ];
 
 
-  private rtoColumnDefs = [
+   rtoColumnDefs = [
 
     {headerName: 'Year', field: 'year',  width: 80, },
     {headerName: 'Vacation', field: 'vacation', editable: false, width: 120,  },
@@ -113,7 +113,7 @@ export class UserViewComponent implements OnInit, OnDestroy {
 
   ];
 
-  private rtoDefaultColDef = {
+   rtoDefaultColDef = {
 
   // maxWidth:120,
     cellStyle: function (params) {
@@ -127,7 +127,7 @@ export class UserViewComponent implements OnInit, OnDestroy {
     suppressMovable: true,
   };
 
-  private groupDefaultColDef = {
+   groupDefaultColDef = {
 
   // maxWidth:120,
     cellStyle: function (params) {
@@ -224,7 +224,7 @@ export class UserViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  addPermission(event){
+  addPermission(event) {
 
     this.http.post<any>(environment.apiUrl + `/permission/${event.id}/user/${this.user.id}`, null).subscribe((r) => {
 
@@ -234,29 +234,29 @@ export class UserViewComponent implements OnInit, OnDestroy {
       this.notification.success(
         'Success', 'Added permission',
         {timeOut: 2000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
-       
-      
+
+
     });
 
-  
+
 
   }
 
   deletePermission(obj) {
     // Find index
 
-    
+
     const index = this.permissionTableSource.data.findIndex(x => x.permission_id === obj.permission_id);
-    console.log(this.permissionTableSource.data,obj,index,);
+    console.log(this.permissionTableSource.data, obj, index, );
     // updated DB
     if (confirm('Are you sure to delete this permission?')) {
       this.http.delete<any>(environment.apiUrl + `/permission/${this.permissionTableSource.data[index].permission_id}/user/${this.user.id}`).subscribe((x) => {
 
         this.notification.success(
           'Success', 'Deleted permission',
-          {timeOut: 2000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton 
-        
-   
+          {timeOut: 2000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
+
+
 
       // Fix Table
       this.permissionTableSource.data.splice(index, 1);

@@ -36,7 +36,9 @@
                 [clearable]="false"
                 appendTo=''
           ></app-select-user>
+
         </div>
+        
         <p> Pay Period {{routeParams.payperiod}}, {{routeParams.year}} </p>
         <p> {{timeSheetObj?.payPeriod.startDateHeader}} - {{timeSheetObj?.payPeriod.endDateHeader}}  </p>
        
@@ -137,7 +139,7 @@
 
     (gridReady)="onGridReady($event)"
     (cellDoubleClicked)="onCellDoubleClicked($event)"
-    (cellEditingStopped)="onCellEditingStopped($event)"
+    (cellValueChanged)="cellValueChanged($event)"
     (cellEditingStarted)="onCellEditingStarted($event)"
     (rowGroupOpened)="onRowGroupOpened($event)"
     (rowDataChanged)="rowDataChanged($event)"
@@ -153,6 +155,8 @@
     [suppressChangeDetection]="false"
     [rowClassRules]="rowClassRules"
     [getRowHeight]="getRowHeight"
+    
+    [enterMovesDownAfterEdit]="true"
     
     
     [suppressContextMenu] = "true"

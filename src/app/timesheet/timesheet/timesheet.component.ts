@@ -48,7 +48,6 @@ export class TimesheetComponent implements OnInit {
   canChangeTimesheetUser = false;
   firstLoad = true;
 
-  oldCellValue = {};
 
   rowStyle = {
 
@@ -76,6 +75,7 @@ export class TimesheetComponent implements OnInit {
     lockPinned: true,
     pinned: 'left',
     sortable: true,
+    editable: false,
     field: 'project.description',
     cellStyle: function (params) {
       const cellStyle = {};
@@ -129,7 +129,7 @@ export class TimesheetComponent implements OnInit {
 
        headerName: 'Project',
        field: 'project.projectID',
-       width: 90,
+       width: 80,
        suppressMenu: true,
        lockPosition: true,
 
@@ -189,8 +189,6 @@ export class TimesheetComponent implements OnInit {
 
     // update these params if they change
 
-    
-
     this.route.paramMap.subscribe(params => {
       this.routeParams.userId = params.get('user');
       this.routeParams.year = params.get('year');
@@ -207,11 +205,6 @@ export class TimesheetComponent implements OnInit {
       this.timesheetYears.push(i);
     }
 
-
-
-
-
-
   }
 
   onGridReady(params) {
@@ -221,44 +214,23 @@ export class TimesheetComponent implements OnInit {
 
   }
 
-   onCellDoubleClicked($event) {}
+  onCellDoubleClicked($event) {}
 
-
-   onCellEditingStopped($event) {
-
-     const value = $event.value;
-
-     if (!$event.value) { $event.value = ''; }
-    if (this.oldCellValue[$event.column.colId] == null ) { this.oldCellValue[$event.column.colId] = ''; }
-
-     if ('' + this.oldCellValue[$event.column.colId] + '' !== value ) {
-
-
-     // $event.value = this.toNearest($event.value,0.25);
-
-     // console.log($event.value, this.oldCellValue[$event.column.colId]);
-      this.updateHours($event);
-
-      }
-      delete this.oldCellValue[$event.column.colId];
-      return;
+   cellValueChanged($event) {
+       this.updateHours($event);
+       return;
    }
    onCellEditingStarted($event) {
 
 
 
          // check for holiday
-         if ($event.value && $event.value.length === 0 ) { $event.value = null; }
-         this.oldCellValue[$event.column.colId] = $event.value;
+        if ($event.value && $event.value.length === 0 ) { $event.value = null; }
 
          const holidayCheck = this.timeSheetObj.holidays.find((holiday) => {
           return holiday.date === $event.column.colId;
         });
 
-
-
-
-       // console.log(this.oldCellValue[$event.column.colId], holidayCheck, $event);
 
         if ($event.data.category.categoryName === 'Absence' &&
         !($event.data.project.projectID === 5 && holidayCheck)
@@ -272,12 +244,8 @@ export class TimesheetComponent implements OnInit {
 
 
   fetchTimesheet() {
-    // console.log(this.routeParams);
 
-    // Auth layer on fetching.
     let url = '';
-
-
     if (this.routeParams.year.length > 0) { url = '/timesheet/' + this.routeParams.userId + '/year/' + this.routeParams.year + '/payperiod/' + this.routeParams.payperiod + ''; } else {
       this.routeParams.userId = this.userService.currentUser.id;
       url = '/timesheet/' +  this.routeParams.userId;
@@ -295,14 +263,14 @@ export class TimesheetComponent implements OnInit {
             window.history.replaceState({}, '', `/timesheet/${this.routeParams.userId}/year/${ this.routeParams.year}/payperiod/${ this.routeParams.payperiod }`);
             this.timesheetService.changeTimesheet(this.routeParams);
             this.displayTimesheet = true;
-            setTimeout((x) => { 
-              
+            setTimeout((x) => {
+
               this.constructTimesheet();
 
               if (this.firstLoad) {
                  // this.gridApi.redrawRows();
                   this.firstLoad = !this.firstLoad;
-                 
+
               }
               this.checkIfTimesheetEditable();
             }, 400);
@@ -355,32 +323,19 @@ export class TimesheetComponent implements OnInit {
 
     this.timeSheetObj.payPeriod.dateArray.forEach((date, i) => {
 
-      // moment to convert date string to date + wahtever
-
-      // identify if weekend
-
-    //
-
       const headerDate = moment(date).format('dd - DD');
       const long_headerDate = moment(date).format('dddd DD, YYYY');
-
-
-
-
-
-
 
       const  obj: any = {
         headerName: headerDate,
         field: date,
         suppressMenu: true,
-        width: 80,
+        width: 70,
         // editable: false,
         lockPosition: true,
         type: 'numericColumn',
         cellEditor: 'numericEditor',
         cellRenderer:  (params) => {
-
 
 
           if (params.node.group && !params.node.footer) { return '<i>' + $.trim(params.value) + '</i>'; }
@@ -537,7 +492,7 @@ export class TimesheetComponent implements OnInit {
        const test = document.getElementsByClassName('ag-group-value');
        const last = test[test.length - 1];
        last.innerHTML   = '<b>Total</b> ( ' + this.timeSheetObj.denomination + ' )';
-       //console.log(last);
+       // console.log(last);
     }, 200);
     console.log(this.timeSheetFramework);
     console.log(this.columnDefs);
@@ -623,14 +578,13 @@ export class TimesheetComponent implements OnInit {
   checkIfTimesheetEditable() {
 
 
-    if(this.timeSheetObj)
-    {
+    if (this.timeSheetObj) {
       if (this.userService.hasPermission(10) || !this.timeSheetObj.payPeriod.locked) {
-      
+
 
         this.timesheetEditable = true;
 
-        this.columnDefs.forEach((element:any) => {
+        this.columnDefs.forEach((element: any) => {
             element.editable = true;
         });
         this.gridApi.setColumnDefs(this.columnDefs);
@@ -640,14 +594,14 @@ export class TimesheetComponent implements OnInit {
       }
       console.log('test');
       this.timesheetEditable = false;
-        this.columnDefs.forEach((element:any) => {
+        this.columnDefs.forEach((element: any) => {
           element.editable = false;
       });
       this.gridApi.setColumnDefs(this.columnDefs);
-      //this.defaultColDef['editable'] = false;
+      // this.defaultColDef['editable'] = false;
     }
 
- 
+
     return;
 
   }
@@ -731,7 +685,7 @@ export class TimesheetComponent implements OnInit {
         this.showSelectBox = false;
       }
 
-     } , 500 );
+     } , 1000 );
   }
 
   checkUserForSubordinatesAndMachines() {
