@@ -16,7 +16,7 @@
 - Drop downs were reverted to a previous working version
 
 ### RTO View
-- Extraneous decimals revmoed on RTO Bank Impact card
+- Extraneous decimals removed on RTO Bank Impact card
 
 ### Timesheet
 
@@ -42,9 +42,14 @@
 ### Statistics 
 - User statistic dates now work as expected. 
 
+### SEM 
+
+- The top row of images will now become a carosel when there is more then the screen can display. 
+
 ### Users 
 
 - Display issues for RTO and groups fixed
+
 
 #  June 2019
 

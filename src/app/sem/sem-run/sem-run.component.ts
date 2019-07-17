@@ -16,6 +16,7 @@ export class SemRunComponent implements OnInit {
 
   private semrunID;
 
+  slideConfig = {'slidesToShow': 10, 'dots': true, 'arrows': true, 'autoplay':true, };
   Semrun;
   selectedImage: any;
   selectedSubImage: any;
@@ -25,7 +26,8 @@ export class SemRunComponent implements OnInit {
     private notification: NotificationsService,
     private route: ActivatedRoute,
     private userService: UserService,
-    private domSanitizer: DomSanitizer,
+ //   private domSanitizer: DomSanitizer,
+    private sanitizer: DomSanitizer
 ) {}
 
 ngOnInit() {
@@ -82,6 +84,11 @@ ngOnInit() {
         return;
       });
 
+    }
+
+    textUrl(selectedImage) {
+      
+      return this.sanitizer.bypassSecurityTrustResourceUrl('http://api.edm.quantiam.com/file?server_path='+selectedImage.fullpath);
     }
 
 }

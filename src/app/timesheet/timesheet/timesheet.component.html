@@ -280,21 +280,21 @@
                 <tbody>
                     <tr *ngIf="timeSheetObj.compensation == 'Salary' || timeSheetObj.compensation == 'Hourly'">
                       <td><b>Vacation</b></td>
-                      <td>{{timeSheetObj.bank.carry_over[timeSheetObj.payPeriod.year]?.vacation || 0 | number : '1.2-2'}} Hours</td>
+                      <td>{{timeSheetObj.bank.carry_over[timeSheetObj.payPeriod.year-1]?.vacation || 0 | number : '1.2-2'}} Hours</td>
                       <td>{{timeSheetObj.bank.alloted[timeSheetObj.payPeriod.year]?.vacation || 0  | number : '1.2-2'}} Hours</td>
                       <td>{{timeSheetObj?.bank.used[timeSheetObj.payPeriod.year]?.vacation || 0  | number : '1.2-2'}} Hours</td>
                       <td>{{timeSheetObj.bank.remaining?.vacation || 0  | number : '1.2-2'}} Hours</td>
                     </tr>
                     <tr *ngIf="timeSheetObj.compensation == 'Salary' || timeSheetObj.compensation == 'Hourly'">
                         <td><b>PTO</b></td>
-                        <td>{{timeSheetObj.bank.carry_over[timeSheetObj.payPeriod.year]?.pto || 0  | number : '1.2-2'}} Hours</td>
+                        <td>{{timeSheetObj.bank.carry_over[timeSheetObj.payPeriod.year-1]?.pto || 0  | number : '1.2-2'}} Hours</td>
                         <td>{{timeSheetObj.bank.alloted[timeSheetObj.payPeriod.year]?.pto || 0  | number : '1.2-2'}} Hours</td>
                         <td>{{timeSheetObj?.bank.used[timeSheetObj.payPeriod.year]?.pto || 0  | number : '1.2-2'}} Hours</td>
                         <td>{{timeSheetObj.bank.remaining?.pto || 0  | number : '1.2-2'}} Hours</td>
                     </tr>  
                     <tr>
                         <td><b>CTO</b></td>
-                        <td>{{timeSheetObj.bank.carry_over[timeSheetObj.payPeriod.year]?.cto || 0  | number : '1.2-2'}} Hours</td>
+                        <td>{{timeSheetObj.bank.carry_over[timeSheetObj.payPeriod.year-1]?.cto || 0  | number : '1.2-2'}} Hours</td>
                         <td>{{timeSheetObj.bank.alloted[timeSheetObj.payPeriod.year]?.cto || 0  | number : '1.2-2'}} Hours</td>
                         <td>{{timeSheetObj?.bank.used[timeSheetObj.payPeriod.year]?.cto || 0  | number : '1.2-2'}} Hours</td>
                         <td>{{timeSheetObj.bank.remaining?.cto || 0  | number : '1.2-2'}} Hours</td>

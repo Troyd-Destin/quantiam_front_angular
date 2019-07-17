@@ -12,7 +12,7 @@
 
         <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center" fxFlex>
             <div fxFlex=30>
-                <h4> {{Semrun.samplename}} </h4>
+                <h3> {{Semrun.samplename}} </h3>
             </div>
             <div fxLayoutAlign="start center" fxFlex>
                 <ngb-alert type="info" [dismissible]="false" style="margin-top:7px; margin-bottom:0px;">
@@ -37,55 +37,95 @@
     </div>
 
     <div fxLayout="row wrap" fxLayoutGap="20px" *ngIf="Semrun?.images">
+           
+    <ngx-slick class="carousel" #slickModal="slick-modal" [config]="slideConfig" style="width:100%;">
+            <div  ngxSlickItem *ngFor="let img of Semrun.images" class="slide" (click)="selectImage(img)">
+                    
+                    <div class="image-wrapper" style="padding:10px; margin:auto;">
+                        <img  class="clickable" src="http://api.edm.quantiam.com/file?server_path={{img.fullpath}}" alt="" width="150px">
+                        <span class="image_label" style="width:150px;"> {{img.filename}}
 
-        <div *ngFor="let img of Semrun.images" fxFlex=10 (click)="selectImage(img)" class="clickable image-wrapper">
+                            <mat-chip color="accent" *ngIf="img.assoc_files[0]" selected>More</mat-chip>
+                        </span>
+                    </div>
+                </div>
+        </ngx-slick>
+
+    <!--     <div *ngFor="let img of Semrun.images" fxFlex=10 (click)="selectImage(img)" class="clickable image-wrapper">
 
 
             <img [class.active-image]="img?.name === selectedImage?.name" 
             *ngIf="img.fullpath"
              width=100%  src="http://api.edm.quantiam.com/file?server_path={{img.fullpath}}" />
 
-             <!-- <div [src]="domSanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,'+img.base64)"></div> -->
             <span class="image_label"> {{img.name}}
 
                 <mat-chip color="accent" *ngIf="img.assoc_files[0]" selected>More</mat-chip>
             </span>
 
-        </div>
+        </div> -->
        
 
     </div>
 
 
-    <div fxLayout="row" fxLayoutGap="10px" *ngIf="selectedImage?.fullpath" fxLayoutAlign="center start">
+    <div fxLayout="row" fxLayoutGap="10px" *ngIf="selectedImage?.fullpath" fxLayoutAlign="center start" fxFlex>
+
+
+    <div fxLayout="column" fxFlex.gt-md=20 fxLayoutAlign="center center" fxLayoutGap="10px" *ngIf="selectedImage.assoc_files[0]">
+            <div fxLayout="column" fxLayoutAlign="center center">
+                <h5>Associated</h5>
+                <small> Points, Maps, etc</small>
+            </div>
+            <div fxLayout="row wrap"  fxLayoutGap="5px" fxLayoutAlign="center center">
+                <div *ngFor="let img of selectedImage.assoc_files" class="clickable image-wrapper"  (click)="selectedSubImage = img">
+                    <div [hidden]="img.type !== 'image'">
+                        <img *ngIf="img.fullpath" width=100px  src="http://api.edm.quantiam.com/file?server_path={{img.fullpath}}"  />
+                        <span class="image_label" style="width:100px; font-size:9px;"> {{img.filename}}</span>
+                    </div>
+                    <div *ngIf="img.type === 'text'">
+                            <img width=100px  src="https://cdn0.iconfinder.com/data/icons/file-extension-line-icon/100/txtb-512.png">
+                            <span class="image_label" style="width:100px; font-size:9px; top:-60px;"> {{img.filename}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div fxLayout="column" fxFlex.gt-md=40 fxLayoutAlign="center center" fxLayoutGap="10px">
             <div fxLayout="column" fxLayoutAlign="center center">
-                <h5>{{selectedImage.name}}</h5>
+                <h5>{{selectedImage.filename}}</h5>
                 <small>{{selectedImage.CM_SIGNAL}} {{selectedImage.CM_MAG}}x {{selectedImage.CM_ACCEL_VOLT}}kV</small>
             </div>
 
             <img *ngIf="selectedImage?.fullpath" width=90% src="http://api.edm.quantiam.com/file?server_path={{selectedImage.fullpath}}" />
         </div>
-        <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" *ngIf="selectedImage.assoc_files[0]">
-            <div fxLayout="column" fxLayoutAlign="center center">
-                <h5>Associated</h5>
-                <small> Points, Maps, etc</small>
-            </div>
-            <div fxLayout="row wrap" fxFlex.gt-md=20 fxLayoutGap="5px" fxLayoutAlign="center center">
-                <div *ngFor="let img of selectedImage.assoc_files" class="clickable image-wrapper" [hidden]="img.type !== 'image'" (click)="selectedSubImage = img">
-                    <img *ngIf="img.fullpath" width=150px  src="http://api.edm.quantiam.com/file?server_path={{img.fullpath}}"  />
-                    <span class="image_label"> {{img.name}}</span>
-                </div>
-            </div>
-        </div>
-        <div fxLayout="column" fxFlex.gt-md=40 fxLayoutAlign="center center" fxLayoutGap="10px" *ngIf="selectedImage.assoc_files[0]">
-            <div fxLayout="column" fxLayoutAlign="center center">
-                <h5>{{selectedSubImage.name}}</h5>
-                <small> Selected associated Image </small>
-            </div>
-            <img *ngIf="selectedSubImage?.fullpath" width=90% src="http://api.edm.quantiam.com/file?server_path={{selectedSubImage.fullpath}}" />
 
+       
+
+        <div fxLayout="column" fxFlex.gt-md=40 fxLayoutAlign="center center" fxLayoutGap="10px" *ngIf="selectedImage.assoc_files[0]">
+          
+            <div *ngIf="selectedSubImage?.fullpath">
+
+
+                    <div fxLayout="column"  *ngIf="selectedSubImage.type === 'image'"  fxLayoutAlign="center center">
+                            <h5>{{selectedSubImage.filename}}</h5> 
+                            <small> Selected Associated Image </small>
+                            <img   width=90% src="http://api.edm.quantiam.com/file?server_path={{selectedSubImage.fullpath}}" />
+
+                    </div>
+
+                  
+                    <div  fxLayout="column" fxLayoutAlign="center center"  *ngIf="selectedSubImage.type === 'text'" fxFlex>
+                            <h5>{{selectedSubImage.filename}}</h5> 
+                            <small> Selected Associated Text File </small>
+                            <iframe 
+                            onload='javascript:(function(o){o.style.height=o.contentWindow.document.body.scrollHeight+"px"; o.style.width=o.contentWindow.document.body.scrollWidth+"px";}(this));' 
+                            style="height:400px;width:500px;;border:none;overflow:hidden; margin:auto;"
+                            [src]="'http://api.edm.quantiam.com/file?server_path=' + selectedSubImage.fullpath | safe"></iframe>
+                            <h5></h5>
+                    </div>
+            </div>
+            
         </div>
 
     </div>

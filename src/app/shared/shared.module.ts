@@ -1,6 +1,9 @@
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 
 
+import { SlickModule } from 'ngx-slick';
+
+
 import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
@@ -20,7 +23,6 @@ import { MatInputModule } from '@angular/material/input';
 import { Select2Module } from 'ng2-select2';
 import { Select2MaterialComponent } from './select2-material/select2-material.component';
 import { Select2MaterialLotComponent } from './select2-material-lot/select2-material-lot.component';
-import { Select2LocationComponent } from './select2-location/select2-location.component';
 import { Select2MaterialSupplierComponent } from './select2-material-supplier/select2-material-supplier.component';
 import { Select2UserComponent } from './select2-user/select2-user.component';
 import { Select2MaterialLotContainerComponent } from './select2-material-lot-container/select2-material-lot-container.component';
@@ -55,6 +57,9 @@ import { SelectSteelComponent } from './select-steel/select-steel.component';
 import { PopUpSteelCardComponent } from './pop-up-steel-card/pop-up-steel-card.component';
 
 import { AutoFocusDirective } from '../directives/auto-focus.directive';
+
+import { SafePipe } from '../pipes/safe.pipe';
+
 import { CommentsComponent } from './comments/comments.component';
 import { LogsComponent } from './logs/logs.component';
 
@@ -81,13 +86,13 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
         NgxFileDropModule ,
         NgbModule,
         CKEditorModule,
+        SlickModule.forRoot(),
     ],
     declarations: [
         AutoFocusDirective,
         SelectProjectComponent,
         Select2MaterialComponent,
         Select2MaterialLotComponent,
-        Select2LocationComponent,
         Select2MaterialSupplierComponent,
         Select2UserComponent,
         Select2MaterialLotContainerComponent,
@@ -114,7 +119,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
         PopUpSteelCardComponent,
         CommentsComponent,
         LogsComponent,
-        
+        SafePipe,
     ],
     exports: [
         SelectMaterialSupplierComponent,
@@ -123,7 +128,6 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
         Select2MaterialComponent,
         Select2MaterialLotComponent,
         Select2MaterialSupplierComponent,
-        Select2LocationComponent,
         Select2UserComponent,
         SelectProjectComponent,
         SelectUserComponent,
@@ -139,6 +143,9 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
         NgbModule,
         CommentsComponent,
         LogsComponent,
+        SlickModule,
+        
+        SafePipe,
 
     ],
     schemas: [NO_ERRORS_SCHEMA]

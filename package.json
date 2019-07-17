@@ -66,6 +66,7 @@
     "ngx-cacheable": "^1.2.2",
     "ngx-file-drop": "^8.0.2",
     "ngx-markdown": "^8.0.2",
+    "ngx-slick": "^0.2.1",
     "popper.js": "^1.15.0",
     "rxjs": "^6.5.2",
     "rxjs-watcher": "^1.1.2",
