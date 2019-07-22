@@ -54,6 +54,9 @@
 
 - Database overhauled to account for XRD Runs without Analyses
 - Now accounts for multiple analysis files per XRD Run
+- Project Filter Added
+- Refresh Button Added
+- Data Storage Location link
 
 ### XRD View
 

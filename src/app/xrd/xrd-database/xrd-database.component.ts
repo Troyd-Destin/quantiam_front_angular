@@ -180,14 +180,19 @@ ngOnInit() {
         const requestParams: HttpParams = new HttpParams()
         .append('limit', `${this.gridOptions.cacheBlockSize}`)
         .append('like', `${this.filteredTextFilterName}`)
-        .append('page', `${page}`);
+        .append('page', `${page}`)
+        .append('requestor', `${this.filteredRequestor}`)
+        .append('operator', `${this.filteredOperator}`)
+        .append('project', `${this.filteredProject}`);
+       // .append('type', `${this.filteredSemrun}`);
+
 
           this.http.get(environment.apiUrl + '/instrument/xrd/run', {params: requestParams}).subscribe((response: any) => {
 
               params2.successCallback(response.data, response.total);
               this.totalRows = response.total;
               this.gridApi.sizeColumnsToFit();
-              console.log(params2);
+            //  console.log(params2);
           });
 
       }
@@ -206,10 +211,49 @@ ngOnInit() {
 
   }
 
-  onPageSizeChanged() {
-    this.gridOptions.paginationPageSize = this.gridOptions.cacheBlockSize;
+ 
+
+  refreshDatabase() {
+
     const datasource = this.fetchDatabase();
     this.gridApi.setServerSideDatasource(datasource);
+  }
+
+  onPageSizeChanged() {
+    this.gridOptions.paginationPageSize = this.gridOptions.cacheBlockSize;
+    this.refreshDatabase();
+  }
+
+  filterProject(event) {
+    if (event) {  this.filteredProject = event.id; } else { this.filteredProject = ''; }
+      this.refreshDatabase();
+  }
+  clearFilterProject(event) {
+     this.filteredProject = '';
+     this.refreshDatabase();
+  }
+
+
+  filterOperator(event) {
+    if (event) { this.filteredOperator = event.id; } else { this.filteredOperator = ''; }
+
+      this.refreshDatabase();
+  }
+
+  clearFilterOperator(event) {
+     this.filteredOperator = '';
+     this.refreshDatabase();
+  }
+
+
+  filterRequestor(event) {
+    if (event) { this.filteredRequestor = event.id; } else { this.filteredRequestor = ''; }
+    this.refreshDatabase();
+  }
+
+  clearFilterRequestor(event) {
+     this.filteredRequestor = '';
+     this.refreshDatabase();
   }
 
 }

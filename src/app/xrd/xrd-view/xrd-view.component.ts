@@ -32,7 +32,7 @@ export class XrdViewComponent implements OnInit {
     updateFlag;
     oneToOneFlag = true;
     HighchartOptions: any = {
-      chart: { zoomType: 'xy'},
+      chart: { zoomType: 'xy', panning: true, panKey: 'shift'},
       title: { text: '' },
       subtitle: { text: ''},
       series: [],
