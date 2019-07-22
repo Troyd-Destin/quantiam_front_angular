@@ -44,6 +44,8 @@ import { AgGridSemTypeComponent } from '../sem/sem-database/ag-grid-sem-type/ag-
 import { AgGridSemContainerSteelCellDisplayComponent } from '../sem/sem-database/ag-grid-sem-container-steel-cell-display/ag-grid-sem-container-steel-cell-display.component';
 import { AgGridSemContainerSteelEditComponent } from '../sem/sem-database/ag-grid-sem-container-steel-edit/ag-grid-sem-container-steel-edit.component';
 
+import { XrdAnalysesFileRendererComponent } from '../xrd/xrd-database/xrd-analyses-file-renderer/xrd-analyses-file-renderer.component';
+
 import { SelectMaterialComponent } from './select-material/select-material.component';
 import { SelectMaterialSupplierComponent } from './select-material-supplier/select-material-supplier.component';
 import { AgGridDurationComponent } from './ag-grid-duration/ag-grid-duration.component';
@@ -72,6 +74,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
             AgGridSelectProjectEditorComponent, AgGridSelectUserComponent,
              AgGridSemTypeComponent, AgGridDurationComponent,
              AgGridSemContainerSteelCellDisplayComponent, AgGridSemContainerSteelEditComponent,
+             XrdAnalysesFileRendererComponent,
              AgGridTimesheetValueEditorComponent]),
         CommonModule,
         Select2Module,
@@ -115,6 +118,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
         AgGridTimesheetValueEditorComponent,
         AgGridSemContainerSteelCellDisplayComponent,
         AgGridSemContainerSteelEditComponent,
+        XrdAnalysesFileRendererComponent,
         SelectSteelComponent,
         PopUpSteelCardComponent,
         CommentsComponent,

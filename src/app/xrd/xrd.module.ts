@@ -10,6 +10,7 @@ import { MaterialDesignModule } from '../material-design/material-design.module'
 import { XrdIndexComponent } from './xrd-index/xrd-index.component';
 import { XrdDatabaseComponent } from './xrd-database/xrd-database.component';
 import { XrdViewComponent } from './xrd-view/xrd-view.component';
+import { PickXrdAnalysesDialogComponent } from './xrd-database/pick-xrd-analyses-dialog/pick-xrd-analyses-dialog.component';
 
 
 const routes: Routes = [
@@ -24,7 +25,7 @@ const routes: Routes = [
         data: {key: 'XrdDatabase'}
       },
       {
-        path: ':id',
+        path: 'analysis/:id',
         component: XrdViewComponent,
         data: {key: 'XrdView'}
       }
@@ -36,7 +37,8 @@ const routes: Routes = [
 
 
 @NgModule({
-  declarations: [XrdIndexComponent, XrdDatabaseComponent, XrdViewComponent],
+  declarations: [XrdIndexComponent, XrdDatabaseComponent, XrdViewComponent, PickXrdAnalysesDialogComponent],
+  entryComponents: [PickXrdAnalysesDialogComponent],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,

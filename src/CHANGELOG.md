@@ -50,6 +50,21 @@
 
 - Display issues for RTO and groups fixed
 
+### XRD
+
+- Database overhauled to account for XRD Runs without Analyses
+- Now accounts for multiple analysis files per XRD Run
+
+### XRD View
+
+- Now displays the spectra collect
+- Now displays patterns for each spectra
+- Pattern controls added, line width & scaling
+- Chart controls added, Y/x Axis Min/Max
+- CSV Print button
+- Images and the image tab will pop up when they are found on the Q drive
+
+### XRD View
 
 #  June 2019
 

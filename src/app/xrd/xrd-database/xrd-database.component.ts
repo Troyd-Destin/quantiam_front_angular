@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient,HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import {  environment} from '../../../environments/environment';
+
+
+import { AgGridSelectProjectEditorComponent } from '../../shared/ag-grid-select-project/ag-grid-select-project.component';
+import { XrdAnalysesFileRendererComponent } from './xrd-analyses-file-renderer/xrd-analyses-file-renderer.component';
 
 @Component({
   selector: 'app-xrd-database',
@@ -18,7 +22,7 @@ export class XrdDatabaseComponent implements OnInit {
 
    columnDefs;
    defaultColDef;
-   rowData: [{id:100,semrun_id:'thing'}];
+   rowData: [];
 
    gridOptions;
    rowModelType;
@@ -35,67 +39,96 @@ export class XrdDatabaseComponent implements OnInit {
 
    totalRows;
 
-  constructor(private http: HttpClient) { 
+    frameworkComponents = {
+    projectEditor: AgGridSelectProjectEditorComponent,
+    analysesRenderer: XrdAnalysesFileRendererComponent,
+  };
+
+  constructor(private http: HttpClient) {
 
     this.columnDefs = [
       {
         headerName: 'ID',
         field: 'id',
-        width: 60,
-        hidden: true,
+        width: 50,
+        hide: true,
       },
-     /*  {
-        headerName: 'XRD',
+      {
+        headerName: '',
         field: 'instrument_name',
-        width: 60,
-        filter: false
-      }, */
+        width: 50,
+        hide: true,
+      },
       {
         headerName: 'Run',
-        field: 'xrd_run.xrdrun_id',
+        field: 'name',
         width: 100,
       },
       {
         headerName: 'Project',
-        field: 'xrd_run.project_id',
-        width: 80,
-        filter: true
+        field: 'project_id',
+        width: 70,
+        editable: true,
+        cellEditor: 'projectEditor',
       },
       {
-        headerName: 'Analysis Name',
-        field: 'name',
+        headerName: 'Sample Name',
+        field: 'sample_name',
         width: 400,
-        
       },
       {
-        headerName: 'Sample Type',
-        field: 'xrd_run.type.id',
-       // width: 100,
-        filter: true
+        headerName: 'Type',
+        field: 'type.name',
+        width: 100,
       },
+
+      
+     /*  {
+        headerName: 'File Name',
+        field: 'path',
+        width: 200,
+        cellRenderer: (cell) =>{
+          let filename =  cell.data.path.split('\\').pop().split('/').pop();
+          return filename;
+        }
+
+      }, */
       {
         headerName: 'Operator',
-        field: 'xrd_run.operator.id',
-       // width: 100,
-        filter: true
+        field: 'operator',
+        width: 100,
       },
       {
-        headerName: 'Requested',
-        field: 'xrd_run.requestor.id',
-       // width: 100,
-        filter: true
+        headerName: 'Requested By',
+        field: 'requestor',
+        width: 100,
       },
       {
         headerName: 'Duration',
-        field: 'xrd_run.duration',
+        field: 'duration',
         width: 100,
-      
+        cellRenderer: (cell) => {
+
+            let duration;
+
+          if(cell.data.duration)
+          {
+             duration =  '~' + (cell.data.duration / 60).toFixed(1) + ' mins';
+          }
+        
+          return duration;
+        }
       },
+       {
+        headerName: 'Analyses',
+        field: 'xrd_runs',
+        width: 80,
+        cellRenderer: 'analysesRenderer',
+      }, 
       {
         headerName: 'Run Date',
         field: 'analyzed_date',
-       // width: 100,
-       
+        width: 150,
       },
 
     ];
@@ -117,7 +150,7 @@ export class XrdDatabaseComponent implements OnInit {
       pagination: true,
       maxConcurrentDatasourceRequests: 1,
        paginationPageSize: 20,
-      //paginationAutoPageSize: true
+      // paginationAutoPageSize: true
     };
  }
 
@@ -133,12 +166,11 @@ ngOnInit() {
     const datasource = this.fetchDatabase();
 
     params.api.setServerSideDatasource(datasource); // datasource needs to be a serverSide model
-    
+
   }
 
 
-  fetchDatabase ()
-  { 
+  fetchDatabase () {
 
     return {
       getRows: (params2: any) => {
@@ -150,7 +182,7 @@ ngOnInit() {
         .append('like', `${this.filteredTextFilterName}`)
         .append('page', `${page}`);
 
-          this.http.get(environment.apiUrl + '/instrument/xrd/analysis', {params: requestParams}).subscribe((response:any) => {
+          this.http.get(environment.apiUrl + '/instrument/xrd/run', {params: requestParams}).subscribe((response: any) => {
 
               params2.successCallback(response.data, response.total);
               this.totalRows = response.total;
@@ -159,24 +191,22 @@ ngOnInit() {
           });
 
       }
-    }
+    };
 
   }
 
-  onTextFilterChanged()
-  {
+  onTextFilterChanged() {
       clearTimeout(this.timeoutTextFilter);
       this.timeoutTextFilter = setTimeout((x) => {
 
             console.log('test');
             const datasource = this.fetchDatabase();
             this.gridApi.setServerSideDatasource(datasource);
-      }, 500 )
+      }, 800 );
 
   }
 
-  onPageSizeChanged()
-  {
+  onPageSizeChanged() {
     this.gridOptions.paginationPageSize = this.gridOptions.cacheBlockSize;
     const datasource = this.fetchDatabase();
     this.gridApi.setServerSideDatasource(datasource);

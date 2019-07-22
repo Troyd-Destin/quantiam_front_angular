@@ -1,35 +1,43 @@
-<div fxLayout="row" fxLayoutGap="20px">
+<div fxLayout="row"  fxLayoutAlign="center center" fxFlexFill>
 
-    <mat-form-field style="max-width: 100px;">
-        <mat-select  placeholder="Page Size"  [(ngModel)]="gridOptions.cacheBlockSize" (selectionChange)="onPageSizeChanged()">
-          <mat-option *ngFor="let pageSize of pageSizes" [value]="pageSize" [attr.selected]="pageSize === gridOptions.cacheBlockSize ? 'selected': null">
-            {{pageSize}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
 
-      <mat-form-field style="width:400px">
-          <!--   <span matPrefix>+1 &nbsp;</span> -->
-          <input id="xrdDatabaseSearchBar" type="text" matInput (keyup)="onTextFilterChanged()"  [(ngModel)]="filteredTextFilterName"  placeholder="Search">
-          <mat-icon matSuffix>search</mat-icon>
-      </mat-form-field>  
+  <div fxLayout="column" fxFlex.gt-md=80 fxFlex >
+      <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center" fxFlex >
+
+          <mat-form-field style="max-width: 100px;">
+              <mat-select  placeholder="Page Size"  [(ngModel)]="gridOptions.cacheBlockSize" (selectionChange)="onPageSizeChanged()">
+                <mat-option *ngFor="let pageSize of pageSizes" [value]="pageSize" [attr.selected]="pageSize === gridOptions.cacheBlockSize ? 'selected': null">
+                  {{pageSize}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field style="width:200px">
+                <!--   <span matPrefix>+1 &nbsp;</span> -->
+                <input id="xrdDatabaseSearchBar" type="text" matInput (keyup)="onTextFilterChanged()"  [(ngModel)]="filteredTextFilterName"  placeholder="Search">
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>  
+
+      </div>
+
+
+        <ag-grid-angular
+        #agGrid
+        
+        id="xrdDatabase"
+        class="ag-theme-balham"
+        [columnDefs]="columnDefs"
+        [gridOptions]="gridOptions"
+        [defaultColDef]="defaultColDef"
+        [rowData]="rowData"
+        domLayout='autoHeight'
+        [animateRows]="true"
+        [frameworkComponents] = "frameworkComponents"
+
+        (gridReady)="onGridReady($event)"
+        >
+        </ag-grid-angular>
+    </div>
+
 
 </div>
-
-
-
-<ag-grid-angular
-#agGrid
-
-id="xrdDatabase"
-class="ag-theme-balham"
-[columnDefs]="columnDefs"
-[gridOptions]="gridOptions"
-[defaultColDef]="defaultColDef"
-[rowData]="rowData"
-domLayout='autoHeight'
-[animateRows]="true"
-
-(gridReady)="onGridReady($event)"
->
-</ag-grid-angular>
