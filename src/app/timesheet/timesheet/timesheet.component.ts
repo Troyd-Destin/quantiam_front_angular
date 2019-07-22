@@ -343,7 +343,7 @@ export class TimesheetComponent implements OnInit {
           if (params.node.footer) {
 
             if (params.value > 8 && !this.timeSheetObj.machine) {
-              console.log(params);
+            //  console.log(params);
               if (this.timesheetLoaded) {
               this.notification.info('Overtime', params.column.colId + ' has more then 8 hours.', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
               }
@@ -494,8 +494,8 @@ export class TimesheetComponent implements OnInit {
        last.innerHTML   = '<b>Total</b> ( ' + this.timeSheetObj.denomination + ' )';
        // console.log(last);
     }, 200);
-    console.log(this.timeSheetFramework);
-    console.log(this.columnDefs);
+   // console.log(this.timeSheetFramework);
+    //console.log(this.columnDefs);
   }
 
   onRowGroupOpened(event) {
@@ -592,7 +592,7 @@ export class TimesheetComponent implements OnInit {
 
         return;
       }
-      console.log('test');
+     // console.log('test');
       this.timesheetEditable = false;
         this.columnDefs.forEach((element: any) => {
           element.editable = false;
@@ -608,7 +608,7 @@ export class TimesheetComponent implements OnInit {
 
 
   getRowClass(params) {
-    console.log('test', params);
+   // console.log('test', params);
 
   }
 

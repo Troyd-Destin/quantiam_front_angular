@@ -46,7 +46,7 @@ export class SelectUserComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    console.log('select user started', this.selectedValue);
+  //  console.log('select user started', this.selectedValue);
    // this.selectedValue = this.selectedValue.toString();
     this.showMachineItems();
     if (!this.restrictedAccessMode) {
@@ -55,7 +55,7 @@ export class SelectUserComponent implements OnInit, OnDestroy {
     this.list$ = this.selectUserService.list$.subscribe((r) => {
          this.allItems = r;
 
-         console.log(this.allItems);
+      //   console.log(this.allItems);
 
           if (r[0]) { this.showItems(); }
       });

@@ -42,7 +42,7 @@ export class TokenInterceptor implements HttpInterceptor {
            // console.log(newParams, request.params.keys());
             const params = new HttpParams({fromObject : newParams});
         
-            console.log(request);
+           // console.log(request);
             if(request.url.includes('user/token') && localStorage.getItem('devToken')) {  //for the one route that needs a different token
                     console.log('worked');
                  headers = new HttpHeaders({ Authorization: 'Bearer ' + localStorage.getItem('devToken'), });

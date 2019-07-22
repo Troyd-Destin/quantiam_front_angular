@@ -32,7 +32,7 @@ export class SelectUserService {
  constructor(public http: HttpClient, public notification: NotificationsService) { }
 
  list(params: any = {}) {
-        console.log(this.listFetched, (this.previousParams !== params));
+      //  console.log(this.listFetched, (this.previousParams !== params));
        if (!this.listFetched ) {
 
           

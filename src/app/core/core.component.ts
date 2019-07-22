@@ -210,7 +210,7 @@ export class CoreComponent implements OnInit, OnDestroy {
   getScanner() {
     this.scannerList = this.websocketService.selectableScanners; // set the selectable list of scanners.
     const savedScanner = this.settings.get('selectedScanner');
-    console.log(savedScanner);
+   // console.log(savedScanner);
     if (savedScanner && savedScanner.id) {
       this.selectedScanner = this.settings.get('selectedScanner');
     } else {
@@ -257,7 +257,7 @@ export class CoreComponent implements OnInit, OnDestroy {
 
 
   changeUser(event) {
-    console.log(event);
+   // console.log(event);
     this.userService.getAuthedUser(event.id).subscribe(r => {
 
 
@@ -269,7 +269,7 @@ export class CoreComponent implements OnInit, OnDestroy {
      this.http.get<any>(environment.apiUrl + `/user/token/${event.id}?filterSpinner`)
 		 .subscribe(r2 => {
 
-      console.log(r2); //
+      //console.log(r2); //
 
       localStorage.setItem('devToken', localStorage.getItem('token'));
       localStorage.setItem('token', r2.token);
