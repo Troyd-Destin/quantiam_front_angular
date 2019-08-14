@@ -60,14 +60,12 @@
 
 ### XRD View
 
-- Now displays the spectra collect
-- Now displays patterns for each spectra
+- Now displays the spectra collected
+- Now displays patterns for each spectra, can modify their yscale, width and visibility 
 - Pattern controls added, line width & scaling
 - Chart controls added, Y/x Axis Min/Max
 - CSV Print button
 - Images and the image tab will pop up when they are found on the Q drive
-
-### XRD View
 
 #  June 2019
 
@@ -203,7 +201,7 @@
 - eliminated caps lock bug when scanning materials
 
 
-# [2019.03] March 2019
+#  March 2019
 
 ### SEM
 - Can now select run types
@@ -213,7 +211,7 @@
 ### Misc
 - User select box will now hard check for employee ID, typing 1 will now select Robert
 
-# [2019.02] February 2019
+#  February 2019
 
 ### TGA
 - Peak tool now has "previous" and "next" buttons for navigating single runs easier
@@ -283,7 +281,7 @@
 
 
 
-# [2018.11.0] November 2018
+# November 2018
 ### Angular 
 - Updated from Angular 7.0 to 7.1  
 

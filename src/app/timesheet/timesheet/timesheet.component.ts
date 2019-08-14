@@ -622,12 +622,12 @@ export class TimesheetComponent implements OnInit {
       projectid: params.data.project.projectID,
       year: this.timeSheetObj.payPeriod.year,
       employeeid: this.timeSheetObj.userID,
-
+      hours: params.value,
 
     };
 
     if (params.value === '') { params.value = 0; }
-    payload[this.timeSheetObj.denomination.toLowerCase()] = '' + params.value + '';
+  //  payload[this.timeSheetObj.denomination.toLowerCase()] = '' + params.value + '';
 
     const url = '/timesheet/' + this.routeParams.userId + '/process';
     this.http.put<any>(environment.apiUrl + url + '?filterSpinner', payload)
