@@ -1,0 +1,41 @@
+
+<div fxLayout="column" fxFlex >
+
+
+    <div fxLayout="row" fxFlex fxLayoutGap="10px">
+
+        <!-- <h3> Test Screen </h3> -->
+
+        <mat-form-field>
+                <mat-label>x Axis</mat-label>
+                <mat-select [(ngModel)]="currentXField" (selectionChange)="changeFields()">
+                  <mat-option *ngFor="let field of fields" [value]="field">
+                    {{field}}
+                  </mat-option>
+                </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+                <mat-label>y Axis</mat-label>
+                <mat-select [(ngModel)]="currentYField" (selectionChange)="changeFields()">
+                  <mat-option *ngFor="let field of fields" [value]="field">
+                    {{field}}
+                  </mat-option>
+                </mat-select>
+        </mat-form-field>
+   
+    </div>
+    <div fxLayout="row" fxFlex>
+
+            <highcharts-chart
+            *ngIf="HighchartOptions.series[0]"
+            [Highcharts]="Highcharts"
+            [options]="HighchartOptions"
+            [(update)]="updateFlag" 
+            [oneToOne]="oneToOneFlag"
+            style="height:450px; width:100%;"
+            [callbackFunction]="chartCallback"
+              ></highcharts-chart>
+    </div>
+      
+    
+</div>

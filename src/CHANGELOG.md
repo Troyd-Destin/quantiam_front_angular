@@ -7,6 +7,20 @@
 - Lot selection dropdown is old and get's stuck "open", this needs to be replaced with the new dropdown
 - When using the Steel/Container/Sample ag-grid dropdown, the active/inactive filters will close the dropdown (event propgation issues)
 - ng Select 2.20+ does not play nice 
+- D8 Files aren't updating properly.
+
+
+# August 2019
+
+### XRD
+
+- Now displays a link to the eva file
+  
+
+### Timesheet
+
+- You can now edit stat holidays manually. 
+- 
 
 # July 2019
 

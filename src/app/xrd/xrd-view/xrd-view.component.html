@@ -2,9 +2,14 @@
 
     <div fxLayout="row" fxFlex>
 
-        <div fxLayout="row" fxFlex>
-          <!--   <app-select-project></app-select-project> -->
-        </div>
+       
+
+        <div fxLayoutAlign="start start" fxFlex>
+          <ngb-alert type="info" [dismissible]="false" style="margin-top:7px; margin-bottom:0px;">
+              <b> Data Storage Location: </b>
+              <a style="margin-left:10px;" target="_blank" [href]="xrdAnalyses[0]?.path"> {{xrdAnalyses[0]?.path}} </a>
+          </ngb-alert>
+      </div>
         <div fxFlex fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="10px">
             <button mat-raised-button (click)="buildChartObj()"> Refresh Chart</button>
             <button mat-raised-button (click)="generateXrdCSV()" color='primary'> CSV </button>

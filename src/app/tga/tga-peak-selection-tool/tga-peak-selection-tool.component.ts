@@ -525,7 +525,7 @@ export class TgaPeakSelectionToolComponent implements OnInit {
     this.fetchTgaRun(this.selectedFile.name);
   }
 
-  clearAllSelectedFiles(event){
+  clearAllSelectedFiles(event) {
     this.storedTgaRuns = [];
     this.multiChartOptions.series = [];
     this.chartOptions.series = [];
@@ -609,7 +609,7 @@ export class TgaPeakSelectionToolComponent implements OnInit {
 
    console.log(this.multiChartOptions.series);
 
-   
+
   //  this.multiChartOptions.title.text = 'test';
 
  setTimeout((r) => {
@@ -636,7 +636,7 @@ export class TgaPeakSelectionToolComponent implements OnInit {
     this.multiChartOptions.xAxis[0].min = this.multiXaxisMin;
     this.multiUpdateFlag = true; // Update Chart
 
-    console.log(this.multiXaxisMax, event);
+   // console.log(this.multiXaxisMax, event);
 
   }
 

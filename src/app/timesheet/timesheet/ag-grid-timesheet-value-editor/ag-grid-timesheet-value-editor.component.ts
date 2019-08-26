@@ -42,7 +42,8 @@ export class AgGridTimesheetValueEditorComponent implements ICellEditorAngularCo
   }
 
   isCancelBeforeStart(): boolean {
-      if (this.params.node.data.category.absence) { return true; }  // if not a holiday needs to added
+      if (this.params.node.data.category.absence
+        && this.params.node.data.project.projectID !== 5 ) { return true; }  // if not a holiday needs to added
       return false;
   }
 

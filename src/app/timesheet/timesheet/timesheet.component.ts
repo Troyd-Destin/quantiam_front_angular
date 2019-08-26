@@ -231,13 +231,13 @@ export class TimesheetComponent implements OnInit {
           return holiday.date === $event.column.colId;
         });
 
-
-        if ($event.data.category.categoryName === 'Absence' &&
-        !($event.data.project.projectID === 5 && holidayCheck)
+        console.log(holidayCheck);
+      /*   if ($event.data.category.categoryName === 'Absence' &&
+        ($event.data.project.projectID !== 5 && holidayCheck.length > 1)
         ) {
-         this.gridApi.stopEditing();
+         //this.gridApi.stopEditing();
          return;
-        }
+        } */
 
 
    }
@@ -656,7 +656,10 @@ export class TimesheetComponent implements OnInit {
   generateTimesheetDownload() {
     const url = '/timesheet/' + this.routeParams.userId + '/year/' + this.routeParams.year + '/payperiod/' + this.routeParams.payperiod + '/generate';
 
-    // this.notification.info('Processing... ',  'Generating this timesheet.', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
+
+
+
+    this.notification.info('Processing... ',  'Generating this timesheet.', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
 
     this.http.get<any>(environment.apiUrl + url + '')
     .subscribe(r => {

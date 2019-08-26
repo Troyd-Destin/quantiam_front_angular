@@ -23,7 +23,7 @@ const routes: Routes = [
         path: 'peak-tool',
         data: { key: 'tgaPeakTool'},
         component: TgaPeakSelectionToolComponent,
-       }
+       },
     ],
   },
 ];

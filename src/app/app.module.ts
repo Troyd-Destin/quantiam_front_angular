@@ -36,6 +36,7 @@ import { AuthComponent } from './auth/auth.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { MaterialDesignModule } from './material-design/material-design.module';
 import { AutoFocusDirective } from './directives/auto-focus.directive';
+
 const routes: Routes = [
   {
     path: 'auth',
@@ -60,6 +61,7 @@ export function gettoken () {
   declarations: [
     AppComponent,
     AuthComponent,
+    
   //  AutoFocusDirective,
   ],
   imports: [

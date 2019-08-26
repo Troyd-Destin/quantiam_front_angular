@@ -75,6 +75,12 @@ const routes: Routes = [
 				// pathMatch: 'prefix',
 
 			},
+			{
+				path: 'arbin',
+				loadChildren: () => import('../arbin/arbin.module').then(m => m.ArbinModule),
+				// pathMatch: 'prefix',
+
+			},
 		]
 	},
 
