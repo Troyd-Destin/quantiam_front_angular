@@ -1,8 +1,11 @@
 markdown ::ng-deep{
 
     font-family: Roboto,sans-serif;
-    overflow-y: scroll;
-    height: 92vh;
+    overflow-y: auto;
+    height: 100% !important;
+    padding-right: 10px;
+    padding-left: 10px;
+    /* height: 92vh; */
 }
 
 markdown ::ng-deep p {
@@ -35,10 +38,21 @@ markdown ::ng-deep h3 {
 
 markdown ::ng-deep h4 {
     margin-left: 5px;
+    
 }
 
 markdown ::ng-deep h2 {
     margin-top: 24px;
     margin-bottom: 16px;
+}
+
+
+.patch-notes-wrapper {
+
+    height: 100% !important;
+}
+
+.markdown-menu-wrapper{
+    height: 100% !important;
 }
 

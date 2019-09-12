@@ -64,8 +64,8 @@ calculatePayperoid () {
     const params: any = {'year': this.selectedYear};
     this.http.get(environment.apiUrl + '/timesheet/payperiod/' + this.selectedPayperiod + '/year/' + this.selectedYear, {params: params}).subscribe((response: any) => {
 
-        this.endDate = response.endDate;
-        this.startDate = response.startDate;
+        this.endDate = _moment(response.endDate).toDate();
+        this.startDate = _moment(response.startDate).toDate();
         console.log(response);
     });
 

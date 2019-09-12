@@ -479,7 +479,7 @@ export class TimesheetComponent implements OnInit {
     });
 
     this.displayTimesheet = true;
-    if (!this.gridApi) {   this.rowData = this.timeSheetFramework; }
+    if (!this.gridApi) {   this.rowData = this.timeSheetFramework;  }
 
     if (this.gridApi) {
 
@@ -492,6 +492,7 @@ export class TimesheetComponent implements OnInit {
        const test = document.getElementsByClassName('ag-group-value');
        const last = test[test.length - 1];
        last.innerHTML   = '<b>Total</b> ( ' + this.timeSheetObj.denomination + ' )';
+       console.log(this.timeSheetFramework);
        // console.log(last);
     }, 200);
    // console.log(this.timeSheetFramework);
@@ -654,6 +655,11 @@ export class TimesheetComponent implements OnInit {
   }
 
   generateTimesheetDownload() {
+
+
+    if(this.checkIfWeekendHasMoreThen2Hours())
+    {
+
     const url = '/timesheet/' + this.routeParams.userId + '/year/' + this.routeParams.year + '/payperiod/' + this.routeParams.payperiod + '/generate';
 
 
@@ -667,6 +673,8 @@ export class TimesheetComponent implements OnInit {
       this.notification.success('Success',  'Timesheet made!', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
 
     });
+
+  }
 
   }
 
@@ -699,6 +707,52 @@ export class TimesheetComponent implements OnInit {
     }
 
     return true;
+  }
+
+  checkIfWeekendHasMoreThen2Hours()
+  {
+    let test = true;
+    let weekendDateArray = [];
+    this.timeSheetObj.payPeriod.dateArray.forEach((date)=>{
+
+      const  day = moment(date).day();
+      if(day === 0 || day === 6){
+        weekendDateArray.push(date);
+      }
+
+    })
+
+    let weekendHours = {};
+    this.timeSheetFramework.forEach((project)=>{
+
+    //  console.log(project);
+      weekendDateArray.forEach((date)=>{
+
+        if(!weekendHours[date])
+        {
+          weekendHours[date] = 0;
+        }
+
+        if(project[date])
+        {
+          weekendHours[date] = parseInt(weekendHours[date]) + parseInt(project[date]);
+        }
+
+      })
+
+    })
+
+    Object.keys(weekendHours).forEach((key)=> {
+
+      if(weekendHours[key] > 0 && weekendHours[key] < 2)
+      {
+        test = false;
+      }
+     });
+    if(!test){
+      this.notification.error('Not Enough Hours',  'You must have a minimum of 2 hours on a weekend.', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
+    }
+    return test;
   }
 
 

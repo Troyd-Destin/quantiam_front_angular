@@ -85,7 +85,7 @@ export class ArbinTestDatabaseComponent implements OnInit {
 
   fetchTestList()
   {
-    this.http.get('http://localhost:3000/arbin/test').subscribe(r => {
+    this.http.get('http://api.edm.quantiam.com:3000/arbin/test').subscribe(r => {
 
         this.rowData = r;
     }, error => { 

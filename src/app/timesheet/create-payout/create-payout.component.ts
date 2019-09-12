@@ -42,7 +42,7 @@ export class CreatePayoutComponent implements OnInit {
           type: this.selectedType,
           hours: this.hours,
           date: this.payoutDate, 
-          commnet: this.comment
+          comment: this.comment
         };
 
         this.http.post(environment.apiUrl+ `/timesheet/${this.data.userId}/payout`, params).subscribe((r)=>{

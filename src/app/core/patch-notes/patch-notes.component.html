@@ -1,11 +1,20 @@
 
 
 <!-- loaded from remote url -->
-<div fxLayout="row" fxFlex fxLayoutGap="20px" fxLayoutAlign="center center">
-    <!-- <menu thing here></menu> -->
-    <div >
-
-
+<div class="patch-notes-wrapper" fxLayout="column" fxLayoutGap="10px"> 
+    <div class="markdown-menu-wrapper" fxLayout="row" fxFlex fxLayoutGap="20px" fxLayoutAlign="center start">
+        <!-- <menu thing here></menu> -->
+    
+        <div fxLayoutGap="10px" fxLayout="column" fxLayoutAlign="start start">
+            <h1> Change Log </h1>
+            <button *ngFor="let version of versionArray; let i = index" mat-raised-button (click)="selectedVersion = versionArray[i]">
+                {{version.name}}
+             </button>
+           
+        </div>
+        <markdown *ngIf="selectedVersion"  [data]="selectedVersion.notes" fxFlex></markdown>
     </div>
-    <markdown [src]="'CHANGELOG.md'" fxFlex=50></markdown>
+    <div fxLayout="row" fxLayoutAlign="end start" >
+            <button mat-raised-button (click)="close()" color="primary"> Close </button>
+    </div>
 </div>

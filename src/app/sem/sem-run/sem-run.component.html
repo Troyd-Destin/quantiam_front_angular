@@ -38,7 +38,7 @@
 
     <div fxLayout="row wrap" fxLayoutGap="20px" *ngIf="Semrun?.images">
            
-    <ngx-slick class="carousel" #slickModal="slick-modal" [config]="slideConfig" style="width:100%;">
+    <!-- <ngx-slick class="carousel" #slickModal="slick-modal" [config]="slideConfig" style="width:100%;">
             <div  ngxSlickItem *ngFor="let img of Semrun.images" class="slide" (click)="selectImage(img)">
                     
                     <div class="image-wrapper" style="padding:10px; margin:auto;">
@@ -49,7 +49,18 @@
                         </span>
                     </div>
                 </div>
-        </ngx-slick>
+        </ngx-slick> -->
+
+        <div   *ngFor="let img of Semrun.images" class="slide" (click)="selectImage(img)">
+                    
+            <div class="image-wrapper" style="padding:10px; margin:auto;">
+                <img  class="clickable" src="http://api.edm.quantiam.com/file?server_path={{img.fullpath}}" alt="" width="150px">
+                <span class="image_label" style="width:150px;"> {{img.filename}}
+
+                    <mat-chip color="accent" *ngIf="img.assoc_files[0]" selected>More</mat-chip>
+                </span>
+            </div>
+        </div>
 
     <!--     <div *ngFor="let img of Semrun.images" fxFlex=10 (click)="selectImage(img)" class="clickable image-wrapper">
 

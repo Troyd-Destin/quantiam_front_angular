@@ -210,10 +210,6 @@ export class XrdViewComponent implements OnInit {
 
     const csvData = [];
 
-
-
-		// this.HighchartOptions.series.length
-
 		this.HighchartOptions.series[0].data.forEach((series, pointIndex) => {
 
 			const temp = [];
@@ -263,7 +259,7 @@ export class XrdViewComponent implements OnInit {
 
 
 		csvData.unshift(headers);
-		console.log(csvData);
+	//	console.log(csvData);
 
 
 		const lineArray = [];

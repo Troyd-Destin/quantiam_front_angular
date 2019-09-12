@@ -66,6 +66,7 @@ import { CommentsComponent } from './comments/comments.component';
 import { LogsComponent } from './logs/logs.component';
 
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { SelectArbinTestComponent } from './select-arbin-test/select-arbin-test.component';
 
 
 @NgModule({
@@ -124,8 +125,10 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
         CommentsComponent,
         LogsComponent,
         SafePipe,
+        SelectArbinTestComponent,
     ],
     exports: [
+        SelectArbinTestComponent,
         SelectMaterialSupplierComponent,
         SelectMaterialComponent,
         SelectSemrunTypeComponent,

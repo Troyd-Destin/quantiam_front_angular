@@ -7,7 +7,7 @@
 	<mat-toolbar class="app-header" color="primary">
 	
 		 <mat-toolbar-row>
-			<button mat-button style="font-size: 14px;padding-left: 10px;text-align:left" routerLink="/home" >Quantiam Technologies Inc.</button>
+			<button mat-button style="font-size: 14px;padding-left: 10px;text-align:left" routerLink="/dashboard" >Quantiam Technologies Inc.</button>
 
 			<a mat-button 
 			style="font-size: 14px;padding-left: 10px;text-align:left"
@@ -24,7 +24,10 @@
 			  </mat-select>
 			</mat-form-field> -->
 
-		
+			<button 
+			(click)="openPatchNotes()" mat-icon-button >
+				<mat-icon  matTooltip="View Patch Notes">menu_book</mat-icon>
+			</button>
 
 			<app-select-user 
 				style="color:black; font-size: 0.8em;" 
@@ -34,6 +37,7 @@
 				></app-select-user>
 
 
+				
 				<button 
 				*ngIf="userService.hasPermission(43) || hasSwitchedUser || devTokenFound"
 				(click)="showUserSwitch = !showUserSwitch; " mat-icon-button >
@@ -356,11 +360,11 @@
 											<fa-icon  [icon]="faMicroscope" ></fa-icon>
 										</button>
 								</mat-list-item>
-								<mat-list-item  *ngIf="userService.hasPermission([39,44])"> 
+							<!-- 	<mat-list-item  *ngIf="userService.hasPermission([39,44])"> 
 										<button routerLink="/tga/database" routerLinkActive="mat-list-item-button-active" mat-button> <p>TGA</p>
 											<fa-icon  [icon]="faFireAlt" ></fa-icon>
 										</button>
-								</mat-list-item>
+								</mat-list-item> -->
 								<mat-list-item *ngIf="userService.hasPermission(39)" > 
 										 <button routerLink="/xps/database" routerLinkActive="mat-list-item-button-active" mat-button> <p>XPS </p>
 											<fa-icon  [icon]="faBolt" ></fa-icon>
@@ -448,8 +452,12 @@
 	
   </mat-sidenav-container>
 
-  <mat-toolbar fxLayout="row-reverse" class="app-footer" color="primary">
-		
+  <mat-toolbar fxLayout="row" class="app-footer" color="primary">
+			<div style="padding-left:5px" fxFlex fxLayout="row" fxLayoutAlign="start start">
+					<p style="font-size: 12px;"> Version {{version}} </p>
+
+			</div>
+
 
 			<div style="padding-right: 20px; " fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
 

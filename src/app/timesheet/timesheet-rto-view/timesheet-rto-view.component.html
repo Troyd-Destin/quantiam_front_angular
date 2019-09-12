@@ -149,15 +149,15 @@
                         <form fxLayout="row" fxLayoutGap="10px">
 
                             <mat-form-field fxFlex=20>
-                                <input matInput [(ngModel)]="requestTime.date" name="date" [matDatepicker]="datePicker" placeholder="Date" >
+                                <input (blur)="resetStartHourAndEndHour()" matInput [(ngModel)]="requestTime.date" name="date" [matDatepicker]="datePicker" placeholder="Date" >
                                 <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
                                 <mat-datepicker #datePicker></mat-datepicker>
                             </mat-form-field>
                             <mat-form-field fxFlex=15>
-                                <input [(ngModel)]="requestTime.hours" name="hours" matInput placeholder="Hours" type="number" step="0.5" min="-8" max="8">
+                                <input (blur)="resetStartHourAndEndHour()" [(ngModel)]="requestTime.hours" name="hours" matInput placeholder="Hours" type="number" step="0.5" min="-8" max="8">
                             </mat-form-field>
                             <mat-form-field fxFlex=15>
-                                <mat-select [(ngModel)]="requestTime.type" name="type" placeholder="Type" matNativeControl>
+                                <mat-select (selectionChange)="resetStartHourAndEndHour()" [(ngModel)]="requestTime.type" name="type" placeholder="Type" matNativeControl>
 
                                     <mat-option value="pto"> PTO </mat-option>
                                     <mat-option value="vacation"> Vacation </mat-option>

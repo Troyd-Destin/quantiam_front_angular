@@ -283,10 +283,10 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 
 		this.http.post<any>('https://chemicalsafety.com/sds1/retriever.php?filterSpinner', params).subscribe(r => {
 
-			console.log(r);
+		//	console.log(r);
 			this.sdsSearch = r.rows;
 
-			console.log(this.sdsSearch);
+		//	console.log(this.sdsSearch);
 
 			if (this.sdsSearch[0]) { this.searchingPossibleSDS = false; }
 
@@ -302,7 +302,7 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 						this.sdsSearch = r2.rows;
 
 						if (this.sdsSearch[0]) {
-							console.log(this.sdsSearch);
+					//		console.log(this.sdsSearch);
 
 
 						}
@@ -329,13 +329,13 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
     for (const droppedFile of files) {
 
 			// Is it a file?
-			console.log(droppedFile);
+		//console.log(droppedFile);
       if (droppedFile.fileEntry.isFile) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         fileEntry.file((file: File) => {
 
           // Here you can access the real file
-          console.log(droppedFile.relativePath, file);
+          console.log( file);
 
 
           // You could upload it like this:
@@ -356,7 +356,7 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
             // Sanitized logo returned from backend
 					},
 					error => {
-											console.log(error);
+											//console.log(error);
 											this.notification.error('Error', error.error.error, {showProgressBar: false, timeOut: 5000, clickToClose: true});
 											this.files = [];
 

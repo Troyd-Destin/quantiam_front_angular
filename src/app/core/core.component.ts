@@ -14,13 +14,15 @@ import {
 
 import { fadeAnimation } from '../animations';
 
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import { PatchNotesComponent } from './patch-notes/patch-notes.component';
 
 import { WebsocketService } from '../services/websocket/websocket.service';
 import { SettingsService } from '../services/settings/settings.service';
 
 
-import { faCoffee, faMicroscope, faBolt, faFlask, faXRay, faFireAlt, faPlaneDeparture, faHatWizard, faPaste, faCog, faPiggyBank, faChartLine } from '@fortawesome/free-solid-svg-icons';
-import { faCalendar, faClock } from '@fortawesome/free-regular-svg-icons';
+import { faCoffee, faMicroscope, faBolt, faFlask, faXRay, faFireAlt, faPlaneDeparture, faHatWizard, faPaste, faCog, faPiggyBank, faChartLine, faJournalWhills } from '@fortawesome/free-solid-svg-icons';
+import { faCalendar, faClock, } from '@fortawesome/free-regular-svg-icons';
 import { faAngular, faGithub, faFontAwesome, faLaravel } from '@fortawesome/free-brands-svg-icons';
 
 
@@ -67,9 +69,11 @@ export class CoreComponent implements OnInit, OnDestroy {
   faCog = faCog;
   faPiggyBank = faPiggyBank;
   faChartLine = faChartLine;
+  faJournalWhills = faJournalWhills;
 
 
   title = 'app';
+  version = '';
   user: any = {};
   userLoaded = false;
   userTitle: null;
@@ -116,6 +120,8 @@ export class CoreComponent implements OnInit, OnDestroy {
     private router: Router,
     private http: HttpClient,
     private timesheetService: TimesheetService,
+    private dialog: MatDialog,
+    
 	) {
 
     this.loading = true;
@@ -166,6 +172,30 @@ export class CoreComponent implements OnInit, OnDestroy {
     if (localStorage.getItem('devToken')) {
       this.devTokenFound = true;
     }
+
+
+    //Change Log trigger
+    this.http.get('CHANGELOG.md',{responseType: 'text',observe: 'response'}).subscribe((r:any)=>{ 
+
+      const etag = localStorage.getItem('PatchNotes_ETag');
+
+      let split = r.body.split('\r\n# ');
+      let thing = split[2].split(' ');
+      let thing2 = thing[0].split('\r\n');
+      this.version = thing2[0];
+       split = null;
+       thing = null;
+       thing2 = null;
+
+      if(etag !== r.headers.get('ETag'))
+      {
+        localStorage.setItem('PatchNotes_ETag', r.headers.get('ETag'));
+        this.openPatchNotes(r.body);
+      }
+    },(e)=>{
+
+
+    });
   }
 
   prepareRoute(outlet) {
@@ -287,5 +317,24 @@ export class CoreComponent implements OnInit, OnDestroy {
     });
   }
 
+
+  openPatchNotes(patchNotes = null)
+  {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '1000px';
+    dialogConfig.height = '90vh';
+    dialogConfig.position = {'top': '50px'};
+    dialogConfig.data = patchNotes;
+    const dialogRef = this.dialog.open(PatchNotesComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(result => {
+    //  console.log('The dialog was closed');
+       // console.log(result);
+        //save the notes as viewed
+    });
+
+  }
 
 }

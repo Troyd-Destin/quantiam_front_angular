@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CoreComponent } from './core.component';
 import { PatchNotesComponent } from './patch-notes/patch-notes.component';
 
+import { DashboardComponent } from '../dashboard/dashboard.component';
 const routes: Routes = [
 
 	{
@@ -15,7 +16,17 @@ const routes: Routes = [
 			},
 			{
 				path: 'home',
+				component: DashboardComponent,
+
+			},
+			{
+				path: 'changes',
 				component: PatchNotesComponent,
+
+			},
+			{
+				path: 'dashboard',
+				component: DashboardComponent,
 
 			},
 			{
@@ -53,11 +64,11 @@ const routes: Routes = [
 				loadChildren: () => import('../xrd/xrd.module').then(m => m.XrdModule),
 			// 	pathMatch: 'prefix',
 			},
-			{
+		/* 	{
 				path: 'tga',
 				loadChildren: () => import('../tga/tga.module').then(m => m.TgaModule),
 			// 	pathMatch: 'prefix',
-			},
+			}, */
 			{
 				path: 'tools',
 				loadChildren: () => import('../tools/tools.module').then(m => m.ToolsModule),

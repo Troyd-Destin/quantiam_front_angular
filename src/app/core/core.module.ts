@@ -16,6 +16,8 @@ import { HeaderComponent } from './header/header.component';
 import { CoreComponent } from './core.component';
 import { PatchNotesComponent } from './patch-notes/patch-notes.component';
 
+import { DashboardComponent } from '../dashboard/dashboard.component';
+
 import { TokenInterceptor } from '../auth/token.interceptor';
 
 @NgModule({
@@ -38,7 +40,8 @@ import { TokenInterceptor } from '../auth/token.interceptor';
   declarations: [
 		HeaderComponent,
 		CoreComponent,
-		PatchNotesComponent
+		PatchNotesComponent,
+		DashboardComponent
 	],
 	bootstrap: [CoreComponent],
 

@@ -407,4 +407,12 @@ export class TimesheetRtoViewComponent implements OnInit {
         })
 
     }
+
+
+    resetStartHourAndEndHour()
+    {
+        this.requestTime.start_hour = null;
+        this.requestTime.end_hour = null;
+
+    }
 }
