@@ -1,7 +1,7 @@
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 
 
-import { SlickModule } from 'ngx-slick';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
 
 
 import { CommonModule } from '@angular/common';
@@ -90,7 +90,7 @@ import { SelectArbinTestComponent } from './select-arbin-test/select-arbin-test.
         NgxFileDropModule ,
         NgbModule,
         CKEditorModule,
-        SlickModule.forRoot(),
+        SlickCarouselModule.forRoot(),
     ],
     declarations: [
         AutoFocusDirective,
@@ -150,7 +150,7 @@ import { SelectArbinTestComponent } from './select-arbin-test/select-arbin-test.
         NgbModule,
         CommentsComponent,
         LogsComponent,
-        SlickModule,
+        SlickCarouselModule,
         
         SafePipe,
 
