@@ -1,5 +1,5 @@
 
-# Change Log - Quantiam Apps 2019
+# Change Log
 
 ### Known Issues
 
@@ -8,21 +8,59 @@
 - When using the Steel/Container/Sample ag-grid dropdown, the active/inactive filters will close the dropdown (event propgation issues)
 - ng Select 2.20+ does not play nice 
 - D8 Files aren't updating properly.
+- SEM Images aren't displaying in the SEM app.sss
 
 
-# August 2019
+# 2019.09.37
+
+
+### New 
+
+- Patch notes can now be found in the top navigation bar
+- Patch notes are now in a popup window and will display if you haven't see them before
+- Implemented [calver semantics](https://calver.org/) for tracking website versions, the current format is YYYY.MM.W
+- The aforemention version number now appears in the footer, on the bottom left side. 
+
+### Changes
+
+- Users can no longer print timesheets if they are Salary or Hourly and have less then 2 hours on a weekend. 
+- The create container button has been turned into a new blue button on the top right of the container list.
+- The container list now sorts by last entered container
+- The container list will now refresh after a new container is added. 
+  
+### Fixes
+- The date display error for timesheet report project-hours start date field was resolved
+- Start and End time now reset when you change the hours or type of RTO. Prevents users from adding 8 hour request with time ranges.
+- Payout comments now save properly.
+- Payout creation button is now called "Create Entry", to better reflect its universal usage.
+- Images now display again in SEM viewer, the image viewer broke, trying to find a better replacement.
+
+
+
+
+
+# 2019.08
+
+### Arbin
+
+- Can now browse Arbin Tests
+- Can now view basic Arbin Data, and change axis
+- Can now overlay runs
+- Can toggle between EIS and IV Data
+- Can download CSV files for loaded Data Sets
 
 ### XRD
 
 - Now displays a link to the eva file
-  
 
 ### Timesheet
 
 - You can now edit stat holidays manually. 
-- 
+- Fixed a time conversion bug for the start and end date fields. 
 
-# July 2019
+
+
+# 2019.07
 
 
 ### General
@@ -81,7 +119,7 @@
 - CSV Print button
 - Images and the image tab will pop up when they are found on the Q drive
 
-#  June 2019
+#  2019.06
 
 ### Dev Tools
 - You can now browse application as another user
@@ -153,7 +191,7 @@
 
 - Button no longer stays disabled after a processing run.
 
-# May 2019
+# 2019.05
 
 
 
@@ -198,7 +236,7 @@
 - Replaced select2 supplier dropdown, with ng select, to fix display bug
 - Auth screen font resized
 
-# April 2019
+# 2019.04
 
 ### Users
 - Can add permissions to individual users now
@@ -215,7 +253,7 @@
 - eliminated caps lock bug when scanning materials
 
 
-#  March 2019
+#  2019.03
 
 ### SEM
 - Can now select run types
@@ -225,7 +263,7 @@
 ### Misc
 - User select box will now hard check for employee ID, typing 1 will now select Robert
 
-#  February 2019
+# 2019.02
 
 ### TGA
 - Peak tool now has "previous" and "next" buttons for navigating single runs easier
@@ -267,7 +305,7 @@
 - Select2 boxes now have proper padding for placeholder text
 
 
-# January 2019
+#  2019.01
 
 ### Misc
 -  Auth screen no longer locks you out when you fail your password.
@@ -287,7 +325,7 @@
 
 
 
-#  December 2018
+#  2018.12
 ### General
 - When the application is "thinking", a loading bar will be displayed at the top of the screen. 
 - The select scanner box is now hidden by default, but can be toggled with the target button by the user's name.
@@ -295,7 +333,7 @@
 
 
 
-# November 2018
+# 2018.11
 ### Angular 
 - Updated from Angular 7.0 to 7.1  
 

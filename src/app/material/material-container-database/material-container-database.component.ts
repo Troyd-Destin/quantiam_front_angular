@@ -1,12 +1,16 @@
 import {  AfterViewInit,  Component,  OnInit,  ViewChild} from '@angular/core';
 import {  HttpClient,  HttpResponse} from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import { MaterialCreationDialogComponent } from '../material-creation-dialog/material-creation-dialog.component';
 
 import {  MaterialLotContainerDatatableService} from '../services/material-lot-container-datatable.service';
 import { MaterialLotContainerService } from '../../services/material-lot-container/material-lot-container.service';
 import {  ContainerAggridService } from '../services/container-aggrid.service';
 import { LocationService } from '../../services/location/location.service';
 import {  environment} from '../../../environments/environment';
+
+import { UserService } from '../../services/user/user.service';
 
 
 @Component({
@@ -42,7 +46,10 @@ export class MaterialContainerDatabaseComponent implements OnInit {
   private editableContainerCellFields = ['location', 'purchase_order', 'qcid', 'container_name', 'container_number'];
 
 
-  constructor(private http: HttpClient, public router: Router, private route: ActivatedRoute, public containerAggridService: ContainerAggridService,	private locationService: LocationService, private materialLotContainerService: MaterialLotContainerService ) {
+  constructor( public userService: UserService, 
+    private dialog: MatDialog,private http: HttpClient, public router: Router, private route: ActivatedRoute, 
+    public containerAggridService: ContainerAggridService,	private locationService: LocationService, 
+    private materialLotContainerService: MaterialLotContainerService ) {
 
   this.locationList = [];
 
@@ -400,7 +407,23 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
 		});
 
-	}
+  }
+  
+  openDialog() {
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '1000px';
+   // dialogConfig.height = '0vh';
+    dialogConfig.position = {'top': '50px'};
+    const dialogRef = this.dialog.open(MaterialCreationDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(result => {
+    //  console.log('The dialog was closed');
+      this.fetchTableData();
+    });
+}
 
   // ngOnDestroy() {  }
 
