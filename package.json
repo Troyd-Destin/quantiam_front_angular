@@ -72,6 +72,7 @@
     "rxjs-watcher": "^1.1.2",
     "select2": "^4.0.9",
     "select2-bootstrap-theme": "0.1.0-beta.10",
+    "slick-carousel": "^1.8.1",
     "sweetalert2": "^8.16.3",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

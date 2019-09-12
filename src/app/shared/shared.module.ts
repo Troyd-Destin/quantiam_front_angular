@@ -90,7 +90,7 @@ import { SelectArbinTestComponent } from './select-arbin-test/select-arbin-test.
         NgxFileDropModule ,
         NgbModule,
         CKEditorModule,
-        SlickCarouselModule.forRoot(),
+        SlickCarouselModule,
     ],
     declarations: [
         AutoFocusDirective,
@@ -124,8 +124,10 @@ import { SelectArbinTestComponent } from './select-arbin-test/select-arbin-test.
         PopUpSteelCardComponent,
         CommentsComponent,
         LogsComponent,
-        SafePipe,
         SelectArbinTestComponent,
+
+
+        SafePipe,
     ],
     exports: [
         SelectArbinTestComponent,
