@@ -27,10 +27,10 @@ fxLayoutAlign="center center" fxLayoutGap="20px">
           
             ></app-select-steel>
         </div>
-    <div fxLayout="column" fxLayoutGap="10px"  [hidden]="selectedContainer?.id || selectedSteel?.id">
+ <!--    <div fxLayout="column" fxLayoutGap="10px"  [hidden]="selectedContainer?.id || selectedSteel?.id">
             <h3> Sample? </h3>
             <app-select-sample></app-select-sample>
-        </div>
+        </div> -->
 
         <button mat-raised-button color="primary" style="margin-top:15px;" (click)="confirmChoice()" 
         [hidden]="!selectedContainer?.id && !selectedSample?.id && !selectedSteel?.id">Confirm</button>

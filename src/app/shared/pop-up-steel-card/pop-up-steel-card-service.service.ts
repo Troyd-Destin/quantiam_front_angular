@@ -7,18 +7,19 @@ export class PopUpSteelCardServiceService {
 
   constructor() { }
   
-  @Output() change: EventEmitter<any> = new EventEmitter();
+  @Output() showEvent: EventEmitter<any> = new EventEmitter();
+  @Output() hideEvent: EventEmitter<any> = new EventEmitter();
 
 
   show(steelObj)
   {
-      this.change.emit(steelObj);
+      this.showEvent.emit(steelObj);
   }
 
   hide()
   {
  
-    this.change.emit({});
+    this.hideEvent.emit({});
   }
 
 }

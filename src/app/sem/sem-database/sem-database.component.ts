@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SemDatabaseService } from './sem-database.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Router } from '@angular/router';
-
 import {  environment} from '../../../environments/environment';
+import { Router } from '@angular/router';
 
 
 import { NotificationsService } from 'angular2-notifications';
@@ -104,10 +103,32 @@ export class SemDatabaseComponent implements OnInit {
         },
         {
           headerName: 'Steel / Container / Sample',
-          field: 'id',
-          width: 100,
+          //field: 'id',
+          width: 150,
           cellRenderer: 'steelContainerDisplay',
           cellEditor: 'steelContainerEdit',
+          valueSetter: (params)=>{
+
+          
+             if(params.newValue){
+              console.log(params.newValue);
+              if(params.newValue.container_id){ 
+                params.data.container = params.newValue;
+                params.data.container_id = params.newValue.container_id;
+               }
+
+              if(params.newValue.steel_type){ 
+                params.data.steel = params.newValue;
+                params.data.steel_id = params.newValue.id;
+               }
+  
+               this.updateSemRun(params);
+    
+              return params.newValue; 
+            
+            }
+            return null;
+          },
         },
         {
           headerName: 'Sample Name',
@@ -388,12 +409,18 @@ export class SemDatabaseComponent implements OnInit {
 
     const params: any = {};
 
+    console.log(cell);
+
     if (cell.column.colId === 'requestor') { params.requested_by = cell.data.requestor.id; }
     if (cell.column.colId === 'operator') { params.operator_id = cell.data.operator.id; }
     if (cell.column.colId === 'project_id') { params.project_id = cell.value; }
     if (cell.column.colId === 'samplename') { params.samplename = cell.value; }
     if (cell.column.colId === 'type') { params.type_id = cell.data.type.type_id; }
     if (cell.column.colId === 'duration') { params.duration = cell.value; }
+    if (cell.column.colId === '0') { 
+      if( cell.data.container ) { params.container_id = cell.data.container_id; }
+      if( cell.data.steel_id ) { params.steel_id = cell.data.steel_id; }
+    }
 
     console.log(params);
 

@@ -6,7 +6,7 @@
 
 <div *ngIf="container && container.hasOwnProperty('id')" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center center">
 
-	<div fxLayoutGap="20px" fxLayout="row"  fxLayout.xl="row wrap"  fxLayout.lg="row wrap" fxLayoutAlign="start stretch">
+	<div fxLayoutGap="20px"  fxLayout.gt-lg="row wrap"  fxLayout="column" fxLayoutAlign="start stretch">
 		<div fxLayout="column"fxFlex=40 fxLayoutGap="10px">
 			<mat-accordion  >
 				<mat-expansion-panel expanded="true" >
@@ -21,14 +21,18 @@
 					</mat-expansion-panel-header>		
 					<div>
 					
-						<div fxLayoutGap="5px" fxLayout="row wrap" fxLayout.sm="column"  fxLayoutAlign="start stretch"  >	
-							<mat-form-field class="full-width"  fxFlex>
+						<div fxLayoutGap="6px" fxLayout="row wrap"   fxLayoutAlign="start stretch"  >	
+							<mat-form-field   fxFlex>
 								<input #MaterialName [disabled]="!editMaterial" (change)="updateMaterial(MaterialName)" type="text" matInput placeholder="Name" [(ngModel)] ='container.lot.material.name' name="name" disabled>
 							</mat-form-field>  
-							<mat-form-field class="full-width" fxFlex>
+							<mat-form-field  fxFlex>
 								<input  #Grade [disabled]="!editMaterial" (change)="updateMaterial(Grade)" type="text" matInput placeholder="Grade" [(ngModel)] ='container.lot.material.grade' name="grade" disabled>
 							</mat-form-field>
-							<mat-form-field class="full-width" fxFlex *ngIf="!editMaterial">
+							<mat-form-field  fxFlex>
+								<input  #ParticleSize [disabled]="!editMaterial" (change)="updateMaterial(ParticleSize)" type="text" matInput placeholder="Particle Size" [(ngModel)] ='container.lot.material.particle_size' name="particle_size" disabled>
+								<mat-hint> "1-5um", "-325 mesh" </mat-hint>
+							</mat-form-field>
+							<mat-form-field  fxFlex *ngIf="!editMaterial">
 								<input  type="text" matInput placeholder="Supplier" [(ngModel)] ='container.lot.material.supplier.supplier_name' name="supplier" disabled>
 							</mat-form-field>  
 							
@@ -48,7 +52,7 @@
 							
 						</div>		
 						
-						<div fxLayoutGap="5px"  fxLayout="row wrap"   >	
+						<div fxLayoutGap="6px"  fxLayout="row wrap"   >	
 							
 							
 							<mat-form-field class="full-width" fxFlex>
@@ -87,52 +91,6 @@
 						
 					</div>
 				</mat-expansion-panel>
-				<!-- <mat-expansion-panel expanded="true">
-					<mat-expansion-panel-header>
-						<mat-panel-title>
-							<b>	Lot Information </b>
-						</mat-panel-title>
-						<mat-panel-description>
-							{{container.lot.lot_name}} 
-						</mat-panel-description>    
-					</mat-expansion-panel-header>		
-					<div fxLayoutGap.sm="20px" fxLayout="column"  fxLayoutAlign="start stretch">
-					
-						<div fxLayoutGap="5px" fxLayout="row wrap" fxLayout.sm="column"  fxFlex="100" >	
-							<mat-form-field *ngIf="!editLot" class="full-width" fxFlex>
-								<input  type="text" matInput placeholder="Name" [(ngModel)] ='container.lot.lot_name' name="name" disabled>
-							</mat-form-field>
-							
-							<app-select2-material-lot 
-									
-									fxLayoutAlign="start center"
-									placeholder="Lot Name" 
-									*ngIf="container.lot.material.id && editLot"
-									enable_create="true"
-									query_params='{"material_id":{{container.lot.material.id}}}'
-									(selectedValue)="changedLot($event)"
-									[default_lot]="container.lot"
-									[disabled]="!editLot"
-									
-							></app-select2-material-lot>
-							<p *ngIf="editLot && !newLotCreated" color="primary"> Select or type a new lot. </p>
-							<mat-chip-list *ngIf="newLotCreated">
-							<mat-chip color="accent">New Lot Created!</mat-chip>
-							</mat-chip-list>
-						
-							
-						</div>		
-						
-							
-						
-						
-					</div>
-						<div fxLayout="row wrap"  fxLayoutAlign="end center">
-						
-						<button mat-button *ngIf="canEdit"  (click)="editLot = !editLot"  > Edit </button>
-						
-						</div>
-				</mat-expansion-panel> -->
 				
 			</mat-accordion>
 			

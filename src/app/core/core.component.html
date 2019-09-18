@@ -125,13 +125,13 @@
 								</mat-list>  
 						</mat-expansion-panel> -->
 						<mat-divider style="display:none"></mat-divider >
-						<mat-expansion-panel expanded="true"  style="padding-top:3px; padding-bottom:15px !important; ">
+						<mat-expansion-panel expanded="true"  style="padding-top:3px; ">
 							
 								<mat-list-item  > 
 										<button routerLink="/user/database"  routerLinkActive="mat-list-item-button-active" mat-button class="not-drop-down-button" >
-											<!-- <mat-icon>person</mat-icon>  -->
-											Employees 
-											
+										
+											<p>Employees</p> 
+											<fa-icon [icon]="faUserFriends"></fa-icon>
 										</button>
 								   </mat-list-item>
 					
@@ -231,13 +231,14 @@
 										<button routerLink="/material" mat-button>Home</button>
 								</mat-list-item> -->
 									
+																
 								
-									 <mat-list-item style="display:none" > 
-										 <button  routerLinkActive="mat-list-item-button-active" mat-button> Steel </button>
-									</mat-list-item>									
-								
-								    <mat-list-item style="display:none"  > 
-										 <button routerLink="/steel/database" routerLinkActive="mat-list-item-button-active" mat-button> Steel </button>
+								    <mat-list-item *ngIf="userService.hasPermission([39])"  > 
+										 <button routerLink="/steel/database" routerLinkActive="mat-list-item-button-active" mat-button> 
+											<p>Steel</p>
+											<fa-icon [icon]="faPallet"></fa-icon>
+										
+										</button>
 									</mat-list-item>  
 
 										 <mat-list-item  > 
@@ -394,6 +395,42 @@
 						
 
 
+						<mat-divider ></mat-divider>
+						<mat-expansion-panel expanded="false" *ngIf="userService.hasPermission([43])">
+							  <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
+								<mat-panel-title>
+								    Manufacturing
+								</mat-panel-title>
+								
+							  </mat-expansion-panel-header>
+								<mat-list>
+
+
+										<mat-list-item  > 
+												<button routerLink="/prefinish/database" routerLinkActive="mat-list-item-button-active" mat-button>Powder Processing</button>
+										</mat-list-item>
+										<mat-list-item  > 
+												<button routerLink="/prefinish/database" routerLinkActive="mat-list-item-button-active" mat-button>Prefinish</button>
+										</mat-list-item>
+										<mat-list-item  > 
+												<button routerLink="/slip/database" routerLinkActive="mat-list-item-button-active" mat-button>Slip Creation</button>
+										</mat-list-item>
+										<mat-list-item  > 
+											<button routerLink="/tapecast/database" routerLinkActive="mat-list-item-button-active" mat-button>Tape Casting</button>
+										</mat-list-item>
+										<mat-list-item  > 
+											<button routerLink="/slipcast/database" routerLinkActive="mat-list-item-button-active" mat-button>Slip Casting</button>
+										</mat-list-item>
+										<mat-list-item  > 
+												<button routerLink="/furnace/run/database" routerLinkActive="mat-list-item-button-active" mat-button>Furnace Runs</button>
+										</mat-list-item>
+										<mat-list-item  > 
+												<button routerLink="/shipment/database" routerLinkActive="mat-list-item-button-active" mat-button>Shipping</button>
+										</mat-list-item>
+									
+										   
+								</mat-list>
+						</mat-expansion-panel>
 						<mat-divider ></mat-divider>
 						<mat-expansion-panel expanded="false" *ngIf="userService.hasPermission([44,39])">
 							  <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">

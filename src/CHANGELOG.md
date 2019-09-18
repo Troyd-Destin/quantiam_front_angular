@@ -4,11 +4,32 @@
 ### Known Issues
 
 - Material Supplier dropdown, does not clear properly when declining to create a new tag
-- Lot selection dropdown is old and get's stuck "open", this needs to be replaced with the new dropdown
+- 
 - When using the Steel/Container/Sample ag-grid dropdown, the active/inactive filters will close the dropdown (event propgation issues)
-- ng Select 2.20+ does not play nice 
-- D8 Files aren't updating properly.
-- SEM Images aren't displaying in the SEM app.sss
+  
+- Certain project names will truncate on the Timesheet
+- Machine timesheets generate stat hours for some reason 
+
+# 2019.09.38
+
+### New
+
+- SEM & XRD runs can now be associated with material containers and steel. Clicking on the buttons will navigate to their respective screens. <br>
+  <img style="margin:5px;" src="https://i.imgur.com/8spYB81.png" width="50%">
+- A prototype pop up for steel objects was added. 
+- The [steel database](http://apps.edm.quantiam.com/steel/database) screen has been somewhat reconstructed, filters will be next.
+
+### Changes
+
+- The material database screen will now show inactive containers.
+- You can now add "Particle Size" as a property when creating & editing materials. 
+- Side menu options will now highlight on hover. 
+
+### Fixes
+
+- D8 XRD runs are now [syncing properly again](http://apps.edm.quantiam.com/xrd/database)
+- Container dropdown spacing issues resolved
+- Material Container page is more responsive on smaller screens
 
 
 # 2019.09.37
@@ -18,7 +39,7 @@
 
 - Patch notes can now be found in the top navigation bar
 - Patch notes are now in a popup window and will display if you haven't see them before
-- Implemented [calver semantics](https://calver.org/) for tracking website versions, the current format is YYYY.MM.W
+- Implemented [calver semantics](https://calver.org/) for tracking website versions, the current format is YYYY.MM.W.minor
 - The aforemention version number now appears in the footer, on the bottom left side. 
 
 ### Changes

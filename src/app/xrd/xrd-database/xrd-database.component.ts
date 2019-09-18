@@ -3,6 +3,13 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 import {  environment} from '../../../environments/environment';
 
+import { NotificationsService } from 'angular2-notifications';
+
+
+
+import { AgGridSemContainerSteelCellDisplayComponent } from '../../sem/sem-database/ag-grid-sem-container-steel-cell-display/ag-grid-sem-container-steel-cell-display.component';
+import { AgGridSemContainerSteelEditComponent } from '../../sem/sem-database/ag-grid-sem-container-steel-edit/ag-grid-sem-container-steel-edit.component';
+
 
 import { AgGridSelectProjectEditorComponent } from '../../shared/ag-grid-select-project/ag-grid-select-project.component';
 import { XrdAnalysesFileRendererComponent } from './xrd-analyses-file-renderer/xrd-analyses-file-renderer.component';
@@ -42,9 +49,11 @@ export class XrdDatabaseComponent implements OnInit {
     frameworkComponents = {
     projectEditor: AgGridSelectProjectEditorComponent,
     analysesRenderer: XrdAnalysesFileRendererComponent,
+    steelContainerDisplay: AgGridSemContainerSteelCellDisplayComponent,
+    steelContainerEdit: AgGridSemContainerSteelEditComponent,
   };
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private notification: NotificationsService) {
 
     this.columnDefs = [
       {
@@ -70,6 +79,35 @@ export class XrdDatabaseComponent implements OnInit {
         width: 70,
         editable: true,
         cellEditor: 'projectEditor',
+      },
+      {
+        headerName: 'Steel / Container / Sample',
+        //field: 'id',
+        width: 150,
+        editable: true,
+        cellRenderer: 'steelContainerDisplay',
+        cellEditor: 'steelContainerEdit',
+        valueSetter: (params)=>{
+
+        
+           if(params.newValue){
+            if(params.newValue.container_id){ 
+              params.data.container = params.newValue;
+              params.data.container_id = params.newValue.container_id;
+             }
+
+            if(params.newValue.steel_type){ 
+              params.data.steel = params.newValue;
+              params.data.steel_id = params.newValue.id;
+             }
+
+             this.updateXRDRun(params);
+            console.log(params);
+            return params.newValue; 
+          
+          }
+          return null;
+        },
       },
       {
         headerName: 'Sample Name',
@@ -152,6 +190,8 @@ export class XrdDatabaseComponent implements OnInit {
        paginationPageSize: 20,
       // paginationAutoPageSize: true
     };
+
+    
  }
 
 ngOnInit() {
@@ -254,6 +294,33 @@ ngOnInit() {
   clearFilterRequestor(event) {
      this.filteredRequestor = '';
      this.refreshDatabase();
+  }
+
+  updateXRDRun (cell){
+
+
+    const params: any = {};
+    if (cell.column.colId === 'requestor') { params.requested_by = cell.data.requestor.id; }
+    if (cell.column.colId === 'operator') { params.operator_id = cell.data.operator.id; }
+   // if (cell.column.colId === 'project_id') { params.project_id = cell.value; }
+    if (cell.column.colId === 'run_type_id') { params.type_id = cell.data.type.type_id; }
+    //  if (cell.column.colId === 'duration') { params.duration = cell.value; }
+    if (cell.column.colId === '0') { 
+      if( cell.data.container ) { params.container_id = cell.data.container_id; }
+      if( cell.data.steel_id ) { params.steel_id = cell.data.steel_id; }
+    }
+
+    this.http.put(environment.apiUrl + '/instrument/xrd/run/' + cell.data.id + '?filterSpinner', params)
+    .subscribe(response => {
+
+      this.notification.success('Success', 'This field was updated', {showProgressBar: false, timeOut: 2000, clickToClose: true});
+      // Sanitized logo returned from backend
+    },
+    error => {
+                this.notification.error('Error', error.error.error, {showProgressBar: false, timeOut: 5000, clickToClose: true});
+
+    });
+
   }
 
 }

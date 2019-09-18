@@ -31,7 +31,7 @@
 
 <ng-template ng-label-tmp let-item="item">
     <small> {{item.qcid || item.identifier}} </small> {{item.lot.material?.name}} {{item.lot.material?.grade}} 
-    <small [hidden]="!item.container_name"> ({{item.container_name}}) </small>
+    <small  [hidden]="!item.container_name"> ({{item.container_name}}) </small>
  </ng-template>
 
 <ng-template ng-header-tmp>
@@ -59,7 +59,7 @@
           <span style="font-size: 11px;" *ngIf="item.container_name">({{item.container_name}})</span>  
        </div>
         <i class="grade_text" >
-            {{item.lot.material.grade}} 
+            {{item.lot.material.grade}} <span *ngIf="item.lot.material.particle_size"> ({{item.lot.material.particle_size}}) </span>
         </i>
       </div>
       <div style="width:100px; font-size: 11px;" [ngOptionHighlight]="search" >

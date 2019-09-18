@@ -46,9 +46,9 @@ export class MaterialContainerDatabaseComponent implements OnInit {
   private editableContainerCellFields = ['location', 'purchase_order', 'qcid', 'container_name', 'container_number'];
 
 
-  constructor( public userService: UserService, 
-    private dialog: MatDialog,private http: HttpClient, public router: Router, private route: ActivatedRoute, 
-    public containerAggridService: ContainerAggridService,	private locationService: LocationService, 
+  constructor( public userService: UserService,
+    private dialog: MatDialog, private http: HttpClient, public router: Router, private route: ActivatedRoute,
+    public containerAggridService: ContainerAggridService,	private locationService: LocationService,
     private materialLotContainerService: MaterialLotContainerService ) {
 
   this.locationList = [];
@@ -172,7 +172,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
           if (cell.value) {
             return '<p style="color:green"> SDS </p>';
           }
-          if (cell.data.active && cell.data.supplier == 'Quantiam' && !cell.value){
+          if (cell.data.active && cell.data.supplier === 'Quantiam' && !cell.value) {
             return '<p style="color:orange">Internal</p>';
           }
           if (cell.data.active) { return '<p style="color:red">Missing</p>'; }
@@ -408,7 +408,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 		});
 
   }
-  
+
   openDialog() {
 
     const dialogConfig = new MatDialogConfig();

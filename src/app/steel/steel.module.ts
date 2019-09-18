@@ -10,6 +10,8 @@ import { Routes, RouterModule  } from '@angular/router';
 
 import { SharedModule } from '../shared/shared.module';
 import { MaterialDesignModule } from '../material-design/material-design.module';
+import { SteelTypeComponent } from './steel-type/steel-type.component';
+import { SteelTypeDatabaseComponent } from './steel-type-database/steel-type-database.component';
 
 
 const routes: Routes = [
@@ -27,6 +29,16 @@ const routes: Routes = [
         path: ':id',
         component: SteelViewComponent,
         data: {key: 'SteelView'}
+      },
+      {
+        path: 'type/:id',
+        component: SteelTypeComponent,
+        data: {key: 'SteelTypeView'}
+      },
+      {
+        path: 'type/database',
+        component: SteelTypeDatabaseComponent,
+        data: {key: 'SteelTypeDatabaseView'}
       }
     ],
 
@@ -38,12 +50,11 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    CommonModule,
-    
+    CommonModule,    
     SharedModule,
     MaterialDesignModule,
     RouterModule.forChild(routes),
   ],
-  declarations: [SteelIndexComponent, SteelDatabaseComponent, SteelViewComponent, SteelCreationDialogComponent, SteelReworkDialogComponent]
+  declarations: [SteelIndexComponent, SteelDatabaseComponent, SteelViewComponent, SteelCreationDialogComponent, SteelReworkDialogComponent, SteelTypeComponent, SteelTypeDatabaseComponent]
 })
 export class SteelModule { }

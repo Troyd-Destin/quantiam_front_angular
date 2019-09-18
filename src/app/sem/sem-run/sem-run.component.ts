@@ -16,7 +16,7 @@ export class SemRunComponent implements OnInit {
 
   private semrunID;
 
-  slideConfig = {'slidesToShow': 10, 'dots': true, 'arrows': true, 'autoplay':true, };
+  slideConfig = {'slidesToShow': 10, 'dots': true, 'arrows': true, 'autoplay': true, };
   Semrun;
   selectedImage: any;
   selectedSubImage: any;
@@ -79,7 +79,7 @@ ngOnInit() {
 
       this.selectedImage.assoc_files.forEach(element => {
 
-        if (element.type == 'image') { this.selectedSubImage = element; }
+        if (element.type === 'image') { this.selectedSubImage = element; }
 
         return;
       });
@@ -87,8 +87,7 @@ ngOnInit() {
     }
 
     textUrl(selectedImage) {
-      
-      return this.sanitizer.bypassSecurityTrustResourceUrl('http://api.edm.quantiam.com/file?server_path='+selectedImage.fullpath);
+      return this.sanitizer.bypassSecurityTrustResourceUrl('http://api.edm.quantiam.com/file?server_path=' + selectedImage.fullpath);
     }
 
 }

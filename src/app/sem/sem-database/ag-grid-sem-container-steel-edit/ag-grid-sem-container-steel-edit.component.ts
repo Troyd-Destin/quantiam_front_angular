@@ -82,18 +82,17 @@ export class AgGridSemContainerSteelEditComponent implements ICellEditorAngularC
   getValue() {
     // throw new Error("Method not implemented.");
 
-
-    if (this.container) {
+    if (this.selectedContainer.id) {
       console.log(this.selectedContainer);
       return this.selectedContainer;
     }
 
-    if (this.steel) {
+    if (this.selectedSteel.id) {
       return this.selectedSteel;
     }
 
     if (typeof this.selectedValue === 'undefined') { return this.previousValue; }
-
+   
     return this.selectedValue;
   }
 
@@ -144,7 +143,9 @@ export class AgGridSemContainerSteelEditComponent implements ICellEditorAngularC
 
 
   confirmChoice() {
-
+    
+    
+    this.params.api.stopEditing();
   }
 
 }

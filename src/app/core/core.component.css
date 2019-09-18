@@ -226,11 +226,33 @@ router-outlet ~ * {
 	font-size: 12px;
     height: 30px;
     line-height: 0px;
-	width: 148px;
-    position: absolute;
+	width: 100%;
+    /* position: absolute; */
     padding: inherit;
-    left: -21px;
+    /* left: -21px; */
 	text-align: left;
+}
+
+.side-panel .mat-list-base {
+	 padding-top: 0px;
+	
+}
+
+::ng-deep .side-panel .mat-expansion-panel-body 
+{
+	padding: 0px 0px 4px !important;
+}
+
+::ng-deep .side-panel .mat-list-item-content{
+
+	padding: 0 8px !important;
+}
+
+
+::ng-deep .side-panel .mat-list-item-content button:hover{
+	color: #005da0 !important;
+    font-weight: bold !important;
+    background-color: #e0e0e0 !important;
 }
 
 

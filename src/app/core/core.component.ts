@@ -21,7 +21,9 @@ import { WebsocketService } from '../services/websocket/websocket.service';
 import { SettingsService } from '../services/settings/settings.service';
 
 
-import { faCoffee, faMicroscope, faBolt, faFlask, faXRay, faFireAlt, faPlaneDeparture, faHatWizard, faPaste, faCog, faPiggyBank, faChartLine, faJournalWhills } from '@fortawesome/free-solid-svg-icons';
+import { faCoffee, faMicroscope, faBolt, faFlask, faXRay, 
+  faFireAlt, faPlaneDeparture, faHatWizard, faPaste, faCog, 
+  faPiggyBank, faChartLine, faJournalWhills, faUserFriends, faPallet } from '@fortawesome/free-solid-svg-icons';
 import { faCalendar, faClock, } from '@fortawesome/free-regular-svg-icons';
 import { faAngular, faGithub, faFontAwesome, faLaravel } from '@fortawesome/free-brands-svg-icons';
 
@@ -70,6 +72,8 @@ export class CoreComponent implements OnInit, OnDestroy {
   faPiggyBank = faPiggyBank;
   faChartLine = faChartLine;
   faJournalWhills = faJournalWhills;
+  faUserFriends = faUserFriends;
+  faPallet = faPallet;
 
 
   title = 'app';
@@ -121,7 +125,7 @@ export class CoreComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private timesheetService: TimesheetService,
     private dialog: MatDialog,
-    
+
 	) {
 
     this.loading = true;
@@ -174,8 +178,8 @@ export class CoreComponent implements OnInit, OnDestroy {
     }
 
 
-    //Change Log trigger
-    this.http.get('CHANGELOG.md',{responseType: 'text',observe: 'response'}).subscribe((r:any)=>{ 
+    // Change Log trigger
+    this.http.get('CHANGELOG.md', {responseType: 'text', observe: 'response'}).subscribe((r: any) => {
 
       const etag = localStorage.getItem('PatchNotes_ETag');
 
@@ -187,12 +191,11 @@ export class CoreComponent implements OnInit, OnDestroy {
        thing = null;
        thing2 = null;
 
-      if(etag !== r.headers.get('ETag'))
-      {
+      if (etag !== r.headers.get('ETag')) {
         localStorage.setItem('PatchNotes_ETag', r.headers.get('ETag'));
         this.openPatchNotes(r.body);
       }
-    },(e)=>{
+    }, (e) => {
 
 
     });
@@ -299,7 +302,7 @@ export class CoreComponent implements OnInit, OnDestroy {
      this.http.get<any>(environment.apiUrl + `/user/token/${event.id}?filterSpinner`)
 		 .subscribe(r2 => {
 
-      //console.log(r2); //
+      // console.log(r2); //
 
       localStorage.setItem('devToken', localStorage.getItem('token'));
       localStorage.setItem('token', r2.token);
@@ -318,8 +321,7 @@ export class CoreComponent implements OnInit, OnDestroy {
   }
 
 
-  openPatchNotes(patchNotes = null)
-  {
+  openPatchNotes(patchNotes = null) {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = true;
@@ -332,7 +334,7 @@ export class CoreComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
     //  console.log('The dialog was closed');
        // console.log(result);
-        //save the notes as viewed
+        // save the notes as viewed
     });
 
   }
