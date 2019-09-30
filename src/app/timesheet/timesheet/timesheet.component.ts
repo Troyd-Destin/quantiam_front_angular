@@ -130,7 +130,7 @@ export class TimesheetComponent implements OnInit {
      // columnGroupShow: false,
      // marryChildren: true,
      // headerGroupTooltip: 'test tool tip',
-      resizable:true,
+      resizable: true,
       hide: true,
     },
     {
@@ -140,7 +140,7 @@ export class TimesheetComponent implements OnInit {
        width: 200,
        suppressMenu: true,
        lockPosition: true,
-       resizable:true,
+       resizable: true,
      //  columnGroupShow: false,
       // rowGroup: true,
        hide: true,
@@ -360,7 +360,7 @@ export class TimesheetComponent implements OnInit {
             }
 
             if ((params.value < 8 && params.value > 0)  && !this.timeSheetObj.machine) {
-                return '<b style="color:red;">' + $.trim(params.value) + '</b>';  
+                return '<b style="color:red;">' + $.trim(params.value) + '</b>';
             }
 
             return '<b>' + $.trim(params.value) + '</b>';
@@ -508,7 +508,7 @@ export class TimesheetComponent implements OnInit {
        // console.log(last);
     }, 200);
    // console.log(this.timeSheetFramework);
-    //console.log(this.columnDefs);
+    // console.log(this.columnDefs);
   }
 
   onRowGroupOpened(event) {
@@ -669,8 +669,7 @@ export class TimesheetComponent implements OnInit {
   generateTimesheetDownload() {
 
 
-    if(this.checkIfWeekendHasMoreThen2Hours())
-    {
+    if (this.checkIfWeekendHasMoreThen2Hours()) {
 
     const url = '/timesheet/' + this.routeParams.userId + '/year/' + this.routeParams.year + '/payperiod/' + this.routeParams.payperiod + '/generate';
 
@@ -721,99 +720,89 @@ export class TimesheetComponent implements OnInit {
     return true;
   }
 
-  checkIfWeekendHasMoreThen2Hours()
-  {
-    if(!this.timeSheetObj.machine && this.timeSheetObj.compensation === 'Salary')
-    {
+  checkIfWeekendHasMoreThen2Hours() {
+    if (!this.timeSheetObj.machine && this.timeSheetObj.compensation === 'Salary') {
     let test = true;
     const weekendDateArray = [];
     const weekDayDateArray = [];
-    this.timeSheetObj.payPeriod.dateArray.forEach((date)=>{
+    this.timeSheetObj.payPeriod.dateArray.forEach((date) => {
 
       const  day = moment(date).day();
-      if(day === 0 || day === 6){
+      if (day === 0 || day === 6) {
         weekendDateArray.push(date);
-      }
-      else
-      {
+      } else {
         weekDayDateArray.push(date);
       }
 
-    })
+    });
 
 
-    let weekendHours = {};
-    this.timeSheetFramework.forEach((project)=>{
+    const weekendHours = {};
+    this.timeSheetFramework.forEach((project) => {
 
     //  console.log(project);
-      weekendDateArray.forEach((date)=>{
+      weekendDateArray.forEach((date) => {
 
-        if(!weekendHours[date])
-        {
+        if (!weekendHours[date]) {
           weekendHours[date] = 0;
         }
 
-        if(project[date])
-        {
+        if (project[date]) {
           weekendHours[date] = parseFloat(weekendHours[date]) + parseFloat(project[date]);
         }
 
-      })
+      });
 
-    })
+    });
 
-  
 
-    Object.keys(weekendHours).forEach((key)=> {
 
-      if(weekendHours[key] > 0 && weekendHours[key] < 2)
-      {
+    Object.keys(weekendHours).forEach((key) => {
+
+      if (weekendHours[key] > 0 && weekendHours[key] < 2) {
         test = false;
       }
      });
-    if(!test){
+    if (!test) {
       this.notification.error('Not Enough Hours',  'You must have a minimum of 2 hours on a weekend.', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
       return test;
     }
 
-    let weekDayHours = {};
-   
-    this.timeSheetFramework.forEach((project)=>{
+    const weekDayHours = {};
+
+    this.timeSheetFramework.forEach((project) => {
 
     //  console.log(project);
-    weekDayDateArray.forEach((date)=>{
+    weekDayDateArray.forEach((date) => {
 
-        if(!weekDayHours[date])
-        {
+        if (!weekDayHours[date]) {
           weekDayHours[date] = 0;
         }
 
-        if(project[date])
-        {
+        if (project[date]) {
           weekDayHours[date] = parseFloat(weekDayHours[date]) + parseFloat(project[date]);
         }
 
-      })
+      });
 
     });
 
     console.log(weekDayHours);
     Object.keys(weekDayHours).forEach((key) => {
-      
-      if(weekDayHours[key] < 8 && weekDayHours[key] !== 0)
-      { 
+
+      if (weekDayHours[key] < 8 && weekDayHours[key] !== 0) {
         console.log(test, weekendHours[key]);
         test = false;
       }
      });
-    if(!test){
+    if (!test) {
       this.notification.error('Not Enough Hours',  'You must have a minimum of 8 hours entered for weekdays you have worked.', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
       return test;
     }
 
 
       return test;
-  
+
    }
 
    return true;
