@@ -200,5 +200,9 @@ export class SteelDatabaseComponent implements OnInit {
       this.router.navigate(['/steel/' + event.data.id]); 
       return;
   }
-
+  
+  onPageSizeChanged()
+  {
+    
+  }
 }

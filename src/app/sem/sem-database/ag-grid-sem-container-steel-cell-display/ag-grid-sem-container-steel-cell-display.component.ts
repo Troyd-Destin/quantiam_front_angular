@@ -56,7 +56,7 @@ export class AgGridSemContainerSteelCellDisplayComponent implements ICellRendere
   }
 
   deleteThis(params) {
-    confirm('Are you sure?');
+    confirm('Are you sure?')
     {
       if (params.data.steel_id) {
         // delete Steel

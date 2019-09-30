@@ -24,7 +24,7 @@ import * as _moment from 'moment';
 export class MaterialCreationDialogComponent implements OnInit, OnDestroy {
 
 
-
+	lookedForMaterial = false;
     form: FormGroup;
     description: string;
     newMaterial = false;

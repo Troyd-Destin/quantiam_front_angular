@@ -27,7 +27,7 @@ export class TimesheetRtoViewComponent implements OnInit {
     rtoBank;
     typeTotals;
     existingAbsences;
-    
+
     routeParams: any;
 
     requestTime = { date: null, end_hour: null, hours: null, requestID: null, rtotimeID: null, start_hour: null, type: null, };
@@ -83,18 +83,18 @@ export class TimesheetRtoViewComponent implements OnInit {
 
     checkIfCanApprove() {
         // is supervisor
-        
 
-        const checkIfAlreadyApproved = this.rto.approvals.filter((obj)=>{
-            
+
+        const checkIfAlreadyApproved = this.rto.approvals.filter((obj) => {
+
             return obj.employeeID === this.userService.get('id');
-        })
+        });
 
         console.log(checkIfAlreadyApproved);
-        if(checkIfAlreadyApproved[0]){ return; }
+        if (checkIfAlreadyApproved[0]) { return; }
 
-        if((this.rto.user.id !== this.userService.get('id')) && this.userService.hasPermission([15,2])){ this.canApprove = true; } // Has the ability to approve others
-        if((this.rto.user.id === this.userService.get('id')) && this.userService.hasPermission([16])){ this.canApprove = true; } // Self Approval Clause
+        if ((this.rto.user.id !== this.userService.get('id')) && this.userService.hasPermission([15, 2])) { this.canApprove = true; } // Has the ability to approve others
+        if ((this.rto.user.id === this.userService.get('id')) && this.userService.hasPermission([16])) { this.canApprove = true; } // Self Approval Clause
 
         // has relevant Permissions
 
@@ -108,12 +108,11 @@ export class TimesheetRtoViewComponent implements OnInit {
 
             this.rto = r;
             this.canEdit();
-            
+
             this.checkIfCanApprove();
             this.fetchExistingAbsences();
 
-            if(this.rto.status === 'pending')
-            {
+            if (this.rto.status === 'pending') {
                 this.fetchRtobank();
             }
         });
@@ -122,29 +121,27 @@ export class TimesheetRtoViewComponent implements OnInit {
     }
 
 
-    checkTimeRequestRules(){
+    checkTimeRequestRules() {
 
-       
 
-        if(this.requestTime.type === 'pto' && (this.requestTime.hours < 1 && this.requestTime.hours > -1))
-        {
-            this.notification.error('Error','PTO must be a minimum of 1 hour. ',{timeOut: 4000});
+
+        if (this.requestTime.type === 'pto' && (this.requestTime.hours < 1 && this.requestTime.hours > -1)) {
+            this.notification.error('Error', 'PTO must be a minimum of 1 hour. ', {timeOut: 4000});
             return false;
         }
 
-        if(this.requestTime.type === 'vacation' && (this.requestTime.hours < 8 && this.requestTime.hours > -8) && !this.userService.hasPermission(11))
-        {
-            this.notification.error('Error','Vacation must taken in full days. ',{timeOut: 4000});
+        if (this.requestTime.type === 'vacation' && (this.requestTime.hours < 8 && this.requestTime.hours > -8) && !this.userService.hasPermission(11)) {
+            this.notification.error('Error', 'Vacation must taken in full days. ', {timeOut: 4000});
             return false;
         }
 
         return true;
-    }   
+    }
 
     createTimeRequest() {
 
         /// requests must be all positive or all negative
-        if(!this.checkTimeRequestRules()) { return; } 
+        if (!this.checkTimeRequestRules()) { return; }
         const params = {
             date: this.requestTime.date,
             end_hour: this.requestTime.end_hour,
@@ -209,11 +206,34 @@ export class TimesheetRtoViewComponent implements OnInit {
         });
     }
 
+    checkNegativeResult() {
+        if((this.rtoBank.remaining.pto + this.typeTotals.pto) < 0){ return true; }
+        if((this.rtoBank.remaining.vacation + this.typeTotals.vacation) < 0){ return true; }
+        if((this.rtoBank.remaining.cto + this.typeTotals.cto) < 0){ return true; }
+        return false;
+    }
+
     checkApproval() {
 
-        // check to see if there 
 
-        if((this.userService.hasPermission(2) && this.rto.approvals.length === 0) && this.userService.get('id') !== this.rto.user.id){
+        // check to see if negative or positive vacation / pto / cto
+        if(this.checkNegativeResult()){
+            Swal.fire({
+                title: 'Negative Hours Result',
+                text: 'This user will have a negative balance in their hours bank. ',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Approved!',
+                cancelButtonText: 'Wait a minute...'
+            }).then((result) => {
+                if (result.value) {
+                    this.createApproval();
+
+                }
+              });
+        } else if ((this.userService.hasPermission(2) && this.rto.approvals.length === 0) && this.userService.get('id') !== this.rto.user.id) {
             // warning for approving on your own
             Swal.fire({
                 title: 'Ignoring First Level Approval',
@@ -225,41 +245,37 @@ export class TimesheetRtoViewComponent implements OnInit {
                 confirmButtonText: 'Approve Anyway',
                 cancelButtonText: 'I will wait...'
             }).then((result) => {
-                if(result.value)
-                {
+                if (result.value) {
                     this.createApproval();
- 
+
                 }
         });
 
-        }
-        else
-        {
+        } else {
             this.createApproval();
         }
 
-     //   
+     //
 
 
     }
 
-    createApproval()
-    {
+    createApproval() {
 
         const params = {
 
             'approval': 'approved',
 
-        }
-        this.http.post(environment.apiUrl + '/approval/' + this.rto.requestID , params).subscribe((r:any) => {
+        };
+        this.http.post(environment.apiUrl + '/approval/' + this.rto.requestID , params).subscribe((r: any) => {
 
                 this.rto.approvals.push(r);
                 this.rto.status = r.check;
 
-                if(this.rto.status === 'pending'){
-                    this.notification.info('Final Review','Notified reviewers via email.')
+                if (this.rto.status === 'pending') {
+                    this.notification.info('Final Review', 'Notified reviewers via email.');
                 }
-                
+
                 this.checkIfCanApprove();
 
         });
@@ -268,30 +284,29 @@ export class TimesheetRtoViewComponent implements OnInit {
 
     deleteApproval(approval) {
 
-        this.http.delete(environment.apiUrl + '/approval/' + approval.approvalID ).subscribe((r)=>{
+        this.http.delete(environment.apiUrl + '/approval/' + approval.approvalID ).subscribe((r) => {
 
             this.notification.success('Delete', 'The approval was removed.', {timeOut: 4000, showProgressBar: false}); /// Daily OT notificaton
-           
+
             this.rto.approvals = this.rto.approvals.filter(obj => obj !== approval);
             this.rto.status = 'pending';
             this.checkIfCanApprove();
 
-        })
+        });
 
     }
 
-    denyApproval()
-    {
+    denyApproval() {
         const params = {
 
             'approval': 'denied',
 
-        }
-        this.http.post(environment.apiUrl + '/approval/' + this.rto.requestID , params).subscribe((r:any) => {
+        };
+        this.http.post(environment.apiUrl + '/approval/' + this.rto.requestID , params).subscribe((r: any) => {
 
                 this.rto.approvals.push(r);
                 this.rto.status = r.check;
-                
+
                 this.checkIfCanApprove();
 
         });
@@ -300,6 +315,33 @@ export class TimesheetRtoViewComponent implements OnInit {
     notifySupervisor() {
 
         // Build date table.
+        if(this.checkNegativeResult())
+        {
+            Swal.fire({
+                title: 'Negative Hours Result',
+                text: 'If this is approved, you will have a negative balance in your bank. ',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Okay!',
+                cancelButtonText: 'Wait a minute...'
+            }).then((result) => {
+                if(result.value){
+                    this.sendSupervisorNotificationEmail();
+                }
+              });
+        }
+        else
+        {
+         this.sendSupervisorNotificationEmail();
+        }
+    }
+
+    sendSupervisorNotificationEmail()
+    {
+
+
         const dates = [];
         let total_hours = 0;
         let amount_of_days = 0;
@@ -321,21 +363,22 @@ export class TimesheetRtoViewComponent implements OnInit {
         const params = {
             'subject': '[RTO] ' + this.rto.user.name + ' has requested time off.',
             'body': body,
-            //'recipientID': ['65'], /// change to supervisor ID later
-             "recipientID": [this.rto.user.id, this.selectedSupervisorToNotifyId],
+            // 'recipientID': ['65'], /// change to supervisor ID later
+             'recipientID': [this.rto.user.id, this.selectedSupervisorToNotifyId],
 
         };
         // 	console.log(params);
 
-        this.http.post(environment.apiUrl + '/mail/send', params).subscribe((r) => {
+         this.http.post(environment.apiUrl + '/mail/send', params).subscribe((r) => {
 
             // Notified Supervisor
 
-            this.selectedSupervisorToNotifyId = null; 
+            this.selectedSupervisorToNotifyId = null;
 
             this.notification.info('Email Sent', 'We notified the Supervisor', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
-             
-        });
+
+        }); 
+
     }
 
     deleteRTO() {
@@ -362,55 +405,52 @@ export class TimesheetRtoViewComponent implements OnInit {
     }
 
 
-    fetchRtobank (){
+    fetchRtobank () {
 
-        this.http.get(environment.apiUrl + '/user/' + this.rto.employeeID + '/rtobank').subscribe((r)=>{
+        this.http.get(environment.apiUrl + '/user/' + this.rto.employeeID + '/rtobank').subscribe((r) => {
 
             this.rtoBank = r;
             this.calculateTypeTotals();
-        
-        })
+
+        });
     }
 
-    fetchExistingAbsences(){
+    fetchExistingAbsences() {
 
         const params = {dateArray: []};
 
-        this.rto.requested_time.forEach((time)=>{
-            
+        this.rto.requested_time.forEach((time) => {
+
             params.dateArray.push(time.date);
 
         });
-       
-        this.http.post(environment.apiUrl + '/rto/existingabsences?filterSpinner',params).subscribe((r:any)=>{
+
+        this.http.post(environment.apiUrl + '/rto/existingabsences?filterSpinner', params).subscribe((r: any) => {
 
             this.existingAbsences = r;
 
 
             this.rto.requested_time.forEach((time) => {
-                
-                if(r[time.date])
-                {
+
+                if (r[time.date]) {
                     time.conflicts = r[time.date].length;
                 }
             });
 
-        })
+        });
 
     }
 
-    calculateTypeTotals()
-    {
-        this.typeTotals = {vacation: 0, pto:0, cto:0, ppl:0};
-        this.rto.requested_time.forEach((time)=>{
+    calculateTypeTotals() {
+        this.typeTotals = {vacation: 0, pto: 0, cto: 0, ppl: 0};
+        this.rto.requested_time.forEach((time) => {
             this.typeTotals[time.type] = this.typeTotals[time.type] + (time.hours * -1);
-        })
+        });
 
     }
 
 
-    resetStartHourAndEndHour()
-    {
+    resetStartHourAndEndHour() {
         this.requestTime.start_hour = null;
         this.requestTime.end_hour = null;
 

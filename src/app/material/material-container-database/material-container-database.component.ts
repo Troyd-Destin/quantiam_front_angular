@@ -69,6 +69,13 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
       },
       {
+        field: 'material_id',
+        width: 100,
+        hide: true,
+        headerName: 'Material ID',
+
+      },
+      {
         width: 70,
         field: 'qcid',
         headerName: 'QCID',
@@ -76,6 +83,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
       },
       {
         width: 250,
+        headerName: 'Name',
         field: 'material',
         cellStyle: function (params) {
 
@@ -139,7 +147,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         width: 120,
         field: 'container_received',
         headerName: 'Received',
-        sort: 'desc',
+        //sort: 'desc',
      //   cellEditor: "datePicker",
       },
       {

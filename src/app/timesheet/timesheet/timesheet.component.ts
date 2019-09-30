@@ -70,10 +70,11 @@ export class TimesheetComponent implements OnInit {
   autoGroupColumnDef = {
     headerName: 'Category',
     lockPosition: true,
-    maxWidth: 380,
+    maxWidth: 400,
     suppressMenu: true,
     lockPinned: true,
     pinned: 'left',
+    resizable: true,
     sortable: true,
     editable: false,
     field: 'project.description',
@@ -102,9 +103,15 @@ export class TimesheetComponent implements OnInit {
 
             return '' + params.value + '';
         }
+        let str = '';
+        if ( params.value.length > 60) {
+          str =  params.value.substring(0, 60) + '...';
+        } else {
+          str =  params.value;
+        }
 
         return '<b style="display: inline-block; font-size: 12px;">' + params.data.project.projectID + '</b>\
-         - <p style="display: inline-block; font-size:10px;">' + params.value + '</p>';
+         - <p style="display: inline-block; font-size:10px;">' + str + '</p>';
       },
 
     }
@@ -115,7 +122,7 @@ export class TimesheetComponent implements OnInit {
     {
      // headerName: "Category",
       field: 'category.categoryName',
-      width: 120,
+      width: 200,
       rowGroup: true,
       rowPinned: true,
 
@@ -123,16 +130,17 @@ export class TimesheetComponent implements OnInit {
      // columnGroupShow: false,
      // marryChildren: true,
      // headerGroupTooltip: 'test tool tip',
+      resizable:true,
       hide: true,
     },
     {
 
        headerName: 'Project',
        field: 'project.projectID',
-       width: 80,
+       width: 200,
        suppressMenu: true,
        lockPosition: true,
-
+       resizable:true,
      //  columnGroupShow: false,
       // rowGroup: true,
        hide: true,
@@ -349,6 +357,10 @@ export class TimesheetComponent implements OnInit {
               }
               return '<b style="color:red;">' + $.trim(params.value) + '</b>';
 
+            }
+
+            if ((params.value < 8 && params.value > 0)  && !this.timeSheetObj.machine) {
+                return '<b style="color:red;">' + $.trim(params.value) + '</b>';  
             }
 
             return '<b>' + $.trim(params.value) + '</b>';
@@ -711,16 +723,24 @@ export class TimesheetComponent implements OnInit {
 
   checkIfWeekendHasMoreThen2Hours()
   {
+    if(!this.timeSheetObj.machine && this.timeSheetObj.compensation === 'Salary')
+    {
     let test = true;
-    let weekendDateArray = [];
+    const weekendDateArray = [];
+    const weekDayDateArray = [];
     this.timeSheetObj.payPeriod.dateArray.forEach((date)=>{
 
       const  day = moment(date).day();
       if(day === 0 || day === 6){
         weekendDateArray.push(date);
       }
+      else
+      {
+        weekDayDateArray.push(date);
+      }
 
     })
+
 
     let weekendHours = {};
     this.timeSheetFramework.forEach((project)=>{
@@ -735,12 +755,14 @@ export class TimesheetComponent implements OnInit {
 
         if(project[date])
         {
-          weekendHours[date] = parseInt(weekendHours[date]) + parseInt(project[date]);
+          weekendHours[date] = parseFloat(weekendHours[date]) + parseFloat(project[date]);
         }
 
       })
 
     })
+
+  
 
     Object.keys(weekendHours).forEach((key)=> {
 
@@ -751,8 +773,50 @@ export class TimesheetComponent implements OnInit {
      });
     if(!test){
       this.notification.error('Not Enough Hours',  'You must have a minimum of 2 hours on a weekend.', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
+      return test;
     }
-    return test;
+
+    let weekDayHours = {};
+   
+    this.timeSheetFramework.forEach((project)=>{
+
+    //  console.log(project);
+    weekDayDateArray.forEach((date)=>{
+
+        if(!weekDayHours[date])
+        {
+          weekDayHours[date] = 0;
+        }
+
+        if(project[date])
+        {
+          weekDayHours[date] = parseFloat(weekDayHours[date]) + parseFloat(project[date]);
+        }
+
+      })
+
+    });
+
+    console.log(weekDayHours);
+    Object.keys(weekDayHours).forEach((key) => {
+      
+      if(weekDayHours[key] < 8 && weekDayHours[key] !== 0)
+      { 
+        console.log(test, weekendHours[key]);
+        test = false;
+      }
+     });
+    if(!test){
+      this.notification.error('Not Enough Hours',  'You must have a minimum of 8 hours entered for weekdays you have worked.', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
+      return test;
+    }
+
+
+      return test;
+  
+   }
+
+   return true;
   }
 
 

@@ -9,20 +9,31 @@
 			<div *ngIf="!newMaterial" fxLayout="row"  fxLayoutGap="20px" fxLayoutAlign="start center" >
 				
 			
-					<p *ngIf="!selectedMaterial?.id"> Select </p>
+					
 					<app-select-material
+						style="width: 300px !important;"
+						[hidden]="lookedForMaterial"
 						(change)="selectMaterial($event)"
 					></app-select-material>
+
+					<mat-checkbox
+					[hidden]="selectedMaterial?.id || lookedForMaterial"
+					(change)="lookedForMaterial = !lookedForMaterial; createMaterialAttrs();"
+					>
+					<p 	*ngIf="!lookedForMaterial">I didn't find the material i'm entering!</p>
 					
-						<p *ngIf="!selectedMaterial?.id"> or </p>
+
+					</mat-checkbox>
+					
 				
-				<button mat-raised-button  (click)="createMaterialAttrs()" *ngIf="!selectedMaterial?.id"> Create Material </button>
 				
+				 <!-- <button mat-raised-button  (click)="createMaterialAttrs()" *ngIf="lookedForMaterial"> Create Material </button>
+			 -->
 			</div>
 			<div fxLayoutGap="5px" fxLayout="row">
-				<button mat-raised-button  (click)="selectingMaterialAttrs()" *ngIf="creatingMaterial" fxFlex="20"> Select Material Instead </button>
+				<button mat-raised-button  (click)="selectingMaterialAttrs(); lookedForMaterial = !lookedForMaterial;" *ngIf="creatingMaterial" fxFlex="20"> Select Material Instead </button>
 			</div>
-			<div *ngIf="newMaterial || selectedMaterial?.id" fxLayout="column"  fxLayoutGap="10px" >
+			<div *ngIf="newMaterial || selectedMaterial?.id  || lookedForMaterial" fxLayout="column"  fxLayoutGap="10px" >
 			
 						<div fxLayoutGap="5px" fxLayout="row" fxLayout.sm="column"  fxLayoutAlign="start stretch"  >	
 						  <mat-form-field class="full-width"  fxFlex>
@@ -39,7 +50,7 @@
 					<div fxLayoutGap="5px"  fxLayout="row" fxLayout.sm="column"  >	
 						
 						  <mat-form-field class="full-width" *ngIf="!creatingMaterial">
-							  <input  type="text" matInput placeholder="Supplier" [value] ='material.supplier_name' name="supplier" disabled>
+							  <input  type="text" matInput placeholder="Supplier" [value] ='material.supplier_name || material.supplier.supplier_name' name="supplier" disabled>
 						 </mat-form-field>  
 						 
 							
@@ -47,7 +58,7 @@
 						 
 						 
 						   <mat-form-field class="full-width" fxFlex>
-							  <input #Nomenclature  type="text" matInput placeholder="Formula" [(ngModel)] ='material.formula' name="formula" [disabled]="!creatingMaterial" >
+							  <input #Nomenclature  type="text" matInput placeholder="Formula / Chemical Name" [(ngModel)] ='material.formula' name="formula" [disabled]="!creatingMaterial" >
 								<mat-hint> Optional </mat-hint>
 						</mat-form-field>  
 						  <mat-form-field class="full-width" fxFlex>
@@ -193,10 +204,10 @@
 						  <input  #ContainerName  type="text" matInput placeholder="Container Name" [(ngModel)] ='container.container_name' name="container_name" >
 						   <mat-hint>Optional: eg. "Robert's Chinese Tungsten"</mat-hint>
 					 </mat-form-field>  
-					   <mat-form-field  fxFlex>
+					  <!--  <mat-form-field  fxFlex>
 						  <input  #ContainerNumber type="text" matInput placeholder="Container #" [(ngModel)] ='container.container_number' name="container_number" >
 						   <mat-hint>Optional</mat-hint>
-					 </mat-form-field>   
+					 </mat-form-field>  -->  
 
 					 <mat-form-field fxFlex>
 						  <input  #PurchaseOrder  type="text" matInput placeholder="P.O. #" [(ngModel)] ='container.purchase_order' name="purchase_order" >

@@ -1,14 +1,42 @@
 
 # Change Log
 
+### To do list
+
+- create a prompt for approvers when approving a request that has a negative result.
+- clean the QCID db for consistency
+
+
 ### Known Issues
 
-- Material Supplier dropdown, does not clear properly when declining to create a new tag
-- 
-- When using the Steel/Container/Sample ag-grid dropdown, the active/inactive filters will close the dropdown (event propgation issues)
-  
+- Material Supplier dropdown, does not clear properly when declining to create a new tag- 
+- When using the Steel/Container/Sample ag-grid dropdown, the active/inactive filters will close the dropdown (event propgation issues)  
 - Certain project names will truncate on the Timesheet
 - Machine timesheets generate stat hours for some reason 
+
+# 2019.09.40
+
+### New
+
+- The container view will now display associated active containers of the same material, click on the row to navigate to that container.<img style="margin:5px;" src="https://imgur.com/Cd2bnMp.png" width="75%">
+
+### Changes
+
+- Material select dropdown now shows the last few QCIDs in the subtext. <img style="margin:5px;" src="https://imgur.com/8MMTDIh.png" width="75%">
+- The SDS box in the container view has been moved to the right side. 
+- The container attributes box is now on the left side
+- The Material Infomration box is now similarly styled to the container box. 
+
+### Fixes
+
+- hours with a decimal caused the "8 hours a day" warning to imporerly trigger
+  
+# 2019.09.39
+
+### Changes
+
+- The material creation screen will now politely remind you to search the database for pre-existing materials.
+- If an RTO request will result in a negative balance, a confirmation dialog will now appear.  
 
 # 2019.09.38
 
@@ -24,12 +52,14 @@
 - The material database screen will now show inactive containers.
 - You can now add "Particle Size" as a property when creating & editing materials. 
 - Side menu options will now highlight on hover. 
+- Salary employees can no longer print timesheets without 8 hours accounted for on a weekday they have worked
 
 ### Fixes
 
 - D8 XRD runs are now [syncing properly again](http://apps.edm.quantiam.com/xrd/database)
 - Container dropdown spacing issues resolved
 - Material Container page is more responsive on smaller screens
+- A display error where some project names on the timesheet were being truncated at the start, rather then at the end, was resolved.
 
 
 # 2019.09.37
