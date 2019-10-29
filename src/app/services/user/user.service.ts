@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders,HttpParams } from '@angular/common/http';
 import { catchError, map, tap, delay, shareReplay, publishReplay, refCount } from 'rxjs/operators';
 import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
 import { NotificationsService } from 'angular2-notifications';
@@ -33,23 +33,32 @@ export class UserService  {
 
 
 
-  getUser(id: string) {
-   //  console.log(id,this.last_id);
+  getUser(id: string, detailed = false, hiearchy = false) {
+    // console.log(id,detailed,hiearchy);
     if (id !== this.last_id) {
 
-     this.http.get<any>(environment.apiUrl + `${this.endpoint}/${id}`)
+      const requestParams: HttpParams = new HttpParams();
+
+      if(detailed){
+        requestParams.append('detailed', `true`);
+      }
+
+      if(hiearchy){
+        requestParams.append('hiearchy', `true`);
+      }
+
+      console.log(requestParams);
+      
+
+     this.http.get<any>(environment.apiUrl + `${this.endpoint}/${id}`, {params: requestParams})
      .pipe(
-        tap( r => {
-
-
-                    }), // set id to be last_id
         map( res => res), // return results without transformation
 
       )
       .subscribe(
-        (container) => {
-			this._selectedUserSource.next(container); // broadcast the material to all subscribers
-			 this.last_id = container.id;
+        (user) => {
+			this._selectedUserSource.next(user); // broadcast the material to all subscribers
+			 this.last_id = user.id;
 		}
       );
     }

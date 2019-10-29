@@ -16,7 +16,22 @@ export class SemRunComponent implements OnInit {
 
   private semrunID;
 
-  slideConfig = {'slidesToShow': 10, 'dots': true, 'arrows': true, 'autoplay': true, };
+  slideConfig = {'slidesToShow': 8, 'dots': true, 'arrows': true, 'autoplay': true,'responsive': [
+    {
+      'breakpoint': 900,
+      'settings': {
+        'slidesToShow': 3
+              }
+      },
+
+      {
+        'breakpoint': 1400,
+        'settings': {
+          'slidesToShow': 5
+                }
+        },
+    
+  ] };
   Semrun;
   selectedImage: any;
   selectedSubImage: any;

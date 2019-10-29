@@ -67,7 +67,10 @@ import { LogsComponent } from './logs/logs.component';
 
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { SelectArbinTestComponent } from './select-arbin-test/select-arbin-test.component';
+import { MiniXrdComponent } from './mini-xrd/mini-xrd.component';
 
+import { HighchartsChartModule } from 'highcharts-angular';
+import { MiniSemComponent } from './mini-sem/mini-sem.component';
 
 @NgModule({
     imports: [
@@ -91,6 +94,7 @@ import { SelectArbinTestComponent } from './select-arbin-test/select-arbin-test.
         NgbModule,
         CKEditorModule,
         SlickCarouselModule,
+        HighchartsChartModule
     ],
     declarations: [
         AutoFocusDirective,
@@ -125,9 +129,9 @@ import { SelectArbinTestComponent } from './select-arbin-test/select-arbin-test.
         CommentsComponent,
         LogsComponent,
         SelectArbinTestComponent,
-
-
         SafePipe,
+        MiniXrdComponent,
+        MiniSemComponent,
     ],
     exports: [
         SelectArbinTestComponent,
@@ -146,6 +150,8 @@ import { SelectArbinTestComponent } from './select-arbin-test/select-arbin-test.
         SelectTgarunComponent,
         SelectPermissionComponent,
         SelectSteelComponent,
+        MiniXrdComponent,
+        MiniSemComponent,
         NgxFileDropModule ,
         AgGridModule,
         PopUpSteelCardComponent,

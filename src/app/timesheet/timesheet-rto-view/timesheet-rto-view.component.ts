@@ -207,9 +207,9 @@ export class TimesheetRtoViewComponent implements OnInit {
     }
 
     checkNegativeResult() {
-        if((this.rtoBank.remaining.pto + this.typeTotals.pto) < 0){ return true; }
-        if((this.rtoBank.remaining.vacation + this.typeTotals.vacation) < 0){ return true; }
-        if((this.rtoBank.remaining.cto + this.typeTotals.cto) < 0){ return true; }
+        if ((this.rtoBank.remaining.pto + this.typeTotals.pto) < 0) { return true; }
+        if ((this.rtoBank.remaining.vacation + this.typeTotals.vacation) < 0) { return true; }
+        if ((this.rtoBank.remaining.cto + this.typeTotals.cto) < 0) { return true; }
         return false;
     }
 
@@ -217,7 +217,7 @@ export class TimesheetRtoViewComponent implements OnInit {
 
 
         // check to see if negative or positive vacation / pto / cto
-        if(this.checkNegativeResult()){
+        if (this.checkNegativeResult()) {
             Swal.fire({
                 title: 'Negative Hours Result',
                 text: 'This user will have a negative balance in their hours bank. ',
@@ -315,8 +315,7 @@ export class TimesheetRtoViewComponent implements OnInit {
     notifySupervisor() {
 
         // Build date table.
-        if(this.checkNegativeResult())
-        {
+        if (this.checkNegativeResult()) {
             Swal.fire({
                 title: 'Negative Hours Result',
                 text: 'If this is approved, you will have a negative balance in your bank. ',
@@ -327,19 +326,16 @@ export class TimesheetRtoViewComponent implements OnInit {
                 confirmButtonText: 'Okay!',
                 cancelButtonText: 'Wait a minute...'
             }).then((result) => {
-                if(result.value){
+                if (result.value) {
                     this.sendSupervisorNotificationEmail();
                 }
               });
-        }
-        else
-        {
+        } else {
          this.sendSupervisorNotificationEmail();
         }
     }
 
-    sendSupervisorNotificationEmail()
-    {
+    sendSupervisorNotificationEmail() {
 
 
         const dates = [];
@@ -377,7 +373,7 @@ export class TimesheetRtoViewComponent implements OnInit {
 
             this.notification.info('Email Sent', 'We notified the Supervisor', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
 
-        }); 
+        });
 
     }
 

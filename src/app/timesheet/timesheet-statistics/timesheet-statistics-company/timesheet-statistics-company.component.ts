@@ -29,6 +29,9 @@ export class TimesheetStatisticsCompanyComponent implements OnInit {
 
 
     yearlyChartOptions = {
+        credits: {
+            text: 'Quantiam Technologies',
+        },
         chart: {
             type: 'pie',
         },
@@ -51,6 +54,9 @@ export class TimesheetStatisticsCompanyComponent implements OnInit {
     };
 
     allMonthlyStackedChartOptions: any = {
+        credits: {
+            text: 'Quantiam Technologies',
+        },
         chart: {
 
             type: 'area'
@@ -119,7 +125,7 @@ export class TimesheetStatisticsCompanyComponent implements OnInit {
         this.getYearlyChartData();
         this.getAllTimePercentageData();
 
-        
+
 
     }
 

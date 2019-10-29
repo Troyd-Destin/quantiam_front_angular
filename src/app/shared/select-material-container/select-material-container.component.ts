@@ -54,14 +54,14 @@ export class SelectMaterialContainerComponent implements OnInit {
 
   firstLoad = true;
 
-  
+
   people3$: Observable<[]>;
   people3Loading = false;
   people3input$ = new Subject<string>();
 
   constructor(public http: HttpClient, private _elementRef: ElementRef, private service: SelectMaterialContainerService) {
 
-    
+
 
   }
 
@@ -91,8 +91,8 @@ export class SelectMaterialContainerComponent implements OnInit {
           this.supressScrollEnd = true;
           this.searchingTerm = true;
 
-          if(this.justCleared) { this.justCleared = false; 
-            
+          if (this.justCleared) { this.justCleared = false;
+
             this.itemsBuffer = this.allRetrievedItemsList;
             return []; }
 
@@ -133,7 +133,7 @@ export class SelectMaterialContainerComponent implements OnInit {
     // use a service
 
     if (!this.service.isEmpty() && this.firstLoad) {
-     
+
       this.itemsBuffer = this.service.getList();
       this.totalResults = this.service.getTotal();
       this.firstLoad = false;
@@ -148,7 +148,7 @@ export class SelectMaterialContainerComponent implements OnInit {
 
     this.http.get<any>(environment.apiUrl + `${this.endpoint}`, { 'params': params } )
     .subscribe(items => {
-         
+
            // this.items = items.data;
             this.totalResults = items.total;
             this.itemsBuffer = items.data;
@@ -168,7 +168,7 @@ export class SelectMaterialContainerComponent implements OnInit {
   }
 
   onScroll({ end }) {
- 
+
     if (this.loading || this.totalResults === this.itemsBuffer.length || this.supressScrollEnd) {
         return;
     }
@@ -179,7 +179,7 @@ export class SelectMaterialContainerComponent implements OnInit {
   }
 
   customSearchFn(term: string, item) {  // good for lists we store in their entirety
-   
+
     term = term.toLocaleLowerCase();
 
     return item.lot.material.name.toLocaleLowerCase().indexOf(term) > -1

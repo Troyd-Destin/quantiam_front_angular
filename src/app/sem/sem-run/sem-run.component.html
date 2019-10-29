@@ -10,7 +10,7 @@
 
     <div fxLayout="column" *ngIf="Semrun?.q_path">
 
-        <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center" fxFlex>
+        <div fxLayout="row wrap" fxLayout.lt-md="column"  fxLayoutGap="10px" fxLayoutAlign="start center" fxFlex>
             <div fxFlex=30>
                 <h3> {{Semrun.samplename}} </h3>
             </div>
@@ -38,7 +38,7 @@
 
     <div fxLayout="row wrap" fxLayoutGap="20px" *ngIf="Semrun?.images">
            
-    <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig" style="width:100%;">
+    <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig" style="width:100%;" fxFlex>
             <div  ngxSlickItem *ngFor="let img of Semrun.images" class="slide" (click)="selectImage(img)">
                     
                     <div class="image-wrapper" style="padding:10px; margin:auto;">

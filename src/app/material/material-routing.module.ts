@@ -7,6 +7,7 @@ import { MaterialViewComponent } from './material-view/material-view.component';
 import { MaterialContainerDatabaseComponent } from './material-container-database/material-container-database.component';
 import { MaterialContainerViewComponent } from './material-container-view/material-container-view.component';
 import { MaterialComponent } from './material.component';
+import { MaterialContainerViewAnalysisComponent } from './material-container-view-analysis/material-container-view-analysis.component';
 
 const routes: Routes = [
   {
@@ -22,9 +23,13 @@ const routes: Routes = [
       },
       {
         path: 'container/:id',
-        component: MaterialContainerViewComponent,
-       
+        component: MaterialContainerViewComponent,        
         data: {key: 'MaterialContainerView'}
+      },
+      {
+        path:'container/:id/analysis',
+        component: MaterialContainerViewAnalysisComponent,
+        data: {key: 'MaterialContainerViewAnalysis'}
       },
       {
         path: 'database',

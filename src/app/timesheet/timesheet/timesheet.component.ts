@@ -47,6 +47,7 @@ export class TimesheetComponent implements OnInit {
   showSelectBox2 = false;
   canChangeTimesheetUser = false;
   firstLoad = true;
+  showOnlyProjectsUsed = false;
 
 
   rowStyle = {
@@ -504,11 +505,8 @@ export class TimesheetComponent implements OnInit {
        const test = document.getElementsByClassName('ag-group-value');
        const last = test[test.length - 1];
        last.innerHTML   = '<b>Total</b> ( ' + this.timeSheetObj.denomination + ' )';
-       console.log(this.timeSheetFramework);
-       // console.log(last);
+
     }, 200);
-   // console.log(this.timeSheetFramework);
-    // console.log(this.columnDefs);
   }
 
   onRowGroupOpened(event) {
@@ -668,7 +666,11 @@ export class TimesheetComponent implements OnInit {
 
   generateTimesheetDownload() {
 
-
+    /* if(this.timeSheetObj.compensation !== 'Machine')
+    {
+     this.notification.error('Wait',  'The printable timesheet for Salary & Hourly is being updated. Please try again later.', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
+     return;
+    } */
     if (this.checkIfWeekendHasMoreThen2Hours()) {
 
     const url = '/timesheet/' + this.routeParams.userId + '/year/' + this.routeParams.year + '/payperiod/' + this.routeParams.payperiod + '/generate';
@@ -721,7 +723,7 @@ export class TimesheetComponent implements OnInit {
   }
 
   checkIfWeekendHasMoreThen2Hours() {
-    if (!this.timeSheetObj.machine && this.timeSheetObj.compensation === 'Salary') {
+    if (!this.timeSheetObj.machine && this.timeSheetObj.compensation !== 'Temporary') {
     let test = true;
     const weekendDateArray = [];
     const weekDayDateArray = [];
@@ -756,7 +758,7 @@ export class TimesheetComponent implements OnInit {
     });
 
 
-
+    console.log(weekendHours);
     Object.keys(weekendHours).forEach((key) => {
 
       if (weekendHours[key] > 0 && weekendHours[key] < 2) {
@@ -787,7 +789,7 @@ export class TimesheetComponent implements OnInit {
 
     });
 
-    console.log(weekDayHours);
+
     Object.keys(weekDayHours).forEach((key) => {
 
       if (weekDayHours[key] < 8 && weekDayHours[key] !== 0) {

@@ -28,7 +28,7 @@ export class TimesheetStatisticsUserComponent implements OnInit {
     constructor(private http: HttpClient, public userService: UserService, private location: Location, private route: ActivatedRoute, ) {}
 
     endDate = moment().format('YYYY-MM-DD');
-    startDate = moment().startOf('year').add(1, 'days').format('YYYY-MM-DD');;
+    startDate = moment().startOf('year').add(1, 'days').format('YYYY-MM-DD');
     user = this.userService.fetchAuthUserObj();
 
     reportObj;
@@ -38,17 +38,17 @@ export class TimesheetStatisticsUserComponent implements OnInit {
     Highcharts = Highcharts;
     projectPieChartOptions;
 
- 
+
     private hotRegisterer = new HotTableRegisterer();
-   
+
     hotTableRawSettings: any = {
-      width:"200px",
-      height: "275px",
+      width: '200px',
+      height: '275px',
         // colHeaders: true,
         // colHeaders: false,
     };
     hotTableAggregateSettings: any = {
-      width:"525px",
+      width: '525px',
         // colHeaders: true,
         // colHeaders: false,
     };
@@ -59,11 +59,11 @@ export class TimesheetStatisticsUserComponent implements OnInit {
 
     ngOnInit() {
 
-       
+
 
         this.route.paramMap.subscribe(params => {
 
-           if(params.get('user')){
+           if (params.get('user')) {
             this.user.id = params.get('user');
 
           }
@@ -77,9 +77,9 @@ export class TimesheetStatisticsUserComponent implements OnInit {
     }
 
     fetchData() {
-        const params = { 
-            startDate: moment(this.startDate).format('YYYY-MM-DD'), 
-            endDate: moment(this.endDate).format('YYYY-MM-DD') 
+        const params = {
+            startDate: moment(this.startDate).format('YYYY-MM-DD'),
+            endDate: moment(this.endDate).format('YYYY-MM-DD')
         };
 
         this.http.get(environment.apiUrl + `/timesheet/statistics/${this.user.id}`, { params: params }).subscribe((r: any) => {
@@ -93,14 +93,17 @@ export class TimesheetStatisticsUserComponent implements OnInit {
             this.projectPieChartOptions.series[0].data = r.aggregate;
             this.updateFlag = true;
 
-            
+
             this.hotRegisterer.getInstance('raw').loadData(r.raw);
             this.hotRegisterer.getInstance('aggregate').loadData(r.aggregate);
-        })
+        });
     }
 
     createProjectPieChart() {
         this.projectPieChartOptions = {
+            credits: {
+                text: 'Quantiam Technologies',
+            },
             chart: {
                 type: 'pie',
             },

@@ -34,6 +34,8 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
   test_selector = null;
   newLotCreated = false;
   scannerNavigation: any;
+  showSDSError = false;
+  
 	fetched = false;
 	sdsSearch = [];
 	searchingPossibleSDS = false;
@@ -41,6 +43,8 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 	showSDS = false;
 	SDSurl;
 	firstLoad = true;
+
+	matButtonToggleState = 'container';
 
 	public files: NgxFileDropEntry[] = [];
 	
@@ -82,14 +86,14 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 
 			this.route.params.subscribe((p) =>{
 
-					console.log(p);
+					
 				 	this.materialLotCotainerService.getMaterialLotContainer(p.id).subscribe(res => {});
 
 			})
 
 			this.route.queryParams.subscribe((p: any) => {
 
-					console.log('test');
+					
 					this.scannerNavigation = p['scannerNavigation'];
 
 
@@ -97,8 +101,7 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 
       this._container = this.materialLotCotainerService.materialLotContainer$.subscribe(res => { // subscribe to the material service for updates
 
-		 console.log(res);
-
+			this.container = {};
 			this.firstLoad = false;
 			this.fetched = true;
 			if (typeof res !== 'undefined') {
@@ -126,7 +129,6 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 			  this.editContainer = false;
 		}
 	  }, (error: any) => {
-	  console.log('test');
 	  this.fetched = false;
 		this.container = {};
 
@@ -185,7 +187,7 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
   changedLot(obj) {
 	const lot_obj = obj.data[0];
 
-	console.log(lot_obj);
+	//console.log(lot_obj);
 	if (lot_obj.isNew) {
 				// trigger some sort of confirm popup
 				if (window.confirm('Are you sure you want to create \'' + lot_obj.text + '\' ?')) {
@@ -199,7 +201,7 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 		}
 
 	const payload = {'lot_id': lot_obj.id, 'lot': true};
-	console.log(payload);
+	//console.log(payload);
 	this.materialLotCotainerService.update(payload).subscribe();
 
 
@@ -297,7 +299,7 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 				params.p1 = splitstring[0];
 				this.http.post<any>('https://chemicalsafety.com/sds1/retriever.php?filterSpinner', params).subscribe(r2 => {
 
-					console.log(r2);
+				//	console.log(r2);
 
 						this.sdsSearch = r2.rows;
 
@@ -383,14 +385,29 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 
 
 	fetchSDS() {
+
+		if(this.showSDS){ this.showSDS = false; }
+		
 		this.http.get(environment.apiUrl + '/material/' + this.container.lot.material.id + '/sds?filterSpinner',  {responseType: 'blob'}).subscribe((response) => {
 
 				this.sdsBlob = response;
 				this.showSDS = true;
+				this.showSDSError = false;
 				 this.SDSurl = window.URL.createObjectURL(response);
-				 console.log(this.SDSurl);
-     	 // window.open(url);
-				document.querySelector('iframe').src = this.SDSurl;
+			//	 console.log(this.SDSurl);
+		  // window.open(url);
+				  const ifr = document.getElementById('iframe') as HTMLIFrameElement;
+				  //console.log(ifr);
+				  
+					if (ifr) {
+						ifr.contentWindow.location.replace(this.SDSurl)
+					}
+
+		}, (error)=>{
+			this.showSDS = false;
+			this.showSDSError = true;
+			this.notification.error('Problem', 'There was an issue trying to display the SDS.', {showProgressBar: false, timeOut: 5000, clickToClose: true});
+
 
 		});
 
@@ -423,6 +440,11 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 
     });
 
+  }
+
+  fixButtonState(){
+	  console.log('test');
+	  this.matButtonToggleState = 'container';
   }
 
 }

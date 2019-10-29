@@ -47,7 +47,7 @@
       <div style="width:70px; font-size: 10px;" >
         <div fxLayout="column" fxLayoutGap="2px">
             <div style="font-size: 9px;">  {{item.id}}</div>
-           <div style="font-size: 8px;"> {{item.qcid}}</div>
+           <div style="font-size: 8px;"> <span *ngIf="item.qcid">QCID-</span>{{item.qcid}}</div>
            
         </div>
       

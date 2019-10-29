@@ -160,7 +160,7 @@ export class UserViewComponent implements OnInit, OnDestroy {
 
           if ( this.userService.hasPermission(27) || res.id === this.id ) {
             this.renderUser = true;
-            this.userService.getUser(this.id);
+            this.userService.getUser(this.id, true, true);
             this.user$ = this.userService.user$.subscribe(r => {
 
               this.user = r;

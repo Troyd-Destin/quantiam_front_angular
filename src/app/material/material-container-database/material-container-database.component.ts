@@ -82,7 +82,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         suppressMenu: true,
       },
       {
-        width: 250,
+        width: 200,
         headerName: 'Name',
         field: 'material',
         cellStyle: function (params) {
@@ -100,6 +100,11 @@ export class MaterialContainerDatabaseComponent implements OnInit {
       },
       {
         width: 100,
+        field: 'particle_size',
+        headerName: 'Size',
+      },
+      {
+        width: 100,
         field: 'supplier'
       },
       {
@@ -109,7 +114,9 @@ export class MaterialContainerDatabaseComponent implements OnInit {
       },
       {
         width: 80,
-        field: 'size'
+        field: 'size',
+        headerName: 'Amount',
+
       },
       // {
       //   width: 90,
@@ -147,7 +154,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         width: 120,
         field: 'container_received',
         headerName: 'Received',
-        //sort: 'desc',
+        // sort: 'desc',
      //   cellEditor: "datePicker",
       },
       {

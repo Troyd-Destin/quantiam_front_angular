@@ -46,7 +46,7 @@
                       <div   *ngFor="let spectra of analysis.spectra"  fxLayout="row wrap" fxLayoutGap="10px"   >
 
 
-                          <mat-card   *ngFor="let pattern of spectra.patterns" fxFlex="calc(20% - 25px)" style="margin-top:5px !important;">
+                          <mat-card   *ngFor="let pattern of spectra.patterns" fxFlex="20" style="margin-top:5px !important;">
                               <mat-card-content fxLayout="column" >
                                 <div fxLayout="row"  fxLayoutAlign="start start">
           
@@ -71,7 +71,7 @@
                                         placeholder="Y Scale" type="number"
                                          step=0.05 min=0 [(ngModel)]="pattern.y_scale"
                                          (change)="yScaleChange(pattern)"
-                                        
+                                          [disabled]="!pattern.display"
                                          >
                                       </mat-form-field>
                                      <mat-form-field fxFlex="calc(25%)"  >
@@ -80,6 +80,7 @@
                                         placeholder="Column Width" type="number"
                                          step=1 min=1 [(ngModel)]="pattern.pointWidth" value = 1
                                          (change)="buildChartObj()" 
+                                         [disabled]="!pattern.display"
                                          >
                                       </mat-form-field>
                                       <div>

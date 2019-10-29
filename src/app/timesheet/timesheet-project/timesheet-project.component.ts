@@ -81,10 +81,32 @@ export class TimesheetProjectComponent implements OnInit {
       }
 
         if(changes[0][2] !== changes [0][3]){ // only trigger if different 
-        this.updateProject(payload.id, payload);
+        this.updateProject(rowProp.id, payload);
         }
       }
+    },
+    columns:[
+      {data:"projectid", title:"Project"},
+      {data:"Description", title:"Name" },
+      {data:"Category", title:"Category", type:"dropdown",  source:this.categoryHandsList},
+      {data:"start_date", title:"Start Date", type:"date", dateFormat: 'YYYY-MM-DD'},
+      {data:"retire_date", title:"Retire Date", type:"date", dateFormat: 'YYYY-MM-DD' },
+      {
+        title:"Actions",
+        readOnly:true,
+        renderer: function(instance, td, row, col, prop, value, cellProperties) {
+          td.innerHTML = `<button id="deleteButton" class="btn btn-xs btn-danger" style="margin:2px;">Delete</button>`
+          return td;
+        }
+      }
+    ],
+    afterOnCellMouseDown: (event, coords, TD) => {
+      console.log(event);
+      if (event.realTarget.id === 'deleteButton' && coords.col === 5) {
+        this.deleteProjectFromRow(coords);
+      }
     }
+
   }
   renderTable = false;
 
@@ -95,15 +117,45 @@ export class TimesheetProjectComponent implements OnInit {
     this.fetchProjectList();
   }
 
+  deleteProjectFromRow(coords)
+  {
+  
+    const data: any = this.hotRegisterer.getInstance('id').getSourceDataAtRow(coords.row);
+    if(confirm('Are you sure you want to delete this project?') && data.Category !== 'Absence'){
+
+      this.deleteProject(data.projectid);
+    }
+    console.log(data,coords);
+  }
+
+
+  
+  deleteProject (id)
+	{
+		  
+      this.http.delete(environment.apiUrl +  `/project/${id}`).subscribe((response:any) => {
+
+        this.notify.success('Deleted', 'You deleted project ' + id, { timeOut: 4000, showProgressBar: false, clickToClose: true }); /// Daily OT notificaton
+  
+          this.fetchProjectList();
+         
+       
+      }, (e)=>{
+
+        this.notify.error('Error', 'Something went wrong here, let the developer know.', { timeOut: 4000, showProgressBar: false, clickToClose: true }); /// Daily OT notificaton
+  
+      });
+  }
+
 
   fetchProjectList ()
 	{
 		  
       this.http.get(environment.apiUrl + '/project').subscribe((response:any) => {
 
-         // console.log(response);
+        
           this.hotRegisterer.getInstance(this.id).loadData(response);
-        //  console.log(this.hotTableSettings);
+       
       }, (e)=>{
 
         this.notify.error('Error', 'Something went wrong here, let the developer know.', { timeOut: 4000, showProgressBar: false, clickToClose: true }); /// Daily OT notificaton
@@ -113,13 +165,17 @@ export class TimesheetProjectComponent implements OnInit {
   
   updateProject(id,payload ){
 
-    this.http.put(environment.apiUrl + `/project/${id}`,payload).subscribe((r)=>{
+    if(id)
+      {
 
-    }, (e)=>{
+      this.http.put(environment.apiUrl + `/project/${id}`,payload).subscribe((r)=>{
+        this.notify.success('Success', 'You updated project ' + id + '.', { timeOut: 4000, showProgressBar: false, clickToClose: true }); /// Daily OT notificaton
+      }, (e)=>{
 
-      this.notify.error('Error', 'Something went wrong here, let the developer know.', { timeOut: 4000, showProgressBar: false, clickToClose: true }); /// Daily OT notificaton
+        this.notify.error('Error', 'Something went wrong here, let the developer know.', { timeOut: 4000, showProgressBar: false, clickToClose: true }); /// Daily OT notificaton
 
-    });
+      });
+   }
   }
 
   addTableRow(){

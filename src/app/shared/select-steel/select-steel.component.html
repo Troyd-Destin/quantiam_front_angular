@@ -1,8 +1,5 @@
 
 <ng-select 
-
-  
-  
 [items]="itemsBuffer"
 [loading]="loading"
 
@@ -39,8 +36,8 @@
 
 
 <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm" style="width:1000px !important;">
-<div fxLayout="row" fxLayoutAlign="center center"  fxLayoutGap="10px" style="height:50px;">
-  <div fxLayout="row" class="dropdown-options"  fxLayoutAlign="start center" fxFlex >
+<div fxLayout="row" fxLayoutAlign="center center"  style="height:50px;">
+  <div fxLayout="row" class="dropdown-options" fxLayoutGap="10px" fxLayoutAlign="start center" fxFlex >
   
 
     <div style="width:70px; font-size: 10px;" >
@@ -52,19 +49,19 @@
     
     </div>
 
-     <div style="width:125px; margin-right:5px;" fxLayout="column"  [ngOptionHighlight]="search">
-      <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+     <div style="width:150px; margin-right:5px;" fxLayout="column"  [ngOptionHighlight]="search">
+      <div fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center start">
         <b>{{item.heat_id || ''}}</b>     
      </div>
     </div>
-    <div style="width:100px; font-size: 11px;" [ngOptionHighlight]="search" >
+    <div style="width:150x; font-size: 11px;" [ngOptionHighlight]="search" >
         {{item.steel_type.part_name || 'Unknown'}}
       </div>
-    <div style="width:80px; font-size: 11px;"  >
-        {{item.cut}}
+    <div fxLayout="row" fxLayoutGap="5px" style="width:80px; font-size: 11px;"  >
+          <p>C:</p><span>{{item.cut}}</span>
       </div>
-    <div style="width:80px; font-size: 11px;"  >
-        {{item.rework}}
+    <div fxLayout="row" fxLayoutGap="5px" style="width:80px; font-size: 11px;"  >
+          <p>R:</p><span>{{item.rework}}</span>
       </div>
     <div style="width:100px; font-size: 11px;" [ngOptionHighlight]="search" >
         {{item.campaign.campaign_shortname}}

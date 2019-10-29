@@ -4,7 +4,22 @@
 	
 </div>
 
-<div *ngIf="container && container.hasOwnProperty('id')" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center center">
+<div *ngIf="container && container.hasOwnProperty('id')" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center start">
+
+	<div *ngIf="container.xrd_runs[0]">
+		<mat-button-toggle-group [(ngModel)]="matButtonToggleState"
+		
+			class="mat-elevation-z1" #selectedGraphView="matButtonToggleGroup" 
+	
+			>
+				<mat-button-toggle value="container" [routerLink]="['/material/container',container.id]"> Container </mat-button-toggle>
+				<mat-button-toggle value="analysis" [routerLink]="['/material/container',container.id,'analysis']" (click)="fixButtonState()" > Analysis </mat-button-toggle>
+			
+				
+				</mat-button-toggle-group>
+	</div> 
+
+
 
 	<div fxLayoutGap="20px"  fxLayout.gt-lg="row wrap"  fxLayout="column" fxLayoutAlign="start stretch">
 		
@@ -268,8 +283,13 @@
 		</div>
 
 		<div id="right column" fxLayout="column" fxFlex>
-				<iframe  [hidden]="!container.lot.material.sds" src="" type="application/pdf"  height="800px" style="overflow: auto; min-width: 50%;">
-				</iframe>
+
+				<div  [hidden]="!showSDS"  fxLayout="column" fxLayoutGap="10px">
+					
+							  <iframe  id="iframe" type="application/pdf"  height="750px" style="overflow: auto; min-width: 50%;">
+							  </iframe>
+				</div>
+				
 				<div fxLayout="column" id="MSDS Query SECTION" *ngIf="!container.lot.material.sds"  fxFlex fxLayoutGap="20px">
 				
 				

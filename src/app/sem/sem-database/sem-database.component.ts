@@ -3,6 +3,7 @@ import { SemDatabaseService } from './sem-database.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import {  environment} from '../../../environments/environment';
 import { Router } from '@angular/router';
+import { RefreshDBTablesService } from '../../services/refresh-db-tables/refresh-dbtables.service';
 
 
 import { NotificationsService } from 'angular2-notifications';
@@ -45,6 +46,8 @@ export class SemDatabaseComponent implements OnInit {
 
    filteredOperator = '';
    filteredRequestor = '';
+   filteredContainer = '';
+   filteredSteel = '';
    filteredSampleType = '';
    filteredProject = '';
    filteredTextFilterName = '';
@@ -59,7 +62,7 @@ export class SemDatabaseComponent implements OnInit {
    componentSettings = {
 
     autoRefreshTable: false,
-   }
+   };
 
 
   constructor(
@@ -67,8 +70,18 @@ export class SemDatabaseComponent implements OnInit {
     private http: HttpClient,
     private notification: NotificationsService,
     public router: Router,
-    private settings: SettingsService
+    private settings: SettingsService,
+    private refreshDBTableService: RefreshDBTablesService
   ) {
+
+    refreshDBTableService.refreshSemDBTable$.subscribe(refresh => {
+
+        if (refresh) {
+          this.refreshDatabase();
+        }
+    });
+
+
 
       this.columnDefs = [
         {
@@ -103,29 +116,29 @@ export class SemDatabaseComponent implements OnInit {
         },
         {
           headerName: 'Steel / Container / Sample',
-          //field: 'id',
+          // field: 'id',
           width: 150,
           cellRenderer: 'steelContainerDisplay',
           cellEditor: 'steelContainerEdit',
-          valueSetter: (params)=>{
+          valueSetter: (params) => {
 
-          
-             if(params.newValue){
+
+             if (params.newValue) {
               console.log(params.newValue);
-              if(params.newValue.container_id){ 
+              if (params.newValue.container_id) {
                 params.data.container = params.newValue;
                 params.data.container_id = params.newValue.container_id;
                }
 
-              if(params.newValue.steel_type){ 
+              if (params.newValue.steel_type) {
                 params.data.steel = params.newValue;
                 params.data.steel_id = params.newValue.id;
                }
-  
+
                this.updateSemRun(params);
-    
-              return params.newValue; 
-            
+
+              return params.newValue;
+
             }
             return null;
           },
@@ -136,7 +149,7 @@ export class SemDatabaseComponent implements OnInit {
           minwidth: 270,
           filter: false,
           cellRenderer: (cell) => {
-            //console.log(cell);
+            // console.log(cell);
             if (cell.hasOwnProperty('data') && cell.data.samplename) { return '<b>' + cell.data.samplename + '</b>'; }
             return '';
           }
@@ -273,10 +286,10 @@ export class SemDatabaseComponent implements OnInit {
 
      this.settings.get(this.constructor.name) ? this.componentSettings = this.settings.get(this.constructor.name) : this.settings.set(this.constructor.name, this.componentSettings);
 
-    setInterval(()=>{
+    setInterval(() => {
 
-      if(this.componentSettings.autoRefreshTable){ this.refreshDatabase(); }
-    },60000)
+      if (this.componentSettings.autoRefreshTable) { this.refreshDatabase(); }
+    }, 60000);
   }
 
 
@@ -307,6 +320,8 @@ export class SemDatabaseComponent implements OnInit {
         .append('operator', `${this.filteredOperator}`)
         .append('project', `${this.filteredProject}`)
         .append('type', `${this.filteredSemrun}`)
+        .append('steel_id', `${this.filteredSteel}`)
+        .append('container_id', `${this.filteredContainer}`)
         .append('page', `${page}`);
 
           this.http.get(environment.apiUrl + '/instrument/sem/run', {params: requestParams}).subscribe((response: any) => {
@@ -364,6 +379,28 @@ export class SemDatabaseComponent implements OnInit {
      this.refreshDatabase();
   }
 
+  filterSteel(event) {
+    if (event) { this.filteredSteel = event.id; } else { this.filteredSteel = ''; }
+
+      this.refreshDatabase();
+  }
+
+  clearFilterSteel(event) {
+     this.filteredSteel = '';
+     this.refreshDatabase();
+  }
+
+  filterContainer(event) {
+    if (event) { this.filteredContainer = event.id; } else { this.filteredContainer = ''; }
+
+      this.refreshDatabase();
+  }
+
+  clearFilterContainer(event) {
+     this.filteredContainer = '';
+     this.refreshDatabase();
+  }
+
 
   filterRequestor(event) {
     if (event) { this.filteredRequestor = event.id; } else { this.filteredRequestor = ''; }
@@ -417,9 +454,9 @@ export class SemDatabaseComponent implements OnInit {
     if (cell.column.colId === 'samplename') { params.samplename = cell.value; }
     if (cell.column.colId === 'type') { params.type_id = cell.data.type.type_id; }
     if (cell.column.colId === 'duration') { params.duration = cell.value; }
-    if (cell.column.colId === '0') { 
-      if( cell.data.container ) { params.container_id = cell.data.container_id; }
-      if( cell.data.steel_id ) { params.steel_id = cell.data.steel_id; }
+    if (cell.column.colId === '0') {
+      if ( cell.data.container ) { params.container_id = cell.data.container_id; }
+      if ( cell.data.steel_id ) { params.steel_id = cell.data.steel_id; }
     }
 
     console.log(params);
@@ -438,10 +475,10 @@ export class SemDatabaseComponent implements OnInit {
 
   }
 
-  toggleAutoUpdate(){
+  toggleAutoUpdate() {
 
     this.componentSettings.autoRefreshTable = !this.componentSettings.autoRefreshTable;
-    this.settings.set(this.constructor.name,this.componentSettings);
+    this.settings.set(this.constructor.name, this.componentSettings);
 
   }
 

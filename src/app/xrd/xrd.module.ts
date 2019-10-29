@@ -12,7 +12,6 @@ import { XrdDatabaseComponent } from './xrd-database/xrd-database.component';
 import { XrdViewComponent } from './xrd-view/xrd-view.component';
 import { PickXrdAnalysesDialogComponent } from './xrd-database/pick-xrd-analyses-dialog/pick-xrd-analyses-dialog.component';
 
-
 const routes: Routes = [
   {
     path: '',

@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-
 import {  environment} from '../../../environments/environment';
-
 import { NotificationsService } from 'angular2-notifications';
-
+import { RefreshDBTablesService } from '../../services/refresh-db-tables/refresh-dbtables.service';
 
 
 import { AgGridSemContainerSteelCellDisplayComponent } from '../../sem/sem-database/ag-grid-sem-container-steel-cell-display/ag-grid-sem-container-steel-cell-display.component';
@@ -51,9 +49,18 @@ export class XrdDatabaseComponent implements OnInit {
     analysesRenderer: XrdAnalysesFileRendererComponent,
     steelContainerDisplay: AgGridSemContainerSteelCellDisplayComponent,
     steelContainerEdit: AgGridSemContainerSteelEditComponent,
+
   };
 
-  constructor(private http: HttpClient, private notification: NotificationsService) {
+  constructor(private http: HttpClient, private notification: NotificationsService,
+    private refreshDBTableService: RefreshDBTablesService) {
+
+    refreshDBTableService.refreshXrdDBTable$.subscribe(refresh => {
+
+      if (refresh) {
+        this.refreshDatabase();
+      }
+  });
 
     this.columnDefs = [
       {
@@ -82,29 +89,29 @@ export class XrdDatabaseComponent implements OnInit {
       },
       {
         headerName: 'Steel / Container / Sample',
-        //field: 'id',
+        // field: 'id',
         width: 150,
         editable: true,
         cellRenderer: 'steelContainerDisplay',
         cellEditor: 'steelContainerEdit',
-        valueSetter: (params)=>{
+        valueSetter: (params) => {
 
-        
-           if(params.newValue){
-            if(params.newValue.container_id){ 
+
+           if (params.newValue) {
+            if (params.newValue.container_id) {
               params.data.container = params.newValue;
               params.data.container_id = params.newValue.container_id;
              }
 
-            if(params.newValue.steel_type){ 
+            if (params.newValue.steel_type) {
               params.data.steel = params.newValue;
               params.data.steel_id = params.newValue.id;
              }
 
              this.updateXRDRun(params);
             console.log(params);
-            return params.newValue; 
-          
+            return params.newValue;
+
           }
           return null;
         },
@@ -120,7 +127,7 @@ export class XrdDatabaseComponent implements OnInit {
         width: 100,
       },
 
-      
+
      /*  {
         headerName: 'File Name',
         field: 'path',
@@ -149,11 +156,10 @@ export class XrdDatabaseComponent implements OnInit {
 
             let duration;
 
-          if(cell.data.duration)
-          {
+          if (cell.data.duration) {
              duration =  '~' + (cell.data.duration / 60).toFixed(1) + ' mins';
           }
-        
+
           return duration;
         }
       },
@@ -162,7 +168,7 @@ export class XrdDatabaseComponent implements OnInit {
         field: 'xrd_runs',
         width: 80,
         cellRenderer: 'analysesRenderer',
-      }, 
+      },
       {
         headerName: 'Run Date',
         field: 'analyzed_date',
@@ -191,7 +197,7 @@ export class XrdDatabaseComponent implements OnInit {
       // paginationAutoPageSize: true
     };
 
-    
+
  }
 
 ngOnInit() {
@@ -251,7 +257,7 @@ ngOnInit() {
 
   }
 
- 
+
 
   refreshDatabase() {
 
@@ -296,7 +302,7 @@ ngOnInit() {
      this.refreshDatabase();
   }
 
-  updateXRDRun (cell){
+  updateXRDRun (cell) {
 
 
     const params: any = {};
@@ -305,9 +311,9 @@ ngOnInit() {
    // if (cell.column.colId === 'project_id') { params.project_id = cell.value; }
     if (cell.column.colId === 'run_type_id') { params.type_id = cell.data.type.type_id; }
     //  if (cell.column.colId === 'duration') { params.duration = cell.value; }
-    if (cell.column.colId === '0') { 
-      if( cell.data.container ) { params.container_id = cell.data.container_id; }
-      if( cell.data.steel_id ) { params.steel_id = cell.data.steel_id; }
+    if (cell.column.colId === '0') {
+      if ( cell.data.container ) { params.container_id = cell.data.container_id; }
+      if ( cell.data.steel_id ) { params.steel_id = cell.data.steel_id; }
     }
 
     this.http.put(environment.apiUrl + '/instrument/xrd/run/' + cell.data.id + '?filterSpinner', params)

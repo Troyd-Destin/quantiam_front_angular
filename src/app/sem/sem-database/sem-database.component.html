@@ -20,7 +20,7 @@
 <div fxLayout="row"  >
   
 
-  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex>
+  <div id="filterTypes" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex>
 
 
       <app-select-project
@@ -52,6 +52,22 @@
         (clear)="clearFilterRequestor($event)"
         placeholder="Requested by"
       ></app-select-user>
+
+      <app-select-steel
+        style="min-width:125px;" 
+        
+        (change)="filterSteel($event)"
+        (clear)="clearFilterSteel($event)"
+        placeholder="Steel "
+      ></app-select-steel>
+
+      <app-select-material-container
+        style="min-width:125px;" 
+        
+        (change)="filterContainer($event)"
+        (clear)="clearFilterContainer($event)"
+        placeholder="Container "
+      ></app-select-material-container>
 
 <!-- 
       <app-select-material-container

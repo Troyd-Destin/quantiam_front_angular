@@ -15,7 +15,7 @@ import { SelectSteelService } from './select-steel.service';
 })
 export class SelectSteelComponent implements OnInit {
 
- 
+
   selectedPersons = [{ name: 'Karyn Wright' }, { name: 'Other' }];
 
 
@@ -26,9 +26,9 @@ export class SelectSteelComponent implements OnInit {
     @Input() selectedValue: any = null; // default value, object or ID
     @Input() multiple: any = false; // multi version
     @Input() selectableGroup: any = false; // multi version
-    @Input() placeholder = 'Container'; // multi version
+    @Input() placeholder = 'Select Steel'; // multi version
     @Input() appendTo; // multi version
-  
+
     // Outputs
     @Output() change = new EventEmitter<any>();
     @Output() clear = new EventEmitter<any>();
@@ -73,7 +73,7 @@ export class SelectSteelComponent implements OnInit {
   onAdd(event) { }
   onRemove(event) { }
   onClear() {
-    
+
     this.justCleared = true;
     this.clear.emit();
   }
@@ -84,13 +84,15 @@ export class SelectSteelComponent implements OnInit {
          debounceTime(500),
         distinctUntilChanged(),
         switchMap((term) => {
-          
-         
-          
+
+
           this.supressScrollEnd = true;
           this.searchingTerm = true;
 
-          if(this.justCleared) { this.justCleared = false; return this.allRetrievedItemsList; }
+          if (this.justCleared) { this.justCleared = false;
+
+            this.itemsBuffer = this.allRetrievedItemsList;
+            return []; }
 
           if (!term) {
 
@@ -103,17 +105,15 @@ export class SelectSteelComponent implements OnInit {
           const params  = new HttpParams().set('like', term).set('limit', '' + this.bufferSize + '').set('active', '1').set('filterSpinner', 'true');
           this.loading = true;
           return this.http.get<any>(environment.apiUrl + `${this.endpoint}`, { 'params': params } );
-
         })
     )
     .subscribe((data) => {
 
-      this.allRetrievedItemsList = this.itemsBuffer;
-      this.itemsBuffer = data;
 
-      if (!data[0]) {
-        if (this.itemsBuffer.length < this.bufferSize) { this.itemsBuffer = this.allRetrievedItemsList; }
-      }
+      this.allRetrievedItemsList = this.itemsBuffer;
+      this.itemsBuffer = data.data;
+
+
 
       this.searchingTerm = false;
       this.loading = false;
@@ -143,7 +143,7 @@ export class SelectSteelComponent implements OnInit {
 
     this.http.get<any>(environment.apiUrl + `${this.endpoint}`, { 'params': params } )
     .subscribe(items => {
-         
+
            // this.items = items.data;
             this.totalResults = items.total;
             this.itemsBuffer = items.data;
@@ -177,9 +177,8 @@ export class SelectSteelComponent implements OnInit {
     // console.log(term,item);
     term = term.toLocaleLowerCase();
 
-    return item.lot.material.name.toLocaleLowerCase().indexOf(term) > -1
-    || item.lot.lot_name.toLocaleLowerCase().indexOf(term) > -1
-    || item.identifier.toLocaleLowerCase().indexOf(term) > -1;
+    return item.heat_id.toLocaleLowerCase().indexOf(term) > -1
+    || item.steel_type.part_name.toLocaleLowerCase().indexOf(term) > -1;
 
 }
 

@@ -17,6 +17,7 @@ export class UserHoursComponent implements OnInit {
 
   hourly = true;
   salary = true;
+  active = false;
   yearList: string[] = [];
   timesheetPayperoids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26];
 
@@ -92,6 +93,7 @@ fetchData() {
       'enddate': _moment(this.endDate).format('YYYY-MM-DD'),
       'hourly': this.hourly,
       'salary': this.salary,
+      'active': this.active,
     };
     this.http.get(environment.apiUrl + '/timesheet/report/SummaryUsage', {params: params}).subscribe((response: any) => {
 

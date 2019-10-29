@@ -24,6 +24,7 @@ import { MaterialViewComponent } from './material-view/material-view.component';
 import { MaterialComponent } from './material.component';
 import { MaterialContainerViewComponent } from './material-container-view/material-container-view.component';
 import { MaterialContainerDatabaseComponent } from './material-container-database/material-container-database.component';
+import { MaterialContainerViewAnalysisComponent } from './material-container-view-analysis/material-container-view-analysis.component';
 
 
 @NgModule({
@@ -37,7 +38,7 @@ import { MaterialContainerDatabaseComponent } from './material-container-databas
     Select2Module,
   ],
   declarations: [MaterialCreationDialogComponent, MaterialIndexComponent, MaterialDatabaseComponent, MaterialViewComponent,
-	  MaterialComponent, MaterialContainerViewComponent, MaterialContainerDatabaseComponent, ],
+	  MaterialComponent, MaterialContainerViewComponent, MaterialContainerDatabaseComponent, MaterialContainerViewAnalysisComponent, ],
   providers: [MaterialService, MaterialLotContainerService, MaterialDatatableService, MaterialLotContainerDatatableService],
   schemas: [NO_ERRORS_SCHEMA]
 })

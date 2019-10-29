@@ -40,14 +40,17 @@
               "node_modules/handsontable/dist/handsontable.full.min.css",
               "src/styles.css"
             ],
-            "scripts": [
-              "node_modules/jquery/dist/jquery.min.js",
+            "scripts": [        
+              "node_modules/jquery/dist/jquery.min.js",      
               "node_modules/slick-carousel/slick/slick.min.js",
               "node_modules/select2/dist/js/select2.full.js",
               "node_modules/moment/min/moment.min.js",
               "node_modules/fullcalendar/dist/fullcalendar.min.js",
               "node_modules/hammerjs/hammer.min.js",
-              "node_modules/marked/lib/marked.js"
+              "node_modules/marked/lib/marked.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+             
+              
             ]
           },
           "configurations": {

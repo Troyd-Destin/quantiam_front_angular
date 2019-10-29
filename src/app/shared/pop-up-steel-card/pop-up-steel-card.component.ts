@@ -88,7 +88,7 @@ export class PopUpSteelCardComponent implements OnInit {
   }
 
   onKeydown(e) {
-    console.log(e);
+    //console.log(e);
     if (e.ctrlKey) { this.keepPopUpStill = true; }
   }
 
@@ -104,7 +104,7 @@ export class PopUpSteelCardComponent implements OnInit {
   }
 
   onMouseLeave(event) {
-      console.log('mouse left');
+     // console.log('mouse left');
     this.visible = false;
     this.hasAtLeastEnteredOnce = false;
     this.mouseLeftPopup = true;

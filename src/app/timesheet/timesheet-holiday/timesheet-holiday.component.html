@@ -1,22 +1,38 @@
 
-<div fxLayout="column" fxFlexOffset="25vw">
-
-  <hot-table  
-    fxFLex=50
-    class="hot"
-
-    [hotId]="id"
-    [settings]="hotTableSettings"
-    [licenseKey]="'non-commercial-and-evaluation'"  
-  
->
-
-
-    <hot-column data="entryid" title="ID" read-only></hot-column>
-    <hot-column data="holidayname" title="Name" ></hot-column>
-    <hot-column date-format="YYYY-MM-DD" data="date" title="Date" type="date" ></hot-column>
+<div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
     
-    </hot-table>  
 
+    <div fxLayout="column" fxLayoutGap="10px"  fxFlex.gt-lg=50  fxFlex.gt-md=60 fxFlex >
+  
+    <div fxFlex fxLayout="row" fxLayoutGap="10px">
+        <mat-form-field>
+            <mat-label>Select a year</mat-label>
+            <mat-select [(value)]="year" (selectionChange)="fetchHolidayList()">
+              <mat-option *ngFor="let yearItem of timesheetYears" [value]="yearItem">{{yearItem}}</mat-option>
+          </mat-select>
+        </mat-form-field> 
+        <div>
+          <button mat-raised-button color="primary" (click)="addTableRow()" > Create  </button>
+    </div>
+            
+
+    </div> 
+    <div fxFlex>
+    <hot-table 
+     
+      class="hot"
+
+      [hotId]="id"
+      [settings]="hotTableSettings"
+      [licenseKey]="'non-commercial-and-evaluation'"  
+    
+  >
+
+
+  
+      </hot-table>  
+      <div>
+
+  </div>
 
 </div>

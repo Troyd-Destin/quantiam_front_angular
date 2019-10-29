@@ -1,15 +1,15 @@
 
-<div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center center">
+<div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
     
 
-    <div fxLayout="column" fxLayoutGap="10px" >
-        <div fxLayout="row" fxFlex fxLayoutAlign="end start">
+    <div fxLayout="column" fxLayoutGap="10px" fxFlex.gt-lg=80  fxFlex.gt-md=85 fxFlex >
+        <div fxLayout="row" fxFlex fxLayoutAlign="start start">
             <button mat-raised-button color="primary" (click)="addTableRow()" *ngIf="userService.hasPermission(20)"> Create Machine </button>
         </div>
 
         <hot-table  
-        width="1150px"
-        height="700px"
+       
+        height="75vh"
         class="hot"
     
         hotId="id"
@@ -19,14 +19,7 @@
     
     >
     
-    <hot-column data="id" title="ID" readOnly="true"></hot-column>
-    <hot-column data="machine_name" title="Name" ></hot-column>
-    <hot-column data="machine_purpose" type="dropdown" [source]="purposes" title="Purpose"></hot-column>
-    <hot-column data="denomination"   type="dropdown" [source]="denominations" title="Denomination" ></hot-column>
-    <hot-column data="billing_category" type="dropdown" [source]="billingCategories" title="Billing Category" ></hot-column>
-    <hot-column data="startdate" title="Start Date" type="date"  dateFormat="YYYY-MM-DD"></hot-column>
-    <hot-column data="enddate" title="End Date" type="date" dateFormat="YYYY-MM-DD"></hot-column>
-    
+ 
         
         </hot-table>  
     </div>  

@@ -14,37 +14,36 @@ import { NotificationsService } from 'angular2-notifications';
 })
 export class TimesheetRtoAllocationComponent implements OnInit {
 
-    
 
-    constructor(private http: HttpClient, public userService:UserService, private notify: NotificationsService ) {}
 
-    selectedYear = ''+ new Date().getFullYear() + '';
+    constructor(private http: HttpClient, public userService: UserService, private notify: NotificationsService ) {}
+
+    selectedYear = '' + new Date().getFullYear() + '';
     yearList: string[] = [];
 
     private hotRegisterer = new HotTableRegisterer();
-    
 
-    //Hot table
+
+    // Hot table
     id = 'hotInstance';
     hotTableSettings: any = {
         colHeaders: true,
         afterChange: (changes, source) => {
-          
-          console.log(changes,source);
-          if(changes)
-          {
-           const rowProp: any = this.hotRegisterer.getInstance('hotInstance').getSourceDataAtRow(changes[0][0]);
-           
 
-            const payload:any = {};
+          console.log(changes, source);
+          if (changes) {
+           const rowProp: any = this.hotRegisterer.getInstance('hotInstance').getSourceDataAtRow(changes[0][0]);
+
+
+            const payload: any = {};
             payload[changes[0][1]] = changes[0][3];
             payload.employee_id = rowProp.employee_id;
-            if(changes[0][2] !== changes [0][3]){ // only trigger if different 
+            if (changes[0][2] !== changes [0][3]) { // only trigger if different
             this.updateList(rowProp.entry_id, payload);
             }
           }
         }
-    }
+    };
 
     ngOnInit() {
 
@@ -68,19 +67,36 @@ export class TimesheetRtoAllocationComponent implements OnInit {
         this.http.get(environment.apiUrl + '/rto/allocation/list', { params: params }).subscribe((response: any) => {
 
             // console.log(response);
-            this.hotRegisterer.getInstance(this.id).loadData(response);
-            console.log(this.hotTableSettings);
-        })
+            const currentYear = new Date().getFullYear();
+            const filteredArray = response.filter(element => {
+
+                if (element.employee.leavedate) {
+
+                 //  const selectedYear2 = new Date(this.selectedYear).getFullYear();
+                    const employeeLeaveYear = new Date(element.employee.leavedate).getFullYear();
+                    console.log(employeeLeaveYear, this.selectedYear);
+                    if (employeeLeaveYear >= parseInt(this.selectedYear, null)) { return element; }
+                } else {
+                    return element;
+                }
+
+            });
+
+           // console.log(filteredArray);
+
+            this.hotRegisterer.getInstance(this.id).loadData(filteredArray);
+           // console.log(this.hotTableSettings);
+        });
     }
 
-    updateList(allocationId, params){
+    updateList(allocationId, params) {
 
 
-      this.http.put(environment.apiUrl + `/rto/allocation/${allocationId}?filterSpinner`,params).subscribe((r)=>{
+      this.http.put(environment.apiUrl + `/rto/allocation/${allocationId}?filterSpinner`, params).subscribe((r) => {
 
 
-          this.notify.success('Sucess','Updated entry',{timeOut:4000});
-      })
+          this.notify.success('Sucess', 'Updated entry', {timeOut: 4000});
+      });
 
     }
 

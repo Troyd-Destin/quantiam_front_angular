@@ -34,6 +34,7 @@ export class XrdViewComponent implements OnInit {
     HighchartOptions: any = {
       chart: { zoomType: 'xy', panning: true, panKey: 'shift'},
       title: { text: '' },
+      credits: { text: 'Quantiam Technologies'},
       subtitle: { text: ''},
       series: [],
       xAxis: [{
@@ -45,13 +46,19 @@ export class XrdViewComponent implements OnInit {
          maxPadding: 0.25,
          tickLength: 0,
          floor: 0,
-         gridLineColor: "#e6e6e600",
-         tickColor: "#e6e6e600",
-         minorGridLineColor: "#e6e6e600",
+         gridLineColor: '#e6e6e600',
+         tickColor: '#e6e6e600',
+         minorGridLineColor: '#e6e6e600',
         title: {
           text: 'Counts',
         }
-      }],
+      },
+      {
+        visible: false,
+        floor: 0,
+        min: 0,
+        max: 0,
+     }],
       legend: {
         labelFormatter: function() {
           // do truncation here and return string
@@ -98,7 +105,7 @@ export class XrdViewComponent implements OnInit {
    // this.HighchartOptions.yAxis[0].max =  this.chart.yAxis[0].dataMax;
    // this.HighchartOptions.yAxis[0].min =  this.chart.yAxis[0].dataMin;
    // this.HighchartOptions.xAxis[0].min =  this.chart.xAxis[0].dataMin;
-    //this.HighchartOptions.xAxis[0].max =  this.chart.xAxis[0].dataMax;
+    // this.HighchartOptions.xAxis[0].max =  this.chart.xAxis[0].dataMax;
   }
 
   fetchXrdAnalysisData(id, routeChange = false) {
@@ -120,7 +127,9 @@ export class XrdViewComponent implements OnInit {
 
     this.HighchartOptions.series = [];
     let netSpectraPresent = false;
-    this.HighchartOptions.yAxis[0].max = 0;
+    this.HighchartOptions.yAxis[0].ceiling = 0;
+    this.HighchartOptions.yAxis[1].ceiling = 0;
+    this.HighchartOptions.yAxis[1].max = 0;
 
 
     this.xrdAnalyses.forEach((xrdAnalysis, index) => { // loop through each loaded Analyses
@@ -135,14 +144,14 @@ export class XrdViewComponent implements OnInit {
           spectra.name = spectra.sample_name + '';
           spectra.marker = {enabled: false } ;
           spectra.visible = true ;
-          if(spectra.y_max > this.HighchartOptions.yAxis[0].max){ this.HighchartOptions.yAxis[0].max = spectra.y_max; }
-          if(spectra.x_end > this.HighchartOptions.yAxis[0].max){ this.HighchartOptions.xAxis[0].max = spectra.x_end; }
-          if(spectra.x_start < this.HighchartOptions.xAxis[0].min){ this.HighchartOptions.xAxis[0].min = spectra.x_start; }
-          if(spectra.data.length > 1000){ spectra.turboThreshold = spectra.data.length + 100; }
+          if (spectra.y_max > this.HighchartOptions.yAxis[0].ceiling) { this.HighchartOptions.yAxis[0].ceiling = spectra.y_max; }
+          if (spectra.y_max > this.HighchartOptions.yAxis[1].ceiling) { this.HighchartOptions.yAxis[1].ceiling = spectra.y_max; this.HighchartOptions.yAxis[1].max =  this.HighchartOptions.yAxis[1].ceiling; }
+          if (spectra.x_end > this.HighchartOptions.yAxis[0].max) { this.HighchartOptions.xAxis[0].max = spectra.x_end; }
+          if (spectra.x_start < this.HighchartOptions.xAxis[0].min) { this.HighchartOptions.xAxis[0].min = spectra.x_start; }
+          if (spectra.data.length > 1000) { spectra.turboThreshold = spectra.data.length + 100; }
           this.HighchartOptions.series.push(spectra);
 
-          if(spectra.is_net)
-          {
+          if (spectra.is_net) {
               // create new spectra that is the new, then hide the other two
               netSpectraPresent = true;
           }
@@ -151,17 +160,16 @@ export class XrdViewComponent implements OnInit {
 
     });
 
-    if(netSpectraPresent)
-    {
-      this.xrdAnalyses.forEach((xrdAnalysis, index) => { 
-        xrdAnalysis.spectra.forEach(spectra => { 
-            if(!spectra.is_net){
+    if (netSpectraPresent) {
+      this.xrdAnalyses.forEach((xrdAnalysis, index) => {
+        xrdAnalysis.spectra.forEach(spectra => {
+            if (!spectra.is_net) {
               spectra.visible = false;
             }
 
-        })
+        });
 
-      })
+      });
     }
 
 
@@ -171,7 +179,8 @@ export class XrdViewComponent implements OnInit {
           if (spectra.patterns) {
             spectra.patterns.forEach(pattern => {
               pattern.type = 'column';
-              // pattern.y = pattern.intensity * pattern.yScale;
+              pattern.yAxis = 1;
+              pattern.y = pattern.intensity * pattern.yScale;
               if (pattern.display) {
                 this.HighchartOptions.series.push(pattern);
               }
@@ -182,7 +191,7 @@ export class XrdViewComponent implements OnInit {
     });
 
 
-    // console.log(this.HighchartOptions);
+    console.log(this.HighchartOptions);
     this.firstChartLoad = false;
     this.updateFlag = true;
     if (this.chart) { this.setReferences(); }
@@ -192,12 +201,23 @@ export class XrdViewComponent implements OnInit {
 
 
   yScaleChange(pattern) {
-    pattern.data.forEach((point) => {
+
+    const found = this.HighchartOptions.series.find((series) => {
+
+        if (series.name === pattern.name && series.formula === pattern.formula) {
+          return series;
+        }
+
+    });
+
+   // console.log(found);
+
+    found.data.forEach((point) => {
         point.y = point.intensity * pattern.y_scale;
     });
-    console.log(pattern.data);
+    console.log(this.HighchartOptions.series);
     this.updateFlag = true;
-    return pattern;
+    return;
 
   }
 
@@ -259,7 +279,7 @@ export class XrdViewComponent implements OnInit {
 
 
 		csvData.unshift(headers);
-	//	console.log(csvData);
+	// 	console.log(csvData);
 
 
 		const lineArray = [];
@@ -283,9 +303,9 @@ export class XrdViewComponent implements OnInit {
 
   fetchXrdAnalysisImages(id) {
     this.images = [];
-    this.http.get(environment.apiUrl + '/instrument/xrd/analysis/' + id + '/images?filterSpinner').subscribe((r:any) => {
+    this.http.get(environment.apiUrl + '/instrument/xrd/analysis/' + id + '/images?filterSpinner').subscribe((r: any) => {
 
-     
+
       this.images = r.images;
       console.log(this.images);
     },

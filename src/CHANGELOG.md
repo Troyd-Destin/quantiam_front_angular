@@ -1,18 +1,49 @@
 
 # Change Log
 
-### To do list
-
-- create a prompt for approvers when approving a request that has a negative result.
-- clean the QCID db for consistency
-
 
 ### Known Issues
 
-- Material Supplier dropdown, does not clear properly when declining to create a new tag- 
-- When using the Steel/Container/Sample ag-grid dropdown, the active/inactive filters will close the dropdown (event propgation issues)  
-- Certain project names will truncate on the Timesheet
+- Material Supplier dropdown, does not clear properly when declining to create a new tag.
 - Machine timesheets generate stat hours for some reason 
+- Cartesian XRD eva format does not include steptimes... hmm.
+- XRD runs are no longer syncing, this is because the XRD computers are off the network. 
+- Cannot view negative y axis in Arbin data viewer
+
+### To do list
+
+- Overlays for XRD viewer
+- Particle Size database
+- Display SEM EDS data in SEM viewer
+- Adapt timesheet download for new format, fix background calculations
+
+# 2019.09.44
+
+### Fixes
+
+- Deleting an approval will now remove hours by request ID, not by hours/date/employee.
+- Timesheet statistic graphs now credit Quantiam Technologies
+  
+
+# 2019.09.42
+
+### New
+- Filters for steel & material containers have been added to the SEM database screen
+- Delete buttons were added to the Projects Screen
+- You can now view, add and remove operators from the machine screen.<img style="margin:5px;" src="https://imgur.com/lgpmmjB.png" width="75%">
+- The holiday screen now allows you to navigate years, create new holidays and delete future holidays.<img style="margin:5px;" src="https://imgur.com/h9jjDuS.png" width="50%"> 
+  
+### Changes
+- Associating a container/steel with XRD or SEM run is now done through a new popup dialog<img style="margin:5px;" src="https://imgur.com/w9dwTem.png" width="75%">
+- An active employee filter option was added to timesheet report known as "User Hours".  
+
+
+### Fixes 
+
+- SEM is viewer is more responsive in smaller windows.
+- The steel select box will now search for Steel IDs
+- The Container Select box will now search for QCIDs 
+- RTO Allocation will no longer show employees who were not employed during the year selected
 
 # 2019.09.40
 
@@ -20,16 +51,22 @@
 
 - The container view will now display associated active containers of the same material, click on the row to navigate to that container.<img style="margin:5px;" src="https://imgur.com/Cd2bnMp.png" width="75%">
 
+- If a container has related XRD, an analysis tab will show up at the top. Click it the view the XRD spectra.<img style="margin:5px;" src="https://imgur.com/B472Xqq.png" width="50%">
+
 ### Changes
 
 - Material select dropdown now shows the last few QCIDs in the subtext. <img style="margin:5px;" src="https://imgur.com/8MMTDIh.png" width="75%">
 - The SDS box in the container view has been moved to the right side. 
 - The container attributes box is now on the left side
-- The Material Infomration box is now similarly styled to the container box. 
+- The Material Information box is now similarly styled to the container box. 
 
 ### Fixes
 
-- hours with a decimal caused the "8 hours a day" warning to imporerly trigger
+- hours with a decimal caused the "8 hours a day" warning to improperly trigger
+- An SDS that won't load, will no longer be displayed.<img style="margin:5px;" src="https://imgur.com/0ZvSKGk.png" width="50%"> 
+- XRD Patterns are now on a seperate yAxis, and will no longer extend into nothingness
+- XRD Pattern cards are now smaller
+- The database will now automatically capitalize material names
   
 # 2019.09.39
 

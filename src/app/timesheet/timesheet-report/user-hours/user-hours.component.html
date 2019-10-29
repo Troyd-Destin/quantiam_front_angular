@@ -63,6 +63,7 @@
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlex>
                <mat-checkbox [(ngModel)]="hourly"> Hourly </mat-checkbox>
               <mat-checkbox [(ngModel)]="salary"> Salary </mat-checkbox>
+              <mat-checkbox [(ngModel)]="active"> Active </mat-checkbox>
             </div>
            
               <div fxLayout="row"  fxLayoutAlign="end center" (click)="fetchData()" fxFlex> <button mat-raised-button color="primary" [disabled]="!endDate && !startDate"> Fetch Report </button> </div>
