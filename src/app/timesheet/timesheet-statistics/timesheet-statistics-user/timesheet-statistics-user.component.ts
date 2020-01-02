@@ -48,7 +48,7 @@ export class TimesheetStatisticsUserComponent implements OnInit {
         // colHeaders: false,
     };
     hotTableAggregateSettings: any = {
-      width: '525px',
+      width: '700px',
         // colHeaders: true,
         // colHeaders: false,
     };

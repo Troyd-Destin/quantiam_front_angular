@@ -492,6 +492,14 @@ color: rgb(255, 255, 255);
 
 }
 
+.quantiam-mat-card mat-card-actions {
+	
+	padding-top: 0px !important; 
+	margin-top:0px !important; 
+	padding-bottom: 0px !important; 
+	margin-bottom:0px !important;
+}
+
 .quantiam-mat-card mat-card-content{
 	
 	padding: 5px 15px 15px 15px !important;
@@ -512,6 +520,48 @@ color: rgb(255, 255, 255);
 	margin-bottom: 5px;
 	border-top-right-radius: 5px;
 	border-top-left-radius: 5px;
+}
+
+.quantiam-mat-card mat-card-title action-bar {
+
+	float: right;
+	display: inline-block;
+
+}
+
+.quantiam-mat-card mat-card-title action-bar button {
+
+	width: 24px;
+    height: 24px;
+    line-height: inherit;
+    top: -2px;
+
+}
+
+
+.quantiam-mat-card mat-card-title action-bar .raised {
+
+	background-color: #fff !important;
+	color: #e91e63;
+
+}
+
+.quantiam-mat-card mat-card-title action-bar button span {
+
+	width: inherit;
+    height: inherit;
+
+}
+.quantiam-mat-card mat-card-title action-bar button span mat-icon {
+
+	font-size: 18px;
+
+}
+
+.quantiam-mat-card mat-card-title action-bar span {
+
+	line-height: inherit;
+
 }
 
 .quantiam-mat-card table {
@@ -542,6 +592,12 @@ color: rgb(255, 255, 255);
 	font-size: 12px;
 	border: 0px;
 	padding: 5px;
+}
+
+
+.mat-step-header .mat-step-label.mat-step-label-active {
+    color: rgba(7, 64, 169, 0.87);
+    font-weight: 600;
 }
 
 

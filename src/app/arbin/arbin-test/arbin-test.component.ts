@@ -49,12 +49,15 @@ export class ArbinTestComponent implements OnInit {
   currentEISGraphType = 'spline';
 
   EISchartOptions: any = {
-    chart: {  panning: true},
+    chart: {  panning: true,
+      zoomType: 'xy',
+      panKey:'shift',
+    },
     title: { text: '' },
     credits:{text: 'Quantiam Technologies', href:''},
-    mapNavigation: {
+    /* mapNavigation: {
       enabled: true,
-    },
+    }, */
     tooltip: {
      // enabled: false
     },
@@ -80,12 +83,17 @@ export class ArbinTestComponent implements OnInit {
   };
 
   HighchartOptions: any = {
-    chart: {  panning: true},
+    chart: {  panning: true,
+      zoomType: 'xy',
+      panKey:'shift',
+    },
     title: { text: '' },
     credits:{text: 'Quantiam Technologies', href:''},
-    mapNavigation: {
+    /*  mapNavigation: {
       enabled: true,
-    },
+      enableDoubleClickZoomTo: true,
+      enableButtons:true,
+    },  */
     tooltip: {
       enabled: false
     },
@@ -100,7 +108,7 @@ export class ArbinTestComponent implements OnInit {
     yAxis: [{
         maxPadding: 0.25,
        tickLength: 0,
-       floor: 0,
+       //floor: 0,
       title: {
         text: '',
       } 

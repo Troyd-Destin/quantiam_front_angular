@@ -4,10 +4,11 @@
         
             <mat-button-toggle-group value="analysis"
 		
-			class="mat-elevation-z1" #selectedGraphView="matButtonToggleGroup" 
+			class="mat-elevation-z1"  
 	
 			>
 				<mat-button-toggle value="container" [routerLink]="['/material/container',container.id]"> Container </mat-button-toggle>
+				<mat-button-toggle value="log" [routerLink]="['/material/container',container.id,'log']"> Log </mat-button-toggle>
 				<mat-button-toggle value="analysis" [routerLink]="['/material/container',container.id,'analysis']"> Analysis </mat-button-toggle>
 			
 				
@@ -15,8 +16,8 @@
      </div> 
 
             <div fxLayout="row" fxFlex>
-                <section id="XRD" *ngIf="container.xrd_runs" fxLayout="column" fxFlex fxLayoutGap="10px">                        
-                    <div fxLayout="row">
+                <section id="XRD" *ngIf="container.xrd_runs[0]" fxLayout="column" fxFlex fxLayoutGap="10px">                        
+                    <div fxLayout="row" >
                             <mat-button-toggle-group id="selectedXrd" [(ngModel)]="selectedXrdRun.id"  (change)="changeAnalysis()"          
                             class="mat-elevation-z1" #containerAnalysis="matButtonToggleGroup" >
                                 <mat-button-toggle *ngFor="let xrd_run of container.xrd_runs" [value]="xrd_run.id" > {{xrd_run.name}} </mat-button-toggle>

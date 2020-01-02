@@ -56,3 +56,9 @@ markdown ::ng-deep h2 {
     height: 100% !important;
 }
 
+
+
+ .left-column ::ng-deep {
+
+ max-height: 100% !important;
+}

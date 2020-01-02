@@ -78,7 +78,7 @@ export class PatchNotesComponent implements OnInit {
       //noteObj.notes = '#'+splitVersionNotes[1];
       noteObj.notes = '# '+versionNotes;
 
-      if(index === 1){ noteObj.name = 'Known Issues'; noteObj.notes = ''+splitVersionNotes[1]; }
+      if(index === 1){ noteObj.name = 'Issues & Todo';  }
 
       this.versionArray.push(noteObj);
 

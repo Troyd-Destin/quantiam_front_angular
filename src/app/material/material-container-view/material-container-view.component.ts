@@ -12,8 +12,9 @@ import { NotificationsService } from 'angular2-notifications';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { fileURLToPath } from 'url';
-import { headersToString } from 'selenium-webdriver/http';
+import { MatDialog } from '@angular/material/dialog'; 
+
+import { MaterialHazardSymbolSelectorComponent } from '../material-hazard-symbol-selector/material-hazard-symbol-selector.component';
 
 @Component({
   selector: 'app-material-container-view',
@@ -72,7 +73,7 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 	private userService: UserService,
 	private http: HttpClient,
 	private notification: NotificationsService,
-
+	public dialog: MatDialog,
 	) { }
 
   ngOnInit() {
@@ -80,7 +81,7 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 		if (this.userService.hasPermission([40, 41])) { this.canEdit = true; }
 
 
-		let id  = this.route.snapshot.params.id;  // obtain ID from route
+		const id  = this.route.snapshot.params.id;  // obtain ID from route
 
 		
 
@@ -172,7 +173,21 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
   changeContainerStatus() {
 		const params = {};
         params['active'] =  this.container.active;
+        params['empty'] =  this.container.empty;
         this.materialLotCotainerService.update(params).subscribe();
+  }
+
+  changeContainerEmptyStatus ()
+  {
+	// call are you sure popup, asking them to scribble on bottle, place item back on the shelf where it lives
+
+	// use route to update status and notify immediate supervisor & notification list. 
+
+  }
+
+  changeContainerActiveStatus()
+  {
+	// notiication isn't required here pretty sure.
   }
 
   updateMaterial(field) {
@@ -330,15 +345,9 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
    // this.files = event.files;
     for (const droppedFile of files) {
 
-			// Is it a file?
-		//console.log(droppedFile);
-      if (droppedFile.fileEntry.isFile) {
+      if (droppedFile.fileEntry.isFile) { //is it a file?
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         fileEntry.file((file: File) => {
-
-          // Here you can access the real file
-          console.log( file);
-
 
           // You could upload it like this:
           const formData = new FormData();
@@ -355,14 +364,10 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 						this.container.lot.material = response;
 						this.files = [];
 						this.fetchSDS();
-            // Sanitized logo returned from backend
 					},
 					error => {
-											//console.log(error);
-											this.notification.error('Error', error.error.error, {showProgressBar: false, timeOut: 5000, clickToClose: true});
-											this.files = [];
-
-					});
+							this.notification.error('Error', error.error.error, {showProgressBar: false, timeOut: 5000, clickToClose: true});
+							this.files = [];	});
 
 
         });
@@ -394,10 +399,7 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 				this.showSDS = true;
 				this.showSDSError = false;
 				 this.SDSurl = window.URL.createObjectURL(response);
-			//	 console.log(this.SDSurl);
-		  // window.open(url);
 				  const ifr = document.getElementById('iframe') as HTMLIFrameElement;
-				  //console.log(ifr);
 				  
 					if (ifr) {
 						ifr.contentWindow.location.replace(this.SDSurl)
@@ -420,6 +422,8 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 			this.http.delete(environment.apiUrl + '/material/' + this.container.lot.material.id + '/sds?filterSpinner').subscribe((response) => {
 
 					// console.log(respone)
+					this.showSDS = false;
+					this.container.lot.material.sds = 0;
 					this.container.lot.material = response;
 			});
 
@@ -445,6 +449,20 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
   fixButtonState(){
 	  console.log('test');
 	  this.matButtonToggleState = 'container';
+  }
+
+  
+  openHazardDialog(): void {
+    const dialogRef = this.dialog.open(MaterialHazardSymbolSelectorComponent, {
+	  width: '80vw',
+	  position: {top:'20px'},
+      data: this.container.lot.material
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.container.lot.material = result;
+    });
   }
 
 }

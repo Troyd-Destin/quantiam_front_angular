@@ -28,7 +28,7 @@ appendTo="body"
 (scroll)="onScroll($event)" -->
 
 <ng-template ng-label-tmp let-item="item">
- <small> {{item.qcid || item.identifier}} </small> <b>{{item.name}}</b> {{item.grade}}
+ <small> {{item.id}} </small> <b>{{item.name}}</b> {{item.grade}}  {{item.supplier.supplier_name}}
 </ng-template>
 
 <ng-template ng-header-tmp>
@@ -41,19 +41,17 @@ appendTo="body"
   <div fxLayout="row" class="dropdown-options"  fxLayoutAlign="start center" fxFlex style="margin:2px;">
   
 
-    <div style="width:60px; font-size: 8px;" >{{item.identifier}}</div>
+    <div style="width:30px; font-size: 8px;" >{{item.id}}</div>
 
      <div style="width:300px; font-size: 13px; margin-right:5px;"  [ngOptionHighlight]="search" fxLayout="column">
-      <b>{{ (item.name.length>30)? (item.name | slice:0:40)+'...':(item.name)}}</b>  
+      <b>{{ (item.name.length>30)? (item.name | slice:0:30)+'...':(item.name)}}</b>  
       <div fxLayout="row" fxLayoutGap="5px"  fxLayoutAlign="start center">
 
-          <small style="font-size: 11px;">{{item.grade}}</small>    
-          <small *ngIf="item.particle_size" style="font-size: 11px;">({{item.particle_size}})</small>    
-          <div *ngIf="item.active_containers[0]" fxLayout="row" fxLayoutAlign="start start">
+         <div *ngIf="item.active_containers[0]" fxLayout="row" fxLayoutAlign="start start">
               
               <span *ngFor="let container of item.active_containers; let i = index" fxLayout="row" fxLayoutAlign="start center">
                   <small *ngIf="container.qcid && i <= 4">
-                    <span *ngIf="i === 0"> || QCID -</span>
+                    <span *ngIf="i === 0">  QCID -</span>
                     {{container.qcid}}
                     <span *ngIf="item.active_containers.length-1 > i">,</span> 
                   </small>   
@@ -66,13 +64,18 @@ appendTo="body"
         {{item.grade}}
       </div> -->
 
+    <div style="width:200px; margin-right:5px;">
+      <small style="font-size: 11px;">{{item.grade}}</small>    
+      <small style="font-size: 11px; margin-right:10px;">{{item.particle_size}}</small>    
+     
+    </div>
     <div style="width:150px; font-size: 11px; font-weight:500; margin-right:5px;">
       {{item.supplier.supplier_name}}
     </div>
-    <div style="width:80px; font-size: 10px">
+  <!--   <div style="width:80px; font-size: 10px">
       {{item.cas}}
     </div>
-
+ -->
     
     
   </div>

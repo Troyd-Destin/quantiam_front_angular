@@ -327,7 +327,7 @@ export class CoreComponent implements OnInit, OnDestroy {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '1000px';
-    dialogConfig.height = '90vh';
+   // dialogConfig.height = '90vh';
     dialogConfig.position = {'top': '50px'};
     dialogConfig.data = patchNotes;
     const dialogRef = this.dialog.open(PatchNotesComponent, dialogConfig);

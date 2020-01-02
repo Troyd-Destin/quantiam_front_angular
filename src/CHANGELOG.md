@@ -1,5 +1,7 @@
 
-# Change Log
+Change Log
+
+# Known Issues, To do List
 
 
 ### Known Issues
@@ -16,8 +18,47 @@
 - Particle Size database
 - Display SEM EDS data in SEM viewer
 - Adapt timesheet download for new format, fix background calculations
+- Sort container DB by hazard class
+- Turn container adding into a stepper
+- build new UI for displaying historical SDS
 
-# 2019.09.44
+
+#2020.01
+
+# 2019.52
+
+### New
+
+- For quality control reasons, the Material Creation Dialog has been revamped into a step by step wizard. This wizard also includes SDS inputs. <br><img style="margin:5px;" src="https://imgur.com/ZjJUv1p.png" width="75%">
+- When creating a material you can now create multiple containers with one button (yay!).<br><img style="margin:5px;" src="https://imgur.com/8nCvBpF.png" width="75%">   
+- You can now add WHMIS 2015 symbols to materials, this will be useful for future label printing & searching by warning label.
+<br><img style="margin:5px;" src="https://imgur.com/MoiSOvE.png" width="75%">
+
+# 2019.50
+
+### New
+
+- If a new SDS is uploaded to a material, the old SDS will be moved into a historical SDS directory. The historical filename will contain the date it was originally created. <br><img style="margin:5px;" src="https://imgur.com/KBazZCs.png" width="75%">
+-  Added a container trait called "empty" to track if a container is empty
+
+- The change log now has a scroll bar to facilitate navigating version histories
+
+- You can now view the Material Container  change log <br><img style="margin:5px;" src="https://imgur.com/zy4ef7X.png" width="75%">
+
+- You can now view the log for Timesheets you have access to. <br><img style="margin:5px;" src="https://imgur.com/kLry5KH.png" width="75%">
+
+### Changes
+
+- Material container card actions items are now found in the title bar.
+- The SDS upload box is visibile at all times, allowing you to update the SDS at anytime
+- The material container analysis tab will be visible at all times. 
+
+### Fixes
+
+- Changing a material name no longer breaks retrieving an SDS, accordingly the SDS name will be updated on the Q drive. 
+- Display issue for summary table on the timesheet statistics page resolved
+
+# 2019.44
 
 ### Fixes
 
@@ -25,7 +66,7 @@
 - Timesheet statistic graphs now credit Quantiam Technologies
   
 
-# 2019.09.42
+# 2019.42
 
 ### New
 - Filters for steel & material containers have been added to the SEM database screen
@@ -45,7 +86,7 @@
 - The Container Select box will now search for QCIDs 
 - RTO Allocation will no longer show employees who were not employed during the year selected
 
-# 2019.09.40
+# 2019.40
 
 ### New
 
@@ -68,14 +109,14 @@
 - XRD Pattern cards are now smaller
 - The database will now automatically capitalize material names
   
-# 2019.09.39
+# 2019.39
 
 ### Changes
 
 - The material creation screen will now politely remind you to search the database for pre-existing materials.
 - If an RTO request will result in a negative balance, a confirmation dialog will now appear.  
 
-# 2019.09.38
+# 2019.38
 
 ### New
 
@@ -99,7 +140,7 @@
 - A display error where some project names on the timesheet were being truncated at the start, rather then at the end, was resolved.
 
 
-# 2019.09.37
+# 2019.37
 
 
 ### New 

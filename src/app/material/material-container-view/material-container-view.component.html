@@ -6,14 +6,12 @@
 
 <div *ngIf="container && container.hasOwnProperty('id')" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center start">
 
-	<div *ngIf="container.xrd_runs[0]">
-		<mat-button-toggle-group [(ngModel)]="matButtonToggleState"
-		
-			class="mat-elevation-z1" #selectedGraphView="matButtonToggleGroup" 
-	
-			>
+	<!-- <div *ngIf="container.xrd_runs[0]"> -->
+	<div >
+		<mat-button-toggle-group  value='container'class="mat-elevation-z1"  >
 				<mat-button-toggle value="container" [routerLink]="['/material/container',container.id]"> Container </mat-button-toggle>
-				<mat-button-toggle value="analysis" [routerLink]="['/material/container',container.id,'analysis']" (click)="fixButtonState()" > Analysis </mat-button-toggle>
+				<mat-button-toggle value="log" [routerLink]="['/material/container',container.id,'log']"> Log </mat-button-toggle>
+				<mat-button-toggle value="analysis" [routerLink]="['/material/container',container.id,'analysis']"  > Analysis </mat-button-toggle>
 			
 				
 				</mat-button-toggle-group>
@@ -27,10 +25,25 @@
 		<div id="left column" fxLayout="column" fxFlex fxLayoutGap="10px">
 
 			<mat-card id="material card" class="quantiam-mat-card" style="padding-bottom:10px !important;"   >
-						<mat-card-title style="margin:0px">
-								Material Information
+						<mat-card-title style="margin:0px"  >
+								Material Information - {{container.lot.material.id}}
+
+								<action-bar >
+									<button mat-icon-button aria-label="Example icon-button with a heart icon"		
+									
+									[ngClass] = "{'raised': editMaterial }"
+									*ngIf="canEdit" (click)="editMaterial = !editMaterial" 
+									matTooltip="Edit this material"
+									>
+										<mat-icon >edit</mat-icon>
+									</button>
+
+									<button mat-icon-button   *ngIf="canEdit && container.lot.material.sds" 
+									(click)="deleteSDS()" color="warn" matTooltip="Delete SDS" > <mat-icon >delete</mat-icon> </button> 
+									
+								</action-bar>
 						</mat-card-title>		
-							<mat-card-content fxLayoutGap="20px"  style="padding-top:20px !important;" >
+			<mat-card-content fxLayoutGap="20px"  style="padding-top:20px !important; padding-bottom: 0px !important;" >
 					<div>
 					
 						<div fxLayoutGap="6px" fxLayout="row wrap"   fxLayoutAlign="start stretch"  >	
@@ -93,19 +106,42 @@
 						
 					</div>
 					</mat-card-content>
-					<mat-card-actions >	
+					<mat-card-actions style="" >	
 							<div fxLayout="row wrap"  fxLayoutAlign="end center" >
 	
-								<div fxLayout="row" fxFlex>
-									<ngb-alert  [hidden]="!container.lot.material.sds" type="info"  [dismissible]="false" style="margin-top:7px; margin-bottom:0px;">
-											<b> SDS Storage </b> <a target="_blank" href="File:///Q:/Administration - All Staff/SDS"> Q:\Administration - All Staff\SDS </a>
+								<div fxLayout="row" fxFlex=60>
+									<ngb-alert  [hidden]="!container.lot.material.sds" type="info"   [dismissible]="false" style="margin-top:7px; margin-bottom:0px; font-size:11px;">
+											<b> SDS Storage: </b> <a target="_blank" href="File:///Q:/Administration - All Staff/Chemical Inventory Tracking System and SDS/SDS"> Q:\Administration - All Staff\Chemical Inventory Tracking System and SDS\SDS </a>
 									</ngb-alert>
 								</div>	
-										
-								<div  fxFlex fxLayout="row"  fxLayoutAlign="end center" >
-									<button mat-button   *ngIf="canEdit" (click)="editMaterial = !editMaterial"  > Edit </button>
-									<button mat-button  *ngIf="canEdit && container.lot.material.sds" (click)="deleteSDS()" color="warn"  > Delete SDS </button> 
+
+								<div fxFlex fxLayout="row" fxLayoutAlign="end center">
+									
+									
+									<div *ngIf="!container.lot.material.whmis_hazard_symbols[0]" (click)="openHazardDialog()" fxFlex fxLayoutAlign="end center">
+										<button mat-raised-button color="primary"> Add Hazard Symbols</button>
+									</div>
+
+									
+									<div *ngIf="container.lot.material.whmis_hazard_symbols[0]" fxFlex fxLayoutAlign="end center">
+											<a  	matTooltip="View Symbol Meanings" mat-button target="_blank" href="https://www.ccohs.ca/oshanswers/chemicals/whmis_ghs/pictograms.html">
+												<img *ngFor="let hazard of container.lot.material.whmis_hazard_symbols" [src]="hazard.url" width="30px">
+											</a>
+											
+											<button mat-icon-button	
+											*ngIf="canEdit" 
+											matTooltip="Edit hazard symbols"
+											(click)="openHazardDialog()"
+											>
+											<mat-icon >edit</mat-icon>
+										</button>
+									</div>
 								</div>
+										
+								<!-- <div  fxFlex fxLayout="row"  fxLayoutAlign="end end" >
+									<!-- <button mat-button   *ngIf="canEdit" (click)="editMaterial = !editMaterial"  > Edit </button> -->
+									<!--
+								 </div> -->
 							</div>
 					</mat-card-actions>
 				
@@ -118,7 +154,39 @@
 			
 			<mat-card  id="Container Section"  class="quantiam-mat-card" style="padding-bottom:10px !important;"   >
 			<mat-card-title style="margin:0px">
-				Container Attributes
+				Container Information
+
+				<action-bar >
+					<button mat-icon-button 		
+					
+				
+					(click)="generateMaterialLargeLabelDownload()"
+					matTooltip="Print Large Label"
+					>
+						<mat-icon >label</mat-icon>
+					</button>
+					
+					
+					<button mat-icon-button 		
+					
+					[ngClass] = "{'raised': editContainer }"
+					*ngIf="canEdit" (click)="editContainer = !editContainer" 
+					matTooltip="Edit container"
+					>
+						<mat-icon >edit</mat-icon>
+					</button>
+					
+					<button mat-icon-button 		
+					
+					style="color:red;"
+					*ngIf="canEdit" 
+					(click)="deleteContainer()" 
+					matTooltip="Delete container"
+					>
+						<mat-icon >delete</mat-icon>
+					</button>
+					
+				</action-bar>
 			</mat-card-title>		
 				<mat-card-content fxLayoutGap="20px"   >
 				
@@ -227,13 +295,16 @@
 				
 				<mat-card-actions >	
 					
-					<mat-checkbox (change)="changeContainerStatus()" style="margin-left:15px" [disabled]="!editContainer" [(ngModel)] ='container.active' name="active" fxLayoutAlign="start center"> In Stock? </mat-checkbox>
 					
+					<mat-checkbox (change)="changeContainerStatus()" style="margin-left:15px" [disabled]="!editContainer" [(ngModel)] ='container.active' name="active" fxLayoutAlign="start center"> In Stock? </mat-checkbox>
+					<mat-checkbox (change)="changeContainerStatus()" style="margin-left:15px" [disabled]="!editContainer" [(ngModel)] ='container.empty' name="empty" fxLayoutAlign="start center"> Empty? </mat-checkbox>
+				
 					<div  fxLayoutAlign="end center" fxFlex>
-								<button mat-button (click)="generateMaterialLargeLabelDownload()" > Print Large Label </button> 			
-								<button mat-button  *ngIf="canEdit"  (click)="editContainer = !editContainer"  > Edit </button>						
-								<button mat-button   *ngIf="canEdit" (click)="deleteContainer()"  color="warn"  >  Delete </button>						
-								<!-- <button mat-button routerLink="/material/{{container.lot.material.id}}" >MSDS</button> -->
+								<!-- <button mat-button (click)="generateMaterialLargeLabelDownload()" > Print Large Label </button> 			
+								 --><!-- <button mat-button  *ngIf="canEdit"  (click)="editContainer = !editContainer"  > Edit </button>						
+								 -->
+								<!--  <button mat-button   *ngIf="canEdit" (click)="deleteContainer()"  color="warn"  >  Delete </button>						
+								 --><!-- <button mat-button routerLink="/material/{{container.lot.material.id}}" >MSDS</button> -->
 					</div>
 				</mat-card-actions>
 				
@@ -284,27 +355,33 @@
 
 		<div id="right column" fxLayout="column" fxFlex>
 
-				<div  [hidden]="!showSDS"  fxLayout="column" fxLayoutGap="10px">
-					
-							  <iframe  id="iframe" type="application/pdf"  height="750px" style="overflow: auto; min-width: 50%;">
-							  </iframe>
-				</div>
+			
 				
-				<div fxLayout="column" id="MSDS Query SECTION" *ngIf="!container.lot.material.sds"  fxFlex fxLayoutGap="20px">
+				<div fxLayout="column" id="MSDS Query SECTION"  fxFlex fxLayoutGap="20px" >
 				
+				
+
 				
 					<div fxFlex fxLayout="column" fxLayoutGap="20px">
 
 						
 
-							<ngb-alert type="danger"  [dismissible]="false"> <b> Oops </b> We can't find an SDS. Employers are required by <a target="_blank" href="https://www.ccohs.ca/oshanswers/chemicals/whmis_ghs/sds.html"> federal WHIMIS 2015 legislation </a> to have an SDS readily accessible.  </ngb-alert>
+							<ngb-alert type="danger" *ngIf="!container.lot.material.sds"   [dismissible]="false"> <b> Oops </b> We can't find an SDS. Employers are required by <a target="_blank" href="https://www.ccohs.ca/oshanswers/chemicals/whmis_ghs/sds.html"> federal WHIMIS 2015 legislation </a> to have an SDS readily accessible.  </ngb-alert>
 								
-							<ngx-file-drop dropZoneLabel="Drag & Drop SDS File or click ----->   " (onFileDrop)="dropped($event)"  showBrowseBtn="false"
+							<ngx-file-drop browseBtnLabel="Drag & Drop or click to upload an SDS" (onFileDrop)="dropped($event)"  [showBrowseBtn]="true"
 							(onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
 
 							
 								
 							</ngx-file-drop>
+
+
+							<div  [hidden]="!showSDS"  fxLayout="column" fxLayoutGap="10px" fxFlex>
+					
+								<iframe  id="iframe" type="application/pdf"  style="overflow: auto; min-width: 50%;" fxFlex>
+								</iframe>
+							</div>
+
 							<div class="upload-table" *ngIf="files[0]">
 									<table class="table">
 										<thead>
@@ -376,6 +453,8 @@
 
 			
 				</div>
+
+			
 		</div>
 
 	</div>

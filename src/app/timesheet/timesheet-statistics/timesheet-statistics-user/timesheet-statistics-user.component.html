@@ -50,7 +50,7 @@ fxLayout.gt-md="row"  fxLayoutAlign.gt-md="center start" fxLayoutGap="20px"
           <h3> Summary  <small>{{reportObj?.denomination}}</small> </h3>
             <hot-table class="hot" hotId="aggregate" [settings]="hotTableAggregateSettings" [licenseKey]="'non-commercial-and-evaluation'">
 
-                <hot-column data="name" title="Project" read-only></hot-column>
+                <hot-column data="name" title="Project" width="70px" read-only></hot-column>
                 <hot-column data="description" title="Name" read-only></hot-column>
                 <hot-column data="total" title="Total" read-only></hot-column>
                 <hot-column data="percent" title="Percent" read-only></hot-column>

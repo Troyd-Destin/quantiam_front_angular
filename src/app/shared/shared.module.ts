@@ -17,6 +17,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 import { MatInputModule } from '@angular/material/input';
 
@@ -72,6 +74,8 @@ import { MiniXrdComponent } from './mini-xrd/mini-xrd.component';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { MiniSemComponent } from './mini-sem/mini-sem.component';
 
+import { ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
     imports: [
         AgGridModule.withComponents([
@@ -90,11 +94,14 @@ import { MiniSemComponent } from './mini-sem/mini-sem.component';
         MatButtonModule,
         MatCheckboxModule,
         MatInputModule,
+        MatDatepickerModule,
+        MatSelectModule,
         NgxFileDropModule ,
         NgbModule,
         CKEditorModule,
         SlickCarouselModule,
-        HighchartsChartModule
+        HighchartsChartModule,
+        ReactiveFormsModule
     ],
     declarations: [
         AutoFocusDirective,
@@ -159,8 +166,8 @@ import { MiniSemComponent } from './mini-sem/mini-sem.component';
         CommentsComponent,
         LogsComponent,
         SlickCarouselModule,
-        
         SafePipe,
+        ReactiveFormsModule
 
     ],
     schemas: [NO_ERRORS_SCHEMA]

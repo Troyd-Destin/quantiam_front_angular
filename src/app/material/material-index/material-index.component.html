@@ -9,12 +9,21 @@
 			<a mat-tab-link *ngIf="selectedMaterialId" [routerLink]="['/material',selectedMaterialId]" routerLinkActive="mat-tab-link-active"> 
 				Material{{' - '+selectedMaterialId}}
 			</a> 
+
+
 			
 			<a mat-tab-link  
 				*ngIf="selectedContainerId" 
 				routerLinkActive="mat-tab-link-active" 
 				[routerLink]="['/material/container',selectedContainerId]" >Container{{' - '+selectedContainerId}}</a>
-		</nav>
+			
+				<a mat-tab-link  routerLink="settings" routerLinkActive="mat-tab-link-active"> 
+					
+					 <mat-icon>settings_applications</mat-icon>
+					 Settings
+				 </a>
+			</nav>
+
 			
 		<div class="tab-content">
 				<router-outlet ></router-outlet>

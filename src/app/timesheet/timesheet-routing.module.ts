@@ -24,6 +24,7 @@ import { TimesheetStatisticsUserComponent } from './timesheet-statistics/timeshe
 import { TimesheetStatisticsCompanyComponent } from './timesheet-statistics/timesheet-statistics-company/timesheet-statistics-company.component';
 
 import { TimesheetSettingsComponent } from './timesheet-settings/timesheet-settings.component';
+import { TimesheetLogComponent } from './timesheet-log/timesheet-log.component';
 
 import { UserHoursComponent } from './timesheet-report/user-hours/user-hours.component';
 
@@ -31,6 +32,7 @@ const routes: Routes = [{
     path: '',
     component: TimesheetIndexComponent,
     children: [
+   
     {
       path: ':user/year/:year/payperiod/:payperiod',
       data: { key: 'timesheet'},
@@ -40,6 +42,11 @@ const routes: Routes = [{
       path: ':user/bank-history/:type',
       data: { key: 'timesheet-bank'},
       component: TimesheetBankComponent,
+    },
+    {
+      path: ':user/log',
+      data: { key: 'timesheet-log'},
+      component: TimesheetLogComponent,
     },
     {
       path: 'calendar',

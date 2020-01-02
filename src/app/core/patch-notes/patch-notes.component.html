@@ -1,20 +1,27 @@
 
 
 <!-- loaded from remote url -->
-<div class="patch-notes-wrapper" fxLayout="column" fxLayoutGap="10px"> 
-    <div class="markdown-menu-wrapper" fxLayout="row" fxFlex fxLayoutGap="20px" fxLayoutAlign="center start">
-        <!-- <menu thing here></menu> -->
+<div mat-dialog-content  fxLayout="column" fxLayoutGap="10px"> 
+    <div  fxLayout="row" fxFlex fxLayoutGap="20px" fxLayoutAlign="center start">
     
-        <div fxLayoutGap="10px" fxLayout="column" fxLayoutAlign="start start">
+        <div fxLayoutGap="10px" class="left-column" fxLayout="column" 
+        fxLayoutAlign="start start" fxFlex=15>
             <h1> Change Log </h1>
-            <button *ngFor="let version of versionArray; let i = index" mat-raised-button (click)="selectedVersion = versionArray[i]">
-                {{version.name}}
-             </button>
-           
+            <div style="overflow:auto; max-height: 100% !important;"  
+            >
+                <button *ngFor="let version of versionArray; let i = index"
+                style="margin:5px;"
+                mat-raised-button (click)="selectedVersion = versionArray[i]">
+                    {{version.name}}
+                </button>
+            </div>
         </div>
-        <markdown *ngIf="selectedVersion"  [data]="selectedVersion.notes" fxFlex></markdown>
+        <div fxFlex>
+             <markdown *ngIf="selectedVersion"  [data]="selectedVersion.notes" fxFlex=80></markdown>
+        </div>
     </div>
-    <div fxLayout="row" fxLayoutAlign="end start" >
-            <button mat-raised-button (click)="close()" color="primary"> Close </button>
-    </div>
+ 
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="end start" >
+        <button mat-raised-button (click)="close()" color="primary"> Close </button>
 </div>

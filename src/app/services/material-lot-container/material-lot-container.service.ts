@@ -86,7 +86,7 @@ export class MaterialLotContainerService {
 	// if(params.active) params.active = params.active ? 1 : 0;
 
      console.log(params);
-    return  this.http.put<any>(environment.apiUrl + `${this.endpoint}/${id}?filterSpinner`, params)
+    return  this.http.put<any>(environment.apiUrl + `${this.endpoint}/${id}`, params)
      .pipe(
         tap( r => {
 
@@ -107,7 +107,7 @@ export class MaterialLotContainerService {
 
   create(params) {
 
-	return this.http.post<any>(environment.apiUrl + `${this.endpoint}?filterSpinner`, params)
+	return this.http.post<any>(environment.apiUrl + `${this.endpoint}`, params)
      .pipe(
         tap( r => {}),
         map( res => {

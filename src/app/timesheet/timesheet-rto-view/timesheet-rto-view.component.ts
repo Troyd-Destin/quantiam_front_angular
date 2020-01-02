@@ -421,7 +421,7 @@ export class TimesheetRtoViewComponent implements OnInit {
 
         });
 
-        this.http.post(environment.apiUrl + '/rto/existingabsences?filterSpinner', params).subscribe((r: any) => {
+        this.http.get(environment.apiUrl + '/rto/existingabsences?filterSpinner', {params:params}).subscribe((r: any) => {
 
             this.existingAbsences = r;
 

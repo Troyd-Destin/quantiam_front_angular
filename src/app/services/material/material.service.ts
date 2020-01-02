@@ -58,6 +58,24 @@ export class MaterialService {
 
   }
 
+ update(params, id = null) {
+		if (!id) {  id = this.last_id; }
+
+     return this.http.put<any>(environment.apiUrl + `${this.endpoint}/${id}?filterSpinner`, params)
+     .pipe(
+        tap( r => {}),
+        map( res => {
+
+
+			 this.notification.success('Updated', 'Material updated', {showProgressBar: false, timeOut: 3000, clickToClose: true});
+			 return res;
+		}), // return results without transformation
+         // catchError( (e) => this.notification.error('Error','Problem updating material.',{showProgressBar:false,timeOut:3000,clickToClose: true})),
+
+      );
+
+  }
+
 
   create(params) {
 
