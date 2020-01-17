@@ -118,12 +118,12 @@
 								<div fxFlex fxLayout="row" fxLayoutAlign="end center">
 									
 									
-									<div *ngIf="!container.lot.material.whmis_hazard_symbols[0]" (click)="openHazardDialog()" fxFlex fxLayoutAlign="end center">
+									<div *ngIf="container.lot.material.whmis_hazard_symbols?.length === 0" (click)="openHazardDialog()" fxFlex fxLayoutAlign="end center">
 										<button mat-raised-button color="primary"> Add Hazard Symbols</button>
 									</div>
 
 									
-									<div *ngIf="container.lot.material.whmis_hazard_symbols[0]" fxFlex fxLayoutAlign="end center">
+									<div *ngIf="container.lot.material.whmis_hazard_symbols?.length > 0" fxFlex fxLayoutAlign="end center">
 											<a  	matTooltip="View Symbol Meanings" mat-button target="_blank" href="https://www.ccohs.ca/oshanswers/chemicals/whmis_ghs/pictograms.html">
 												<img *ngFor="let hazard of container.lot.material.whmis_hazard_symbols" [src]="hazard.url" width="30px">
 											</a>

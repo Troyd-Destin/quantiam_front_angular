@@ -1,5 +1,6 @@
 import {  AfterViewInit,  Component,  OnInit,  ViewChild} from '@angular/core';
-import {  HttpClient,  HttpResponse} from '@angular/common/http';
+
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { MaterialCreationDialogComponent } from '../material-creation-dialog/material-creation-dialog.component';
@@ -24,19 +25,28 @@ export class MaterialContainerDatabaseComponent implements OnInit {
   private gridColumnApi;
    rowData: any = [{}, {}];
 
-  private components: any;
+
+   gridOptions;
+   rowModelType;
+   rowSelection;
+   maxBlocksInCache;
+   cacheBlockSize;
+   oldCellValue;
+
+
+   components: any;
    columnDefs;
-  private statusBar: any;
+   statusBar: any;
    defaultColDef;
-  private rowModelType;
-  private cacheBlockSize;
-  private maxBlocksInCache;
-  private getRowNodeId;
-  private icons;
-  private cellOldValue;
+   getRowNodeId;
+   icons;
+   cellOldValue;
    searchBarValue: string;
-  private frameworkComponents;
-  private context;
+   frameworkComponents;
+   totalRows;
+   context;
+
+   filteredTextFilterName;
 
   private locationList: any = [];
   private locationListObj: any[];
@@ -62,14 +72,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
       },
       {
-        field: 'material_id',
-        width: 100,
-        hide: true,
-        headerName: 'Material ID',
-
-      },
-      {
-        field: 'material_id',
+        field: 'lot.material.id',
         width: 100,
         hide: true,
         headerName: 'Material ID',
@@ -84,7 +87,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
       {
         width: 200,
         headerName: 'Name',
-        field: 'material',
+        field: 'lot.material.name',
         cellStyle: function (params) {
 
           return {
@@ -96,35 +99,36 @@ export class MaterialContainerDatabaseComponent implements OnInit {
       },
       {
         width: 150,
-        field: 'grade'
+        field: 'lot.material.grade',        
+        headerName: 'Grade',
       },
       {
         width: 100,
-        field: 'particle_size',
-        headerName: 'Size',
+        field: 'lot.material.particle_size',
+        headerName: 'P. Size',
       },
       {
         width: 100,
-        field: 'supplier'
+        field: 'lot.material.supplier.supplier_name',
+        headerName: 'Suplier',
       },
       {
-        field: 'lot_name',
+        field: 'lot.lot_name',
         headerName: 'Lot',
         width: 90,
       },
       {
         width: 80,
-        field: 'size',
         headerName: 'Amount',
+        cellRenderer: function(cell) {
 
+           if(!cell.hasOwnProperty('data')){ return ''; };
+            return cell.data.denomaintion;
+        }
       },
-      // {
-      //   width: 90,
-      //   field: 'catalog'
-      // },
       {
         width: 90,
-        field: 'cas',
+        field: 'lot.material.cas',
       },
       {
         width: 90,
@@ -134,7 +138,8 @@ export class MaterialContainerDatabaseComponent implements OnInit {
       {
         width: 100,
         field: 'container_name',
-        headerName: 'Name',
+        headerName: 'C. Name',
+        hide: true,
       },
       /* {
         width: 80,
@@ -143,7 +148,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
       }, */
       {
         width: 120,
-        field: 'location',
+        field: 'location.name',
         cellEditorParams: {
           values: this.locationList,
         },
@@ -178,12 +183,29 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
       },
       {
+        field: 'empty',
+        width: 80,
+        headerName: 'Empty',
+        cellRenderer: function(cell) {
+
+          //console.log(cell);
+          if (cell.value) {
+            return '<p style="color:orange">Empty</p>';
+          }
+
+          return '';
+        },
+
+      },
+      {
         field: 'sds',
         width: 80,
         headerName: 'SDS',
         cellRenderer: function(cell) {
 
          // console.log(cell);
+           console.log(cell);
+           if(!cell.hasOwnProperty('data')){ return '' };
           if (cell.value) {
             return '<p style="color:green"> SDS </p>';
           }
@@ -237,9 +259,21 @@ export class MaterialContainerDatabaseComponent implements OnInit {
       ]
     };
 
-    // this.rowModelType = "serverSide";
-    // this.cacheBlockSize = 10;
-    // this.maxBlocksInCache = 2;
+    this.gridOptions = {
+      rowSelection: 'single',
+      cacheBlockSize: 20,
+      enableRangeSelection: true,
+      // maxBlocksInCache: 2,
+     // enableServerSideFilter: false,
+     // enableServerSideSorting: false,
+      rowModelType: 'serverSide',
+      pagination: true,
+      maxConcurrentDatasourceRequests: 1,
+       paginationPageSize: 10,
+      // paginationAutoPageSize: true
+    };
+
+
     this.getRowNodeId = function (item) {
       return item.id;
     };
@@ -256,7 +290,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
   ngOnInit() {
 
 
-    this.containerAggridService.getDatabase({});
+ //   this.containerAggridService.getDatabase({});
     this.locationService.getList();
     this.locationService.list$.subscribe((r) => {
 
@@ -278,7 +312,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
       if (queryParams.refreshTable === 'true') {
 
-        this.fetchTableData();
+        this.refreshDatabase();
         console.log('fetched?');
 
       }
@@ -313,16 +347,13 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
   /** Ag Grid Comparison */
 
+  
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
+    const datasource = this.fetchMaterialContainerDatabase();
+    params.api.setServerSideDatasource(datasource); // datasource needs to be a serverSide model
 
-
-    this.containerAggridService.Database$.subscribe((r) => {
-      // console.log(r);
-      if (r[0]) { this.rowData = r; }
-      setTimeout(() => {  this.gridApi.sizeColumnsToFit(); }, 300);
-    });
   }
 
   sizeColumnsToFit() {
@@ -436,9 +467,42 @@ export class MaterialContainerDatabaseComponent implements OnInit {
     const dialogRef = this.dialog.open(MaterialCreationDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
     //  console.log('The dialog was closed');
-      this.fetchTableData();
+      this.refreshDatabase();
     });
 }
+
+
+fetchMaterialContainerDatabase () {
+
+  return {
+    getRows: (params2: any) => {
+      console.log(params2);
+      const page = (this.gridApi.paginationGetCurrentPage() + 1);
+
+      const requestParams: HttpParams = new HttpParams()
+      .append('limit', `${this.gridOptions.cacheBlockSize}`)      
+      .append('like', `${this.filteredTextFilterName}`)
+      .append('page', `${page}`);
+
+        this.http.get(environment.apiUrl + '/material/lot/container', {params: requestParams}).subscribe((response: any) => {
+
+             params2.successCallback(response.data, response.total);
+             this.totalRows = response.total;
+             this.gridApi.sizeColumnsToFit();
+           ///  console.log(params2);
+        });
+
+    }
+  };
+
+}
+
+refreshDatabase() {
+
+  const datasource = this.fetchMaterialContainerDatabase();
+  this.gridApi.setServerSideDatasource(datasource);
+}
+
 
   // ngOnDestroy() {  }
 

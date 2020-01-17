@@ -197,7 +197,8 @@
         
 
                         <div fxLayout="row" fxLayoutAlign="end center" fxFlex>
-                            <button [disabled]="!requestTime.hours && !requestTime.date && !requestTime.type" mat-raised-button color="primary" (click)="createTimeRequest()"> Add Request </button>
+                            <button [disabled]="!requestTime.hours || !requestTime.date || !requestTime.type"
+                             mat-raised-button color="primary" (click)="createTimeRequest()"> Add Request </button>
                         </div>
 
 

@@ -361,43 +361,51 @@ export class MaterialCreationDialogComponent implements OnInit, OnDestroy {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, I want this.'
         }).then((result) => {
-            for (let index = 0; index < this.containersToMake; index++) {
-                this.createAllTheStuff();
-            }
+
+            this.createAllTheStuff();
+           
 			this.goForward(stepper);
 			this.stuffCreated = true;
         });
 
     }
 
-    createAllTheStuff() {
+    createAllTheStuff(createNewMaterial = true, onlyCreateContainer = false) {
+
+       
         if (this.creatingMaterial && this.lot.isNew) {
-            this.materialService.create(this.material).subscribe((response) => {
-                this.lot.slip_material_id = response.id;
+            this.materialService.create(this.material).subscribe((material) => {
+                this.material.id = material.id;
+                this.lot.slip_material_id = material.id;
 
                 this.materialLotService.create(this.lot).subscribe((lot_response) => {
 
                     console.log(lot_response);
                     this.container.lot_id = lot_response.id;
-                    this.materialLotContainerService.create(this.container).subscribe((container) => {
-                        this.createdContainers.push(container);
-                        console.log(this.createdContainers);
-                        this.container = container;
-                        this.codeRegistryStep = true;
-                        this.materialCreationStep = false;
-                        this.createdContainers = this.createdContainers;
-                    });
+                    for (let index = 0; index < this.containersToMake; index++) {
+                        this.materialLotContainerService.create(this.container).subscribe((container) => {
+                            this.createdContainers.push(container);
+                            console.log(this.createdContainers);
+                            this.container = container;
+                            this.codeRegistryStep = true;
+                            this.materialCreationStep = false;
+                            this.createdContainers = this.createdContainers;
+                        });
+                    }
+
+                  
                 });
             });
             return;
 
         }
-        if (!this.creatingMaterial && this.lot.isNew) {
+        if ((!this.creatingMaterial && this.lot.isNew) ) {
             this.lot.slip_material_id = this.material.slip_material_id;
+            this.material.id = this.material.slip_material_id;
             this.materialLotService.create(this.lot).subscribe((response) => {
                 this.container.lot_id = response.id;
                 if (this.container.container_received) { this.container.container_received = _moment(this.container.container_received).format('YYYY-MM-DD'); }
-
+                for (let index = 0; index < this.containersToMake; index++) {
                 this.materialLotContainerService.create(this.container).subscribe((container) => {
                     this.createdContainers.push(container);
                     this.createdContainers = this.createdContainers;
@@ -406,25 +414,29 @@ export class MaterialCreationDialogComponent implements OnInit, OnDestroy {
                     this.codeRegistryStep = true;
                     this.materialCreationStep = false;
                 });
+              }
             });
+       
             return;
 
         }
 
         ///// Only new container.
         this.container.lot_id = this.lot.id;
-        if (this.container.container_received) { this.container.container_received = _moment(this.container.container_received).format('YYYY-MM-DD'); }
+        if (this.container.container_received ) { this.container.container_received = _moment(this.container.container_received).format('YYYY-MM-DD'); }
         console.log(this.container);
-        this.materialLotContainerService.create(this.container).subscribe((response) => {
-            this.createdContainers.push(response);
-            this.createdContainers = this.createdContainers;
-            console.log(this.createdContainers);
-            this.container = response;
-            this.codeRegistryStep = true;
-            this.materialCreationStep = false;
+                for (let index = 0; index < this.containersToMake; index++) {
+                this.materialLotContainerService.create(this.container).subscribe((response) => {
+                    this.createdContainers.push(response);
+                    this.createdContainers = this.createdContainers;
+                    console.log(this.createdContainers);
+                    this.container = response;
+                    this.codeRegistryStep = true;
+                    this.materialCreationStep = false;
 
 
-        });
+                });
+            }
         return;
 
     }

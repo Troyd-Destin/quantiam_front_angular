@@ -386,12 +386,12 @@
 							<mat-datepicker #myDatepicker41></mat-datepicker>
 						</mat-form-field>
 						
-						<div *ngIf="!material?.whmis_hazard_symbols[0]" (click)="openHazardDialog()" fxFlex fxLayoutAlign="end center">
+						<div *ngIf="!material?.whmis_hazard_symbols" (click)="openHazardDialog()" fxFlex fxLayoutAlign="end center">
 							<button mat-raised-button color="primary"> Add Hazard Symbols</button>
 						</div>
 
 						
-						<div *ngIf="material?.whmis_hazard_symbols[0]" fxLayout="column" fxLayoutGap="10px" fxFlex=40 fxLayoutAlign="end center">
+						<div *ngIf="material?.whmis_hazard_symbols" fxLayout="column" fxLayoutGap="10px" fxFlex=40 fxLayoutAlign="end center">
 
 							<div fxLayout="row" fxFlex>
 								<a  	matTooltip="View Symbol Meanings" mat-button target="_blank" href="https://www.ccohs.ca/oshanswers/chemicals/whmis_ghs/pictograms.html">

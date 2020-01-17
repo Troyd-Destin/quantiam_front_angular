@@ -381,11 +381,8 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
   }
 
 	public fileOver(event) {
-    console.log(event);
-  }
-
+	}
   public fileLeave(event) {
-    console.log(event);
 	}
 
 
@@ -456,6 +453,7 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(MaterialHazardSymbolSelectorComponent, {
 	  width: '80vw',
 	  position: {top:'20px'},
+	  disableClose: true,
       data: this.container.lot.material
     });
 

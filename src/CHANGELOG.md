@@ -10,20 +10,40 @@ Change Log
 - Machine timesheets generate stat hours for some reason 
 - Cartesian XRD eva format does not include steptimes... hmm.
 - XRD runs are no longer syncing, this is because the XRD computers are off the network. 
+- SEM Runs don't always sync to Q drive. 
 - Cannot view negative y axis in Arbin data viewer
 
 ### To do list
 
+- Org chart for employees.
 - Overlays for XRD viewer
 - Particle Size database
-- Display SEM EDS data in SEM viewer
-- Adapt timesheet download for new format, fix background calculations
+- Display SEM EDS data in SEM viewer 
 - Sort container DB by hazard class
-- Turn container adding into a stepper
 - build new UI for displaying historical SDS
+- keywords for material searches
+- printable standard labels using WHIMS pictograms
+- Settings section in Materials
+- Who receives empty notifications (Fu, Supervisor, Sherry) Materials settings
+- Sort contianer list by empty and in stock
+- Add holidays to the RTO calendar 
+- Approving an RTO doesn't doesn't trigger the timesheet calculation process. 
 
 
-#2020.01
+# 2020.03
+
+### Fixes 
+
+- Users who have unpaid entries will now have their overtime calculated properly.
+- Adding an SDS no longer causes the application to continually "think". 
+- Adding multiple containers no longer duplicates materials. 
+
+# 2020.01
+
+### Fixes 
+
+- You can no longer submit a RTO without having hours, date & type value selected. 
+- An issue where Manual CTO bank changes were appearing in the printed timesheet was fixed. 
 
 # 2019.52
 
