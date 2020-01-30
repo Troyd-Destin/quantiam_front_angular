@@ -31,6 +31,12 @@ Change Log
 - Approving an RTO doesn't doesn't trigger the timesheet calculation process. 
 
 
+# 2020.XX
+
+## New
+
+- 
+
 # 2020.03
 
 ### Fixes 

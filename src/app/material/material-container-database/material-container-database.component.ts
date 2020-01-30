@@ -1,12 +1,13 @@
 import {  AfterViewInit,  Component,  OnInit,  ViewChild} from '@angular/core';
-import {  HttpClient,  HttpResponse} from '@angular/common/http';
+
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
-import { MaterialCreationDialogComponent } from '../material-creation-dialog/material-creation-dialog.component';
+import { MaterialCreationDialogComponent } from '../../material/material-creation-dialog/material-creation-dialog.component';
 
-import {  MaterialLotContainerDatatableService} from '../services/material-lot-container-datatable.service';
+import {  MaterialLotContainerDatatableService} from '../../material/services/material-lot-container-datatable.service';
 import { MaterialLotContainerService } from '../../services/material-lot-container/material-lot-container.service';
-import {  ContainerAggridService } from '../services/container-aggrid.service';
+import {  ContainerAggridService } from '../../material/services/container-aggrid.service';
 import { LocationService } from '../../services/location/location.service';
 import {  environment} from '../../../environments/environment';
 
@@ -24,19 +25,32 @@ export class MaterialContainerDatabaseComponent implements OnInit {
   private gridColumnApi;
    rowData: any = [{}, {}];
 
-  private components: any;
+
+   gridOptions;
+   rowModelType;
+   rowSelection;
+   maxBlocksInCache;
+   cacheBlockSize;
+   oldCellValue;
+
+   timeoutTextFilter;
+   components: any;
    columnDefs;
-  private statusBar: any;
+   statusBar: any;
    defaultColDef;
-  private rowModelType;
-  private cacheBlockSize;
-  private maxBlocksInCache;
-  private getRowNodeId;
-  private icons;
-  private cellOldValue;
+   getRowNodeId;
+   icons;
+   cellOldValue;
    searchBarValue: string;
-  private frameworkComponents;
-  private context;
+   frameworkComponents;
+   totalRows;
+   context;
+
+
+   supplierSearchFilter;
+
+   filteredTextFilterName;
+   hazardSearchFilter;
 
   private locationList: any = [];
   private locationListObj: any[];
@@ -62,29 +76,43 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
       },
       {
-        field: 'material_id',
+        field: 'lot.material.id',
         width: 100,
         hide: true,
         headerName: 'Material ID',
 
       },
       {
-        field: 'material_id',
-        width: 100,
-        hide: true,
-        headerName: 'Material ID',
-
-      },
-      {
-        width: 70,
+        width: 60,
         field: 'qcid',
         headerName: 'QCID',
         suppressMenu: true,
       },
       {
+        width: 100,
+        //field: 'lot.material.whmis_hazard_symbols',
+        headerName: 'Warnings',
+        cellRenderer: (cell) => {
+
+          let html = '';
+         
+          if (cell.data.lot.material.whmis_hazard_symbols.length > 0) {
+
+            cell.data.lot.material.whmis_hazard_symbols.forEach((hazard) => {
+
+              html = html + '<img  style="margin-right:2px" src="' + hazard.url + '" width="25px" >';
+            });
+
+            return html;
+
+          } else { return ''; }
+        }
+
+      },
+      {
         width: 200,
         headerName: 'Name',
-        field: 'material',
+        field: 'lot.material.name',
         cellStyle: function (params) {
 
           return {
@@ -96,45 +124,48 @@ export class MaterialContainerDatabaseComponent implements OnInit {
       },
       {
         width: 150,
-        field: 'grade'
+        field: 'lot.material.grade',
+        headerName: 'Grade',
+      },
+      {
+        width: 90,
+        field: 'lot.material.particle_size',
+        headerName: 'P. Size',
       },
       {
         width: 100,
-        field: 'particle_size',
-        headerName: 'Size',
+        field: 'lot.material.supplier.supplier_name',
+        headerName: 'Suplier',
       },
       {
-        width: 100,
-        field: 'supplier'
-      },
-      {
-        field: 'lot_name',
+        field: 'lot.lot_name',
         headerName: 'Lot',
         width: 90,
       },
       {
         width: 80,
-        field: 'size',
         headerName: 'Amount',
+        cellRenderer: function(cell) {
 
-      },
-      // {
-      //   width: 90,
-      //   field: 'catalog'
-      // },
-      {
-        width: 90,
-        field: 'cas',
+           if (!cell.hasOwnProperty('data')) { return ''; }
+            return cell.data.amount_ordered + ' ' + cell.data.denomination;
+        }
       },
       {
-        width: 90,
+        width: 80,
+        field: 'lot.material.cas',
+        hide: true,
+      },
+      {
+        width: 80,
         field: 'purchase_order',
         headerName: 'PO #',
       },
       {
         width: 100,
         field: 'container_name',
-        headerName: 'Name',
+        headerName: 'C. Name',
+        hide: true,
       },
       /* {
         width: 80,
@@ -143,7 +174,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
       }, */
       {
         width: 120,
-        field: 'location',
+        field: 'location.name',
         cellEditorParams: {
           values: this.locationList,
         },
@@ -151,9 +182,17 @@ export class MaterialContainerDatabaseComponent implements OnInit {
       },
 
       {
-        width: 120,
+        width: 90,
         field: 'container_received',
         headerName: 'Received',
+        valueFormatter: (params) => {
+
+          if (params.value) {
+          const split = params.value.split(' ');
+          return split[0];
+          } else { return ''; }
+
+        },
         // sort: 'desc',
      //   cellEditor: "datePicker",
       },
@@ -178,36 +217,54 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
       },
       {
-        field: 'sds',
+        field: 'empty',
         width: 80,
+        headerName: 'Empty',
+        cellRenderer: function(cell) {
+
+          // console.log(cell);
+          if (cell.value) {
+            return '<p style="color:orange">Empty</p>';
+          }
+
+          return '';
+        },
+
+      },
+      {
+        field: 'sds',
+        width: 60,
         headerName: 'SDS',
         cellRenderer: function(cell) {
 
          // console.log(cell);
-          if (cell.value) {
+         //  console.log(cell);
+           if (!cell.hasOwnProperty('data')) { return ''; }
+          if (cell.data.lot.material.sds) {
             return '<p style="color:green"> SDS </p>';
           }
-          if (cell.data.active && cell.data.supplier === 'Quantiam' && !cell.value) {
+          if (cell.data.lot.material.active && cell.data.lot.material.supplier === 'Quantiam' && !cell.value) {
             return '<p style="color:orange">Internal</p>';
           }
-          if (cell.data.active) { return '<p style="color:red">Missing</p>'; }
+          if (cell.data.lot.material.active) { return '<p style="color:red">Missing</p>'; }
 
           return '';
         },
         onCellClicked: (cell ) => {
 
-          if (cell.value) { this.fetchSDS(cell.data.material_id); }
+          if (cell.data) { this.fetchSDS(cell.data.lot.material.id); }
           //  console.log('worked');
 
         }
 
       },
       {
-        width: 100,
+        width: 80,
         field: 'sds_updated_at',
         headerName: 'SDS Updated',
         hide: true,
       },
+     
     ];
 
  //   this.components = { datePicker: getDatePicker() };
@@ -237,9 +294,21 @@ export class MaterialContainerDatabaseComponent implements OnInit {
       ]
     };
 
-    // this.rowModelType = "serverSide";
-    // this.cacheBlockSize = 10;
-    // this.maxBlocksInCache = 2;
+    this.gridOptions = {
+      rowSelection: 'single',
+      cacheBlockSize: 100,
+      enableRangeSelection: true,
+       maxBlocksInCache: 2,
+       enableServerSideFilter: true,
+     // enableServerSideSorting: false,
+      rowModelType: 'serverSide',
+      pagination: true,
+      maxConcurrentDatasourceRequests: 1,
+     // paginationPageSize: 20,
+      paginationAutoPageSize: true
+    };
+
+
     this.getRowNodeId = function (item) {
       return item.id;
     };
@@ -256,7 +325,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
   ngOnInit() {
 
 
-    this.containerAggridService.getDatabase({});
+ //   this.containerAggridService.getDatabase({});
     this.locationService.getList();
     this.locationService.list$.subscribe((r) => {
 
@@ -278,7 +347,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
       if (queryParams.refreshTable === 'true') {
 
-        this.fetchTableData();
+        this.refreshDatabase();
         console.log('fetched?');
 
       }
@@ -313,16 +382,13 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
   /** Ag Grid Comparison */
 
+
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
+    const datasource = this.fetchMaterialContainerDatabase();
+    params.api.setServerSideDatasource(datasource); // datasource needs to be a serverSide model
 
-
-    this.containerAggridService.Database$.subscribe((r) => {
-      // console.log(r);
-      if (r[0]) { this.rowData = r; }
-      setTimeout(() => {  this.gridApi.sizeColumnsToFit(); }, 300);
-    });
   }
 
   sizeColumnsToFit() {
@@ -409,7 +475,40 @@ export class MaterialContainerDatabaseComponent implements OnInit {
   }
 
   onFilterChanged() {
-    this.gridApi.setQuickFilter(this.searchBarValue);
+    // this.gridApi.setQuickFilter(this.searchBarValue);
+
+      clearTimeout(this.timeoutTextFilter);
+      this.timeoutTextFilter = setTimeout((x) => {
+
+              this.refreshDatabase();
+      }, 500 );
+
+
+  }
+
+  hazardSelectionChanged(event)
+  {
+    
+    this.hazardSearchFilter = [];
+    event.forEach(element => {
+      this.hazardSearchFilter.push(element.id);
+    });
+
+    this.refreshDatabase();
+
+  }
+
+
+  supplierFilterChanged(event)
+  {
+    
+    this.supplierSearchFilter = [];
+    event.forEach(element => {
+      this.supplierSearchFilter.push(element.id);
+    });
+
+    this.refreshDatabase();
+
   }
 
 
@@ -436,10 +535,50 @@ export class MaterialContainerDatabaseComponent implements OnInit {
     const dialogRef = this.dialog.open(MaterialCreationDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
     //  console.log('The dialog was closed');
-      this.fetchTableData();
+      this.refreshDatabase();
     });
 }
+
+
+fetchMaterialContainerDatabase () {
+
+  return {
+    getRows: (params2: any) => {
+      console.log(params2);
+      const page = (this.gridApi.paginationGetCurrentPage() + 1);
+
+      const requestParams: HttpParams = new HttpParams()
+      .append('limit', `${this.gridOptions.cacheBlockSize}`)
+      .append('like', `${this.filteredTextFilterName}`)
+      .append('hazards[]', this.hazardSearchFilter)
+      .append('suppliers[]', this.supplierSearchFilter)
+      .append('page', `${page}`);
+
+
+
+        this.http.get(environment.apiUrl + '/material/lot/container', {params: requestParams}).subscribe((response: any) => {
+
+             params2.successCallback(response.data, response.total);
+             this.totalRows = response.total;
+             this.gridApi.sizeColumnsToFit();
+           ///  console.log(params2);
+        });
+
+    }
+  };
+
+}
+
+refreshDatabase() {
+
+  const datasource = this.fetchMaterialContainerDatabase();
+  this.gridApi.setServerSideDatasource(datasource);
+}
+
 
   // ngOnDestroy() {  }
 
 }
+
+
+

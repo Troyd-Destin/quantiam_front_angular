@@ -13,8 +13,10 @@ import { SelectMaterialContainerService } from './select-material-container.serv
 })
 export class SelectMaterialContainerComponent implements OnInit {
 
-
-  selectedPersons = [{ name: 'Karyn Wright' }, { name: 'Other' }];
+  constructor(
+    public http: HttpClient, 
+    private _elementRef: ElementRef, 
+    private service: SelectMaterialContainerService) { }
 
   input$ = new Subject<string>();
 
@@ -53,19 +55,6 @@ export class SelectMaterialContainerComponent implements OnInit {
   lastPage = 9999999;
 
   firstLoad = true;
-
-
-  people3$: Observable<[]>;
-  people3Loading = false;
-  people3input$ = new Subject<string>();
-
-  constructor(public http: HttpClient, private _elementRef: ElementRef, private service: SelectMaterialContainerService) {
-
-
-
-  }
-
-
 
   ngOnInit() {
 

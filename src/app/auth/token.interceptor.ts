@@ -35,7 +35,7 @@ export class TokenInterceptor implements HttpInterceptor {
             let headers;
 
             request.params.keys().forEach((key) => {
-                if (request.params.get(key) == null) {} else {
+                if (request.params.get(key) == null || request.params.get(key) === 'undefined' ) {} else {
                     newParams[key] = request.params.get(key);
                 }
             });

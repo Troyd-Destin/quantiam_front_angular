@@ -12,7 +12,7 @@
                <!--  <app-select-material></app-select-material> -->
                
                     <ngb-alert   type="info"  [dismissible]="false" style="margin-top:7px; margin-bottom:0px;">
-                            <b> SDS Storage </b> <a target="_blank" href="File:///Q:/Administration - All Staff/SDS"> Q:\Administration - All Staff\SDS </a>
+                            <b> SDS Storage </b> <a target="_blank" href="File:///Q:/Administration - All Staff/Chemical Inventory Tracking System and SDS/SDS"> Q:\Administration - All Staff\SDS </a>
                     </ngb-alert>
 
                     <mat-slide-toggle  (click)="toggleCellsEditable()"> Edit Table </mat-slide-toggle> 
@@ -22,18 +22,14 @@
         <div fxFlex fxLayout="row"  fxLayoutAlign="center center" fxLayoutGap="20px"> 
 
            
-                <mat-form-field style="width:300px">
-                        <!--   <span matPrefix>+1 &nbsp;</span> -->
-                        <input type="text" matInput (keyup)="onFilterChanged()"  [(ngModel)]="searchBarValue"  placeholder="Search">
-                        <mat-icon matSuffix>search</mat-icon>
-                    </mat-form-field>  
+              
         </div>
         <div fxFlex fxLayout="row"  fxLayoutAlign="end start" fxLayoutGap="10px">
            
             <button *ngIf="userService.hasPermission([40,41])"  (click)="openDialog()" mat-raised-button color="primary"> 
                 Create Container
             </button>
-            <button (click)="fetchTableData()" mat-raised-button> 
+            <button (click)="refreshDatabase()" mat-raised-button> 
                 Refresh
                 <mat-icon  >refresh</mat-icon>
             </button>
@@ -48,11 +44,34 @@
     <!-- <button mat-button > Active </button> -->
     </div>
 
+    <div fxLayout="row" fxFlexAlign="start center">
+
+            <div fxFlex fxLayout="row" fxLayoutGap="10px">
+                    <div style="max-width: 350px;"> 
+                        <app-select-hazard (change)="hazardSelectionChanged($event)" ></app-select-hazard>
+                    </div>
+                    <div style="max-width: 350px;"> 
+                        <app-select-material-supplier  [multiple]="true"  (change)="supplierFilterChanged($event)" ></app-select-material-supplier>
+                 
+                    </div>
+                   
+
+            </div>
+
+            <div fxFlex fxLayout='row' fxLayoutAlign="end center">
+                <mat-form-field style="width:300px">
+                    <!--   <span matPrefix>+1 &nbsp;</span> -->
+                    <input type="text" matInput (keyup)="onFilterChanged()"  [(ngModel)]="filteredTextFilterName"  placeholder="Search">
+                    <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>  
+            </div>
+    </div>
+
     <ag-grid-angular 
         #agGrid
            
               
-        style="width: calc(100%); height:calc(78vh); margin-top:10px;" 
+        style="width: calc(100%); height:calc(60vh); margin-top:10px;" 
         class="ag-theme-balham"
         animateRows="true"
         
@@ -62,14 +81,14 @@
         [columnDefs]="columnDefs"
       
         [defaultColDef]="defaultColDef"
-        	
+        [gridOptions]="gridOptions"
         (gridReady)="onGridReady($event)"
         (rowDoubleClicked)="onRowDoubleClicked($event)"
         (cellEditingStopped)="onCellEditingStopped($event)"
         (cellEditingStarted)="onCellEditingStarted($event)"
        
         [enableRangeSelection]="true"
-        [pagination]="false"
+        [pagination]="true"
        
     
         

@@ -15,9 +15,7 @@ import { SelectSteelService } from './select-steel.service';
 })
 export class SelectSteelComponent implements OnInit {
 
-
-  selectedPersons = [{ name: 'Karyn Wright' }, { name: 'Other' }];
-
+  constructor(public http: HttpClient, private _elementRef: ElementRef, private service: SelectSteelService) {}
 
   input$ = new Subject<string>();
 
@@ -57,9 +55,7 @@ export class SelectSteelComponent implements OnInit {
 
   firstLoad = true;
 
-  constructor(public http: HttpClient, private _elementRef: ElementRef, private service: SelectSteelService) {}
-
-
+ 
 
   ngOnInit() {
 

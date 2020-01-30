@@ -75,6 +75,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { MiniSemComponent } from './mini-sem/mini-sem.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { SelectHazardComponent } from './select-hazard/select-hazard.component';
 
 @NgModule({
     imports: [
@@ -139,6 +140,7 @@ import { ReactiveFormsModule } from '@angular/forms';
         SafePipe,
         MiniXrdComponent,
         MiniSemComponent,
+        SelectHazardComponent,
     ],
     exports: [
         SelectArbinTestComponent,
@@ -157,6 +159,7 @@ import { ReactiveFormsModule } from '@angular/forms';
         SelectTgarunComponent,
         SelectPermissionComponent,
         SelectSteelComponent,
+        SelectHazardComponent,
         MiniXrdComponent,
         MiniSemComponent,
         NgxFileDropModule ,
