@@ -17,6 +17,7 @@ Change Log
 
 - Org chart for employees.
 - Overlays for XRD viewer
+- Fix XRD datasource
 - Particle Size database
 - Display SEM EDS data in SEM viewer 
 - Sort container DB by hazard class
@@ -36,7 +37,8 @@ Change Log
 
 - Users who have unpaid entries will now have their overtime calculated properly.
 - Adding an SDS no longer causes the application to continually "think". 
-- Adding multiple containers no longer duplicates materials. 
+- Adding multiple containers no longer duplicates materials.
+- RTO Allocation for 2020 works as intended  
 
 # 2020.01
 
