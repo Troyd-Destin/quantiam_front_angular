@@ -1,4 +1,5 @@
 import {  AfterViewInit,  Component,  OnInit,  ViewChild} from '@angular/core';
+import { FileSaverService } from 'ngx-filesaver';
 
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -48,9 +49,9 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
 
    supplierSearchFilter;
-
    filteredTextFilterName;
    hazardSearchFilter;
+   locationSearchFilter;
 
   private locationList: any = [];
   private locationListObj: any[];
@@ -61,6 +62,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
 
   constructor( public userService: UserService,
+    private _FileSaverService: FileSaverService,
     private dialog: MatDialog, private http: HttpClient, public router: Router, private route: ActivatedRoute,
     public containerAggridService: ContainerAggridService,	private locationService: LocationService,
     private materialLotContainerService: MaterialLotContainerService ) {
@@ -226,6 +228,10 @@ export class MaterialContainerDatabaseComponent implements OnInit {
           if (cell.value) {
             return '<p style="color:orange">Empty</p>';
           }
+          else
+          {
+            return '<p style="color:green">No</p>';
+          }
 
           return '';
         },
@@ -237,24 +243,18 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         headerName: 'SDS',
         cellRenderer: function(cell) {
 
-         // console.log(cell);
-         //  console.log(cell);
-           if (!cell.hasOwnProperty('data')) { return ''; }
+          if (!cell.hasOwnProperty('data')) { return ''; }
           if (cell.data.lot.material.sds) {
             return '<p style="color:green"> SDS </p>';
           }
-          if (cell.data.lot.material.active && cell.data.lot.material.supplier === 'Quantiam' && !cell.value) {
+          if (cell.data.lot.material.supplier_id === 14) {
             return '<p style="color:orange">Internal</p>';
           }
-          if (cell.data.lot.material.active) { return '<p style="color:red">Missing</p>'; }
-
+          if (!cell.value) { return '<p style="color:red">Missing</p>'; }
           return '';
         },
         onCellClicked: (cell ) => {
-
           if (cell.data) { this.fetchSDS(cell.data.lot.material.id); }
-          //  console.log('worked');
-
         }
 
       },
@@ -273,7 +273,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
       sortable: true,
       resizable: true,
-      filter: true,
+      filter: false,
       cellStyle: function (params) {
         return {
           cursor: 'pointer',
@@ -299,8 +299,8 @@ export class MaterialContainerDatabaseComponent implements OnInit {
       cacheBlockSize: 100,
       enableRangeSelection: true,
        maxBlocksInCache: 2,
-       enableServerSideFilter: true,
-     // enableServerSideSorting: false,
+     //  enableServerSideFilter: true,
+      enableServerSideSorting: false,
       rowModelType: 'serverSide',
       pagination: true,
       maxConcurrentDatasourceRequests: 1,
@@ -510,6 +510,18 @@ export class MaterialContainerDatabaseComponent implements OnInit {
     this.refreshDatabase();
 
   }
+  
+  locationFilterChanged(event)
+  {
+    
+    this.locationSearchFilter = [];
+    event.forEach(element => {
+      this.locationSearchFilter.push(element.id);
+    });
+
+    this.refreshDatabase();
+
+  }
 
 
 	fetchSDS(id) {
@@ -552,6 +564,7 @@ fetchMaterialContainerDatabase () {
       .append('like', `${this.filteredTextFilterName}`)
       .append('hazards[]', this.hazardSearchFilter)
       .append('suppliers[]', this.supplierSearchFilter)
+      .append('locations[]', this.locationSearchFilter)
       .append('page', `${page}`);
 
 
@@ -574,6 +587,19 @@ refreshDatabase() {
   const datasource = this.fetchMaterialContainerDatabase();
   this.gridApi.setServerSideDatasource(datasource);
 }
+
+downloadIventoryList()
+{
+
+  this.http.get(environment.apiUrl + '/material/lot/container/inventorylist', {
+    responseType: 'blob', // This must be a Blob type
+  }).subscribe((res) => {
+    this._FileSaverService.save(<any>res, 'inventory.xlsx');
+  });
+  
+ 
+}
+
 
 
   // ngOnDestroy() {  }

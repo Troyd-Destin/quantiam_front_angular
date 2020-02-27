@@ -1,5 +1,5 @@
 import { environment } from '../environments/environment';
-
+import { FileSaverModule } from 'ngx-filesaver';
 import { AuthService } from './services/auth/auth.service';
 import { AuthGuardService } from './services/auth-guard/auth-guard.service';
 
@@ -82,7 +82,7 @@ export function gettoken () {
 
       }),
 
-
+    FileSaverModule,
     MaterialDesignModule,
     HighchartsChartModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),

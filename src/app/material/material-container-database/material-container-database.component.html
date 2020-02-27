@@ -25,7 +25,9 @@
               
         </div>
         <div fxFlex fxLayout="row"  fxLayoutAlign="end start" fxLayoutGap="10px">
-           
+            <button  (click)="downloadIventoryList()" mat-raised-button color="primary"> 
+                Inventory List
+            </button>
             <button *ngIf="userService.hasPermission([40,41])"  (click)="openDialog()" mat-raised-button color="primary"> 
                 Create Container
             </button>
@@ -53,6 +55,9 @@
                     <div style="max-width: 350px;"> 
                         <app-select-material-supplier  [multiple]="true"  (change)="supplierFilterChanged($event)" ></app-select-material-supplier>
                  
+                    </div>
+                    <div style="max-width: 350px;"> 
+                       <app-select-location [multiple]="true" (change)="locationFilterChanged($event)" ></app-select-location>
                     </div>
                    
 

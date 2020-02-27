@@ -11,7 +11,7 @@ Change Log
 - Cartesian XRD eva format does not include steptimes... hmm.
 - XRD runs are no longer syncing, this is because the XRD computers are off the network. 
 - SEM Runs don't always sync to Q drive. 
-- Cannot view negative y axis in Arbin data viewer
+- timesheet 65, why isn't there two 0.5 for CTO? 
 
 ### To do list
 
@@ -20,7 +20,6 @@ Change Log
 - Fix XRD datasource
 - Particle Size database
 - Display SEM EDS data in SEM viewer 
-- Sort container DB by hazard class
 - build new UI for displaying historical SDS
 - keywords for material searches
 - printable standard labels using WHIMS pictograms
@@ -28,14 +27,23 @@ Change Log
 - Who receives empty notifications (Fu, Supervisor, Sherry) Materials settings
 - Sort contianer list by empty and in stock
 - Add holidays to the RTO calendar 
+- Change Regular to hours work in the report screen
 - Approving an RTO doesn't doesn't trigger the timesheet calculation process. 
 
 
-# 2020.XX
+# 2020.05
 
-## New
+### New
 
-- 
+- A hazard and empty column was added to the material container DB screen
+- A hazard,  supplier and location filter was added to the material container DB screen
+
+### Changes
+- The chemical inventory list is now downloaded from a button near the top of the material container DB screen
+
+### Fixes
+
+- Container dropdown now once again properly searches qcid, grade and lot
 
 # 2020.03
 

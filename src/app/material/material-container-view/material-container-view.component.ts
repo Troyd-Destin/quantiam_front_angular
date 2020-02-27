@@ -463,4 +463,12 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
     });
   }
 
+  SDStabChanged(event){
+	  console.log(event);
+	  if(event.tab.textLabel === 'SDS')
+	  {
+		  this.fetchSDS();
+	  }
+  }
+
 }

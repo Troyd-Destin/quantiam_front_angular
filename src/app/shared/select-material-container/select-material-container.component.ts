@@ -39,9 +39,9 @@ export class SelectMaterialContainerComponent implements OnInit {
   itemsBuffer = [];
   allRetrievedItemsList = [];
   dropdownWidth = 950; // in pixels
-  bufferSize = 100;
+  bufferSize = 40;
   virtualScroll = true;
-  numberOfItemsFromEndBeforeFetchingMore = 40;
+  numberOfItemsFromEndBeforeFetchingMore = 15;
   totalResults;
   loading = false;
   page = 1;
@@ -102,12 +102,7 @@ export class SelectMaterialContainerComponent implements OnInit {
     .subscribe((data) => {
 
       this.allRetrievedItemsList = this.itemsBuffer;
-      this.itemsBuffer = data;
-      console.log(this.itemsBuffer);
-      if (!data[0]) {
-        if (this.itemsBuffer.length < this.bufferSize) { this.itemsBuffer = this.allRetrievedItemsList; }
-      }
-
+      this.itemsBuffer = data.data;
       this.searchingTerm = false;
       this.loading = false;
 

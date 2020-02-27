@@ -4,7 +4,7 @@
 	
 </div>
 
-<div *ngIf="container && container.hasOwnProperty('id')" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center start">
+<div *ngIf="container && container.hasOwnProperty('id')" fxLayout="column" style='height:100%;' fxLayoutGap="10px" fxLayoutAlign="start start">
 
 	<!-- <div *ngIf="container.xrd_runs[0]"> -->
 	<div >
@@ -19,7 +19,7 @@
 
 
 
-	<div fxLayoutGap="20px"  fxLayout.gt-lg="row wrap"  fxLayout="column" fxLayoutAlign="start stretch">
+	<div fxLayoutGap="20px"  fxLayout.gt-lg="row wrap" style="height:100%;" fxLayout="column" fxLayoutAlign="start stretch">
 		
 		
 		<div id="left column" fxLayout="column" fxFlex fxLayoutGap="10px">
@@ -111,7 +111,8 @@
 	
 								<div fxLayout="row" fxFlex=60>
 									<ngb-alert  [hidden]="!container.lot.material.sds" type="info"   [dismissible]="false" style="margin-top:7px; margin-bottom:0px; font-size:11px;">
-											<b> SDS Storage: </b> <a target="_blank" href="File:///Q:/Administration - All Staff/Chemical Inventory Tracking System and SDS/SDS"> Q:\Administration - All Staff\Chemical Inventory Tracking System and SDS\SDS </a>
+											<b> SDS Storage: </b> <a target="_blank" href="File:///Q:/Administration - All Staff/Chemical Inventory Tracking System and SDS/SDS">
+												 Q:\Administration - All Staff\Tracking SDS\SDS </a>
 									</ngb-alert>
 								</div>	
 
@@ -353,106 +354,106 @@
 			 
 		</div>
 
-		<div id="right column" fxLayout="column" fxFlex>
+		<div id="right column" style="height:100%;" fxLayout="column" fxFlex>
 
-			
-				
-				<div fxLayout="column" id="MSDS Query SECTION"  fxFlex fxLayoutGap="20px" >
-				
-				
+			<mat-tab-group backgdroundColor="primary" (focusChange)="SDStabChanged($event)" fxFlex>
+				<mat-tab label="SDS" fxLayout="column" id="MSDS Query SECTION"  fxFlex fxLayoutGap="20px" >  
 
-				
-					<div fxFlex fxLayout="column" fxLayoutGap="20px">
-
+						<div fxFlex fxLayout="column"  style="height:100%;" fxLayoutGap="20px">
+								<ngb-alert type="danger" *ngIf="!container.lot.material.sds"   [dismissible]="false"> <b> Oops </b> We can't find an SDS. Employers are required by <a target="_blank" href="https://www.ccohs.ca/oshanswers/chemicals/whmis_ghs/sds.html"> federal WHIMIS 2015 legislation </a> to have an SDS readily accessible.  </ngb-alert>
+									
+								<ngx-file-drop browseBtnLabel="Drag & Drop or click to upload an SDS" (onFileDrop)="dropped($event)"  [showBrowseBtn]="true"
+								(onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+	
+								
+									
+								</ngx-file-drop>
+	
+	
+								<div  [hidden]="!showSDS"  fxLayout="column" fxLayoutGap="10px" fxFlex>
 						
-
-							<ngb-alert type="danger" *ngIf="!container.lot.material.sds"   [dismissible]="false"> <b> Oops </b> We can't find an SDS. Employers are required by <a target="_blank" href="https://www.ccohs.ca/oshanswers/chemicals/whmis_ghs/sds.html"> federal WHIMIS 2015 legislation </a> to have an SDS readily accessible.  </ngb-alert>
-								
-							<ngx-file-drop browseBtnLabel="Drag & Drop or click to upload an SDS" (onFileDrop)="dropped($event)"  [showBrowseBtn]="true"
-							(onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
-
-							
-								
-							</ngx-file-drop>
-
-
-							<div  [hidden]="!showSDS"  fxLayout="column" fxLayoutGap="10px" fxFlex>
-					
-								<iframe  id="iframe" type="application/pdf"  style="overflow: auto; min-width: 50%;" fxFlex>
-								</iframe>
-							</div>
-
-							<div class="upload-table" *ngIf="files[0]">
-									<table class="table">
-										<thead>
-											<tr>
-												<th>Name</th>
-											</tr>
-										</thead>
-										<tbody class="upload-name-style">
-											<tr *ngFor="let item of files; let i=index">
-												<td><strong>{{ item.relativePath }}</strong></td>
-											</tr>
-										</tbody>
-									</table>
+									<iframe  id="iframe" type="application/pdf"  style="overflow: auto; min-width: 50%;" fxFlex>
+									</iframe>
 								</div>
-
-
-							<div *ngIf="searchingPossibleSDS && !sdsSearch[0]" fxLayoutAlign="center center" fxLayout="column">
-
-									<mat-spinner diameter=10></mat-spinner>
-									<p>Searching online for possible SDS</p>
-							</div>
-
-						
-						
-
-					</div>
-
-					<div *ngIf="!searchingPossibleSDS && sdsSearch[0]" fxFlex>
-							<ngb-alert type="warning"  [dismissible]="false"> Here is a list of possible SDS's from <a target="_blank" href="https://chemicalsafety.com/sds-search/"> sds.chemicalsafety.com </a>  to help you out. </ngb-alert>
-							<mat-card   class="quantiam-mat-card" style="padding-bottom:10px !important;"   >
-									<mat-card-title style="margin:0px">
-										Possible Safety Data Sheet(s) 
-								</mat-card-title>		
-								<mat-card-content fxLayoutGap="20px"   >
-
-										
-										
-
+	
+								<div class="upload-table" *ngIf="files[0]">
 										<table class="table">
-												<thead>
+											<thead>
 												<tr>
-												<th scope="col">ID</th>
-												<th scope="col">Material Name</th>
-												<th scope="col">Manufacturer</th>
-												<th scope="col">CAS#</th>
-												<!-- <th scope="col"></th>  -->
-												
+													<th>Name</th>
 												</tr>
-												</thead>
-												<tbody>
-														<tr class="clickable" *ngFor="let item of sdsSearch" >
-
-																<td  (click)="navigateToSDS(item)"> {{item[0]}} </td>
-																<td  (click)="navigateToSDS(item)"> {{item[1]}} </td>
-																<td  (click)="navigateToSDS(item)"> {{item[2]}} </td>
-																<td  (click)="navigateToSDS(item)"> {{item[3]}} </td>
-																<!-- <td>
-																	<button mat-button matTooltip="Remember this SDS for another time.">Save
-																	</button>
-																</td>  -->
-														</tr>
-
-												</tbody>
+											</thead>
+											<tbody class="upload-name-style">
+												<tr *ngFor="let item of files; let i=index">
+													<td><strong>{{ item.relativePath }}</strong></td>
+												</tr>
+											</tbody>
 										</table>
-								</mat-card-content>
-							</mat-card>
+									</div>
+	
+	
+								<div *ngIf="searchingPossibleSDS && !sdsSearch[0]" fxLayoutAlign="center center" fxLayout="column">
+	
+										<mat-spinner diameter=10></mat-spinner>
+										<p>Searching online for possible SDS</p>
+								</div>
+	
+							
+							
+	
+						</div>
+	
+						<div *ngIf="!searchingPossibleSDS && sdsSearch[0]" fxFlex>
+								<ngb-alert type="warning"  [dismissible]="false"> Here is a list of possible SDS's from <a target="_blank" href="https://chemicalsafety.com/sds-search/"> sds.chemicalsafety.com </a>  to help you out. </ngb-alert>
+								<mat-card   class="quantiam-mat-card" style="padding-bottom:10px !important;"   >
+										<mat-card-title style="margin:0px">
+											Possible Safety Data Sheet(s) 
+									</mat-card-title>		
+									<mat-card-content fxLayoutGap="20px"   >
+	
+											
+											
+	
+											<table class="table">
+													<thead>
+													<tr>
+													<th scope="col">ID</th>
+													<th scope="col">Material Name</th>
+													<th scope="col">Manufacturer</th>
+													<th scope="col">CAS#</th>
+													<!-- <th scope="col"></th>  -->
+													
+													</tr>
+													</thead>
+													<tbody>
+															<tr class="clickable" *ngFor="let item of sdsSearch" >
+	
+																	<td  (click)="navigateToSDS(item)"> {{item[0]}} </td>
+																	<td  (click)="navigateToSDS(item)"> {{item[1]}} </td>
+																	<td  (click)="navigateToSDS(item)"> {{item[2]}} </td>
+																	<td  (click)="navigateToSDS(item)"> {{item[3]}} </td>
+																	<!-- <td>
+																		<button mat-button matTooltip="Remember this SDS for another time.">Save
+																		</button>
+																	</td>  -->
+															</tr>
+	
+													</tbody>
+											</table>
+									</mat-card-content>
+								</mat-card>
+	
+						</div>
+	
+				
+					
 
-					</div>
-
+				</mat-tab>
+				<mat-tab label="Historical SDS"> Historical SDS </mat-tab>
+				<mat-tab label="Certificate of Analyses"> Certificate of Analyses </mat-tab>
+			  </mat-tab-group>
+				
 			
-				</div>
 
 			
 		</div>
