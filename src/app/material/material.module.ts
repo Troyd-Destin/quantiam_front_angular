@@ -10,7 +10,6 @@ import { WebsocketService } from '../services/websocket/websocket.service';
 
 
 
-import { Select2Module } from 'ng2-select2';
 // import { DataTablesModule } from 'angular-datatables';
 
 import { SharedModule } from '../shared/shared.module';
@@ -38,7 +37,6 @@ import { MaterialHazardSymbolSelectorComponent } from './material-hazard-symbol-
   	MaterialDesignModule,
     MaterialRoutingModule,
   	// DataTablesModule,
-    Select2Module,
   ],
   declarations: [MaterialCreationDialogComponent, MaterialIndexComponent, MaterialDatabaseComponent, MaterialViewComponent,
 	  MaterialComponent, MaterialContainerViewComponent, MaterialContainerDatabaseComponent, MaterialContainerViewAnalysisComponent, MaterialSettingsComponent, MaterialContainerLogComponent,  MaterialHazardSymbolSelectorComponent, ],
