@@ -22,12 +22,6 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 
 import { MatInputModule } from '@angular/material/input';
 
-import { Select2Module } from 'ng2-select2';
-import { Select2MaterialComponent } from './select2-material/select2-material.component';
-import { Select2MaterialLotComponent } from './select2-material-lot/select2-material-lot.component';
-import { Select2MaterialSupplierComponent } from './select2-material-supplier/select2-material-supplier.component';
-import { Select2UserComponent } from './select2-user/select2-user.component';
-import { Select2MaterialLotContainerComponent } from './select2-material-lot-container/select2-material-lot-container.component';
 
 import { SelectProjectComponent } from './select-project/select-project.component';
 import { SelectUserComponent } from './select-user/select-user.component';
@@ -87,7 +81,6 @@ import { SelectLocationComponent } from './select-location/select-location.compo
              XrdAnalysesFileRendererComponent,
              AgGridTimesheetValueEditorComponent]),
         CommonModule,
-        Select2Module,
         NgSelectModule,
         FormsModule,
         FlexLayoutModule,
@@ -107,12 +100,7 @@ import { SelectLocationComponent } from './select-location/select-location.compo
     ],
     declarations: [
         AutoFocusDirective,
-        SelectProjectComponent,
-        Select2MaterialComponent,
-        Select2MaterialLotComponent,
-        Select2MaterialSupplierComponent,
-        Select2UserComponent,
-        Select2MaterialLotContainerComponent,
+        SelectProjectComponent,       
         SelectUserComponent,
         SelectExperimentComponent,
         SelectMaterialContainerComponent,
@@ -148,11 +136,7 @@ import { SelectLocationComponent } from './select-location/select-location.compo
         SelectArbinTestComponent,
         SelectMaterialSupplierComponent,
         SelectMaterialComponent,
-        SelectSemrunTypeComponent,
-        Select2MaterialComponent,
-        Select2MaterialLotComponent,
-        Select2MaterialSupplierComponent,
-        Select2UserComponent,
+        SelectSemrunTypeComponent,      
         SelectProjectComponent,
         SelectUserComponent,
         SelectExperimentComponent,
