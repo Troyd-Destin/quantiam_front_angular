@@ -4,7 +4,6 @@ import { MarkdownModule } from 'ngx-markdown';
 import { CoreRoutingModule } from './core-routing.module';
 
 import { NgHttpLoaderModule } from 'ng-http-loader';
-import { Select2Module } from 'ng2-select2';
 
 import { SharedModule } from '../shared/shared.module';
 import { MaterialDesignModule } from '../material-design/material-design.module';

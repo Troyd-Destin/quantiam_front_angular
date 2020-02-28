@@ -35,8 +35,8 @@ export class UserViewComponent implements OnInit, OnDestroy {
   this.editUser = false;
  }
 
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-   @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+   @ViewChild(MatSort) sort: MatSort;
 
   id: any;
   user: any = {};
