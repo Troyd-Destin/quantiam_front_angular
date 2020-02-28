@@ -9,7 +9,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 
 import { NgxFileDropModule  } from 'ngx-file-drop';
-import { AgGridModule } from 'ag-grid-angular';
+import { AgGridModule } from '@ag-grid-community/angular';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 

@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, ViewChild, ViewContainerRef} from '@angular/core';
 
-import {ICellEditorAngularComp} from 'ag-grid-angular';
-
+import {ICellEditorAngularComp} from '@ag-grid-community/angular';
 @Component({
     // tslint:disable-next-line:component-selector
     selector: 'numeric-cell',

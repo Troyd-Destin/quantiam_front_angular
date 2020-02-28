@@ -1,7 +1,8 @@
 
 import {AfterViewInit, Component, ViewChild, ViewContainerRef, ElementRef} from '@angular/core';
 
-import {ICellEditorAngularComp} from 'ag-grid-angular';
+import {ICellEditorAngularComp} from '@ag-grid-community/angular';
+
 
 import * as moment from 'moment';
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild, HostListener, ViewContainerRef, ElementRef } from '@angular/core';
-import { ICellEditorAngularComp } from 'ag-grid-angular';
+import { ICellEditorAngularComp } from '@ag-grid-community/angular';
 import {MatDialog } from '@angular/material/dialog';
 import { DialogSteelContainerSelectionComponent } from '../dialog-steel-container-selection/dialog-steel-container-selection.component';
 
@@ -22,7 +22,7 @@ export class AgGridSemContainerSteelEditComponent implements ICellEditorAngularC
    constructor(private popUpSteel: PopUpSteelCardServiceService, public dialog: MatDialog) { }
 
 
-  agInit(params: import('ag-grid-community').ICellEditorParams): void {
+  agInit(params: import('@ag-grid-community/all-modules').ICellEditorParams): void {
 
 
       const dialogRef = this.dialog.open(DialogSteelContainerSelectionComponent, {

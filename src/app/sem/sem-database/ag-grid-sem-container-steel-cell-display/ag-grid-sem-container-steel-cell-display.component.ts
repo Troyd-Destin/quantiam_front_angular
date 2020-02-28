@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {  environment} from '../../../../environments/environment';
 
-import {ICellRendererAngularComp} from 'ag-grid-angular';
+import {ICellRendererAngularComp} from '@ag-grid-community/angular';
 
 import { NotificationsService } from 'angular2-notifications';
 
@@ -40,7 +40,7 @@ export class AgGridSemContainerSteelCellDisplayComponent implements ICellRendere
     this.params = params;
 
   }
-  afterGuiAttached?(params?: import('ag-grid-community').IAfterGuiAttachedParams): void {
+  afterGuiAttached?(params?: import('@ag-grid-community/all-modules').IAfterGuiAttachedParams): void {
     throw new Error('Method not implemented.');
   }
 
