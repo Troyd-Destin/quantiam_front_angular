@@ -95,7 +95,7 @@ const routes: Routes = [{
       ]
     },
     {
-      path: 'statistics',
+      path: 'insights',
       data: { key: 'timesheet-statistics'},
       component: TimesheetStatisticsComponent,
       children: [

@@ -8,6 +8,8 @@ import {LicenseManager} from '@ag-grid-enterprise/core';
 LicenseManager.setLicenseKey('Evaluation_License_Not_For_Production_13_November_2019__MTU3MzYwMzIwMDAwMA==1d5643fcff17c78b7eb9e3341b0df45f');
 
 
+import 'angular2-notifications';
+
 if (environment.production) {
   enableProdMode();
 }

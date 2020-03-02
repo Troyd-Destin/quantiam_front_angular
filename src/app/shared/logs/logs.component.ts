@@ -4,6 +4,7 @@ import {  environment} from '../../../environments/environment';
 import { NotificationsService } from 'angular2-notifications';
 import * as _moment from 'moment';
 
+import { AllModules  } from '@ag-grid-enterprise/all-modules';
 
 @Component({
   selector: 'app-logs',
@@ -21,6 +22,7 @@ export class LogsComponent implements OnInit {
 
   rowData: [];
 
+  modules = AllModules;
    editable = false;
    title = '';
 

@@ -28,7 +28,7 @@ export class SemDatabaseComponent implements OnInit {
 
    gridApi;
    gridColumnApi;
-   modules: Module[] = AllModules;
+   modules = AllModules;
    pageSizes = [20, 25, 50, 100, 200];
 
 

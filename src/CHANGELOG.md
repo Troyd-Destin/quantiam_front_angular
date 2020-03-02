@@ -33,10 +33,9 @@ Change Log
 
 # 2020.09
 
-
 ### New
 
-- Application is now developed using Angular 9. 
+- Web application is now developed using Angular 9.  
 
 # 2020.05
 

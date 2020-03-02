@@ -71,6 +71,7 @@ import { MiniSemComponent } from './mini-sem/mini-sem.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SelectHazardComponent } from './select-hazard/select-hazard.component';
 import { SelectLocationComponent } from './select-location/select-location.component';
+import { SelectMaterialLotComponent } from './select-material-lot/select-material-lot.component';
 
 @NgModule({
     imports: [
@@ -131,6 +132,7 @@ import { SelectLocationComponent } from './select-location/select-location.compo
         MiniSemComponent,
         SelectHazardComponent,
         SelectLocationComponent,
+        SelectMaterialLotComponent,
     ],
     exports: [
         SelectArbinTestComponent,
@@ -147,6 +149,7 @@ import { SelectLocationComponent } from './select-location/select-location.compo
         SelectSteelComponent,
         SelectHazardComponent,
         SelectLocationComponent,
+        SelectMaterialLotComponent,
         MiniXrdComponent,
         MiniSemComponent,
         NgxFileDropModule ,

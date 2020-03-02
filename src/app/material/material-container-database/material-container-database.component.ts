@@ -6,6 +6,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { MaterialCreationDialogComponent } from '../../material/material-creation-dialog/material-creation-dialog.component';
 
+import { AllModules  } from '@ag-grid-enterprise/all-modules';
+
 import {  MaterialLotContainerDatatableService} from '../../material/services/material-lot-container-datatable.service';
 import { MaterialLotContainerService } from '../../services/material-lot-container/material-lot-container.service';
 import {  ContainerAggridService } from '../../material/services/container-aggrid.service';
@@ -26,6 +28,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
   private gridColumnApi;
    rowData: any = [{}, {}];
 
+   modules = AllModules;
 
    gridOptions;
    rowModelType;

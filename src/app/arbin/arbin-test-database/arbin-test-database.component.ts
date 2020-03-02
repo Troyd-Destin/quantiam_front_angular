@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+import { AllModules  } from '@ag-grid-enterprise/all-modules';
 
 import {  HttpClient} from '@angular/common/http';
 
@@ -21,6 +22,7 @@ export class ArbinTestDatabaseComponent implements OnInit {
   gridColumnApi;
   gridApi;
 
+  modules = AllModules;
   editable = false;
 
   gridOptions;

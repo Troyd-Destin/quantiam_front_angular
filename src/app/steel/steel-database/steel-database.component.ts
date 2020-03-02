@@ -6,6 +6,7 @@ import { NotificationsService } from 'angular2-notifications';
 
 import { Router } from '@angular/router';
 
+import { AllModules  } from '@ag-grid-enterprise/all-modules';
 
 @Component({
   selector: 'app-steel-database',
@@ -21,6 +22,7 @@ export class SteelDatabaseComponent implements OnInit {
 
    pageSizes = [20, 25, 50, 100];
 
+   modules = AllModules;
    rowData: [];
    rowModelType;
    rowSelection;
