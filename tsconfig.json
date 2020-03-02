@@ -1,6 +1,9 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "importHelpers": true,
     "module": "esnext",
     "outDir": "./dist/out-tsc",

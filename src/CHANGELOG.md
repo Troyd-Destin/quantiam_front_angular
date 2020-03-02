@@ -31,6 +31,13 @@ Change Log
 - Approving an RTO doesn't doesn't trigger the timesheet calculation process. 
 
 
+# 2020.09
+
+
+### New
+
+- Application is now developed using Angular 9. 
+
 # 2020.05
 
 ### New
