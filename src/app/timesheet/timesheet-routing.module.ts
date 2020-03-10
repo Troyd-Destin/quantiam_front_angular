@@ -27,12 +27,16 @@ import { TimesheetSettingsComponent } from './timesheet-settings/timesheet-setti
 import { TimesheetLogComponent } from './timesheet-log/timesheet-log.component';
 
 import { UserHoursComponent } from './timesheet-report/user-hours/user-hours.component';
+import { CompanyInsightHoursComponent } from './timesheet-statistics/timesheet-statistics-company/company-insight-hours/company-insight-hours.component';
+import { CompanyInsightUnpaidComponent } from './timesheet-statistics/timesheet-statistics-company/company-insight-unpaid/company-insight-unpaid.component';
+import { CompanyInsightHeadcountComponent } from './timesheet-statistics/timesheet-statistics-company/company-insight-headcount/company-insight-headcount.component';
+
 
 const routes: Routes = [{
     path: '',
     component: TimesheetIndexComponent,
     children: [
-   
+
     {
       path: ':user/year/:year/payperiod/:payperiod',
       data: { key: 'timesheet'},
@@ -96,7 +100,7 @@ const routes: Routes = [{
     },
     {
       path: 'insights',
-      data: { key: 'timesheet-statistics'},
+     // data: { key: 'timesheet-statistics'},
       component: TimesheetStatisticsComponent,
       children: [
         {
@@ -106,8 +110,28 @@ const routes: Routes = [{
         },
         {
           path: 'company',
-          data: { key: 'timesheet-statistics-company'},
+      //     data: { key: 'timesheet-statistics-company'},
           component: TimesheetStatisticsCompanyComponent,
+          children: [
+            {
+              path: '',
+              redirectTo: 'hours',
+              pathMatch: 'full'
+            },
+            {
+              path: 'hours',
+              data: { key: 'company-insight-hours'},
+              component: CompanyInsightHoursComponent
+              }, {
+              path: 'overtime-unpaid',
+              data: { key: 'company-insight-unpaid'},
+              component: CompanyInsightUnpaidComponent
+              }, {
+              path: 'headcount',
+              data: { key: 'company-insight-headcount'},
+              component: CompanyInsightHeadcountComponent
+              },
+          ]
         },
         {
           path: 'user',
@@ -115,7 +139,7 @@ const routes: Routes = [{
         },
         {
           path: 'user/:id',
-          data: { key: 'timesheet-statistics-user'},
+         // data: { key: 'timesheet-statistics-user'},
           component: TimesheetStatisticsUserComponent,
         },
 

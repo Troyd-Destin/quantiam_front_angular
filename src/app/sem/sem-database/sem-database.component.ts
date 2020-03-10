@@ -483,6 +483,24 @@ export class SemDatabaseComponent implements OnInit {
 
   }
 
+  updateTimesheet()
+  {
+    
+    this.http.get(environment.apiUrl + '/instrument/sem/run/process/durations')
+    .subscribe(response => {
+
+      this.notification.success('Success', 'The timesheet was updated and missing run durations calculated.', {showProgressBar: false, timeOut: 2000, clickToClose: true});
+      this.refreshDatabase();
+      // Sanitized logo returned from backend
+    },
+    error => {
+                this.notification.error('Error', error.error.error, {showProgressBar: false, timeOut: 5000, clickToClose: true});
+
+    });
+
+  
+  }
+
 
 }
 

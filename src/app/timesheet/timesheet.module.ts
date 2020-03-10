@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 //import { FullCalendarModule } from 'ng-fullcalendar';
 
 
+import { jqxDataTableModule } from 'jqwidgets-ng/jqxdatatable';
 import { HotTableModule } from '@handsontable/angular';
 
 import { HighchartsChartModule } from 'highcharts-angular';
@@ -37,6 +38,9 @@ import { TimesheetEquipmentComponent } from './timesheet-equipment/timesheet-equ
 import { TimesheetMachinesComponent } from './timesheet-machines/timesheet-machines.component';
 import { MachineUserDialogComponent } from './machine-user-dialog/machine-user-dialog.component';
 import { TimesheetLogComponent } from './timesheet-log/timesheet-log.component';
+import { CompanyInsightHoursComponent } from './timesheet-statistics/timesheet-statistics-company/company-insight-hours/company-insight-hours.component';
+import { CompanyInsightUnpaidComponent } from './timesheet-statistics/timesheet-statistics-company/company-insight-unpaid/company-insight-unpaid.component';
+import { CompanyInsightHeadcountComponent } from './timesheet-statistics/timesheet-statistics-company/company-insight-headcount/company-insight-headcount.component';
 
 @NgModule({
   imports: [
@@ -44,7 +48,7 @@ import { TimesheetLogComponent } from './timesheet-log/timesheet-log.component';
     TimesheetRoutingModule,
     HighchartsChartModule,
     HotTableModule.forRoot(),
-    
+    jqxDataTableModule,
     MaterialDesignModule,
     SharedModule
   ],
@@ -52,7 +56,7 @@ import { TimesheetLogComponent } from './timesheet-log/timesheet-log.component';
   declarations: [ NumericEditor, TimesheetIndexComponent, TimesheetComponent, 
     TimesheetBankComponent, TimesheetSimpleComponent, TimesheetCalendarComponent, TimesheetRtoComponent, TimesheetRtoViewComponent,
      TimesheetProjectComponent, TimesheetHolidayComponent, TimesheetRtoAllocationComponent, TimesheetReportComponent, UserHoursComponent,
-      ProjectUserHoursComponent, UserRTOBankStatusComponent, UserAbsenceSummaryComponent, TimesheetSettingsComponent, CreateRtoDialogComponent, TimesheetStatisticsComponent, TimesheetStatisticsUserComponent, TimesheetStatisticsCompanyComponent, CreatePayoutComponent, TimesheetEquipmentComponent, TimesheetMachinesComponent, MachineUserDialogComponent,  TimesheetLogComponent,
+      ProjectUserHoursComponent, UserRTOBankStatusComponent, UserAbsenceSummaryComponent, TimesheetSettingsComponent, CreateRtoDialogComponent, TimesheetStatisticsComponent, TimesheetStatisticsUserComponent, TimesheetStatisticsCompanyComponent, CreatePayoutComponent, TimesheetEquipmentComponent, TimesheetMachinesComponent, MachineUserDialogComponent,  TimesheetLogComponent, CompanyInsightHoursComponent, CompanyInsightUnpaidComponent, CompanyInsightHeadcountComponent,
       
       ]
 })

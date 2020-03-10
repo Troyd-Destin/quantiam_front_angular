@@ -177,8 +177,7 @@ export class MaterialCreationDialogComponent implements OnInit, OnDestroy {
 
     close() {
 
-		if(!this.stuffCreated)
-		{
+		if(!this.stuffCreated) {
 		Swal.fire({
             title: 'Are you sure?',
             text: 'This action will lose your container progress.',
@@ -192,9 +191,7 @@ export class MaterialCreationDialogComponent implements OnInit, OnDestroy {
 				this.dialogRef.close();
 		
 		});
-		}
-		else
-		{
+		} else {
 			this.dialogRef.close();
 		}
     }
@@ -217,8 +214,7 @@ export class MaterialCreationDialogComponent implements OnInit, OnDestroy {
         }
 		//  console.log(this.selectedMaterial);
 		
-		if(obj.sds)
-		{
+		if(obj.sds) {
 			console.log('triggered');
 			this.fetchSDS();
 		}
@@ -251,18 +247,21 @@ export class MaterialCreationDialogComponent implements OnInit, OnDestroy {
 
     selectLot(obj) {
 
-
-
-        if (obj.data[0].selected === false) {
-            this.selectedLot = obj.data[0];
+       // console.log(obj);
+        try {
+            this.selectedLot = obj;
             this.lot = this.selectedLot;
             this.newLot.lot_name = 'eee';
             this.hideNewLot = true;
-        } else {
+            this.lot.isNew = false;
+
+        } catch (e) {
             this.selectedLot = {};
             this.lot = {};
+           // this.lot.isNew = true;
             this.newLot = {};
             this.hideNewLot = false;
+
         }
 
     }

@@ -7,35 +7,47 @@ Change Log
 ### Known Issues
 
 - Material Supplier dropdown, does not clear properly when declining to create a new tag.
-- Machine timesheets generate stat hours for some reason 
 - Cartesian XRD eva format does not include steptimes... hmm.
 - XRD runs are no longer syncing, this is because the XRD computers are off the network. 
-- SEM Runs don't always sync to Q drive. 
-- timesheet 65, why isn't there two 0.5 for CTO? 
+- timesheet 65, why isn't there two 0.5 for CTO? (weekly vs daily ot
 
 ### To do list
 
 - Org chart for employees.
 - Overlays for XRD viewer
-- Fix XRD datasource
 - Particle Size database
-- Display SEM EDS data in SEM viewer 
+- Display (fix) EDS data display in the SEM viewer 
 - build new UI for displaying historical SDS
 - keywords for material searches
 - printable standard labels using WHIMS pictograms
 - Settings section in Materials
 - Who receives empty notifications (Fu, Supervisor, Sherry) Materials settings
-- Sort contianer list by empty and in stock
-- Add holidays to the RTO calendar 
-- Change Regular to hours work in the report screen
-- Approving an RTO doesn't doesn't trigger the timesheet calculation process. 
+- Approving an RTO doesn't doesn't trigger the timesheet calculation process.
+- Stop material duplication
+- Add merge material function
+- historical SDS list
 
 
-# 2020.09
+
+# 2020.10
 
 ### New
 
-- Web application is now developed using Angular 9.  
+- Web application is now developed using Angular 9 (more impressive then it sounds)
+- You can now update the SEM timesheet & run durations from the database screen. 
+- Added a datatable to the monthly distribution chart on /timesheet/insights/company
+- Insight Category: Unpaid hours & cto awarded<br><img style="margin:5px;" src="https://imgur.com/n7Bnyy1.png" width="75%">
+- Insight Category: Employee headcount / Active Timesheet Users
+  
+### Changes 
+
+- Timesheet 'Statistics' was  changed to "insights" to better reflect normative industry standard terms
+- User-hours report regular column  changed to "Hours worked"
+- Lot selecter now uses Ng-select
+- Select2 plugin remove
+- RTO Calendar now displays holidays<br><img style="margin:5px;" src="https://imgur.com/uwP40aL.png" width="75%">
+
+### Fixes
 
 # 2020.05
 

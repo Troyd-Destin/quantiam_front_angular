@@ -73,6 +73,12 @@ import { SelectHazardComponent } from './select-hazard/select-hazard.component';
 import { SelectLocationComponent } from './select-location/select-location.component';
 import { SelectMaterialLotComponent } from './select-material-lot/select-material-lot.component';
 
+import { jqxButtonModule } from 'jqwidgets-ng/jqxbuttons';
+import { jqxWindowModule } from 'jqwidgets-ng/jqxwindow';
+import { jqxCheckBoxModule } from 'jqwidgets-ng/jqxcheckbox';
+import { jqxTabsModule } from 'jqwidgets-ng/jqxtabs';
+
+
 @NgModule({
     imports: [
         AgGridModule.withComponents([
@@ -97,7 +103,8 @@ import { SelectMaterialLotComponent } from './select-material-lot/select-materia
         CKEditorModule,
         SlickCarouselModule,
         HighchartsChartModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        jqxButtonModule, jqxWindowModule, jqxCheckBoxModule, jqxTabsModule
     ],
     declarations: [
         AutoFocusDirective,
@@ -160,7 +167,8 @@ import { SelectMaterialLotComponent } from './select-material-lot/select-materia
         LogsComponent,
         SlickCarouselModule,
         SafePipe,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        jqxButtonModule, jqxWindowModule, jqxCheckBoxModule, jqxTabsModule
 
     ],
     schemas: [NO_ERRORS_SCHEMA]

@@ -2,6 +2,7 @@
 <div mat-dialog-content>
 <mat-horizontal-stepper [linear]="isLinear" #stepper>
 	<mat-step [stepControl]="materialFormGroup">
+		
 	<div *ngIf="materialCreationStep" fxFlex>
 		<form [formGroup]="materialFormGroup" id="materialForm" >
 		<ng-template matStepLabel>Material </ng-template>
@@ -127,20 +128,13 @@
 			
 			<div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center" style="margin-top:20px;">
 					
-								
-								<app-select2-material-lot 
-										
-										
-									
-										fxLayoutAlign="start center"
-										placeholder="Lot Name" 
-										*ngIf="(materialStepComplete && !lot.isNew ) || (materialStepComplete && !newLot.lot_name && !lot.isNew)"								
-										query_params='{"material_id":{{selectedMaterial.id}}}'
-										(selectedValue)="selectLot($event)"
-										s2options='{"allowClear":true}'
-										
-										
-								></app-select2-material-lot>
+							<app-select-material-lot 
+							*ngIf="((materialStepComplete && !lot.isNew ) || (materialStepComplete && !newLot.lot_name && !lot.isNew)) && stepper.selectedIndex === 1"								
+							[materialID]="selectedMaterial.id"
+							(change)="selectLot($event)"		
+							style="width:200px;"  >
+						
+							</app-select-material-lot >
 								<div [hidden]="hideNewLot || newLot.lot_name || lot.isNew " *ngIf="(materialStepComplete && !lot.isNew ) || (!newLot.lot_name && !lot.isNew) || (!hideNewLot)"> or </div>
 								
 								<mat-form-field  class="full-width" [hidden]="hideNewLot" *ngIf="lot.isNew || (materialStepComplete && !selectedLot.text)"  fxFlex="30">

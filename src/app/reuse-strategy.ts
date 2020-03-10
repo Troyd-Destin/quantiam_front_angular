@@ -16,6 +16,10 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
     'XrdDatabase','XrdView',
     'xpsDatabase',
     'ArbinTest',
+    'company-insight-unpaid',
+    'company-insight-headcount',
+    'company-insight-hours',
+
    ];
   storedRouteHandles = new Map<string, DetachedRouteHandle>();
 
