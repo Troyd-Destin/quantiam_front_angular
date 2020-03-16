@@ -10,9 +10,11 @@ import { UserService } from '../../services/user/user.service';
 import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import { NotificationsService } from 'angular2-notifications';
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { MatDialog } from '@angular/material/dialog'; 
+
+import { FileSaverService } from 'ngx-filesaver';
 
 import { MaterialHazardSymbolSelectorComponent } from '../material-hazard-symbol-selector/material-hazard-symbol-selector.component';
 
@@ -36,7 +38,8 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
   newLotCreated = false;
   scannerNavigation: any;
   showSDSError = false;
-  
+  showUploadZone = false;
+  historicalSDSList = <any>[];
 	fetched = false;
 	sdsSearch = [];
 	searchingPossibleSDS = false;
@@ -74,6 +77,7 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 	private http: HttpClient,
 	private notification: NotificationsService,
 	public dialog: MatDialog,
+	private _FileSaverService: FileSaverService,
 	) { }
 
   ngOnInit() {
@@ -463,11 +467,52 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
     });
   }
 
+  fetchSDSList() {
+
+	this.http.get(environment.apiUrl + '/material/' + this.container.lot.material.id + '/sds/list?filterSpinner').subscribe((response) => {
+
+			this.historicalSDSList = response;
+			console.log(this.historicalSDSList);
+	});
+
+  } 
+  
+  fetchCofAList() {
+
+	this.http.get(environment.apiUrl + '/lot/' + this.container.lot.material.lot.id + '/cofa?filterSpinner').subscribe((response) => {
+
+			this.historicalSDSList = response;
+			console.log(this.historicalSDSList);
+	});
+
+  }
+
+  downloadSDS(obj){
+	const params  = new HttpParams().set('fullpath', obj.pathname);
+	this.http.get(environment.apiUrl + '/qdrive', {
+		responseType: 'blob', // This must be a Blob type
+		params: params
+	  }).subscribe((res) => {
+		this._FileSaverService.save(<any>res, obj.filename);
+	  });
+
+  }
+
   SDStabChanged(event){
 	  console.log(event);
 	  if(event.tab.textLabel === 'SDS')
 	  {
 		  this.fetchSDS();
+	  }
+
+	  if(event.tab.textLabel === 'Historical SDS')
+	  {
+		this.fetchSDSList();
+	  } 
+	  
+	  if(event.tab.textLabel === 'Certificate of Analyses')
+	  {
+		//this.fetchCofAList();
 	  }
   }
 

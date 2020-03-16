@@ -38,8 +38,9 @@
 										<mat-icon >edit</mat-icon>
 									</button>
 
-									<button mat-icon-button   *ngIf="canEdit && container.lot.material.sds" 
-									(click)="deleteSDS()" color="warn" matTooltip="Delete SDS" > <mat-icon >delete</mat-icon> </button> 
+								<!-- 	<button mat-icon-button   *ngIf="canEdit" 
+									(click)="deleteMaterial()" color="warn" matTooltip="Delete Material" > <mat-icon >delete</mat-icon> </button>
+									 -->
 									
 								</action-bar>
 						</mat-card-title>		
@@ -110,10 +111,7 @@
 							<div fxLayout="row wrap"  fxLayoutAlign="end center" >
 	
 								<div fxLayout="row" fxFlex=60>
-									<ngb-alert  [hidden]="!container.lot.material.sds" type="info"   [dismissible]="false" style="margin-top:7px; margin-bottom:0px; font-size:11px;">
-											<b> SDS Storage: </b> <a target="_blank" href="File:///Q:/Administration - All Staff/Chemical Inventory Tracking System and SDS/SDS">
-												 Q:\Administration - All Staff\Tracking SDS\SDS </a>
-									</ngb-alert>
+								
 								</div>	
 
 								<div fxFlex fxLayout="row" fxLayoutAlign="end center">
@@ -359,10 +357,30 @@
 			<mat-tab-group backgdroundColor="primary" (focusChange)="SDStabChanged($event)" fxFlex>
 				<mat-tab label="SDS" fxLayout="column" id="MSDS Query SECTION"  fxFlex fxLayoutGap="20px" >  
 
+
+					
 						<div fxFlex fxLayout="column"  style="height:100%;" fxLayoutGap="20px">
 								<ngb-alert type="danger" *ngIf="!container.lot.material.sds"   [dismissible]="false"> <b> Oops </b> We can't find an SDS. Employers are required by <a target="_blank" href="https://www.ccohs.ca/oshanswers/chemicals/whmis_ghs/sds.html"> federal WHIMIS 2015 legislation </a> to have an SDS readily accessible.  </ngb-alert>
-									
-								<ngx-file-drop browseBtnLabel="Drag & Drop or click to upload an SDS" (onFileDrop)="dropped($event)"  [showBrowseBtn]="true"
+								<div  fxLayout="row">
+								
+									<div fxFlex  fxLayout="row">
+										<ngb-alert  [hidden]="!container.lot.material.sds" type="info"   [dismissible]="false" style="margin-top:7px; margin-bottom:0px; font-size:11px;">
+											<b> Storage: </b> <a target="_blank" href="File:///Q:/Administration - All Staff/Chemical Inventory Tracking System and SDS/SDS">
+												 Q:\Administration - All Staff\Chemical Inventory Tracking </a>
+										</ngb-alert>
+									</div>
+									<div fxFlex fxLayout="row" fxLayoutAlign="end center">
+										<button mat-icon-button   *ngIf="canEdit && container.lot.material.sds" 
+										(click)="showUploadZone = !showUploadZone" color="primary" matTooltip="Upload New SDS" > <mat-icon >cloud_upload</mat-icon> </button> 
+										<button mat-icon-button   *ngIf="canEdit && container.lot.material.sds" 
+										(click)="deleteSDS()" color="warn" matTooltip="Delete SDS" > <mat-icon >delete</mat-icon> </button> 
+
+									</div>
+										
+								</div>
+								
+
+								<ngx-file-drop [hidden]="!showUploadZone" browseBtnLabel="Drag & Drop or click to upload an SDS" (onFileDrop)="dropped($event)"  [showBrowseBtn]="true"
 								(onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
 	
 								
@@ -449,7 +467,31 @@
 					
 
 				</mat-tab>
-				<mat-tab label="Historical SDS"> Historical SDS </mat-tab>
+				<mat-tab label="Historical SDS"> 
+
+						<table class="table">
+							<thead>
+								<tr>
+									<th>File Name</th>
+									<th>Created</th>
+									<th>Download</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr *ngFor="let item of historicalSDSList">
+									<td>{{item.filename}}</td>
+									<td>{{item.cTime_readable}}</td>
+									<td>	<button mat-icon-button   
+										 color="primary" (click)="downloadSDS(item)" matTooltip="Download" > 
+										<mat-icon >cloud_download</mat-icon> </button> 
+									</td>
+
+								</tr>
+							</tbody>
+
+						</table>
+
+				</mat-tab>
 				<mat-tab label="Certificate of Analyses"> Certificate of Analyses </mat-tab>
 			  </mat-tab-group>
 				

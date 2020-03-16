@@ -127,13 +127,32 @@
 						<mat-divider style="display:none"></mat-divider >
 						<mat-expansion-panel expanded="true"  style="padding-top:3px; ">
 							
+								
+							<mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
+								   <mat-panel-title>
+								   Employees
+								</mat-panel-title>
+								
+							  </mat-expansion-panel-header>
+								<mat-list>
 								<mat-list-item  > 
 										<button routerLink="/user/database"  routerLinkActive="mat-list-item-button-active" mat-button class="not-drop-down-button" >
 										
-											<p>Employees</p> 
+											<p>Directory</p> 
 											<fa-icon [icon]="faUserFriends"></fa-icon>
 										</button>
-								   </mat-list-item>
+								</mat-list-item>
+									<mat-list-item  > 
+										<button routerLink="/user/hierarchy"  routerLinkActive="mat-list-item-button-active" mat-button class="not-drop-down-button" >
+										
+											<p>Hierarchy</p> 
+											<fa-icon [icon]="faSitemap"></fa-icon>
+										</button>
+								</mat-list-item>
+
+								</mat-list>
+								
+								
 					
 							
 						</mat-expansion-panel>

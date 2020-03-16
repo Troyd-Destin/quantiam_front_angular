@@ -75,6 +75,11 @@ const routes: Routes = [{
       component: TimesheetSettingsComponent,
       children: [
         {
+          path: '',
+          pathMatch: 'full',
+          redirectTo: 'project'
+        },
+        {
           path: 'project',
           data: { key: 'timesheet-project'},
           component: TimesheetProjectComponent,
@@ -151,6 +156,11 @@ const routes: Routes = [{
       // data: { key: 'timesheet-report'},
       component: TimesheetReportComponent,
       children: [
+        {
+          path: '',
+          pathMatch: 'full',
+          redirectTo: 'user-hours'
+        },
         {
           path: 'user-hours',
           data: { key: 'timesheet-report-user-hours'},

@@ -5,10 +5,11 @@ import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 
 import {LicenseManager} from '@ag-grid-enterprise/core';
-LicenseManager.setLicenseKey('Evaluation_License_Not_For_Production_13_November_2019__MTU3MzYwMzIwMDAwMA==1d5643fcff17c78b7eb9e3341b0df45f');
+LicenseManager.setLicenseKey('[TRIAL]_9_May_2020_[v2]_MTU4ODk4MjQwMDAwMA==0e7809f5959896e0fda5b20de768d01a');
 
 
 import 'angular2-notifications';
+//import * as jquery from 'jquery';
 
 if (environment.production) {
   enableProdMode();

@@ -9,6 +9,7 @@ import { UserViewPermissionsComponent } from './user-view-permissions/user-view-
 import { UserViewKeycardComponent } from './user-view-keycard/user-view-keycard.component';
 import { UserViewMachinesComponent } from './user-view-machines/user-view-machines.component';
 import { UserDatabaseComponent } from './user-database/user-database.component';
+import { UserHierarchyComponent } from './user-hierarchy/user-hierarchy.component';
 
 const routes: Routes = [
   {
@@ -21,14 +22,21 @@ const routes: Routes = [
          {
               path: 'database',
               data: { key: 'userDatabase' },
+              pathMatch: 'full',
               component: UserDatabaseComponent,
             //  data: { reuse: true },
 
          },
          {
+            path:'hierarchy',
+            data:{key:'userHierarchy'},
+            component: UserHierarchyComponent,
+            pathMatch: 'full',
+         },
+         {
               path: ':id',
               component: UserViewComponent,
-              pathMatch: 'full',
+              
               data: { key: 'userView' },
               children: [
                 {

@@ -94,7 +94,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         suppressMenu: true,
       },
       {
-        width: 100,
+        width: 80,
         //field: 'lot.material.whmis_hazard_symbols',
         headerName: 'Warnings',
         cellRenderer: (cell) => {
@@ -115,7 +115,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
       },
       {
-        width: 200,
+        width: 170,
         headerName: 'Name',
         field: 'lot.material.name',
         cellStyle: function (params) {
@@ -128,7 +128,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         },
       },
       {
-        width: 150,
+        width: 100,
         field: 'lot.material.grade',
         headerName: 'Grade',
       },
@@ -299,7 +299,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
     this.gridOptions = {
       rowSelection: 'single',
-      cacheBlockSize: 100,
+      cacheBlockSize: 18,
       enableRangeSelection: true,
        maxBlocksInCache: 2,
      //  enableServerSideFilter: true,

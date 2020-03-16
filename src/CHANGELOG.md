@@ -25,36 +25,43 @@ Change Log
 - Approving an RTO doesn't doesn't trigger the timesheet calculation process.
 - Stop material duplication
 - Add merge material function
-- historical SDS list
 
 
 
-# 2020.10
+# 2020.11
 
 ### New
 
 - Web application is now developed using Angular 9 (more impressive then it sounds)
-- You can now update the SEM timesheet & run durations from the database screen. 
+- You can now update the SEM timesheet & run durations from the SEM database screen. 
 - Added a datatable to the monthly distribution chart on /timesheet/insights/company
-- Insight Category: Unpaid hours & cto awarded<br><img style="margin:5px;" src="https://imgur.com/n7Bnyy1.png" width="75%">
+- Insight Category: Unpaid hours & Cto awarded<br><img style="margin:5px;" src="https://imgur.com/n7Bnyy1.png" width="75%">
 - Insight Category: Employee headcount / Active Timesheet Users
+- Historical SDS's are now visible on the material container page  
+- Employees section is now divded into Directory, and Hierarchy
+- An administrative hierarchy dynamically generated from the database is now viewable<br><img style="margin:5px;" src="https://imgur.com/h1BMssM.png" width="75%">
+
   
 ### Changes 
 
-- Timesheet 'Statistics' was  changed to "insights" to better reflect normative industry standard terms
+- Timesheet 'Statistics' was  changed to "Insights" to better reflect normative industry  terms
 - User-hours report regular column  changed to "Hours worked"
-- Lot selecter now uses Ng-select
-- Select2 plugin remove
+- Lot selecter now uses the ng-select library
+- Select2 plugin removed 
 - RTO Calendar now displays holidays<br><img style="margin:5px;" src="https://imgur.com/uwP40aL.png" width="75%">
+- The SDS upload box on the material container page is now hidden until activated with the upload button. 
+
 
 ### Fixes
+
+- Timesheet Reports and Settings now open the first tab by default 
 
 # 2020.05
 
 ### New
 
 - A hazard and empty column was added to the material container DB screen
-- A hazard,  supplier and location filter was added to the material container DB screen
+- A hazard, supplier and location filter was added to the material container DB screen
 
 ### Changes
 - The chemical inventory list is now downloaded from a button near the top of the material container DB screen
