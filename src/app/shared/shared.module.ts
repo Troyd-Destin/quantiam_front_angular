@@ -168,6 +168,7 @@ import { jqxTabsModule } from 'jqwidgets-ng/jqxtabs';
         SlickCarouselModule,
         SafePipe,
         ReactiveFormsModule,
+        NgSelectModule,
         jqxButtonModule, jqxWindowModule, jqxCheckBoxModule, jqxTabsModule
 
     ],

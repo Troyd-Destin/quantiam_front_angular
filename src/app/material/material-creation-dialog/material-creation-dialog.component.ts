@@ -7,7 +7,7 @@ import { MaterialLotService } from '../../services/material-lot/material-lot.ser
 import { MaterialService } from '../../services/material/material.service';
 import { MaterialLotContainerDatatableService } from '../services/material-lot-container-datatable.service';
 import { MatStepper } from '@angular/material/stepper';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 
@@ -21,10 +21,10 @@ import { NotificationsService } from 'angular2-notifications';
 import { MatDialog } from '@angular/material/dialog'; 
 
 import { MaterialHazardSymbolSelectorComponent } from '../material-hazard-symbol-selector/material-hazard-symbol-selector.component';
-
+import { MaterialCheckCreationDialogComponent } from '../material-check-creation-dialog/material-check-creation-dialog.component';
 
 import * as _moment from 'moment';
-import Swal from 'sweetalert2';
+const Swal = require('sweetalert2');
 
 
 @Component({
@@ -43,7 +43,10 @@ export class MaterialCreationDialogComponent implements OnInit, OnDestroy {
     sdsFormGroup: FormGroup;
     qcidFormGroup: FormGroup;
 
-
+    materialChecked = false;
+    materialCheckedOkay = false;
+    checkIfDirectMatch = false;
+    hideMaterialCheckBox = false;
 
     lookedForMaterial = false;
     form: FormGroup;
@@ -181,7 +184,7 @@ export class MaterialCreationDialogComponent implements OnInit, OnDestroy {
 		Swal.fire({
             title: 'Are you sure?',
             text: 'This action will lose your container progress.',
-            type: 'warning',
+            icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -201,6 +204,7 @@ export class MaterialCreationDialogComponent implements OnInit, OnDestroy {
 
 
         this.selectedMaterial = obj;
+        this.material = {};
         this.lot = {};
         this.selectedLot = {};
         this.materialStepComplete = false;
@@ -224,12 +228,21 @@ export class MaterialCreationDialogComponent implements OnInit, OnDestroy {
 
     selectSupplier(obj) {
 
-
+        
         if (typeof(obj) !== 'undefined') {
             this.material.supplier_id = obj.supplier_id;
         }
 
+        this.resetMaterialCheck();
 
+
+    }
+
+    clearSupplier(){
+    
+        this.material.supplier_id = null;
+        delete this.material.supplier;
+        this.resetMaterialCheck();
     }
 
     createMaterialAttrs() {
@@ -242,7 +255,10 @@ export class MaterialCreationDialogComponent implements OnInit, OnDestroy {
 
     selectingMaterialAttrs() {
         this.creatingMaterial = false;
-        this.newMaterial = !this.newMaterial;
+        this.materialChecked = false;
+        this.material = {};
+        this.lot = {};
+        this.newMaterial = false;
     }
 
     selectLot(obj) {
@@ -282,6 +298,7 @@ export class MaterialCreationDialogComponent implements OnInit, OnDestroy {
 
     updateQCID(container) {
         const params = {};
+        
 
         params['qcid'] = container.qcid;
 
@@ -354,7 +371,7 @@ export class MaterialCreationDialogComponent implements OnInit, OnDestroy {
         Swal.fire({
             title: 'Creating Container',
             text: 'This action will create ' + this.containersToMake + ' container(s) of ' + this.material.name,
-            type: 'warning',
+            icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -551,7 +568,91 @@ export class MaterialCreationDialogComponent implements OnInit, OnDestroy {
 		  console.log('The dialog was closed');
 		  this.material = result;
 		});
-	  }
+      }
+      
+      checkMaterialExistence(stepper:MatStepper){
+
+        console.log('test');
+        console.log(this.material);
+        const requestParams: HttpParams = new HttpParams()
+        .append('name', `${this.material.name}`)
+        .append('grade', `${this.material.grade}`)
+        .append('limit', `10`)
+        .append('supplier_id', this.material.supplier_id);
+
+        this.http.get(environment.apiUrl + '/material', { params: requestParams })
+        .subscribe((response:any) => {
+
+                this.checkIfDirectMatch = false;
+
+                if(response.data.length > 0)
+                {
+                    this.materialCheckedOkay = false;
+                    // check if name, grade and supplier_id match; set material, move on
+                    response.data.forEach(materialChecked => {
+                            if(this.material.name === materialChecked.name 
+                                && this.material.grade === materialChecked.grade
+                                 && this.material.supplier_id === materialChecked.supplier_id )
+                                 {
+                                     this.material = materialChecked;
+                                     this.checkIfDirectMatch = true;
+                                     this.materialChecked = true;
+                                     this.newMaterial = false;
+                                     this.lot.isNew = false;
+                                     this.goForward(stepper);
+                                     //go to lot step
+                                 }
+                    });
+
+                    
+                    // trigger some sort of material selection dialog. give it the data, return a selection.
+                    
+                    if(!this.checkIfDirectMatch)
+                    {
+                    const dialogRef = this.dialog.open(MaterialCheckCreationDialogComponent, {
+
+                        // disableClose: true,
+                          width: 'auto',
+                          autoFocus: true,
+                          position: {'top': '50px'},
+                           data: response.data,
+                        });
+                  
+                        dialogRef.afterClosed().subscribe((result) => {
+                            
+                            if (result) {
+                                this.material = result;
+                                this.newMaterial = false;
+                                this.lot.isNew = false;
+                            }
+
+                            this.materialChecked = true;
+                  
+                        });
+                    }
+
+
+
+                }
+                else
+                {
+                    this.materialCheckedOkay = true;
+                    this.materialChecked = true;
+                    this.hideMaterialCheckBox = true;
+                }
+                
+
+        });
+
+      
+    }
+
+    resetMaterialCheck()
+    {
+        this.materialChecked = false;
+        this.materialCheckedOkay = false;
+        this.hideMaterialCheckBox = false;
+    }
 
 
     ngOnDestroy() {

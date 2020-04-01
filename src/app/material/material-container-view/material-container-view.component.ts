@@ -294,7 +294,7 @@ export class MaterialContainerViewComponent implements OnInit, OnDestroy {
 
 		const params = this.MsdsSearch;
 
-		if(this.searchingPossibleSDS === false && this.container.lot.material && this.container.lot.material.cas)
+		if(this.searchingPossibleSDS === false && this.container.lot.material && this.container.lot.material.cas && !this.container.lot.material.sds)
 		{
 		this.searchingPossibleSDS = true;
 		params.p1 = 'MSMSDS.COMMON|' + this.container.lot.material.name.toLowerCase();

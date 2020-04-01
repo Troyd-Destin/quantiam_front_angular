@@ -128,7 +128,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         },
       },
       {
-        width: 100,
+        width: 120,
         field: 'lot.material.grade',
         headerName: 'Grade',
       },
@@ -136,6 +136,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         width: 90,
         field: 'lot.material.particle_size',
         headerName: 'P. Size',
+        hide: true,
       },
       {
         width: 100,

@@ -92,6 +92,12 @@ const routes: Routes = [
 				// pathMatch: 'prefix',
 
 			},
+			{
+				path: 'quality',
+				loadChildren: () => import('../quality/quality.module').then(m => m.QualityModule),
+				// pathMatch: 'prefix',
+
+			},
 		]
 	},
 

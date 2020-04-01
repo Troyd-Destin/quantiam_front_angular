@@ -360,7 +360,10 @@
 
 					
 						<div fxFlex fxLayout="column"  style="height:100%;" fxLayoutGap="20px">
-								<ngb-alert type="danger" *ngIf="!container.lot.material.sds"   [dismissible]="false"> <b> Oops </b> We can't find an SDS. Employers are required by <a target="_blank" href="https://www.ccohs.ca/oshanswers/chemicals/whmis_ghs/sds.html"> federal WHIMIS 2015 legislation </a> to have an SDS readily accessible.  </ngb-alert>
+								<ngb-alert type="danger" *ngIf="!container.lot.material.sds"   [dismissible]="false"> 
+									<b> Oops </b> We can't find an SDS. Employers are required by 
+									<a target="_blank" href="https://www.ccohs.ca/oshanswers/chemicals/whmis_ghs/sds.html"> federal WHIMIS 2015 legislation </a> to have an SDS readily accessible. 
+								 </ngb-alert>
 								<div  fxLayout="row">
 								
 									<div fxFlex  fxLayout="row">
@@ -370,9 +373,9 @@
 										</ngb-alert>
 									</div>
 									<div fxFlex fxLayout="row" fxLayoutAlign="end center">
-										<button mat-icon-button   *ngIf="canEdit && container.lot.material.sds" 
+										<button mat-icon-button   *ngIf="canEdit" 
 										(click)="showUploadZone = !showUploadZone" color="primary" matTooltip="Upload New SDS" > <mat-icon >cloud_upload</mat-icon> </button> 
-										<button mat-icon-button   *ngIf="canEdit && container.lot.material.sds" 
+										<button mat-icon-button   *ngIf="canEdit" 
 										(click)="deleteSDS()" color="warn" matTooltip="Delete SDS" > <mat-icon >delete</mat-icon> </button> 
 
 									</div>
@@ -388,7 +391,7 @@
 								</ngx-file-drop>
 	
 	
-								<div  [hidden]="!showSDS"  fxLayout="column" fxLayoutGap="10px" fxFlex>
+								<div  [hidden]="!container.lot.material.sds"  fxLayout="column" fxLayoutGap="10px" fxFlex>
 						
 									<iframe  id="iframe" type="application/pdf"  style="overflow: auto; min-width: 50%;" fxFlex>
 									</iframe>

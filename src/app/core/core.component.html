@@ -365,6 +365,24 @@
 						
 						<mat-divider ></mat-divider>
 						<mat-expansion-panel expanded="true" >
+							<mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
+						   
+						   
+						   <mat-panel-title>
+							   Quality
+						   </mat-panel-title>
+						   
+						 </mat-expansion-panel-header>
+						   <mat-list>
+						   <mat-list-item  > 
+								   <button routerLink="/quality" routerLinkActive="mat-list-item-button-active" mat-button> <p>NCR</p>								   
+									   <fa-icon  [icon]="faUserTimes" ></fa-icon>
+								   </button>
+						   </mat-list-item>
+						</mat-list>
+						</mat-expansion-panel>
+						<mat-divider ></mat-divider>
+						<mat-expansion-panel expanded="true" >
 								 <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
 								
 								
@@ -414,8 +432,8 @@
 						
 
 
-						<mat-divider ></mat-divider>
-						<mat-expansion-panel expanded="false" *ngIf="userService.hasPermission([43])">
+						<mat-divider style="display:none;" ></mat-divider>
+						<mat-expansion-panel style="display:none;" expanded="false" *ngIf="userService.hasPermission([43])">
 							  <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
 								<mat-panel-title>
 								    Manufacturing

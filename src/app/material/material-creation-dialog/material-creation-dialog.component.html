@@ -40,10 +40,12 @@
 			
 					<div fxLayoutGap="10px" fxLayout="row" fxLayout.sm="column"  fxLayoutAlign="start stretch"  >	
 						  <mat-form-field class="full-width"  fxFlex>
-							  <input #MaterialName   type="text" matInput placeholder="Name" (change)="validateNewMaterial()" [(ngModel)] ='material.name' formControlName="firstCtrl" name="name" required [disabled]="!creatingMaterial">
+							  <input #MaterialName   type="text" matInput placeholder="Name" (change)="validateNewMaterial()"   (blur)="resetMaterialCheck()" [(ngModel)] ='material.name' formControlName="firstCtrl" name="name" required [disabled]="!creatingMaterial">
 						 </mat-form-field>  
 						  <mat-form-field class="full-width" fxFlex>
-							  <input  #MaterialGrade  type="text" matInput placeholder="Grade" [(ngModel)] ='material.grade' name="grade"   [ngModelOptions]="{standalone: true}" [disabled]="!creatingMaterial">
+							  <input  #MaterialGrade  type="text" matInput placeholder="Grade" 
+							  (blur)="resetMaterialCheck()"
+							  [(ngModel)] ='material.grade' name="grade"   [ngModelOptions]="{standalone: true}" [disabled]="!creatingMaterial">
 							  	<mat-hint> "99%", "Si-102","TOTAL Mn/SI" </mat-hint>
 						 </mat-form-field>
 						 
@@ -60,7 +62,9 @@
 							name="supplier_name"
 							addTag="true"
 							*ngIf="creatingMaterial"
+							[selectedValue]="material.supplier_id"
 							(change)="selectSupplier($event)"
+							(clear)="clearSupplier()"
 							>
 							</app-select-material-supplier>
 							
@@ -97,25 +101,23 @@
 							  <input #FormulaWeight type="text" matInput placeholder="Formula Wight" [(ngModel)] ='material.formula_weight' [ngModelOptions]="{standalone: true}" name="formula_weight"   [disabled]="!creatingMaterial">
 							  <mat-hint> Optional </mat-hint>
 						 </mat-form-field> 
-					
-					
-				
-
-							
 					</div>
 			</div>
-	
-
-
-
-
-
-	
-
-		
-		<div *ngIf="material.name" fxLayout="row" fxLayoutAlign="end center" style="margin-top:10px;">
-		  <button mat-raised-button [disabled]="materialFormGroup.status === 'INVALID'" matStepperNext color="primary">Next</button>
-		</div>
+			<div *ngIf="material.name && material.supplier_id" fxLayout="row" fxLayoutAlign="end center" style="margin-top:10px;" fxLayoutGap="10px">
+				<!--[hidden]="materialChecked"-->
+					<button mat-raised-button   [hidden]="hideMaterialCheckBox" (click)="checkMaterialExistence(stepper)" color="accent">Check Material</button>
+			
+					<div [hidden]="!materialChecked" fxLayout="row" fxLayoutGap="5px" >
+						<ngb-alert   type="success" [hidden]="!materialCheckedOkay" [dismissible]="false" style="margin-top:7px; margin-bottom:0px;">
+							<b> Checked </b> Material doesn't exist!
+						</ngb-alert>
+					<!-- 	<ngb-alert   type="danger" [hidden]="(materialCheckedOkay)" [dismissible]="false" style="margin-top:7px; margin-bottom:0px;">
+							<b> Checked </b> Material seems to already exists!
+						</ngb-alert> -->
+					</div>
+					<button mat-raised-button *ngIf="materialChecked && material.name && material.supplier_id" [disabled]="materialFormGroup.status === 'INVALID'" matStepperNext color="primary">Next</button>
+					
+			</div>
 	 	 </form>
 	  </div>
 	</mat-step>
@@ -129,8 +131,10 @@
 			<div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center" style="margin-top:20px;">
 					
 							<app-select-material-lot 
-							*ngIf="((materialStepComplete && !lot.isNew ) || (materialStepComplete && !newLot.lot_name && !lot.isNew)) && stepper.selectedIndex === 1"								
-							[materialID]="selectedMaterial.id"
+							*ngIf="((materialStepComplete && !lot.isNew ) 
+							|| (materialStepComplete && !newLot.lot_name && !lot.isNew))
+							 && stepper.selectedIndex === 1"								
+							[materialID]="material.id"
 							(change)="selectLot($event)"		
 							style="width:200px;"  >
 						

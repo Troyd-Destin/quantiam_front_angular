@@ -6,8 +6,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { UserService } from '../../services/user/user.service';
 
 import * as moment from 'moment';
-import Swal from 'sweetalert2';
-
+const Swal = require('sweetalert2');
 
 @Component({
     selector: 'app-timesheet-rto-view',
@@ -221,7 +220,7 @@ export class TimesheetRtoViewComponent implements OnInit {
             Swal.fire({
                 title: 'Negative Hours Result',
                 text: 'This user will have a negative balance in their hours bank. ',
-                type: 'warning',
+                icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
                 cancelButtonColor: '#3085d6',
@@ -382,7 +381,7 @@ export class TimesheetRtoViewComponent implements OnInit {
         Swal.fire({
             title: 'Delete Request ' + this.rto.requestID + '?',
             text: 'You won\'t be able to revert this!',
-            type: 'warning',
+            icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',

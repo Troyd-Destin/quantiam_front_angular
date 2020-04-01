@@ -27,6 +27,7 @@ import { MaterialContainerViewAnalysisComponent } from './material-container-vie
 import { MaterialSettingsComponent } from './material-settings/material-settings.component';
 import { MaterialContainerLogComponent } from './material-container-log/material-container-log.component';
 import { MaterialHazardSymbolSelectorComponent } from './material-hazard-symbol-selector/material-hazard-symbol-selector.component';
+import { MaterialCheckCreationDialogComponent } from './material-check-creation-dialog/material-check-creation-dialog.component';
 
 
 @NgModule({
@@ -39,7 +40,7 @@ import { MaterialHazardSymbolSelectorComponent } from './material-hazard-symbol-
   	// DataTablesModule,
   ],
   declarations: [MaterialCreationDialogComponent, MaterialIndexComponent, MaterialDatabaseComponent, MaterialViewComponent,
-	  MaterialComponent, MaterialContainerViewComponent, MaterialContainerDatabaseComponent, MaterialContainerViewAnalysisComponent, MaterialSettingsComponent, MaterialContainerLogComponent,  MaterialHazardSymbolSelectorComponent, ],
+	  MaterialComponent, MaterialContainerViewComponent, MaterialContainerDatabaseComponent, MaterialContainerViewAnalysisComponent, MaterialSettingsComponent, MaterialContainerLogComponent,  MaterialHazardSymbolSelectorComponent, MaterialCheckCreationDialogComponent, ],
   providers: [MaterialService, MaterialLotContainerService, MaterialDatatableService, MaterialLotContainerDatatableService],
   schemas: [NO_ERRORS_SCHEMA],
   entryComponents: [MaterialHazardSymbolSelectorComponent]

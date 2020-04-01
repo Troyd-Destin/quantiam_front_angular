@@ -1,0 +1,7 @@
+.example-spacer {
+    flex: 1 1 auto;
+  }
+  
+  .mat-button-toggle-disabled.mat-button-toggle-checked {
+   background-color: #34597a; 
+}

@@ -9,11 +9,9 @@ Change Log
 - Material Supplier dropdown, does not clear properly when declining to create a new tag.
 - Cartesian XRD eva format does not include steptimes... hmm.
 - XRD runs are no longer syncing, this is because the XRD computers are off the network. 
-- timesheet 65, why isn't there two 0.5 for CTO? (weekly vs daily ot
 
 ### To do list
 
-- Org chart for employees.
 - Overlays for XRD viewer
 - Particle Size database
 - Display (fix) EDS data display in the SEM viewer 
@@ -23,10 +21,30 @@ Change Log
 - Settings section in Materials
 - Who receives empty notifications (Fu, Supervisor, Sherry) Materials settings
 - Approving an RTO doesn't doesn't trigger the timesheet calculation process.
-- Stop material duplication
 - Add merge material function
+- NCR Report database
+- NCR Reports
+- Steel Creation Dialog
 
 
+# 2020.14
+
+### New
+
+- Quality Section Added
+- Non Conformance Report Database Prototype
+- Non Conformance Report Prototype 
+
+# 2020.12
+
+### New
+
+- The material container wizard now attempts to prevent duplicate material creation. The wizard will search the database for similar materials and prompt you to select one if it thinks the material is similar. If the entered material has the same name, grade & supplier as something in the database, it will automatically select it. 
+
+### Fixes
+
+- The previous SDS will no longer show when navigating to a material without an SDS from a material that has an SDS. 
+- The supplier select box now recognizes clear events. 
 
 # 2020.11
 
