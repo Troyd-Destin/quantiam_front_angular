@@ -413,17 +413,17 @@
 									</div>
 	
 	
-								<div *ngIf="searchingPossibleSDS && !sdsSearch[0]" fxLayoutAlign="center center" fxLayout="column">
+							<!-- 	<div *ngIf="searchingPossibleSDS && !sdsSearch[0]" fxLayoutAlign="center center" fxLayout="column">
 	
 										<mat-spinner diameter=10></mat-spinner>
 										<p>Searching online for possible SDS</p>
-								</div>
+								</div> -->
 	
 							
 							
 	
 						</div>
-	
+	<!-- 
 						<div *ngIf="!searchingPossibleSDS && sdsSearch[0]" fxFlex>
 								<ngb-alert type="warning"  [dismissible]="false"> Here is a list of possible SDS's from <a target="_blank" href="https://chemicalsafety.com/sds-search/"> sds.chemicalsafety.com </a>  to help you out. </ngb-alert>
 								<mat-card   class="quantiam-mat-card" style="padding-bottom:10px !important;"   >
@@ -442,7 +442,6 @@
 													<th scope="col">Material Name</th>
 													<th scope="col">Manufacturer</th>
 													<th scope="col">CAS#</th>
-													<!-- <th scope="col"></th>  -->
 													
 													</tr>
 													</thead>
@@ -453,10 +452,7 @@
 																	<td  (click)="navigateToSDS(item)"> {{item[1]}} </td>
 																	<td  (click)="navigateToSDS(item)"> {{item[2]}} </td>
 																	<td  (click)="navigateToSDS(item)"> {{item[3]}} </td>
-																	<!-- <td>
-																		<button mat-button matTooltip="Remember this SDS for another time.">Save
-																		</button>
-																	</td>  -->
+																	
 															</tr>
 	
 													</tbody>
@@ -464,7 +460,7 @@
 									</mat-card-content>
 								</mat-card>
 	
-						</div>
+						</div> -->
 	
 				
 					

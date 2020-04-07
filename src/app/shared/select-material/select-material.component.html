@@ -1,4 +1,13 @@
-<ng-select style="min-width: 120px;" [items]="itemsBuffer" [loading]="loading" [multiple]="multiple" [placeholder]="placeholder" [hideSelected]="true" [virtualScroll]="true" appendTo="body" (change)="onChange($event)" (add)="onAdd($event)" (remove)="onRemove($event)" (scrollToEnd)="onScrollToEnd()" (clear)="onClear($event)" (open)="onOpen()" [(ngModel)]="selectedValue" [(typeahead)]="input$">
+<ng-select style="min-width: 120px;" [items]="itemsBuffer" 
+[loading]="loading" 
+[multiple]="multiple"
+[placeholder]="placeholder" 
+[hideSelected]="true" 
+[virtualScroll]="true" 
+appendTo="body" (change)="onChange($event)" 
+(add)="onAdd($event)" (remove)="onRemove($event)" 
+(scrollToEnd)="onScrollToEnd()"
+ (clear)="onClear($event)" (open)="onOpen()" [(ngModel)]="selectedValue" [(typeahead)]="input$">
     <!-- scroll-host & scrollable-content  [searchFn]="customSearchFn" 
 (scroll)="onScroll($event)" -->
 

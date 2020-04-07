@@ -218,7 +218,7 @@ export class MaterialCreationDialogComponent implements OnInit, OnDestroy {
         }
 		//  console.log(this.selectedMaterial);
 		
-		if(obj.sds) {
+		if(obj.hasOwnProperty('sds') && obj.sds) {
 			console.log('triggered');
 			this.fetchSDS();
 		}

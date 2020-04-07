@@ -76,13 +76,22 @@ padding-right:12px !important;
 /* ag-grid Balham overwrites */
 
 .ag-theme-balham .ag-header{
-background-color: #3c658a;;
-color: rgb(255, 255, 255);
+background-color: #3c658a;
+}
+
+.ag-theme-balham .ag-header-cell-text{
+
+	color: rgb(255, 255, 255);
 }
 
 .ag-theme-balham .ag-root {
     border: 1px solid #BDC3C7;
     border-radius: 10px;
+}
+
+.ag-theme-balham .ag-root-wrapper {
+     border: solid 0px #bdc3c7; 
+    border-radius: 2px;
 }
 
 .ag-theme-balham .ag-side-bar {

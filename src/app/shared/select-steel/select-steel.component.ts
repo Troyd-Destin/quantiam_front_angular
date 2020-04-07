@@ -15,7 +15,8 @@ import { SelectSteelService } from './select-steel.service';
 })
 export class SelectSteelComponent implements OnInit {
 
-  constructor(public http: HttpClient, private _elementRef: ElementRef, private service: SelectSteelService) {}
+  constructor(public http: HttpClient, 
+    private _elementRef: ElementRef, private service: SelectSteelService) {}
 
   input$ = new Subject<string>();
 
@@ -65,11 +66,11 @@ export class SelectSteelComponent implements OnInit {
     // this._people3input.next(this.selectedPersons);
   }
 
-  onChange(event) { this.change.emit(event); }
+  onChange(event) { this.change.emit(event); this.loading = false;}
   onAdd(event) { }
   onRemove(event) { }
   onClear() {
-
+    this.loading = false;
     this.justCleared = true;
     this.clear.emit();
   }
@@ -105,12 +106,8 @@ export class SelectSteelComponent implements OnInit {
     )
     .subscribe((data) => {
 
-
       this.allRetrievedItemsList = this.itemsBuffer;
       this.itemsBuffer = data.data;
-
-
-
       this.searchingTerm = false;
       this.loading = false;
 
@@ -205,7 +202,7 @@ export class SelectSteelComponent implements OnInit {
   setTimeout((x) => {
 
     const dropdown = document.querySelector('.total-padding');
-    dropdown.setAttribute('style', 'width:' + this.dropdownWidth + 'px !important;height: 1800px;'); // this changes the dropdown to be as wide as it's contents
+   // dropdown.setAttribute('style', 'width:' + this.dropdownWidth + 'px !important;height: 1800px;'); // this changes the dropdown to be as wide as it's contents
     // dropdown.setAttribute('style',''); //workaround
 
   }, 100);

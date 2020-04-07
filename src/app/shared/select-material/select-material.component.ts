@@ -4,6 +4,7 @@ import { Component, OnInit, Input, EventEmitter, Output, ElementRef  } from '@an
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { catchError, map, tap, delay, debounceTime, distinctUntilChanged, switchMap, shareReplay, publishReplay, refCount } from 'rxjs/operators';
 import { Subject, Observable, of, concat, BehaviorSubject } from 'rxjs';
+import { SelectMaterialService } from './select-material.service';
 
 @Component({
   selector: 'app-select-material',
@@ -46,13 +47,17 @@ export class SelectMaterialComponent implements OnInit {
   loading = false;
   page = 1;
   searchingTerm = false;
+  firstLoad = true;
 
+  lastPage = 9999999;
+
+  justCleared = false;
   showActive = true;
   showInactive = false;
 
   supressScrollEnd = false;
 
-  constructor(public http: HttpClient, private _elementRef: ElementRef) {}
+  constructor(public http: HttpClient, private _elementRef: ElementRef,private service: SelectMaterialService) {}
 
 
 
@@ -64,12 +69,21 @@ export class SelectMaterialComponent implements OnInit {
     // this._people3input.next(this.selectedPersons);
   }
 
-  onChange(event) {  this.change.emit(event); }
-  onAdd(event) { }
-  onRemove(event) { }
+  onChange(event) {  this.change.emit(event);  this.loading = false;}
+  onAdd(event) { 
+     this.loading = false; 
+    this.searchingTerm = false;    
+    this.itemsBuffer = this.service.getList();
+  }
+  onRemove(event) {  
+    this.loading = false; 
+    this.itemsBuffer = this.service.getList();
+  }
   onClear(event) {
-    this.itemsBuffer = this.allRetrievedItemsList;
+    this.justCleared = true;
     this.searchingTerm = false;
+    this.loading = false;
+    this.itemsBuffer = this.service.getList();
   }
 
   onSearch() {
@@ -79,60 +93,71 @@ export class SelectMaterialComponent implements OnInit {
         distinctUntilChanged(),
         switchMap((term) => {
 
+          
           this.supressScrollEnd = true;
           this.searchingTerm = true;
-          this.loading = true;
-          
 
+          if (this.justCleared) { 
+            this.justCleared = false;
+            this.itemsBuffer = this.allRetrievedItemsList;
+            return []; }
 
-          if(!term) { 
-          
+          if (!term) {
+
             this.itemsBuffer = this.allRetrievedItemsList;
             this.supressScrollEnd = false;
             this.searchingTerm = false;
-
             return [];
           }
-         
+          this.loading = true;
           const params  = new HttpParams().set('like', term).set('limit', '' + this.bufferSize + '').set('active', '1').set('filterSpinner', 'true');
-
+          
           return this.http.get<any>(environment.apiUrl + `${this.endpoint}`, { 'params': params } );
 
         })
     )
-    .subscribe((data) => {
-
-     
+    .subscribe((data) => {     
+ 
       this.allRetrievedItemsList = this.itemsBuffer;
-      this.itemsBuffer = data;
-
-     if (!data[0]) {
-        if (this.itemsBuffer.length < this.bufferSize) { this.itemsBuffer = this.allRetrievedItemsList; }
-      }
-      this.loading = false;
+      this.itemsBuffer = data.data;
       this.searchingTerm = false;
+      this.loading = false;
 
-    });
+
+    },(error)=>{this.loading = false;});
 
   }
 
 
   loadItems(page) {
 
+// use a service
 
-    const params  = new HttpParams().set('page', page.toString()).set('filterSpinner', 'true');
+if (!this.service.isEmpty() && this.firstLoad) {
+  this.itemsBuffer = this.service.getList();
+  this.totalResults = this.service.getTotal();
+  this.firstLoad = false;
+  this.loading = false;
+  return;
+}
 
-    this.http.get<any>(environment.apiUrl + `${this.endpoint}`, { 'params': params } )
-    .subscribe(items => {
-            console.log(items);
-            this.page = items.current_page;
-            this.loading = false;
-           // this.items = items.data;
-            this.totalResults = items.total;
-            this.itemsBuffer = this.itemsBuffer.concat(items.data);
-        });
+  if (this.page <=  this.lastPage) {
+
+  const params  = new HttpParams().set('page', this.page.toString());
 
 
+      this.http.get<any>(environment.apiUrl + `${this.endpoint}`, { 'params': params } )
+      .subscribe(items => {
+                  // this.items = items.data;
+                  this.totalResults = items.total;
+                  this.itemsBuffer = items.data;
+                  this.lastPage = items.last_page;    
+                // this.service.appendList(this.itemsBuffer);
+                  this.service.update(items);
+                  this.loading = false;
+          });
+
+        }
   }
 
   onScrollToEnd() {
@@ -141,15 +166,35 @@ export class SelectMaterialComponent implements OnInit {
     }
   }
 
-  onScroll() {
-   
+  
+  onScroll({ end }) {
+  //  console.log(end);
+    if (this.loading || this.totalResults === this.itemsBuffer.length || this.supressScrollEnd) {
+        return;
+    }
+
+    if (end + this.numberOfItemsFromEndBeforeFetchingMore >= this.itemsBuffer.length) {
+        this.fetchMore();
+    }
   }
 
 
   private fetchMore() {
 
-    this.loading = true;
-    this.loadItems(this.page + 1);
+    if (this.page <= this.lastPage) {
+      this.loading = true;
+      this.page = this.page + 1;
+  
+      const params = new HttpParams().set('page', this.page.toString()).set('filterSpinner', 'true');
+  
+      this.http.get<any>(environment.apiUrl + `${this.endpoint}`, { params: params } )
+      .subscribe(items => {
+              this.page = items.current_page;
+              this.loading = false;
+  
+              this.itemsBuffer = this.itemsBuffer.concat(items.data);
+          });
+      }
   
   }
 
