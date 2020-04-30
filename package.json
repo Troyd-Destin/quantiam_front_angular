@@ -59,7 +59,7 @@
     "handsontable": "^7.3.0",
     "highcharts": "^7.2.1",
     "highcharts-angular": "^2.4.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "ml-savitzky-golay": "^4.1.0",
     "moment": "^2.24.0",
     "ng-http-loader": "^6.*",
