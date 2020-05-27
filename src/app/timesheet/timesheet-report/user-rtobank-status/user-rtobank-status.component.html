@@ -20,7 +20,7 @@
                 
                 
                       <mat-form-field>
-                        <input matInput [(ngModel)]="date" [matDatepicker]="startDatePicker" placeholder="Date" (dateChange)="changeDates()">
+                        <input matInput name="user-rto-bank-status-date" [(ngModel)]="date" [matDatepicker]="startDatePicker" placeholder="Date" (dateChange)="changeDates()">
                         <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
                         <mat-datepicker #startDatePicker></mat-datepicker>
                       </mat-form-field>
@@ -40,7 +40,7 @@
              <mat-card-actions>
 
                 <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlex>
-                   <mat-checkbox [(ngModel)]="active"> Active Employees </mat-checkbox>
+                   <mat-checkbox [(ngModel)]="active" (change)="updateDate()"> Active Employees </mat-checkbox>
                  </div>
                 <!-- <div fxLayout="row"  fxLayoutAlign="end center" (click)="fetchData()" fxFlex> 
                   <button mat-button mat-raised-button color="primary" class="mat-elevation-z1"> Fetch Report </button>

@@ -61,7 +61,7 @@ export class TokenInterceptor implements HttpInterceptor {
         return next.handle(request).pipe(catchError((error, caught) => {
             // intercept the respons error and displace it to the console
             console.log(error);
-            this.handleAuthError(error);
+            this.handleAuthError(error, request);
             return of(error);
         }) as any);
 
@@ -69,9 +69,9 @@ export class TokenInterceptor implements HttpInterceptor {
     }
 
 
-    private handleAuthError(err: HttpErrorResponse): Observable < any > {
+    private handleAuthError(err: HttpErrorResponse, request): Observable < any > {
         // handle your auth error or rethrow
-        if (err.status === 401 && this.router.url !== '/auth') {
+        if (err.status === 401 && this.router.url !== '/auth' && request.url.includes(environment.apiUrl)) {
             // navigate /delete cookies or whatever
 
             this.notification.error('Unauthorized', 'Your session has expired.', { timeOut: 4000, showProgressBar: false, clickToClose: true });

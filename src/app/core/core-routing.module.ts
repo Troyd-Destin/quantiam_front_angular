@@ -64,11 +64,11 @@ const routes: Routes = [
 				loadChildren: () => import('../xrd/xrd.module').then(m => m.XrdModule),
 			// 	pathMatch: 'prefix',
 			},
-		/* 	{
+		 	{
 				path: 'tga',
 				loadChildren: () => import('../tga/tga.module').then(m => m.TgaModule),
 			// 	pathMatch: 'prefix',
-			}, */
+			}, 
 			{
 				path: 'tools',
 				loadChildren: () => import('../tools/tools.module').then(m => m.ToolsModule),
@@ -95,6 +95,12 @@ const routes: Routes = [
 			{
 				path: 'quality',
 				loadChildren: () => import('../quality/quality.module').then(m => m.QualityModule),
+				// pathMatch: 'prefix',
+
+			},
+			{
+				path: '3dmodels',
+				loadChildren: () => import('../threedmodels/threedmodels.module').then(m => m.ThreedmodelsModule),
 				// pathMatch: 'prefix',
 
 			},

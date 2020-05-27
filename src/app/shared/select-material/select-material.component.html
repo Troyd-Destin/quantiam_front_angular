@@ -31,6 +31,7 @@ appendTo="body" (change)="onChange($event)"
                     <b>{{ (item.name.length>30)? (item.name | slice:0:30)+'...':(item.name)}}</b>
                     <div>
                       <small style="font-size: 11px;">{{item.grade}}</small>
+                      <small *ngIf="item.purity" style="font-size: 11px; margin-right:5px; margin-left:5px;">{{item.purity}}%,</small>
                       <small style="font-size: 11px; margin-right:10px; margin-left:5px;">{{item.particle_size}}</small>
                   </div>
                 </div>

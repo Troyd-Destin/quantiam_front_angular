@@ -8,7 +8,7 @@
       placeholder="Please select one or more TGA Runs"
       multiple="true"
       style="min-width:400px;"
-      selectedValue="selectedTgaRuns"
+      [selectedValue]="selectedTgaRuns"
       (change)="changeTgaRun($event)"
       (remove)="removeTgaRun($event)"
       (clear)="clearAllSelectedFiles($event)"
@@ -31,7 +31,7 @@
     
   </div>
 
-  <div *ngIf="TgaRun?.filename && selectedTgaRuns.length == 1">
+  <div *ngIf="TgaRun?.filename && selectedTgaRuns.length == 1" fxLayout="column" fxLayoutGap="10px">
 
 
     <div fxLayout="row" fxLayoutGap="10px">
@@ -55,13 +55,14 @@
 
         style="width: 100%; height: 500px; display: block;"
       ></highcharts-chart>
+      <h2 *ngIf="!correctStepNameCheck" >The expected stepname is missing.</h2>
 
     
 
       <div *ngIf="TgaRun.peaks[0]">
           <h3> Peaks </h3> 
           <div  fxLayout="row" fxLayoutGap="10px">
-            <button *ngFor="let peak of TgaRun.peaks" mat-button (click)="deleteTgaRunPeak(peak)">{{peak.temperature}}</button>
+            <button *ngFor="let peak of TgaRun.peaks" mat-raised-button (click)="deleteTgaRunPeak(peak)">{{peak.temperature}}</button>
           </div>
     </div>
     <div *ngIf="renderChart && selectedTgaRuns.length == 1">

@@ -56,7 +56,9 @@
           <span style="font-size: 11px;" *ngIf="item.container_name">({{item.container_name}})</span>  
        </div>
         <i class="grade_text" >
-            {{item.lot.material.grade}} <span *ngIf="item.lot.material.particle_size"> ({{item.lot.material.particle_size}}) </span>
+            {{item.lot.material.grade}} 
+            <span *ngIf="item.lot.material.purity"> ({{item.lot.material.purity}})% </span>
+            <span *ngIf="item.lot.material.particle_size"> ({{item.lot.material.particle_size}}) </span>
         </i>
       </div>
       <div style="width:100px; font-size: 11px;" [ngOptionHighlight]="search" >

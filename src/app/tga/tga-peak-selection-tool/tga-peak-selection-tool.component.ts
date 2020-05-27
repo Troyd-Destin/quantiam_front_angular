@@ -40,6 +40,8 @@ export class TgaPeakSelectionToolComponent implements OnInit {
   tgaRunlist$;
   selectTgaRun;
 
+  correctStepNameCheck = false;
+
   TgaFileList = [];
   selectedTgaRuns = [];
   selectedFileIndex = 1;
@@ -108,7 +110,6 @@ export class TgaPeakSelectionToolComponent implements OnInit {
     zoomType: 'xy',
   },
   exporting: {
-    url: 'http://192.168.1.179:7801',
     enabled: true,
   },
  // tooltip: { enabled: false },
@@ -247,11 +248,12 @@ export class TgaPeakSelectionToolComponent implements OnInit {
   }
 
   fetchTgaRun (runName) {
-
+    
     this.http.get<any>(environment.apiUrl + `/tga/` + runName)
     .subscribe(obj => {
-            console.log(obj);
-
+           
+            this.storedTgaRuns = [];
+            this.storedTgaRuns.push(obj);
             this.TgaRun = obj;
 
              this.updateHighchartObj();
@@ -290,15 +292,19 @@ export class TgaPeakSelectionToolComponent implements OnInit {
     this.storedTgaRuns.forEach((TgaRun) => {
 
         TgaRun.steps.forEach((step, i) => {
+          
 
+         
           if (step.name === 'Ramp 20.00 °C/min to 1000.00 °C' || step.name === 'Ramp 50.00 °C/min to 1000.00 °C') {
-
+            
             // console.log(step);
 
               const SGX_name = TgaRun.Procedure.comments.match(/(SGX)\w+/g);
-
+              let seriesObj:any = {};
+              if(SGX_name)
+              {
               /// Derivative
-              const seriesObj = {
+              seriesObj = {
 
                 name: SGX_name[0] + ' (' + TgaRun.filename + ')',
                 sgx_name: SGX_name[0],
@@ -307,6 +313,21 @@ export class TgaPeakSelectionToolComponent implements OnInit {
                 turboThreshold: 0,
                 data: [],
               };
+
+              
+            }
+            else
+            {
+
+              seriesObj = {
+
+                name: TgaRun.filename ,
+                type: 'spline',
+                // yAxis: 0,
+                turboThreshold: 0,
+                data: [],
+              };
+            }
 
 
               TgaRun.steps[i].data.forEach((point, index) => {
@@ -344,7 +365,8 @@ export class TgaPeakSelectionToolComponent implements OnInit {
   updateHighchartObj() {
 
 
-    // this.renderChart = false;
+    this.correctStepNameCheck = false;
+    
     this.chartOptions.series = [];
     this.chartOptions.xAxis[0].plotLines = [];
 
@@ -356,9 +378,12 @@ export class TgaPeakSelectionToolComponent implements OnInit {
 
     this.TgaRun.steps.forEach((step, i) => {
 
+      console.log(step.name);
       if (step.name === 'Ramp 20.00 °C/min to 1000.00 °C' || step.name === 'Ramp 50.00 °C/min to 1000.00 °C') {
 
         console.log(step);
+
+        this.correctStepNameCheck = true;
 
           /// Derivative
           const seriesObj = {
@@ -392,7 +417,8 @@ export class TgaPeakSelectionToolComponent implements OnInit {
             }
            }
           };
-
+          
+          
 
           this.TgaRun.steps[i].data.forEach((point) => {
 
@@ -420,6 +446,8 @@ export class TgaPeakSelectionToolComponent implements OnInit {
 
     });
 
+    if(!this.correctStepNameCheck){  this.renderChart = false; return; }
+
     if (this.TgaRun.peaks[0]) {
       this.TgaRun.peaks.forEach((peak, index) => {
         const plotline = {
@@ -438,8 +466,14 @@ export class TgaPeakSelectionToolComponent implements OnInit {
       padValue: 'replicate',
     };
 
-    this.updateFlag = true;
-    this.renderChart = true;
+    
+
+    setTimeout((r) => {
+      this.updateFlag = true;
+      this.renderChart = true;
+    }, 300);
+
+    
 
     console.log(this.chartOptions);
 
@@ -501,22 +535,26 @@ export class TgaPeakSelectionToolComponent implements OnInit {
 
   previousRun() {
 
-
-    this.tgaRunBuffer.forEach((item, index, object) => {
-        if (item.name === this.TgaRun.filename) {
-          this.fetchTgaRun(this.tgaRunBuffer[index - 1].name);
-        }
-    });
+    this.storedTgaRuns = [];
+    const index = this.tgaRunBuffer.findIndex((item) => 
+        item.name === this.TgaRun.filename
+    );
+    console.log(index);
+    this.selectedTgaRuns = [];
+    this.selectedTgaRuns.push(this.tgaRunBuffer[index-1]);
+    this.fetchTgaRun(this.tgaRunBuffer[index - 1].name);
 
   }
 
   nextRun() {
+    this.storedTgaRuns = [];
+    const index = this.tgaRunBuffer.findIndex((item) => 
+      item.name === this.TgaRun.filename
+  );
 
-    this.tgaRunBuffer.forEach((item, index, object) => {
-      if (item.name === this.TgaRun.filename) {
-        this.fetchTgaRun(this.tgaRunBuffer[index + 1].name);
-      }
-  });
+    this.selectedTgaRuns = [];
+    this.selectedTgaRuns.push(this.tgaRunBuffer[index+2]);
+    this.fetchTgaRun(this.tgaRunBuffer[index + 2].name);
   }
 
   changeSelectedFile(event) {
@@ -533,13 +571,11 @@ export class TgaPeakSelectionToolComponent implements OnInit {
   }
 
   changeTgaRun(event) {
-    this.selectedTgaRuns = event;
-    console.log(event);
-    if (event.length === 1 && this.renderChart === true) {
-      // console.log(event);
-      this.fetchTgaRun(event[0].name);
-
-    }
+     this.selectedTgaRuns = event;
+     if (this.selectedTgaRuns.length  === 1) {
+      this.fetchTgaRun(this.selectedTgaRuns[0].name);
+      return;
+     }
   }
 
   loadSelectedTgaRuns() {
@@ -612,10 +648,10 @@ export class TgaPeakSelectionToolComponent implements OnInit {
 
   //  this.multiChartOptions.title.text = 'test';
 
- setTimeout((r) => {
+    setTimeout((r) => {
 
-  this.renderMultiChart = true;
- }, 300);
+      this.renderMultiChart = true;
+    }, 300);
 
    /// console.log(this.storedTgaRuns);
 

@@ -19,6 +19,7 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
     'company-insight-unpaid',
     'company-insight-headcount',
     'company-insight-hours',
+    '3dmodels-database'
 
    ];
   storedRouteHandles = new Map<string, DetachedRouteHandle>();

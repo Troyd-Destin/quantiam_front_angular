@@ -3,6 +3,8 @@ import {AfterViewInit, Component, ViewChild, ViewContainerRef, ElementRef} from 
 
 import {ICellEditorAngularComp} from '@ag-grid-community/angular';
 
+import { NotificationsService } from 'angular2-notifications';
+
 
 import * as moment from 'moment';
 
@@ -33,7 +35,8 @@ export class AgGridTimesheetValueEditorComponent implements ICellEditorAngularCo
   @ViewChild('valueField', { read: ViewContainerRef, static: true }) public minuteInput: any;  // reference the container
 
 
-  constructor() { }
+  constructor(
+    private notification: NotificationsService,) { }
 
 
 
@@ -49,6 +52,19 @@ export class AgGridTimesheetValueEditorComponent implements ICellEditorAngularCo
   }
 
   isCancelAfterEnd(): boolean {
+    //console.log(this.value);
+    const int = parseInt(this.value);
+    //console.log(this.value, int);
+
+    if(this.value)
+    {
+      if((int !== 8) && this.params.node.data.project.projectID === 5) { 
+        
+        this.notification.error('Stat Error', ' Stat holidays must be 8 hours.', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
+              
+        ;return true;
+      }
+    }
     if (this.value === this.oldValue) { return true; }
     return false;
   }

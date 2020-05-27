@@ -45,14 +45,19 @@
 								</action-bar>
 						</mat-card-title>		
 			<mat-card-content fxLayoutGap="20px"  style="padding-top:20px !important; padding-bottom: 0px !important;" >
-					<div>
+					<div >
 					
-						<div fxLayoutGap="6px" fxLayout="row wrap"   fxLayoutAlign="start stretch"  >	
+						<div fxLayoutGap="10px" style="margin-bottom:10px" fxLayout="row wrap"   fxLayoutAlign="start stretch"  >	
 							<mat-form-field   fxFlex>
 								<input #MaterialName [disabled]="!editMaterial" (change)="updateMaterial(MaterialName)" type="text" matInput placeholder="Name" [(ngModel)] ='container.lot.material.name' name="name" disabled>
 							</mat-form-field>  
 							<mat-form-field  fxFlex>
 								<input  #Grade [disabled]="!editMaterial" (change)="updateMaterial(Grade)" type="text" matInput placeholder="Grade" [(ngModel)] ='container.lot.material.grade' name="grade" disabled>
+								<mat-hint> "MN-101","VC-6928" </mat-hint>
+							</mat-form-field>
+							<mat-form-field  fxFlex=10>
+								<input  #Purity [disabled]="!editMaterial" (change)="updateMaterial(Purity)" type="text" matInput placeholder="Purity (%)" [(ngModel)] ='container.lot.material.purity' name="purity" disabled>
+								<mat-hint> "98","99.5" </mat-hint>
 							</mat-form-field>
 							<mat-form-field  fxFlex>
 								<input  #ParticleSize [disabled]="!editMaterial" (change)="updateMaterial(ParticleSize)" type="text" matInput placeholder="Particle Size" [(ngModel)] ='container.lot.material.particle_size' name="particle_size" disabled>
@@ -83,6 +88,7 @@
 							
 							<mat-form-field class="full-width" fxFlex>
 								<input #Nomenclature [disabled]="!editMaterial" (change)="updateMaterial(Nomenclature)" type="text" matInput placeholder="Formula / Chemical Name" [(ngModel)] ='container.lot.material.formula' name="formula" >
+								<mat-hint> "CrO2","MnO2","W","NaCl" </mat-hint>
 							</mat-form-field>  
 							
 							<mat-form-field class="full-width"  fxFlex="20" fxFlex.lt-lg="20">

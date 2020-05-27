@@ -13,14 +13,8 @@ import { AgGridModule } from '@ag-grid-community/angular';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSelectModule } from '@angular/material/select';
-import {MatDatepickerModule} from '@angular/material/datepicker';
 
-import { MatInputModule } from '@angular/material/input';
+import { MaterialDesignModule } from '../material-design/material-design.module';
 
 
 import { SelectProjectComponent } from './select-project/select-project.component';
@@ -77,6 +71,7 @@ import { jqxButtonModule } from 'jqwidgets-ng/jqxbuttons';
 import { jqxWindowModule } from 'jqwidgets-ng/jqxwindow';
 import { jqxCheckBoxModule } from 'jqwidgets-ng/jqxcheckbox';
 import { jqxTabsModule } from 'jqwidgets-ng/jqxtabs';
+import { FileAssociatorComponent } from './file-associator/file-associator.component';
 
 
 @NgModule({
@@ -90,14 +85,8 @@ import { jqxTabsModule } from 'jqwidgets-ng/jqxtabs';
         CommonModule,
         NgSelectModule,
         FormsModule,
+        MaterialDesignModule,
         FlexLayoutModule,
-        MatIconModule,
-        MatCardModule,
-        MatButtonModule,
-        MatCheckboxModule,
-        MatInputModule,
-        MatDatepickerModule,
-        MatSelectModule,
         NgxFileDropModule ,
         NgbModule,
         CKEditorModule,
@@ -140,6 +129,7 @@ import { jqxTabsModule } from 'jqwidgets-ng/jqxtabs';
         SelectHazardComponent,
         SelectLocationComponent,
         SelectMaterialLotComponent,
+        FileAssociatorComponent,
     ],
     exports: [
         SelectArbinTestComponent,
@@ -169,6 +159,7 @@ import { jqxTabsModule } from 'jqwidgets-ng/jqxtabs';
         SafePipe,
         ReactiveFormsModule,
         NgSelectModule,
+        FileAssociatorComponent,
         jqxButtonModule, jqxWindowModule, jqxCheckBoxModule, jqxTabsModule
 
     ],

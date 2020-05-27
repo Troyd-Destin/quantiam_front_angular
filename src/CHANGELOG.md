@@ -27,13 +27,37 @@ Change Log
 - Steel Creation Dialog
 
 
-# 2020.14
+# 2020.20
+
+
+### New
+
+- Purity is now an optional attribute of a material, which communicates how pure a material might be, eg 99.5%, or 99.9%. This is distinct from a material grade, which identifies the class of material. All relevant creation or search dialogs have been updated with this property. <br><img style="margin:5px;" src="https://imgur.com/1DskLBB.png" width="75%">  
+
+- A searchable 3d Model database has now been prototyped utilizing the autodesk data management api. Now accessible on the side bar menu under "3d models", or /3dmodels/database<br><img style="margin:5px;" src="https://imgur.com/So00VQP.png" width="75%">
+
+### Changes
+
+- An error notification should now display when an RTO allocation doesn't save properly. 
+
+### Fixes 
+
+- When viewing a container, the latest SDS will now displayed, rather then the oldest. All historical SDSs are available in the historical SDS tab. 
+- Fixed an Issue where a stat holiday would accept "8", but not "8.0". 
+- The "Active Employees" filter now works as expected for the user rto bank status report. 
+
+
+# 2020.16
 
 ### New
 
 - Quality Section Added
 - Non Conformance Report Database Prototype
 - Non Conformance Report Prototype 
+
+### Changes
+
+- You can no longer enter less then 8 hours on a stat holiday
 
 # 2020.12
 

@@ -5,6 +5,7 @@ import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
@@ -50,6 +51,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   CommonModule,
   FontAwesomeModule,
      MatAutocompleteModule,
+     MatBadgeModule,
     MatButtonModule,
     MatButtonToggleModule,
     MatCardModule,
@@ -89,6 +91,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NgbAlertModule,
     FontAwesomeModule,
     MatAutocompleteModule,
+    MatBadgeModule,
     MatButtonModule,
     MatButtonToggleModule,
     MatCardModule,

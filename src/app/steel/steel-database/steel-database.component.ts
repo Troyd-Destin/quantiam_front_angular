@@ -4,10 +4,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import {  environment} from '../../../environments/environment';
 import { NotificationsService } from 'angular2-notifications';
 
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+
 import { Router } from '@angular/router';
 
 import { AllModules  } from '@ag-grid-enterprise/all-modules';
 
+import { SteelCreationDialogComponent } from '../steel-creation-dialog/steel-creation-dialog.component';
+ 
 @Component({
   selector: 'app-steel-database',
   templateUrl: './steel-database.component.html',
@@ -15,7 +19,7 @@ import { AllModules  } from '@ag-grid-enterprise/all-modules';
 })
 export class SteelDatabaseComponent implements OnInit {
 
-  constructor( private http: HttpClient, private notification: NotificationsService, private router: Router) { }
+  constructor(  private dialog: MatDialog, private http: HttpClient, private notification: NotificationsService, private router: Router) { }
 
   gridApi;
    gridColumnApi;
@@ -207,4 +211,26 @@ export class SteelDatabaseComponent implements OnInit {
   {
     
   }
+
+  createSteel()
+  {
+
+    const dialogRef = this.dialog.open(SteelCreationDialogComponent, {
+      width: '600px',
+      position: {'top':'10px'},
+      //data: car,
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+
+      this.refreshDatabase();
+    })
+  }
+
+
+
+  
+
 }

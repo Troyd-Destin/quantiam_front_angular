@@ -10,6 +10,8 @@ import { MaterialDesignModule } from '../material-design/material-design.module'
 import { NcrDatabaseComponent } from './ncr-database/ncr-database.component';
 import { NcrComponent } from './ncr/ncr.component';
 import { QualityIndexComponent } from './quality-index/quality-index.component';
+import { CarComponent } from './car/car.component';
+import { CarDialogComponent } from './car-dialog/car-dialog.component';
 
 const routes: Routes = [
   {
@@ -37,7 +39,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [NcrDatabaseComponent, NcrComponent,QualityIndexComponent],
+  declarations: [NcrDatabaseComponent, NcrComponent,QualityIndexComponent, CarComponent, CarDialogComponent],
   imports: [    
     RouterModule.forChild(routes),
     CommonModule,

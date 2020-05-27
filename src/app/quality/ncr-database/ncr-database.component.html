@@ -2,8 +2,8 @@
 <h2> NCR Database </h2>
 
 <div fxLayout="column">
-    <div id="top_row" fxLayout="row">
-        <div fxFlex fxLayoutGap=10px>
+    <div id="top_row" fxLayout="row" fxLayoutGap=10px>
+        <div fxFlex fxLayoutGap=10px fxFlex>
 
             <ng-select
             fxFlex=10
@@ -12,6 +12,9 @@
            bindValue="id"
            placeholder="Status"
            appendTo="body"
+           
+          (change)="filterStatus($event)"
+          (clear)="clearFilterStatus()"
            
            >
             </ng-select>
@@ -23,20 +26,32 @@
            bindValue="id"
            placeholder="Type"
            appendTo="body"
-           >
-            </ng-select> 
+           (change)="filterTypes($event)"
+           (clear)="clearFilterTypes()"
+
+           ></ng-select> 
             
             <ng-select
             fxFlex=10
-            [items]="statusTypes"
-           bindLabel="value"
+            [items]="buissnessUnits"
+           bindLabel="name"
            bindValue="id"
            placeholder="Buisness Unit"
            appendTo="body"
+           (change)="filterBuisnessUnits($event)"
+           (clear)="clearFilterBuisnessUnits()"
            >
             </ng-select>
             
         </div>
+        <div fxLayoutAlign="center center">
+        <mat-form-field style="width:300px">
+            <!--   <span matPrefix>+1 &nbsp;</span> -->
+            <input id="semDatabaseSearchBar" type="text" matInput (keyup)="onTextFilterChanged()"  [(ngModel)]="filteredTextFilterName"  placeholder="Search">
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>  
+        </div>
+
         <div fxLayoutAlign="end center" fxLayoutGap="5px">
             <button (click)="refreshDatabase()" mat-raised-button> 
                 Refresh

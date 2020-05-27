@@ -128,18 +128,24 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         },
       },
       {
-        width: 120,
+        width: 110,
         field: 'lot.material.grade',
         headerName: 'Grade',
       },
       {
+        width: 75,
+        field: 'lot.material.purity',
+        headerName: 'Purity (%)',
+        hide: false,
+      }, 
+      {
         width: 90,
         field: 'lot.material.particle_size',
         headerName: 'P. Size',
-        hide: true,
+        hide: false,
       },
       {
-        width: 100,
+        width: 95,
         field: 'lot.material.supplier.supplier_name',
         headerName: 'Suplier',
       },

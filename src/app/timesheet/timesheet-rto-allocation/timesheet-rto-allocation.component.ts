@@ -99,6 +99,8 @@ export class TimesheetRtoAllocationComponent implements OnInit {
 
 
           this.notify.success('Sucess', 'Updated entry', {timeOut: 4000});
+      },(e)=>{
+        this.notify.error('Error', 'Something went wrong, this did not save.', {timeOut: 4000});
       });
 
     }

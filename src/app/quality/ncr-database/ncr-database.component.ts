@@ -33,15 +33,29 @@ export class NcrDatabaseComponent implements OnInit {
   totalRows;
   context;
 
+  filteredStatus;
+  filteredTextFilterName;
+  filteredType;
+  filteredBuisnessUnit;
+
   statusTypes = [
-    {id:'draft',value:'Draft'},
-    {id:'ongoing',value:'Ongoing'},
-    {id:'resolved',value:'Resolved'}
+    {id:'draft',value:'draft'},
+    {id:'ongoing',value:'ongoing'},
+    {id:'completed',value:'Completed'}
   ]
   
   typeTypes = [
     {id:'procedure',value:'Procedure'},
     {id:'product',value:'Product'},
+  ]
+
+  buissnessUnits = [
+    {id:'trial_manufacturing', name:"Trial Manuacturing"},
+    {id:'receiving', name:"Receiving"},
+    {id:'health_and_safety', name:"Health and Safety"},
+    {id:'research_and_developmemnt', name:"R & D"},
+    {id:'finance', name:"Finance"},
+
   ]
 
   
@@ -54,22 +68,34 @@ export class NcrDatabaseComponent implements OnInit {
     {
       field: 'name',      
       headerName: 'NCR Name',
-      width: 100,
+      width: 200,
     },
      {
       field: 'type',      
       headerName: 'Type',
       width: 100,
+      cellRenderer: (cell) => {
+        return cell.value.replace(/^./, cell.value[0].toUpperCase());
+      }
     },    
     {
       field: 'buisness_unit',      
       headerName: 'Buisness Unit',
       width: 100,
+      cellRenderer: (cell) => {
+        return cell.value.split('_').map((word)=>{
+          return word.replace(word[0],word[0].toUpperCase());
+        }).join(' ');
+
+      }
     },
     {
       field: 'severity',      
       headerName: 'Severity',
       width: 100,
+      cellRenderer: (cell) => {
+        return cell.value.replace(/^./, cell.value[0].toUpperCase());
+      }
     },    
     {
       field: 'created_at',      
@@ -79,7 +105,26 @@ export class NcrDatabaseComponent implements OnInit {
     {
       field: 'status',      
       headerName: 'Status',
-      width: 100,
+      width: 60,
+      cellStyle: {textAlign: "center",  'align-items': "center", 'justify-content': "center", display: "flex"},
+      cellRenderer: (cell) => {
+
+        if(cell.value === 'ongoing')
+        {
+          return '<button class="btn btn-warning btn-sm">'+cell.value.replace(/^./, cell.value[0].toUpperCase())+'</button>';
+        }
+
+        if(cell.value === 'draft')
+        {
+          return '<button class="btn btn-light btn-sm">'+cell.value.replace(/^./, cell.value[0].toUpperCase())+'</button>';
+        }
+
+        if(cell.value === 'completed')
+        {
+          return '<button class="btn btn-success btn-sm">'+cell.value.replace(/^./, cell.value[0].toUpperCase())+'</button>';
+        }
+
+      }
     },
   ];
 
@@ -101,6 +146,7 @@ export class NcrDatabaseComponent implements OnInit {
     cacheBlockSize: 18,
     enableRangeSelection: true,
      maxBlocksInCache: 2,
+     rowHeight: 38,
    //  enableServerSideFilter: true,
     enableServerSideSorting: false,
     rowModelType: 'serverSide',
@@ -147,10 +193,13 @@ fetchDatabase () {
       console.log(params2);
       const page = (this.gridApi.paginationGetCurrentPage() + 1);
 
-       const requestParams: HttpParams = new HttpParams();
-     /* .append('limit', `${this.gridOptions.cacheBlockSize}`)
+       const requestParams: HttpParams = new HttpParams()
+     // .append('limit', `${this.gridOptions.cacheBlockSize}`)
       .append('like', `${this.filteredTextFilterName}`)
-      .append('hazards[]', this.hazardSearchFilter)
+      .append('status', `${this.filteredStatus}`)
+      .append('type', `${this.filteredType}`)
+      .append('buisness_unit', `${this.filteredBuisnessUnit}`);
+     /* .append('hazards[]', this.hazardSearchFilter)
       .append('suppliers[]', this.supplierSearchFilter)
       .append('locations[]', this.locationSearchFilter)
       .append('page', `${page}`); */
@@ -179,5 +228,33 @@ fetchDatabase () {
     })
 
   }
+
+  onTextFilterChanged() {
+    clearTimeout(this.timeoutTextFilter);
+    this.timeoutTextFilter = setTimeout((x) => {
+
+            this.refreshDatabase();
+    }, 500 );
+
+}
+
+
+  
+  filterStatus(event)  { this.filteredStatus = event.id; 
+    this.refreshDatabase(); }
+  clearFilterStatus () {this.filteredStatus = '';
+  this.refreshDatabase(); } 
+  
+  
+  filterBuisnessUnits(event)  { this.filteredBuisnessUnit = event.id; 
+    this.refreshDatabase(); }
+    clearFilterBuisnessUnits () {this.filteredBuisnessUnit = '';
+  this.refreshDatabase(); }  
+  
+  
+  filterTypes(event)  { this.filteredType = event.id; 
+    this.refreshDatabase(); }
+    clearFilterTypes () {this.filteredType = '';
+  this.refreshDatabase(); }
 
 }

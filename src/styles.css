@@ -300,6 +300,11 @@ background-color: #3c658a;
 	color: #fff;
 }
 
+.mat-chip.mat-success{
+	background-color: #328847;
+	color: #fff;
+}
+
 .mat-button.mat-success{
 	color: #328847;
 }

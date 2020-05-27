@@ -596,6 +596,7 @@ export class MaterialCreationDialogComponent implements OnInit, OnDestroy {
                                  {
                                      this.material = materialChecked;
                                      this.checkIfDirectMatch = true;
+                                     this.creatingMaterial = false;
                                      this.materialChecked = true;
                                      this.newMaterial = false;
                                      this.lot.isNew = false;

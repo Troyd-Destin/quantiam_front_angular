@@ -43,35 +43,41 @@
 							  <input #MaterialName   type="text" matInput placeholder="Name" (change)="validateNewMaterial()"   (blur)="resetMaterialCheck()" [(ngModel)] ='material.name' formControlName="firstCtrl" name="name" required [disabled]="!creatingMaterial">
 						 </mat-form-field>  
 						  <mat-form-field class="full-width" fxFlex>
-							  <input  #MaterialGrade  type="text" matInput placeholder="Grade" 
+							  <input  #MaterialGrade  type="text" matInput placeholder="Grade" required
 							  (blur)="resetMaterialCheck()"
 							  [(ngModel)] ='material.grade' name="grade"   [ngModelOptions]="{standalone: true}" [disabled]="!creatingMaterial">
-							  	<mat-hint> "99%", "Si-102","TOTAL Mn/SI" </mat-hint>
+							  	<mat-hint> "MN-101", "VC-8729", "Si-102","TOTAL Mn/SI" </mat-hint>
 						 </mat-form-field>
+
+						 <mat-form-field class="full-width" *ngIf="!creatingMaterial">
+							<input  type="text" matInput placeholder="Supplier" [value] ='material.supplier_name || material.supplier.supplier_name' name="supplier" disabled>
+						</mat-form-field>  
+						<app-select-material-supplier 
+						style="min-width: 200px;"
+						name="supplier_name"
+						addTag="true"
+						*ngIf="creatingMaterial"
+						[selectedValue]="material.supplier_id"
+						(change)="selectSupplier($event)"
+						(clear)="clearSupplier()"
+						>
+						</app-select-material-supplier>
 						 
 						 
 					</div>		
 					
 					<div fxLayoutGap="10px"  fxLayout="row" fxLayout.sm="column"  >	
 						
-							<mat-form-field class="full-width" *ngIf="!creatingMaterial">
-								<input  type="text" matInput placeholder="Supplier" [value] ='material.supplier_name || material.supplier.supplier_name' name="supplier" disabled>
-							</mat-form-field>  
-							<app-select-material-supplier 
-							style="min-width: 200px;"
-							name="supplier_name"
-							addTag="true"
-							*ngIf="creatingMaterial"
-							[selectedValue]="material.supplier_id"
-							(change)="selectSupplier($event)"
-							(clear)="clearSupplier()"
-							>
-							</app-select-material-supplier>
+						
 							
 							<mat-form-field class="full-width" fxFlex>
 								<input #ParticleSize type="text" matInput placeholder="Particle Size" [(ngModel)] ='material.particle_size'  [ngModelOptions]="{standalone: true}" name="particle_size"   [disabled]="!creatingMaterial">
 								<mat-hint> Optional: eg 1-5um, -325 mesh </mat-hint>
 						   </mat-form-field> 
+						   <mat-form-field class="full-width" fxFlex>
+							<input #Purity type="text" matInput placeholder="Purity (%)" [(ngModel)] ='material.purity'  [ngModelOptions]="{standalone: true}" name="purity"   [disabled]="!creatingMaterial">
+							<mat-hint> Optional: "99.9","99.5","99.0" </mat-hint>
+					 	  </mat-form-field> 
 						   
 						 
 						

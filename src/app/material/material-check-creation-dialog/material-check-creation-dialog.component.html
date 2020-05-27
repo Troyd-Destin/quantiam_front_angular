@@ -8,7 +8,9 @@
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Grade</th>
+                <th>Grade</th>          
+                <th>Purity</th>
+                <th>Size</th>
                 <th>Supplier</th>
                 <th>Select?</th>
             </tr>
@@ -17,6 +19,11 @@
             <tr *ngFor="let material of data">
                 <td>{{material.name}}</td>
                 <td>{{material.grade}}</td>
+                <td>
+                    <div *ngIf="material.purity"> {{material.purity}}% </div>
+
+                </td>
+                <td>{{material.particle_size}}</td>
                 <td>{{material.supplier.supplier_name}}</td>
                 <td>
                     <button [mat-dialog-close]="material" cdkFocusInitial mat-button color="primary">

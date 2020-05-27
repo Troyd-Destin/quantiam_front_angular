@@ -23,7 +23,7 @@ import { SettingsService } from '../services/settings/settings.service';
 
 import { faCoffee, faMicroscope, faBolt, faFlask, faXRay, 
   faFireAlt, faPlaneDeparture, faHatWizard, faPaste, faCog, 
-  faPiggyBank, faChartLine, faJournalWhills, faUserFriends, faPallet, faSitemap, faUserTimes } from '@fortawesome/free-solid-svg-icons';
+  faPiggyBank, faChartLine, faJournalWhills, faUserFriends, faPallet, faSitemap, faUserTimes, faDraftingCompass } from '@fortawesome/free-solid-svg-icons';
 import { faCalendar, faClock, } from '@fortawesome/free-regular-svg-icons';
 import { faAngular, faGithub, faFontAwesome, faLaravel } from '@fortawesome/free-brands-svg-icons';
 
@@ -76,6 +76,7 @@ export class CoreComponent implements OnInit, OnDestroy {
   faPallet = faPallet;
   faSitemap = faSitemap;
   faUserTimes = faUserTimes;
+  faDraftingCompass = faDraftingCompass;
 
 
   title = 'app';

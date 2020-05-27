@@ -15,7 +15,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { NotificationsService } from 'angular2-notifications';
-import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { CarDialogComponent } from '../car-dialog/car-dialog.component';
+import { CarComponent } from '../car/car.component';
 
 export interface Fruit {
   name: string;
@@ -32,12 +34,11 @@ export class NcrComponent implements OnInit {
   @ViewChild('responsibleInput') responsibleInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
-  ncrFiles: NgxFileDropEntry[] = [];
   ncrName;
   ncrOptions;
   ncrObject = {
-    id:null, status: null, name: null, requirement_violated:null,
-    type:null,severity:null,description:null,buisness_unit:null,project_id:null,occurred:null
+    id:null, status: null, name: null, requirement_violated:null,completion_notes: null,completed_by:null, completed_at: null,
+    type:null,severity:null,description:null,buisness_unit:null,project_id:null,occurred:null, media: null, cars: []
   };
   ncrLoading = false;
 
@@ -61,12 +62,15 @@ export class NcrComponent implements OnInit {
   allUsers;  
   allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
 
+
   constructor(
     private userService:SelectUserService,
     private route: ActivatedRoute, 
     private http: HttpClient,
     private notification: NotificationsService,
     private projectService: ProjectService,
+    public carDialog: MatDialog,
+    private router: Router,
     ) {
       
 
@@ -75,17 +79,18 @@ export class NcrComponent implements OnInit {
   ngOnInit(): void {
 
     this.ncrOptions = new FormGroup({
-      name: new FormControl(this.ncrObject.name, [Validators.required]),
-      requirement_violated: new FormControl(this.ncrObject.requirement_violated, [Validators.required]),
-      type: new FormControl(this.ncrObject.type, [Validators.required]),
-      severity: new FormControl(this.ncrObject.severity, [Validators.required]),
-      description: new FormControl(this.ncrObject.description, [Validators.required]),
-      immediate_containment_action: new FormControl(null,null),
-      buisness_unit: new FormControl(this.ncrObject.buisness_unit, [Validators.required]),
-      status: new FormControl(this.ncrObject.status,null),
-      project_id: new FormControl(this.ncrObject.project_id,null),
-      occurred: new FormControl(this.ncrObject.occurred,[Validators.required]),
-      responsible: new FormControl(this.selectedResponsible,[Validators.required]),
+      name: new FormControl({ value:this.ncrObject.name, disable: true}, [Validators.required]),
+      requirement_violated: new FormControl({ value:this.ncrObject.requirement_violated, disable: true}, [Validators.required]),
+      type: new FormControl({ value:this.ncrObject.type, disable: true}, [Validators.required]),
+      severity: new FormControl({ value:this.ncrObject.severity, disable: true}, [Validators.required]),
+      description: new FormControl({ value:this.ncrObject.description, disable: true}, [Validators.required]),
+      immediate_containment_action: new FormControl({ value:null, disable: true},null),
+      buisness_unit: new FormControl({ value:this.ncrObject.buisness_unit, disable: true}, [Validators.required]),
+      status: new FormControl({ value:this.ncrObject.status, disable: true},null),
+      project_id: new FormControl({ value:this.ncrObject.project_id, disable: true},null),
+      occurred: new FormControl({ value:this.ncrObject.occurred, disable: true},[Validators.required]),
+      responsible: new FormControl({ value:this.selectedResponsible, disable: true},[Validators.required]),
+      completion_notes: new FormControl({ value: this.ncrObject.completion_notes, disable: false}),
      });
 
      this.ncrOptions.controls['responsible'].setValue({id:65,name:'Tyson Boyce',title:'QA/QC Supervisor', clearable: false});
@@ -141,6 +146,8 @@ export class NcrComponent implements OnInit {
  
        });
 
+
+      
       
   }
 
@@ -158,8 +165,20 @@ export class NcrComponent implements OnInit {
 
         this.ncrOptions.updateValueAndValidity();
         this.ncrLoading = false;
+        this.canEditCheck();
 
     })
+
+  }
+
+  canEditCheck()
+  {
+    if(this.ncrObject.status === 'draft') { this.ncrOptions.enable(); }
+    if(this.ncrObject.status === 'ongoing' || this.ncrObject.status == 'completed') {
+       
+      this.ncrOptions.disable();
+      
+      }
 
   }
 
@@ -169,8 +188,10 @@ export class NcrComponent implements OnInit {
       let params =  this.ncrOptions.getRawValue();
       if(status){ params.status = status; }
       params.responsible = this.selectedResponsible;
-      this.http.put(environment.apiUrl + '/ncr/' + this.ncrObject.id, params).subscribe((r)=>{
+      this.http.put(environment.apiUrl + '/ncr/' + this.ncrObject.id, params).subscribe((r:any)=>{
+        this.ncrObject = r;
         this.notification.success('Success',  'NCR Details Saved', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
+        this.canEditCheck();
       }) 
   }
 
@@ -203,41 +224,87 @@ export class NcrComponent implements OnInit {
   }
 
 
-  NCRdroppedfile(files: NgxFileDropEntry[]){
-    this.ncrFiles = files;
-    console.log(files);
-    for (const droppedFile of files) {
+  openCarDialog(car, index = null)
+  {
+    car.arrayLength = this.ncrObject.cars.length;
+    car.index = index;
+    const dialogRef = this.carDialog.open(CarComponent, {
+      width: '700px',
+      position: {'top':'10px'},
+      data: car,
+      disableClose: true,
+    });
 
-      // Is it a file?
-      if (droppedFile.fileEntry.isFile) {
-        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-        fileEntry.file((file: File) => {
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
 
-          // Here you can access the real file
-          console.log(droppedFile.relativePath, file);
 
-          /**
-          // You could upload it like this:
-           **/
-          const formData = new FormData()
-          formData.append('media', file, droppedFile.relativePath)
-  
-          this.http.put(environment.apiUrl + '/ncr/' + this.ncrObject.id, formData, { responseType: 'blob' })
-          .subscribe(data => {
-              console.log(data);
-            // Sanitized logo returned from backend
-          })
-         
+      this.ncrObject.cars[index] = result;
 
-        });
-      } else {
-        // It was a directory (empty directories are added, otherwise only files)
-        const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
-        console.log(droppedFile.relativePath, fileEntry);
+      if(result.hasOwnProperty('next'))
+      {
+        this.openCarDialog(this.ncrObject.cars[index+1],index+1);
       }
-    }}
-  NCRfileOver(event){ console.log(event);}
-  NCRfileLeave(event){ console.log(event);}
+      else if(result.hasOwnProperty('previous'))
+      {
+        this.openCarDialog(this.ncrObject.cars[index-1],index-1);
+      }
+      else if(result.hasOwnProperty('deleted') && result.deleted)
+      {
+        this.ncrObject.cars = this.ncrObject.cars.filter(car => car.id !== result.id);
+      }
 
+    });
+  
+
+  }
+
+
+  createCar(ncrObject)
+  {
+    this.http.post(environment.apiUrl + '/ncr/' + this.ncrObject.id + '/car', ncrObject).subscribe((r)=>{
+
+      this.ncrObject.cars.push(r);
+      this.openCarDialog(r);
+
+      this.notification.success('Success',  'Created Corrective Action Report', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
+    }) 
+
+
+  }
+
+  canCompleteNcr()
+  {
+
+    if(this.ncrObject.cars.length > 0)
+    {
+      const unfinishedCar = this.ncrObject.cars.filter((car)=>{
+          return car.completed === 0;
+      })
+
+      if(unfinishedCar.length > 0) { return false; }
+      return true;
+
+    }
+    return false;
+  }
+
+  markNcrAsComplete()
+  {
+    this.updateNCR('completed');
+  }
+
+  deleteNCR()
+  {
+    if(confirm('Are you sure you want to delete this NCR?'))
+    {
+
+      this.http.delete(environment.apiUrl + '/ncr/' + this.ncrObject.id).subscribe((r)=>{
+        //redirect to 
+        this.router.navigate(['/quality/ncr/database'], {queryParams: { refreshTable: true}});
+      });
+    }
+
+  }
 
 }

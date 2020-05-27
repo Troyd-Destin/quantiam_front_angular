@@ -265,6 +265,12 @@
 											<fa-icon [icon]="faFlask"></fa-icon>
 										</button>
 									</mat-list-item> 
+									
+									<mat-list-item  > 
+										 <button routerLink="/3dmodels/database" routerLinkActive="mat-list-item-button-active" mat-button> <p>3d Models</p>
+											<fa-icon [icon]="faDraftingCompass"></fa-icon>
+										</button>
+									</mat-list-item>  
 
 								
 									<!--  <mat-list-item style="display:none" > 
@@ -398,11 +404,11 @@
 											<fa-icon  [icon]="faMicroscope" ></fa-icon>
 										</button>
 								</mat-list-item>
-							<!-- 	<mat-list-item  *ngIf="userService.hasPermission([39,44])"> 
-										<button routerLink="/tga/database" routerLinkActive="mat-list-item-button-active" mat-button> <p>TGA</p>
+								<mat-list-item  *ngIf="userService.hasPermission([39,44])"> 
+										<button routerLink="/tga/peak-tool" routerLinkActive="mat-list-item-button-active" mat-button> <p>TGA</p>
 											<fa-icon  [icon]="faFireAlt" ></fa-icon>
 										</button>
-								</mat-list-item> -->
+								</mat-list-item>
 								<mat-list-item *ngIf="userService.hasPermission(39)" > 
 										 <button routerLink="/xps/database" routerLinkActive="mat-list-item-button-active" mat-button> <p>XPS </p>
 											<fa-icon  [icon]="faBolt" ></fa-icon>
