@@ -32,21 +32,23 @@
 				 <!-- <button mat-raised-button  (click)="createMaterialAttrs()" *ngIf="lookedForMaterial"> Create Material </button>
 			 -->
 			</div>
-			<div fxLayoutGap="5px" style="margin-bottom:10px;" fxLayout="row">
+			<div fxLayoutGap="5px" style="margin-bottom:10px;" fxLayout="row" fxLayoutAlign="center center">
 				<button mat-raised-button  (click)="selectingMaterialAttrs(); lookedForMaterial = !lookedForMaterial;" *ngIf="creatingMaterial" fxFlex="20"> Select Material Instead </button>
 			</div>
 
 			<div *ngIf="newMaterial || selectedMaterial?.id  || lookedForMaterial" fxLayout="column"  fxLayoutGap="10px" >
-			
+
+					<h3>Required Attributes</h3> 
+
 					<div fxLayoutGap="10px" fxLayout="row" fxLayout.sm="column"  fxLayoutAlign="start stretch"  >	
 						  <mat-form-field class="full-width"  fxFlex>
 							  <input #MaterialName   type="text" matInput placeholder="Name" (change)="validateNewMaterial()"   (blur)="resetMaterialCheck()" [(ngModel)] ='material.name' formControlName="firstCtrl" name="name" required [disabled]="!creatingMaterial">
 						 </mat-form-field>  
 						  <mat-form-field class="full-width" fxFlex>
-							  <input  #MaterialGrade  type="text" matInput placeholder="Grade" required
+							  <input  #MaterialGrade  type="text" matInput placeholder="Grade" 
 							  (blur)="resetMaterialCheck()"
 							  [(ngModel)] ='material.grade' name="grade"   [ngModelOptions]="{standalone: true}" [disabled]="!creatingMaterial">
-							  	<mat-hint> "MN-101", "VC-8729", "Si-102","TOTAL Mn/SI" </mat-hint>
+							  	<mat-hint> Can be left blank, "MN-101", "VC-8729", "TOTAL Mn/SI" </mat-hint>
 						 </mat-form-field>
 
 						 <mat-form-field class="full-width" *ngIf="!creatingMaterial">
@@ -56,6 +58,7 @@
 						style="min-width: 200px;"
 						name="supplier_name"
 						addTag="true"
+						placeholder="Supplier (Required)"
 						*ngIf="creatingMaterial"
 						[selectedValue]="material.supplier_id"
 						(change)="selectSupplier($event)"
@@ -66,6 +69,8 @@
 						 
 					</div>		
 					
+					<h3>Optional Attributes</h3> 
+
 					<div fxLayoutGap="10px"  fxLayout="row" fxLayout.sm="column"  >	
 						
 						

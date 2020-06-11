@@ -23,3 +23,80 @@
 ::ng-deep .fc button, .fc table, body .fc {
     font-size: 0.9em !important;
 }
+
+/*!
+ * FullCalendar v3.8.1
+ * Docs & License: https://fullcalendar.io/
+ * (c) 2017 Adam Shaw
+ */
+/*!
+ * FullCalendar v3.8.1 Print Stylesheet
+ * Docs & License: https://fullcalendar.io/
+ * (c) 2017 Adam Shaw
+ */
+
+ @media print{
+
+    :host {
+        visibility: visible;
+        
+    }
+
+    * {
+        transition: none !important;
+    }
+
+
+    /deep/ @page {size:landscape; margin: 10px 20px;}
+
+
+    /deep/ #calendar {
+        background-color: white;
+    }
+
+    /deep/ .fc-center h2
+    {
+
+        font-size: 40px;
+    }
+
+    /deep/ .fc-button-group{
+        display:none;
+    }
+    
+    /deep/ .fc-title{
+
+        font-size: 11px;
+        color:black;
+    }
+
+    /deep/ .fc-event{
+        
+    }
+
+    .print {
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        z-index:9999999;
+      }
+
+
+      /deep/ .fc-day-grid-event{
+          text-decoration: none !important;
+      }
+
+      /deep/ .fc-content-skeleton table thead tr{
+
+        /* height: 95px !important; */
+      }
+ 
+
+      
+
+
+
+   
+   }

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 //import { FullCalendarModule } from 'ng-fullcalendar';
 
-
 import { jqxDataTableModule } from 'jqwidgets-ng/jqxdatatable';
 import { HotTableModule } from '@handsontable/angular';
 
@@ -11,6 +10,8 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialDesignModule } from '../material-design/material-design.module';
 import { TimesheetRoutingModule } from './timesheet-routing.module';
+
+import { FullCalendarModule } from '@fullcalendar/angular'; // for FullCalendar!
 import { TimesheetIndexComponent } from './timesheet-index/timesheet-index.component';
 import { TimesheetComponent } from './timesheet/timesheet.component';
 import { TimesheetBankComponent } from './timesheet-bank/timesheet-bank.component';
@@ -50,7 +51,8 @@ import { CompanyInsightHeadcountComponent } from './timesheet-statistics/timeshe
     HotTableModule.forRoot(),
     jqxDataTableModule,
     MaterialDesignModule,
-    SharedModule
+    SharedModule,
+    FullCalendarModule ,
   ],
   entryComponents:[ CreateRtoDialogComponent,CreatePayoutComponent, MachineUserDialogComponent ],
   declarations: [ NumericEditor, TimesheetIndexComponent, TimesheetComponent, 

@@ -70,10 +70,15 @@ export class NcrDatabaseComponent implements OnInit {
       headerName: 'NCR Name',
       width: 200,
     },
+    {
+      field: 'project_id',      
+      headerName: 'Project',
+      width: 60,
+    },
      {
       field: 'type',      
       headerName: 'Type',
-      width: 100,
+      width: 70,
       cellRenderer: (cell) => {
         return cell.value.replace(/^./, cell.value[0].toUpperCase());
       }
@@ -92,7 +97,7 @@ export class NcrDatabaseComponent implements OnInit {
     {
       field: 'severity',      
       headerName: 'Severity',
-      width: 100,
+      width: 70,
       cellRenderer: (cell) => {
         return cell.value.replace(/^./, cell.value[0].toUpperCase());
       }
@@ -100,7 +105,7 @@ export class NcrDatabaseComponent implements OnInit {
     {
       field: 'created_at',      
       headerName: 'Created',
-      width: 100,
+      width: 70,
     },
     {
       field: 'status',      

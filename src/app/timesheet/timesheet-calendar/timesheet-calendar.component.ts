@@ -5,8 +5,13 @@ import {  HttpClient } from '@angular/common/http';
 
 import {  environment } from '../../../environments/environment';
 
+import { EventInput } from '@fullcalendar/core';
 
 import { UserService } from '../../services/user/user.service';
+import dayGridPlugin from '@fullcalendar/daygrid';
+
+import timeGrigPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
 
 @Component({
   selector: 'app-timesheet-calendar',
@@ -15,10 +20,26 @@ import { UserService } from '../../services/user/user.service';
 })
 export class TimesheetCalendarComponent implements OnInit {
 
-  calendarEvents = [];
+ 
   subordinatesOnly = false;
   selectedUser;
   minimumHours = 0;
+  calendarPlugins = [dayGridPlugin,interactionPlugin,timeGrigPlugin]; // important! //
+  calendarEvents: EventInput[] = [
+    { title: 'Event Now', start: new Date() },
+    { title: 'Event Now', start: new Date() },
+    { title: 'Event Now', start: new Date() },
+    { title: 'Event Now', start: new Date() },
+    { title: 'Event Now', start: new Date() },
+    { title: 'Event Now', start: new Date() },
+    { title: 'Event Now', start: new Date() }
+  ];
+ 
+  calendarHeader = {
+    left: 'prev,next today',
+    center: 'title',
+    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+  };
 
   constructor(private router: Router, private http: HttpClient, private userService: UserService) { }
 
@@ -48,7 +69,14 @@ export class TimesheetCalendarComponent implements OnInit {
         eventSources: [this.eventSourceQuantiam()],
       });
 
-    }, 500);
+    }, 500);  
+  }
+
+  eventClick (calEvent, jsEvent, view) {
+
+
+    this.router.navigate(['/timesheet/rto/' + calEvent.rto_id]);
+
   }
 
 
@@ -93,6 +121,10 @@ export class TimesheetCalendarComponent implements OnInit {
     // console.log(event);
   }
 
+
+  printPage() {
+    window.print()
+  }
 
 
 

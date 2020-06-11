@@ -27,8 +27,17 @@ Change Log
 - Steel Creation Dialog
 
 
-# 2020.20
+# 2020.23
 
+### Changes
+
+- To reflect policy HRD-0001H, Updated May 2020 --- Hourly CTO now accrues at a rate of 1.0x, instead of 1.5x. The timesheets no longer indicate a 1.5x modifier. 
+
+- You can now print off the absence calendar <br><img style="margin:5px;" src="https://imgur.com/reMPGMc.png" width="100%">
+
+- Column filters were added to the Bank History table
+
+# 2020.20
 
 ### New
 

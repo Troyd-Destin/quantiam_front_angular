@@ -2,11 +2,11 @@
 <div fxLayout="row" fxLayoutAlign="center center">
 
 
-<div fxLayout="column" fxFlex=50>
+<div fxLayout="column" fxFlex=60>
     <div fxLayoutGap="10px" fxFlex> 
 
         <div fxLayoutAlign="start center">
-            <mat-checkbox style="margin-left:15px" (change)="toggleQuantiamDrawings()" [checked]="quantiamDrawingsToggle">Quantiam Drawings</mat-checkbox>
+            <mat-checkbox style="margin-left:15px" (change)="toggleQuantiamDrawings()" [checked]="quantiamDrawingsToggle">Quantiam</mat-checkbox>
 
         </div>
        
@@ -27,17 +27,21 @@
 
 
     </div>
-    <div fxLayout="column" fxLayoutGap=10px>
+    <div fxLayout="column" fxLayoutGap=10px fxFlex>
 
 
         <ag-grid-angular
-                 style="width: calc(100%); height:calc(60vh); margin-top:10px;" 
+
+                 style="height:calc(60vh); margin-top:10px;" 
                  class="ag-theme-balham"
                 [rowData]="searchResults$ | async"
                 [columnDefs]="columnDefs"                
                 [modules]="modules"
-                [defaultColDef]="defaultColDef"
-                
+                [animateRows]="true"
+                [masterDetail]="true"
+                [defaultColDef]="defaultColDef"                
+                [detailCellRendererParams]="detailCellRendererParams"
+                (rowClicked)="onRowClicked($event)"
                 (gridReady)="onGridReady($event)"
                 >
         </ag-grid-angular>

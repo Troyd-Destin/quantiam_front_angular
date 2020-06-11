@@ -30,8 +30,11 @@ export class TimesheetBankComponent implements OnInit {
   hotTableId = 'hotInstance';
   hotTableSettings: Handsontable.GridSettings = {
    // height: "600px",
-    width: '710px',
+    width: '730px',
     colHeaders: true,
+    filters: true,
+    
+    dropdownMenu: true,
     afterChange: (changes, source) => {
 
       if (this.dataLoaded && changes[0]) {
@@ -77,6 +80,7 @@ export class TimesheetBankComponent implements OnInit {
       title: 'Timesheet',
       readOnly: true,
       allowHtml: true,
+      filter: false,
       renderer:  (instance, td, row, col, prop, value, cellProperties) => {
 
         const data: any = instance.getSourceDataAtRow(row);
@@ -101,6 +105,7 @@ export class TimesheetBankComponent implements OnInit {
       readOnly: true,
       allowHtml: true,
       width: '80px',
+      filter: false,
       renderer:  (instance, td, row, col, prop, value, cellProperties) => {
         Handsontable.dom.empty(td);
         const data: any = instance.getSourceDataAtRow(row);
@@ -128,7 +133,8 @@ export class TimesheetBankComponent implements OnInit {
     {
       data: 'comment',
       title: 'Comment',
-      width: '200px'
+      width: '200px',
+      filter: false,
     },
 
     ]
