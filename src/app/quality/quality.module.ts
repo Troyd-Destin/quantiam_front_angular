@@ -12,6 +12,7 @@ import { NcrComponent } from './ncr/ncr.component';
 import { QualityIndexComponent } from './quality-index/quality-index.component';
 import { CarComponent } from './car/car.component';
 import { CarDialogComponent } from './car-dialog/car-dialog.component';
+import { CarDatabaseComponent } from './car-database/car-database.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,11 @@ const routes: Routes = [
         path:'',
         redirectTo: 'ncr/database',
       },
+       {
+        component: CarDatabaseComponent,
+        path: 'car/database',
+        data: {key: 'CarDatabase'}
+      },
       {
         path: 'ncr/database',
         component: NcrDatabaseComponent,
@@ -31,6 +37,12 @@ const routes: Routes = [
         path: 'ncr/:id',
         component: NcrComponent,
         data: {key: 'NCR'}
+      },
+      
+      {
+        path: 'car/:id',
+        component: CarComponent,
+        data: {key: 'CAR'}
       }
     ],
 
@@ -39,7 +51,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [NcrDatabaseComponent, NcrComponent,QualityIndexComponent, CarComponent, CarDialogComponent],
+  declarations: [NcrDatabaseComponent, NcrComponent,QualityIndexComponent, CarComponent, CarDialogComponent, CarDatabaseComponent],
   imports: [    
     RouterModule.forChild(routes),
     CommonModule,

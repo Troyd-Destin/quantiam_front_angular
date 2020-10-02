@@ -26,7 +26,7 @@
         </div>
         <div fxFlex fxLayout="row"  fxLayoutAlign="end start" fxLayoutGap="10px">
             <button  (click)="downloadIventoryList()" mat-raised-button color="primary"> 
-                Inventory List
+                SDS List
             </button>
             <button *ngIf="userService.hasPermission([40,41])"  (click)="openDialog()" mat-raised-button color="primary"> 
                 Create Container

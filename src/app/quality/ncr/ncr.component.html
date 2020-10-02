@@ -140,12 +140,19 @@
                 </div>
 
                 </form>
-                <div style="margin-bottom:20px;" id="ncr action bar" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="5px">
-                    <button *ngIf="ncrObject.status !== 'draft' && ncrOptions.enabled && ncrObject.status != 'completed'" mat-raised-button color="primary"  (click)="updateNCR()"> Save Changes </button>
-                    <button *ngIf="ncrObject.status === 'ongoing' && ncrOptions.disabled" mat-raised-button color="accent" (click)="ncrOptions.enable()"> Edit </button>
-                    <button  type="submit" [disabled]="!ncrOptions.valid" *ngIf="ncrObject.status === 'draft'"  mat-raised-button  color="primary" (click)="updateNCR('ongoing')">Submit</button>
-                
+                <div style="margin-bottom:20px;" id="ncr action bar" fxLayout="row">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex>
+                        Created By: {{ncrObject.created_by.name}}
+                    </div>
+                    <div  fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="5px" fxFlex>
+                        <button *ngIf="ncrObject.status !== 'draft' && ncrOptions.enabled && ncrObject.status != 'completed'" mat-raised-button color="primary"  (click)="updateNCR()"> Save Changes </button>
+                        <button *ngIf="ncrObject.status === 'ongoing' && ncrOptions.disabled" mat-raised-button color="accent" (click)="ncrOptions.enable()"> Edit </button>
+                        <button  type="submit" [disabled]="!ncrOptions.valid" *ngIf="ncrObject.status === 'draft'"  mat-raised-button  color="primary" (click)="updateNCR('ongoing')">Submit</button>
+                    
+                    </div>
+
                 </div>
+               
 
             </mat-card>
               
@@ -205,7 +212,8 @@
                                  <td> 
                                    
                                     <mat-chip *ngIf="car?.effective && car?.completed" color="success" selected>Effective</mat-chip>
-                                    <mat-chip  *ngIf="!car?.effective && car?.completed" color="warn" selected>Ineffective</mat-chip>
+                                    <mat-chip  *ngIf="car?.completed && car.effective === 0" color="warn" selected>Ineffective</mat-chip>
+                                    <mat-chip  *ngIf="car?.completed && car.effective === null" color="accent" selected>Assessing</mat-chip>
                                 </td>
                             <!--    <td> <mat-icon matBadgeSize="medium" matBadge="6" matBadgeColor="warn">description</mat-icon>
                                     Include text description of the icon's meaning for screen-readers
@@ -266,4 +274,4 @@
    
 
     
-</div>n
+</div>

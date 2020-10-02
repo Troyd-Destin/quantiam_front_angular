@@ -72,6 +72,7 @@ import { jqxWindowModule } from 'jqwidgets-ng/jqxwindow';
 import { jqxCheckBoxModule } from 'jqwidgets-ng/jqxcheckbox';
 import { jqxTabsModule } from 'jqwidgets-ng/jqxtabs';
 import { FileAssociatorComponent } from './file-associator/file-associator.component';
+import { SelectCampaignComponent } from './select-campaign/select-campaign.component';
 
 
 @NgModule({
@@ -130,6 +131,7 @@ import { FileAssociatorComponent } from './file-associator/file-associator.compo
         SelectLocationComponent,
         SelectMaterialLotComponent,
         FileAssociatorComponent,
+        SelectCampaignComponent,
     ],
     exports: [
         SelectArbinTestComponent,
@@ -147,6 +149,7 @@ import { FileAssociatorComponent } from './file-associator/file-associator.compo
         SelectHazardComponent,
         SelectLocationComponent,
         SelectMaterialLotComponent,
+        SelectCampaignComponent,
         MiniXrdComponent,
         MiniSemComponent,
         NgxFileDropModule ,

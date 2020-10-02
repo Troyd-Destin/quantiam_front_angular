@@ -160,18 +160,42 @@ export class UserViewComponent implements OnInit, OnDestroy {
 
           if ( this.userService.hasPermission(27) || res.id === this.id ) {
             this.renderUser = true;
-            this.userService.getUser(this.id, true, true);
-            this.user$ = this.userService.user$.subscribe(r => {
 
-              this.user = r;
+            //check user ID
 
-              this.permissionTableSource = new MatTableDataSource<any>(r.permissions);
-              this.permissionTableSource.paginator = this.paginator;
-              this.permissionTableSource.sort = this.sort;
+            if(this.id > 10040)
+            {   
+              console.log('test, database ID');
+              this.http.get(environment.apiUrl + `/user/${this.id}/databaseid`).subscribe((r) => {
+         
+                this.user = r;                 
+                this.permissionTableSource = [];  
+                this.rfidTableSource = [];
+          
+              });
 
-              this.rfidTableSource = new MatTableDataSource<any>(r.rfid);
-            //  this.rfidTableSource = this.paginator;
-            });
+            }
+            else
+            {
+
+              this.userService.getUser(this.id, true, true);
+              this.user$ = this.userService.user$.subscribe(r => {
+  
+                this.user = r;
+  
+                this.permissionTableSource = new MatTableDataSource<any>(r.permissions);
+                this.permissionTableSource.paginator = this.paginator;
+                this.permissionTableSource.sort = this.sort;
+  
+                this.rfidTableSource = new MatTableDataSource<any>(r.rfid);
+              //  this.rfidTableSource = this.paginator;
+              });
+
+            }
+
+
+
+
 
           }
 
@@ -194,8 +218,21 @@ export class UserViewComponent implements OnInit, OnDestroy {
 
 
           this.user = r;
+          this.notification.success(
+            'Success', 'Added Supervisor',
+            {timeOut: 2000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
+    
+    
 
+      }, (e)=>{
+
+        this.notification.success(
+          'Success', 'Added Supervisor',
+          {timeOut: 2000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
+  
+  
       });
+
     }
 
   }
@@ -204,14 +241,18 @@ export class UserViewComponent implements OnInit, OnDestroy {
 
   updateUser (obj) {
 
-       this.userService.update(this.user.id, this.user).subscribe((r) => {
+       this.userService.update(this.user.employeeid, this.user).subscribe((r) => {
 
          this.location.replaceState('/user/' + r.employeeid);
          this.user.id = r.employeeid;
          this.user.employeeid = r.employeeid;
 
-        });
-
+         this.notification.success(
+          'Success', 'Updated this user.',
+          {timeOut: 2000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
+  
+  
+      });
 
   }
 
@@ -361,6 +402,20 @@ export class UserViewComponent implements OnInit, OnDestroy {
     this.groupGridColumnApi = params.columnApi;
 	  setTimeout(() => {  this.groupGridApi.sizeColumnsToFit(); }, 200);
 
+  }
+
+  editUserClick()
+  {
+      this.editUser = !this.editUser;
+      if(!this.user.employeeid)
+      {
+        this.notification.info(
+          'Action Required', 'Please update the users employee ID first. All other editable options will unlock after that. ',
+          {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
+  
+  
+     
+      }
   }
 
 

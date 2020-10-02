@@ -134,19 +134,51 @@ export class ThreedmodelDatabaseComponent implements OnInit {
             field: '',
             headerName: "Actions",
 
-            cellRenderer: (item) => {
+            cellRenderer: (item,thing) => {
 
-                // console.log(item);
+                 console.log(item,thing);
+                console.log(item.data.project.id);
+                let hash = item.data.project.id.split('.');
+
+                let urlInfo = atob(hash[1]);
+                console.log(urlInfo);
+
+                let myhubSplit = urlInfo.split(':');
+                let secondSplit = myhubSplit[1].split('#');
+                
+                
+                let type = myhubSplit[0];
+                let hub = secondSplit[0];
+                let project = secondSplit[1];
+
+
+
+
+
+
+
+                
+                // get array item.rowIndex  grab from item list
+
+                // fetch item object from the response. 
 
                 if (item.data.type === 'items') {
+
+
+
+                //let url = 'myhub.autodesk360.com/abcd/g/projects/1234/data/Base64Encode(FolderURN)/Base64Encode(ItemUrn)/viewer';
+
+                let url = type+'.autodesk360.com/'+hub+'/g/projects/'+project+'/data/btoa(FolderURN)/atob(ItemUrn)/viewer';
+
+
                     var bim360Url = 'https://docs.b360' + (item.data.relationships.parent.data.id.indexOf('emea') > 0 ? '.eu' : '') + //folder urn
                         '.autodesk.com/projects/' + item.data.project.id.replace("b.", '') +
                         '/folders/' + item.data.relationships.parent.data.id +
                         '/detail/viewer/items/' + item.data.id;
 
-                    console.log(bim360Url);
+                    console.log(item);
 
-                    return '<a href="' + bim360Url + '" target="_blank" class="btn btn-xs btn-primary">Broken Link</a>';
+                    return '<a target="_blank" class="btn btn-xs btn-primary">Broken Link</a>';
                 }
 
 
@@ -234,6 +266,16 @@ export class ThreedmodelDatabaseComponent implements OnInit {
                 //   console.log(item);
 
                 if (item.data.attributes.type === 'items') {
+
+                    //myhub.autodesk360.com/abcd/g/projects/1234/data/Base64Encode(FolderURN)/Base64Encode(ItemUrn)/viewer
+
+                    /* 
+                        1. project id
+                    */
+
+                    var test = atob(item._source.projectId);
+                    console.log(test);
+
                     var bim360Url = 'https://docs.b360' + (item.data.relationships.parent.data.id.indexOf('emea') > 0 ? '.eu' : '') +
                         '.autodesk.com/projects/' + item._source.projectId.replace("b.", '') +
                         '/folders/' + item._source.folderUrn +
@@ -241,7 +283,7 @@ export class ThreedmodelDatabaseComponent implements OnInit {
 
                     console.log(bim360Url);
                     if (item.value) {
-                        return bim360Url;
+                    //   return bim360Url;
                     }
                 }
 

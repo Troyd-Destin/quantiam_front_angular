@@ -8,22 +8,23 @@
 	
 		<mat-card class="quantiam-mat-card" fxLayout="column" >
 		<mat-card-title>
-			 Attributes
+			 Employee Attributes
 		</mat-card-title> 
 		<mat-card-content>
 			<div   fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="start stretch">
 			
 				
 				
-				<mat-form-field  fxFlex="10">
+				<mat-form-field  fxFlex="20">
 							<input  #EmployeeID 
 							(change)="updateUser(EmployeeID)"
 							[disabled]="!editUser" 
 							type="number" 
 							matInput 
-							placeholder="ID" 
+							min=0
+							placeholder="Employee ID" 
 							[(ngModel)] ='user.employeeid'
-							name="employeeud"
+							name="employeeid"
 					>
 				</mat-form-field >
 				
@@ -31,7 +32,7 @@
 			 <mat-form-field  fxFlex="10">
 							<input  #Prefix 
 							(change)="updateUser(FirstName)"
-							[disabled]="!editUser" 
+							[disabled]="!editUser || !user.employeeid" 
 							type="text" 
 							matInput 
 							placeholder="Prefix" 
@@ -42,7 +43,7 @@
 				<mat-form-field  fxFlex="30%">
 							<input  #FirstName 
 							(change)="updateUser(FirstName)"
-							[disabled]="!editUser" 
+							[disabled]="!editUser || !user.employeeid" 
 							type="text" 
 							matInput 
 							placeholder="First Name" 
@@ -53,7 +54,7 @@
 					<mat-form-field  fxFlex>
 							<input  #LastName 
 							(change)="updateUser(LastName)"
-							[disabled]="!editUser" 
+							[disabled]="!editUser || !user.employeeid" 
 							type="text" 
 							matInput 
 							placeholder="Last Name" 
@@ -85,12 +86,12 @@
 					   
 					   ></app-select2-user>  -->
 
-					   <app-select-user fxFlex.xl='25' fxFlex
+					   <app-select-user fxFlex.xl='30' fxFlex
 							   
-							   [hidden]="!editUser && user.employeeid"
+							   [hidden]="!editUser || !user.employeeID"
 							   fxLayoutAlign="start center"
 							   (change)="updateSupervisor($event)"
-							   [placeholder]="user.supervisors[0]?.name"
+							   [placeholder]="user?.supervisors[0]?.name"
 							   						   
 					   ></app-select-user>
 					   
@@ -102,7 +103,7 @@
 							   type="text" 
 							   matInput 
 							   placeholder="Immediate Supervisor" 
-							   [ngModel] ='user.supervisors[0]?.name'
+							   [ngModel] ='user?.supervisors[0]?.name'
 							   name="supervisor"
 					   >
 				   </mat-form-field >
@@ -129,7 +130,7 @@
 							matInput 
 							placeholder="Phone" 
 							[(ngModel)] ='user.direct_line'
-							[disabled]="!editUser" 
+							[disabled]="!editUser || !user.employeeid" 
 							name="direct_line"
 					>
 					</mat-form-field >
@@ -141,7 +142,7 @@
 							type="number" 
 							matInput 
 							placeholder="Extension" 
-							[disabled]="!editUser" 
+							[disabled]="!editUser || !user.employeeid" 
 							[(ngModel)] ='user.extension'
 							name="extension"
 					>
@@ -156,15 +157,15 @@
 
 					<mat-form-field   style="width:150px" >
 							<mat-select 	
-							placeholder="Compensation" 
+							placeholder="Employee Type" 
 							(selectionChange)="updateUser($event)"
-							[disabled]="!editUser" 
+							[disabled]="!editUser || !user.employeeid" 
 							[(ngModel)] ='user.compensation'
 												
 							>
 									<mat-option value="Salary">Salary</mat-option>
 									<mat-option value="Hourly">Hourly</mat-option>
-									<mat-option value="Temporary">Temporary</mat-option>
+									<mat-option value="Temporary">Contract/Temporary</mat-option>
 								  </mat-select>
 
 					</mat-form-field>
@@ -172,7 +173,7 @@
 					<mat-form-field fxFlex>
 								<input  #Title 
 								(change)="updateUser(Title)"
-								[disabled]="!editUser" 
+								[disabled]="!editUser || !user.employeeid" 
 								type="text" 
 								matInput 
 								placeholder="Title" 
@@ -187,14 +188,14 @@
 			<div fxLayoutGap="10px" fxLayout="row wrap">
 				
 				<mat-form-field fxFlex >
-					<input matInput [matDatepicker]="myDatepicker1" placeholder="Start Date" [(ngModel)] ='user.startdate' (dateChange)="updateUser($event.value,'startdate')" [disabled]="!editUser">
+					<input matInput [matDatepicker]="myDatepicker1" placeholder="Start Date" [(ngModel)] ='user.startdate' (dateChange)="updateUser($event.value,'startdate')" [disabled]="!editUser || !user.employeeid">
 						  <mat-datepicker-toggle matSuffix [for]="myDatepicker1"></mat-datepicker-toggle>
 						  <mat-datepicker #myDatepicker1></mat-datepicker>
 				</mat-form-field>
 				
 				
 				<mat-form-field fxFlex >
-						  <input matInput [matDatepicker]="myDatepicker2" placeholder="Leave Date" [(ngModel)] ='user.leavedate' (dateChange)="updateUser($event.value,'leavedate')" [disabled]="!editUser">
+						  <input matInput [matDatepicker]="myDatepicker2" placeholder="Leave Date" [(ngModel)] ='user.leavedate' (dateChange)="updateUser($event.value,'leavedate')" [disabled]="!editUser || !user.employeeid">
 						  <mat-datepicker-toggle matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
 						  <mat-datepicker #myDatepicker2></mat-datepicker>
 				</mat-form-field>
@@ -208,7 +209,7 @@
 	
 		<mat-card-actions fxLayout="row-reverse">
 				
-				<button  *ngIf="userService.hasPermission(7)" mat-button (click)="editUser = !editUser"> Edit </button>
+				<button  *ngIf="userService.hasPermission(7)" mat-button (click)="editUserClick()"> Edit </button>
 			
 			
 			</mat-card-actions>
@@ -219,7 +220,7 @@
 	
 			
 			
-		<mat-card   class='quantiam-mat-card' fxLayout="column"  >
+		<mat-card   class='quantiam-mat-card' fxLayout="column" [hidden]="!user?.employeeid" >
 			<mat-card-title>
 				Management
 			</mat-card-title> 

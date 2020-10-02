@@ -34,7 +34,6 @@ export class UserService  {
 
 
   getUser(id: string, detailed = false, hiearchy = false) {
-    // console.log(id,detailed,hiearchy);
     if (id !== this.last_id) {
 
       const requestParams: HttpParams = new HttpParams();
@@ -48,6 +47,8 @@ export class UserService  {
       }
 
       console.log(requestParams);
+
+      // if id is greater then 
       
 
      this.http.get<any>(environment.apiUrl + `${this.endpoint}/${id}`, {params: requestParams})

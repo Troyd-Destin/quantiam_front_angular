@@ -33,11 +33,16 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { MaterialDesignModule } from './material-design/material-design.module';
 import { AutoFocusDirective } from './directives/auto-focus.directive';
 
+import { DisconnectionScreenComponent } from './auth/disconnection-screen/disconnection-screen.component';
 const routes: Routes = [
   {
     path: 'auth',
     component: AuthComponent,
     data: {key: 'Auth'},
+  },  
+  {
+    path: 'disconnected',
+    component: DisconnectionScreenComponent,
   },
   {
     path: '',
@@ -58,6 +63,8 @@ export function gettoken () {
     AppComponent,
     AuthComponent,
     
+		DisconnectionScreenComponent,
+    
   //  AutoFocusDirective,
   ],
   imports: [
@@ -66,7 +73,7 @@ export function gettoken () {
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
+    HttpClientModule,    
     SimpleNotificationsModule.forRoot(),
     JwtModule.forRoot({
 

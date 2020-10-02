@@ -238,7 +238,7 @@
 						</mat-form-field>
 						
 						<mat-form-field fxFlex>
-							<input  #PurchaseOrder formControlName="thirdCtrl5"  required
+							<input  #PurchaseOrder formControlName="thirdCtrl5"  
 							type="text" matInput placeholder="P.O. #" [(ngModel)] ='container.purchase_order' name="purchase_order" >
 							<mat-hint>Optional: eg. 2018-xxxxx</mat-hint>
 						</mat-form-field>  
@@ -324,18 +324,19 @@
 						<tbody>
 							<tr *ngFor="let container of createdContainers; let i = index;">
 								<td>
-									{{i}}
+									{{i+1}}
 								</td>
 								<td>
 									<mat-form-field>
 										<input 
-										type="number"
-										matInput placeholder="Enter a QCID"  	
+										
+										matInput placeholder="Enter a QCID"  
+										name="container_{{container.id}}"	
 										[name]="'Container '+i" 
 										(blur)="updateQCID(container)"
-										[(ngModel)]="container.qcid"
+										
 										>			
-										<mat-hint>Do not include "QCID", type only the number.</mat-hint>		
+										<mat-hint>Scan "QCID-1234" or type "1234"</mat-hint>		
 									</mat-form-field>
 								</td>
 							</tr>

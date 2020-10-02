@@ -13,18 +13,86 @@ Change Log
 ### To do list
 
 - Overlays for XRD viewer
-- Particle Size database
 - Display (fix) EDS data display in the SEM viewer 
-- build new UI for displaying historical SDS
 - keywords for material searches
 - printable standard labels using WHIMS pictograms
 - Settings section in Materials
 - Who receives empty notifications (Fu, Supervisor, Sherry) Materials settings
 - Approving an RTO doesn't doesn't trigger the timesheet calculation process.
 - Add merge material function
-- NCR Report database
-- NCR Reports
 - Steel Creation Dialog
+
+
+# 2020.39
+
+
+### Fixes
+
+- The scale bar tool no longer fails when it encounters capital X letters in file names when determining the magnification to stamp things with.
+- The material SDS system no longer fails when it encounters special characters such as "%" when trying to save an SDS.
+- The J6 SEM automatically syncs files to the Q drive once again within a few minutes, allowing the SEM viewer app to be usable.  
+  
+
+# 2020.38
+
+### New 
+
+- A campaign select dropdown has been added
+
+
+### Changes
+
+- Employee View | employee type field option "Temporary" now reads "Contract/Temporary"
+
+### Fixes 
+
+- You can now delete Stat Holiday hours without getting an error
+- User Hierachy page is readable again
+
+
+# 2020.35
+
+### Changes
+
+- Email notifications are now sent out for NCR completion
+- Email notifications are now sent out for CAR updates. 
+
+# 2020.34
+
+### New
+
+- Corrective action reports now have a database screen. Double clicking an entry will view the CAR.<br><img style="margin:5px;" src="https://imgur.com/XroAi7Q.png" width="100%"> 
+
+### Changes
+
+- An employee can no longer be edited until it is assigned an employeeID.
+- Added a confirmation notification for changing someone's supervisor, and various other actions on the employee viewer. 
+- You can now navigate to a Corrective action report through url using the ID -- apps.edm.quantiam.com/quality/car/{id}
+
+### Fixes
+
+- The employee database will no longer navigate to a null value employeeID. In the absence of an employeeID, the database ID is used.  
+
+# 2020.31
+
+
+### Changes 
+
+- Auto-Scale Bar Tool can now be forced to stamp images with a magnification of your choosing, as opposed to one written in the file name. This allows you to auto stamp folders of images without renaming every file. <br><img style="margin:5px;" src="https://imgur.com/F1ZOv40.png" width="100%"> 
+
+### Fixes
+
+- Auto-Scalebar Bar Tool now uses correctly sized scalebars for the new Axio Camera. It was using scalebars for the old camera. 
+
+# 2020.28
+
+### Changes
+
+- A handheld scanner can now be used to scan QCID codes when registering a container. 
+
+### Fixes 
+
+- Fixed an issue where .rpt and .xps files were crashing the SEM run viewer. 
 
 
 # 2020.23

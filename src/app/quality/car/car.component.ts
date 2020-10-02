@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild,OnInit, Input, Inject} from '@angular/core';
+import {Component, ElementRef, ViewChild,OnInit, Input, EventEmitter, Output} from '@angular/core';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {FormBuilder, FormControl, FormGroup,Validators} from '@angular/forms';
 import {MatChipInputEvent} from '@angular/material/chips';
@@ -10,6 +10,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import {map, startWith,tap} from 'rxjs/operators';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { NotificationsService } from 'angular2-notifications';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-car',
@@ -23,44 +24,65 @@ export class CarComponent implements OnInit {
   carFormObjectOptions;
   selectedResponsible = [];
   userList;
-  filteredUsers;  
   isPopUp = false;
+  filteredUsers;  
+ // MAT_DIALOG_DATA = {};
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   addOnBlur = true;
+  data;  //CAR OBJECT
+  formRender = false;
   
   @ViewChild('responsibleInput') responsibleInput: ElementRef<HTMLInputElement>;
 
-  @Input() carObject = { id: null, name:null, description: null, type: null,index: null, arrayLength:null, saved: false,
+  @Input() carObject = { id: null, name:null, description: null, type: null,index: null, arrayLength:null, saved: false, deleted: false, ncr_id: null,
      project_id: null, occurred: null, responsible:null, disposition_comment:null, effective:null, status: null, completed: null, target_completion: null, completed_at: null};
+
+    // Outputs
+  @Output() removed = new EventEmitter<any>();
 
   constructor(
     
     private http: HttpClient,
     private userService:SelectUserService,
-    public dialogRef: MatDialogRef<any>,
-    @Inject(MAT_DIALOG_DATA) public data:any,    
+    //public dialogRef: MatDialogRef<any>,
+    //@Inject(MAT_DIALOG_DATA) public data:any,    
     private notification: NotificationsService,
+    private route: ActivatedRoute,
     ) { }
 
   ngOnInit(): void {
   
 
-    if(this.data){ 
-      
-      this.carObject = this.data;
-      this.isPopUp = true;
-      
-      if(this.data.responsible)
-      {
-        this.selectedResponsible = [];
-        this.carObject.responsible.forEach(element => {
-              this.selectedResponsible.push(element.employee);
-          });
-      }
+    if(this.carObject.id){ 
       console.log(this.carObject);
+     // this.carObject = this.data;
+     // this.isPopUp = true;
+     
+      console.log('not route trigger', this.carObject);
+      this.isPopUp = true;
+      this.createForm();
   
      };
 
+     if(!this.carObject.id)
+     {
+       console.log('route_form');
+        this.fetchCar();
+      
+     }
+  }
+
+  createForm()
+  {
+
+     
+    if(this.carObject.responsible)
+    {
+      this.selectedResponsible = [];
+      this.carObject.responsible.forEach(element => {
+            this.selectedResponsible.push(element.employee);
+        });
+    }
 
     this.carFormObjectOptions = new FormGroup({
       name: new FormControl(this.carObject.name, [Validators.required]),
@@ -94,21 +116,24 @@ export class CarComponent implements OnInit {
         );
 
       });
-  
-  
-  }
 
+      this.formRender = true;
+
+
+  }
 
   updateCar()
   {
     //  this.http.put()
     let params =  this.carFormObjectOptions.getRawValue();
     if(status){ params.status = status; }
+    if(params.effective === 'null'){  params.effective = null;}
     params.responsible = this.selectedResponsible;
     this.http.put(environment.apiUrl + '/car/' + this.carObject.id, params).subscribe((r:any)=>{
       this.carObject = Object.assign({}, r, this.carObject);
-      this.data.saved = true;
-      this.data = r;
+      this.carObject.saved = true;
+      
+     // this.data = r;
       this.notification.success('Success',  'Car Details Saved', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
       // this.canEditCheck();
     }) 
@@ -122,8 +147,10 @@ export class CarComponent implements OnInit {
     {
     this.http.delete(environment.apiUrl + '/car/' + this.carObject.id).subscribe((r:any)=>{
             this.notification.success('Success',  'Car Deleted', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
-            this.data.deleted = true;
-            this.dialogRef.close(this.data);
+            this.carObject.deleted = true;
+          
+            this.removed.emit(this.carObject);
+           // this.dialogRef.close(this.data);
       // this.canEditCheck();
     }) 
    }
@@ -131,7 +158,15 @@ export class CarComponent implements OnInit {
 
   fetchCar()
   {
+
+    //fetch from URL
     
+    const id = this.route.snapshot.paramMap.get('id');
+    this.http.get(environment.apiUrl + '/car/' + id).subscribe((r:any)=>{
+      this.carObject = r;
+      this.createForm();
+      console.log(this.carObject);
+    });
 
   }
 
@@ -153,20 +188,7 @@ export class CarComponent implements OnInit {
     console.log(event,index);
     if (index >= 0) {
       this.selectedResponsible.splice(index, 1);
-    }
-  }
-
-  nextCar()
-  {
-    this.data.next = true;
-    this.dialogRef.close(this.data);
-    console.log(this.data);
-  }
-
-  previousCar()
-  {
-    this.data.previous = true;
-    this.dialogRef.close(this.data);
+    }    
   }
 
 

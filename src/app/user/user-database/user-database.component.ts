@@ -68,8 +68,15 @@ export class UserDatabaseComponent implements OnInit {
   }
 
    onRowDoubleClicked(event) {
-    this.router.navigate(['/user/' + event.data.employeeid]);
 
+    if(event.data.employeeid)
+    {
+    this.router.navigate(['/user/' + event.data.employeeid]);
+    }
+    else
+    {
+      this.router.navigate(['/user/' + event.data.employee_database_id]);
+    }
 
   }
 

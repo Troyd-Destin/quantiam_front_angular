@@ -37,7 +37,7 @@ export class NcrComponent implements OnInit {
   ncrName;
   ncrOptions;
   ncrObject = {
-    id:null, status: null, name: null, requirement_violated:null,completion_notes: null,completed_by:null, completed_at: null,
+    id:null, status: null, name: null, requirement_violated:null,completion_notes: null,completed_by:null, completed_at: null,created_by:{name:null},
     type:null,severity:null,description:null,buisness_unit:null,project_id:null,occurred:null, media: null, cars: []
   };
   ncrLoading = false;
@@ -228,7 +228,7 @@ export class NcrComponent implements OnInit {
   {
     car.arrayLength = this.ncrObject.cars.length;
     car.index = index;
-    const dialogRef = this.carDialog.open(CarComponent, {
+    const dialogRef = this.carDialog.open(CarDialogComponent, {
       width: '700px',
       position: {'top':'10px'},
       data: car,
@@ -239,7 +239,9 @@ export class NcrComponent implements OnInit {
       console.log(result);
 
 
-      this.ncrObject.cars[index] = result;
+      //this.ncrObject.cars[index] = result;
+
+      this.fetchNCR(this.ncrObject.id);
 
       if(result.hasOwnProperty('next'))
       {
@@ -279,7 +281,7 @@ export class NcrComponent implements OnInit {
     if(this.ncrObject.cars.length > 0)
     {
       const unfinishedCar = this.ncrObject.cars.filter((car)=>{
-          return car.completed === 0;
+          return car.completed === 0 || (car.completed && !car.effective);
       })
 
       if(unfinishedCar.length > 0) { return false; }

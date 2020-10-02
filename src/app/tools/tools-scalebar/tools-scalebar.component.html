@@ -28,6 +28,21 @@
       <!-- <mat-hint> Q:\somedirectory </mat-hint> -->
       </mat-form-field>
     </mat-list-item>
+    <mat-list-item style="margin-top:30px;" fxFLex>
+      <mat-form-field appearance="fill" style="width:100%;">
+        <mat-label>Force Magnification</mat-label>
+        <mat-select matNativeControl [(ngModel)]="forceMagnification"  >
+          <mat-option value="none" selected>Default Behaviour</mat-option>
+          <mat-option value="50x">50x</mat-option>
+          <mat-option value="100x">100x</mat-option>
+          <mat-option value="200x">200x</mat-option>
+          <mat-option value="500x">500x</mat-option>
+          <mat-option value="1000x">1000x</mat-option>
+        </mat-select>
+        <mat-hint>Optional | Ignores magnification in file name, and stamps images with the selected scalebar. </mat-hint>
+      </mat-form-field>
+
+    </mat-list-item>
      
     <mat-list-item >        
         <button  mat-raised-button color="primary" (click)="processDirectory()" [disabled]="toolOptions.path.length < 7 || enableLoadingGraphic"> Process </button>

@@ -17,6 +17,8 @@ export class ToolsScalebarComponent implements OnInit {
    enableLoadingGraphic: boolean = false;
    processResponse: any = []; 
 
+   forceMagnification = 'none';
+
   constructor(public http: HttpClient, 
 		public notification: NotificationsService,) { 
 
@@ -38,6 +40,13 @@ export class ToolsScalebarComponent implements OnInit {
         this.enableLoadingGraphic = true;
         this.processResponse = [];
 
+        if(this.forceMagnification !== 'none')
+        {
+          // certain query params
+          this.toolOptions.forcedMagnification = this.forceMagnification;
+
+        }
+
         return  this.http.post<any>(environment.apiUrl+`/scalebars?filterSpinner&creator=true`,this.toolOptions)
         .pipe( 
         map( res => {  
@@ -49,8 +58,12 @@ export class ToolsScalebarComponent implements OnInit {
         (r:any) => {
                   this.enableLoadingGraphic = false;
                   this.notification.success('Success','We processed '+r.length+' images.',{showProgressBar:false,timeOut:4000,clickToClose: true});
-                  this.processResponse = r;
-                  this.toolOptions.path.length = '';
+                 // this.processResponse = r;
+                // this.toolOptions.path.length = '';
+      },
+      (e:any)=>{
+        this.enableLoadingGraphic = false;
+        this.notification.error('Error','Something went wrong.',{showProgressBar:false,timeOut:4000,clickToClose: true});
       }
       );
    }

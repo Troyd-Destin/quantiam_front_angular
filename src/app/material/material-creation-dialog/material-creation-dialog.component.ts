@@ -118,7 +118,7 @@ export class MaterialCreationDialogComponent implements OnInit, OnDestroy {
             thirdCtrl2: ['', Validators.required],
             thirdCtrl3: ['', Validators.required],
             thirdCtrl4: ['', Validators.required],
-            thirdCtrl5: ['', Validators.required],
+            thirdCtrl5: ['', ],
             thirdCtrl6: ['', Validators.required],
             thirdCtrl7: ['', ],
             thirdCtrl8: ['', ],
@@ -298,6 +298,12 @@ export class MaterialCreationDialogComponent implements OnInit, OnDestroy {
 
     updateQCID(container) {
         const params = {};
+
+        //check for QCID string
+        if(container.qcid.includes('QCID'))
+        {
+            container.qcid = parseInt(container.qcid);
+        }
         
 
         params['qcid'] = container.qcid;

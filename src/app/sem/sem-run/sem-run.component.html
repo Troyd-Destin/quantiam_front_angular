@@ -83,7 +83,17 @@
     <div fxLayout="row" fxLayoutGap="10px" *ngIf="selectedImage?.fullpath" fxLayoutAlign="center start" fxFlex>
 
 
-    <div fxLayout="column" fxFlex.gt-md=20 fxLayoutAlign="center center" fxLayoutGap="10px" *ngIf="selectedImage.assoc_files[0]">
+   
+        <div fxLayout="column" fxFlex.gt-md=40 fxLayoutAlign="center center" fxLayoutGap="10px">
+            <div fxLayout="column" fxLayoutAlign="center center">
+                <h5>{{selectedImage.filename}}</h5>
+                <small>{{selectedImage.CM_SIGNAL}} {{selectedImage.CM_MAG}}x {{selectedImage.CM_ACCEL_VOLT}}kV</small>
+            </div>
+
+            <img *ngIf="selectedImage?.fullpath" width=90% src="http://api.edm.quantiam.com/file?server_path={{selectedImage.fullpath}}" />
+        </div>
+
+        <div fxLayout="column" fxFlex.gt-md=20 fxLayoutAlign="center center" fxLayoutGap="10px" *ngIf="selectedImage.assoc_files[0]">
             <div fxLayout="column" fxLayoutAlign="center center">
                 <h5>Associated</h5>
                 <small> Points, Maps, etc</small>
@@ -102,14 +112,6 @@
             </div>
         </div>
 
-        <div fxLayout="column" fxFlex.gt-md=40 fxLayoutAlign="center center" fxLayoutGap="10px">
-            <div fxLayout="column" fxLayoutAlign="center center">
-                <h5>{{selectedImage.filename}}</h5>
-                <small>{{selectedImage.CM_SIGNAL}} {{selectedImage.CM_MAG}}x {{selectedImage.CM_ACCEL_VOLT}}kV</small>
-            </div>
-
-            <img *ngIf="selectedImage?.fullpath" width=90% src="http://api.edm.quantiam.com/file?server_path={{selectedImage.fullpath}}" />
-        </div>
 
        
 

@@ -80,7 +80,12 @@ export class NcrDatabaseComponent implements OnInit {
       headerName: 'Type',
       width: 70,
       cellRenderer: (cell) => {
+
+        if(cell.value)
+        {
         return cell.value.replace(/^./, cell.value[0].toUpperCase());
+        }
+        return '';
       }
     },    
     {
@@ -88,10 +93,14 @@ export class NcrDatabaseComponent implements OnInit {
       headerName: 'Buisness Unit',
       width: 100,
       cellRenderer: (cell) => {
-        return cell.value.split('_').map((word)=>{
+        if(cell.value)
+        {
+                  return cell.value.split('_').map((word)=>{
           return word.replace(word[0],word[0].toUpperCase());
         }).join(' ');
+      }
 
+       return '';
       }
     },
     {
@@ -99,10 +108,18 @@ export class NcrDatabaseComponent implements OnInit {
       headerName: 'Severity',
       width: 70,
       cellRenderer: (cell) => {
+        if(cell.value)
+        {
         return cell.value.replace(/^./, cell.value[0].toUpperCase());
+        }
+        return '';
       }
     },    
     {
+      field: 'created_by.name',      
+      headerName: 'By',
+      width: 70,
+    },{
       field: 'created_at',      
       headerName: 'Created',
       width: 70,
@@ -114,20 +131,22 @@ export class NcrDatabaseComponent implements OnInit {
       cellStyle: {textAlign: "center",  'align-items': "center", 'justify-content': "center", display: "flex"},
       cellRenderer: (cell) => {
 
-        if(cell.value === 'ongoing')
+        if(cell.value === 'ongoing' && cell.value)
         {
           return '<button class="btn btn-warning btn-sm">'+cell.value.replace(/^./, cell.value[0].toUpperCase())+'</button>';
         }
 
-        if(cell.value === 'draft')
+        if(cell.value === 'draft' && cell.value)
         {
           return '<button class="btn btn-light btn-sm">'+cell.value.replace(/^./, cell.value[0].toUpperCase())+'</button>';
         }
 
-        if(cell.value === 'completed')
+        if(cell.value === 'completed' && cell.value)
         {
           return '<button class="btn btn-success btn-sm">'+cell.value.replace(/^./, cell.value[0].toUpperCase())+'</button>';
         }
+
+        return '';
 
       }
     },

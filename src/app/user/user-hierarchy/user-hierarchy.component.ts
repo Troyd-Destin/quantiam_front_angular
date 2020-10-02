@@ -29,7 +29,7 @@ export class UserHierarchyComponent implements OnInit {
 
     hierarchyChartOPtions = {
         chart: {
-            height: 600,
+            height: 700,
             width: 1500,
             inverted: true
         },
@@ -51,7 +51,7 @@ export class UserHierarchyComponent implements OnInit {
                 dataLabels: {
                     color: 'white',
                 },
-                height: 25
+                height: 20
             }, {
                 level: 1,
                 
@@ -60,7 +60,10 @@ export class UserHierarchyComponent implements OnInit {
                 dataLabels: {
                     color: 'white',
                 },
+                height: 20,
             }],
+            nodePadding: 10,
+            nodeWidth: 40,
             nodes: [],
             colorByPoint: false,
             color: '#dadada',
@@ -68,20 +71,18 @@ export class UserHierarchyComponent implements OnInit {
                 color: 'black',
                 nodeFormatter: function(){
                   //  console.log(this);
-                    return '<div><p>'+this.point.employeeid+'</p>\
-                    <p>'+this.point.firstname+' '+this.point.lastname+'</p>\
+                    return '<div><p>'+this.point.employeeid+' - '+this.point.firstname+' '+this.point.lastname+'</p>\
                     <p>'+this.point.title.substring(0, 25)+'</p></div>';
                 },
-                
+               
             style:{
-                fontSize: "10px",
+                fontSize: "9px",
             },
             },
             label:{
                 connectorNeighbourDistance: 10,
             },
             borderColor: 'white',
-            nodeWidth: 65,
             point:{
                 events:{
                     click: function(){
@@ -91,7 +92,8 @@ export class UserHierarchyComponent implements OnInit {
             }
         }],
         tooltip: {
-            outside: true
+            //outside: true
+            enabled:false,
         },
         exporting: {
             allowHTML: true,

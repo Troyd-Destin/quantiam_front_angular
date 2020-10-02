@@ -128,6 +128,12 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         },
       },
       {
+        width: 170,
+        headerName: 'Formula',
+        field: 'lot.material.formula',
+        hide: true,
+      },
+      {
         width: 110,
         field: 'lot.material.grade',
         headerName: 'Grade',
@@ -153,6 +159,12 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         field: 'lot.lot_name',
         headerName: 'Lot',
         width: 90,
+      },
+      {
+        field: 'lot.id',
+        headerName: 'Lot ID',
+        width: 90,
+        hide: true,
       },
       {
         width: 80,

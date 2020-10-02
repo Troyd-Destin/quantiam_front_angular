@@ -1,9 +1,10 @@
 
-<div fxLayout="column" fxLayoutGap="10px">
+<div fxLayout="column" fxLayoutGap="10px" *ngIf="formRender">
 
-<div fxLayout="row">
+<div fxLayout="row" fxLayoutAlign="center center">
 
     <h2 fxFlex> Corrective Action Report #{{carObject.id}} <small> {{carObject.name}} </small> </h2>
+    <button *ngIf="!isPopUp" matTooltip="Navigate" mat-raised-button routerLink="/quality/ncr/{{carObject.ncr_id}}" color="primary" >NCR {{carObject.ncr_id}} </button>
     <div fxLayoutAlign="end center" >
         <button mat-icon-button  color="warn" (click)="deleteCar()" matTooltip="Delete CAR" > <mat-icon >delete</mat-icon> </button>
     </div>
@@ -38,7 +39,7 @@
                     <mat-chip 
                     (removed)="remove(user,i)" *ngFor="let user of selectedResponsible; index as i">{{user.name}}
                         <mat-icon matChipRemove>cancel</mat-icon>
-                    </mat-chip>
+                    </mat-chip> 
                     <input required 
                     #responsibleInput
                     formControlName="responsible"
@@ -63,7 +64,7 @@
     <mat-form-field fxFlexFill>
         <mat-label>Description</mat-label>
         <mat-hint> Briefly describe corrective actions taken. </mat-hint>
-        <textarea rows=2 maxlength=600 
+        <textarea rows=6 maxlength=600 
          formControlName="description"
           name="ncr_description" 
           placeholder="Individuals were found not wearing hardhards in mandatory hardhat designation zones. Upon inspection, it was apparent there were no hardhats available for use. " matInput required></textarea>
@@ -81,6 +82,7 @@
             <mat-radio-group aria-label="Select an option" formControlName="effective" fxLayoutGap="5px"   >
                 <mat-radio-button value="1">Effective</mat-radio-button>
                 <mat-radio-button value="0">Ineffective</mat-radio-button>
+                <mat-radio-button value="null">Ongoing</mat-radio-button>
             </mat-radio-group>
     
             
@@ -93,7 +95,7 @@
     <mat-form-field  fxFlexFill>
         <mat-label>Disposition Comments</mat-label>
         <mat-hint> If you have anything further to add about the disposition of this corrective action, put it here.  </mat-hint>
-        <textarea rows=2 maxlength=600 
+        <textarea maxlength=600 rows="4"
          formControlName="disposition_comment"
           name="car_disposition_comment" 
           placeholder="" matInput ></textarea>
@@ -117,8 +119,8 @@
 <app-file-associator objectType="car" [object]="carObject" title="CAR Documents"></app-file-associator>
 
 
-<div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="end center" *ngIf="isPopUp">
-  <!--   {{carObject.index}} {{carObject.arrayLength}} -->
+<!-- <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="end center" *ngIf="isPopUp">
+  
     <div fxLayoutAlign="start center" fxFlex>
         <button mat-button  (click)="previousCar()" *ngIf="carObject.index !== 0 && carObject.index < (carObject.arrayLength)"> Prev </button>   
     </div>
@@ -130,6 +132,6 @@
         <button mat-button (click)="nextCar()" *ngIf="carObject.index !== (carObject.arrayLength - 1)"> Next </button>   
      </div>
 </div>
-
+ -->
 
 </div>

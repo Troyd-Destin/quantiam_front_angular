@@ -35,6 +35,11 @@ const routes: Routes = [
 				// pathMatch: 'prefix',
 			},
 			{
+				path: 'manufacturing',
+				loadChildren: () => import('../manufacturing/manufacturing.module').then(m => m.ManufacturingModule),
+				// pathMatch: 'prefix',
+			},
+			{
 				path: 'sample',
 				loadChildren: () => import('../sample/sample.module').then(m => m.SampleModule),
 			// 	pathMatch: 'prefix',
