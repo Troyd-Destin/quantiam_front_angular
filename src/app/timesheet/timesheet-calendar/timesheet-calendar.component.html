@@ -1,6 +1,6 @@
 <div fxLayout="column" fxLayoutGap="15px">
 
-  <div fxLayout="row" >
+  <div fxLayout="row" class="donotprint"  >
 
     <div  fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start start" fxFlex> 
         <mat-form-field>
@@ -20,11 +20,20 @@
       
     </mat-form-field>
 
-   <app-select-user placeholder="Select Employee" (change)="updateSelectedUser($event)" style="width: 250px;"></app-select-user>
+   <app-select-user placeholder="Select Employee" (change)="updateSelectedUser($event)" appendTo=''></app-select-user>
 
     
-
-
+  <!--  <app-select-user 
+                [placeholder]="timeSheetObj?.fullname"
+                [hidden]="!showSelectBox" 
+                (change)="selectedUserChanged($event)" 
+                [selectedValue]="timeSheetObj?.userID" 
+                [authorizedSubordinatesOrMachines]=true
+                [allOptions]="userService.hasPermission([43,1])"
+                [clearable]="false"
+                appendTo=''
+          ></app-select-user>
+ -->
   
    <mat-checkbox [(ngModel)]="subordinatesOnly" (change)="updateCalendar()">Subordinates</mat-checkbox>
 </div>
@@ -48,7 +57,8 @@
   schedulerLicenseKey="GPL-My-Project-Is-Open-Source"
   [events]="calendarEvents"
 ></full-calendar>  -->
-      <div id="calendar"></div>  
+<full-calendar  #calendar [options]="calendarOptions"></full-calendar>
+   <!--    <div id="calendar"></div>   -->
     
 </div>
 </div>

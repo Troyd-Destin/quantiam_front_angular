@@ -370,12 +370,7 @@ export class TimesheetRtoViewComponent implements OnInit {
 
             this.selectedSupervisorToNotifyId = null;
 
-            this.notification.info('Email Sent', 'We notified the Supervisor', {timeOut: 6000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
-
-        }, (e) =>{
-
-            this.notification.error('Email Error', 'Please communicate with your supervisor in person.', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
-
+            this.notification.info('Email Sent', 'We notified the Supervisor', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
 
         });
 

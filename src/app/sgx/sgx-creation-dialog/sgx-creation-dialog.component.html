@@ -20,13 +20,12 @@
 					
 						[rowData]="selectedContainers" 
 						[columnDefs]="ColumnDefs"
-						[enableSorting]="true"
-						[enableFilter]="true"	
+						
+						
 						(gridReady)="onGridReady($event)"
 						(cellEditingStopped)="onCellEditingStopped($event)"
     				(cellEditingStarted)="onCellEditingStarted($event)"
 						[statusBar]="false"
-						[enableColResize]="true"
 						[enableRangeSelection]="true"						
 						[defaultColDef]="DefaultColDef"
 						

@@ -73,7 +73,8 @@ export class TimesheetComponent implements OnInit {
   autoGroupColumnDef = {
     headerName: 'Category',
     lockPosition: true,
-    maxWidth: 400,
+    width: 340,
+   // widt: 400,
     suppressMenu: true,
     lockPinned: true,
     pinned: 'left',
@@ -125,7 +126,7 @@ export class TimesheetComponent implements OnInit {
     {
      // headerName: "Category",
       field: 'category.categoryName',
-      width: 200,
+      width: 600,
       rowGroup: true,
       rowPinned: true,
 
@@ -221,7 +222,7 @@ export class TimesheetComponent implements OnInit {
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    params.api.sizeColumnsToFit();
+    setTimeout( (x)=>{params.api.sizeColumnsToFit()},1000);
 
   }
 
@@ -500,7 +501,8 @@ export class TimesheetComponent implements OnInit {
 
       this.gridApi.setColumnDefs(this.columnDefs);
       this.gridApi.setRowData(this.timeSheetFramework);
-      this.gridApi.sizeColumnsToFit();
+     // setTimeout( (x)=>{ this.gridApi.sizeColumnsToFit(); },1000);
+      
     }
 
     setTimeout((x) => {

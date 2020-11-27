@@ -8,10 +8,15 @@ import {  environment } from '../../../environments/environment';
 import { EventInput } from '@fullcalendar/core';
 
 import { UserService } from '../../services/user/user.service';
+
+import { Calendar } from '@fullcalendar/core'; // include this line
+import { FullCalendarComponent, CalendarOptions } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 
 import timeGrigPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
+
+
 
 @Component({
   selector: 'app-timesheet-calendar',
@@ -20,20 +25,14 @@ import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
 })
 export class TimesheetCalendarComponent implements OnInit {
 
+  
+  @ViewChild('calendar') calendarComponent: FullCalendarComponent;  
  
   subordinatesOnly = false;
   selectedUser;
   minimumHours = 0;
   calendarPlugins = [dayGridPlugin,interactionPlugin,timeGrigPlugin]; // important! //
-  calendarEvents: EventInput[] = [
-    { title: 'Event Now', start: new Date() },
-    { title: 'Event Now', start: new Date() },
-    { title: 'Event Now', start: new Date() },
-    { title: 'Event Now', start: new Date() },
-    { title: 'Event Now', start: new Date() },
-    { title: 'Event Now', start: new Date() },
-    { title: 'Event Now', start: new Date() }
-  ];
+ 
  
   calendarHeader = {
     left: 'prev,next today',
@@ -41,35 +40,33 @@ export class TimesheetCalendarComponent implements OnInit {
     right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
   };
 
-  constructor(private router: Router, private http: HttpClient, private userService: UserService) { }
+  constructor(private router: Router, private http: HttpClient, private userService: UserService) {
+
+      const name = Calendar.name; // add this line in your constructor 
+   }
+
+   calendarOptions = {
+    plugins: [dayGridPlugin],
+    dayMaxEventRows: true,
+    eventLimit: 5,
+    aspectRatio: 10,
+    height: 700,
+    
+    header: {
+      left: 'prev,next',
+      center: 'title',
+      right: 'month,agendaWeek,agendaDay,listMonth'
+    },
+    eventSources: [this.eventSourceQuantiam()],
+    eventClick: (calEvent, jsEvent, view) => {
+      this.router.navigate(['/timesheet/rto/' + calEvent.event._def.extendedProps.rto_id]);
+
+    },
+  };
 
   ngOnInit() {
 
-
-      setTimeout((x) => {
-
-        console.log('test');
-
-        (<any>$('#calendar')).fullCalendar({
-
-        eventLimit: 5,
-				aspectRatio: 10,
-        header: {
-          left: 'prev,next',
-          center: 'title',
-          right: 'month,agendaWeek,agendaDay,listMonth'
-        },
-        height: 700,
-        eventClick: (calEvent, jsEvent, view) => {
-
-
-          this.router.navigate(['/timesheet/rto/' + calEvent.rto_id]);
-
-        },
-        eventSources: [this.eventSourceQuantiam()],
-      });
-
-    }, 500);  
+    
   }
 
   eventClick (calEvent, jsEvent, view) {
@@ -79,39 +76,24 @@ export class TimesheetCalendarComponent implements OnInit {
 
   }
 
-
-  loadRTO(rto) {
-
-     console.log('navigate');
-
-  }
-
   updateCalendar = function () {
-    console.log(this.selectedUser);
-    const eventSource = this.eventSourceQuantiam();
-    console.log('updated');
-    (<any>$('#calendar')).fullCalendar( 'removeEventSource', eventSource.url );
-    (<any>$('#calendar')).fullCalendar( 'addEventSource',  this.eventSourceQuantiam());
+    this.calendarOptions.eventSources = [this.eventSourceQuantiam()];
 	};
 
   eventSourceQuantiam() {
 
     return  {
       url: environment.apiUrl + '/rtocalendar',
-      headers: {'Authorization': 'Bearer ' + localStorage.getItem('token'), },
-     data: {
-
-                  userID: this.selectedUser,
+      //headers: {'Authorization': 'Bearer ' + localStorage.getItem('token'), },
+      extraParams: {
+                  user:  this.userService.currentUser.employeeid || null,
+                  userID: this.selectedUser || null,
                   subordinates: this.subordinatesOnly,
                  'minimumHours': this.minimumHours
               },
      color: '#38536f',
-     // color: '#5c7a9a;',
     };
-
-
-
-
+  
   }
 
   updateSelectedUser(event) {

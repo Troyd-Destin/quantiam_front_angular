@@ -320,6 +320,8 @@
 						<thead>
 							<th>Container No.</th>
 							<th>QCID</th>
+							<td>Save</td>
+							<td>Check Box</td>
 						</thead>
 						<tbody>
 							<tr *ngFor="let container of createdContainers; let i = index;">
@@ -333,11 +335,20 @@
 										matInput placeholder="Enter a QCID"  
 										name="container_{{container.id}}"	
 										[name]="'Container '+i" 
-										(blur)="updateQCID(container)"
+										[(ngModel)]="container.qcid"
+										
 										
 										>			
-										<mat-hint>Scan "QCID-1234" or type "1234"</mat-hint>		
+										<mat-hint>"1234"</mat-hint>		
 									</mat-form-field>
+									
+								</td>
+								<td>
+									<button [hidden]="!container.qcid" (click)="updateQCID(container)" mat-raised-button color="accent"> Save </button>
+								</td>
+								<td>
+									<mat-checkbox  [hidden]="!container.qcid" class="example-margin"
+									[checked]="container.savedQCID" disabled></mat-checkbox>
 								</td>
 							</tr>
 

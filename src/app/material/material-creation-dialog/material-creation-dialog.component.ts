@@ -59,7 +59,7 @@ export class MaterialCreationDialogComponent implements OnInit, OnDestroy {
     materialCreationStep = true;
     creatingMaterial = false;
     newLot: any = {};
-    container: any = {};
+    container: any = {savedQCID: false};
     material: any = {whmis_hazard_symbols: []};
     lot: any = {};
     today = new Date();
@@ -298,7 +298,8 @@ export class MaterialCreationDialogComponent implements OnInit, OnDestroy {
 
     updateQCID(container) {
         const params = {};
-
+        container.savedQCID = false;
+        console.log(container);
         //check for QCID string
         if(container.qcid.includes('QCID'))
         {
@@ -311,6 +312,9 @@ export class MaterialCreationDialogComponent implements OnInit, OnDestroy {
         if (container.id) {
             this.materialLotContainerService.update(params, container.id).subscribe((r) => {
 
+
+                container.savedQCID = true;
+                this.notification.success('It worked!', 'The QCID was updated.', { showProgressBar: false, timeOut: 5000, clickToClose: true });
 
                 // 	this.close();
                 // this.router.navigate('/material/container/'+this.container.id);

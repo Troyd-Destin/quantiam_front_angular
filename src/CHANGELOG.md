@@ -22,6 +22,30 @@ Change Log
 - Add merge material function
 - Steel Creation Dialog
 
+# 2020.43
+
+
+
+### New
+
+<img  style="margin:5px;" src="https://www.mindinventory.com/blog/wp-content/uploads/2020/07/angular-10.png" width="100%"><br>
+- Upgraded to Angular 10, a slew of modifications for compatibility, some bugs may still arise. 
+
+
+### Changes
+
+- Added a save button to the QCID registry in the create container window
+
+
+
+### Fixes 
+
+- An issue where SEM images would not display if they had the character "+" in their filename, has been resolved. 
+- An issue preventing SDS uploads for with certain special characters was resolved
+- An issue preventing new SDS uploads to older materials was resolved   
+- You can now select a scanner from the header bar again. 
+- The menu on the left side, no longer has annoyingly off center menu items in the Time Tracking section. 
+
 
 # 2020.39
 

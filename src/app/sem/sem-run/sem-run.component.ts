@@ -105,4 +105,12 @@ ngOnInit() {
       return this.sanitizer.bypassSecurityTrustResourceUrl('http://api.edm.quantiam.com/file?server_path=' + selectedImage.fullpath);
     }
 
+
+    encodeUriFixes(string)
+    {
+      let str = string.replace('+', "%2B");
+       str = str.replace('+', "%2B");
+       str = str.replace('#', "%23");
+      return str; 
+    }
 }

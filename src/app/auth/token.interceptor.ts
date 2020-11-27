@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
-import { catchError } from 'rxjs/internal/operators';
+import { catchError } from 'rxjs/operators';
 import { NotificationsService } from 'angular2-notifications';
 
 import {

@@ -44,7 +44,7 @@
 					<mat-icon  matTooltip="Change User">person</mat-icon>
 				</button>
 			
-			<select2 *ngIf="initializeScanner"									
+			<select *ngIf="initializeScanner"									
 					 (valueChanged)="updateScanner($event)"
 					cssImport ="true"
 					style="margin-bottom: 2px;"
@@ -54,7 +54,7 @@
 						[value]="scanner.id"
 						[attr.selected]="selectedScanner.id==scanner.id ? true : null"
 						>{{scanner.text}}</option>
-			</select2>
+			</select>
 			<button (click)="initializeScanner = !initializeScanner; connectScannerService()" mat-icon-button >
 				<mat-icon  matTooltip="Select a handheld scanner.">track_changes</mat-icon>
 			</button>
@@ -125,7 +125,7 @@
 								</mat-list>  
 						</mat-expansion-panel> -->
 						<mat-divider style="display:none"></mat-divider >
-						<mat-expansion-panel expanded="true"  style="padding-top:3px; ">
+						<mat-expansion-panel expanded="false"  style="padding-top:3px; ">
 							
 								
 							<mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
@@ -181,9 +181,10 @@
 										   <fa-icon [icon]="faPiggyBank"></fa-icon>
 									   </button>
 								   </mat-list-item>
+								   
 								 <mat-list-item > 
 									 
-									 <button routerLink="/timesheet/calendar" routerLinkActive="mat-list-item-button-active" mat-button  fxLayout="row" >  
+									 <button routerLink="/timesheet/calendar" routerLinkActive="mat-list-item-button-active" mat-button  >  
 										<p>	Calendar</p> 
 										<fa-icon [icon]="faCalendar" ></fa-icon>
 									</button>
@@ -191,7 +192,7 @@
 								</mat-list-item>
 								 <mat-list-item > 
 									 
-									 <button routerLink="/timesheet/rto/database" routerLinkActive="mat-list-item-button-active" mat-button  fxLayout="row" >  
+									 <button routerLink="/timesheet/rto/database" routerLinkActive="mat-list-item-button-active" mat-button   >  
 										<p>	RTO </p> 
 										<fa-icon [icon]="faPlaneDeparture" ></fa-icon>
 									</button>
@@ -199,7 +200,7 @@
 								</mat-list-item>
 								 <mat-list-item > 
 									 
-									 <button routerLink="/timesheet/insights/company" routerLinkActive="mat-list-item-button-active" mat-button  fxLayout="row" >  
+									 <button routerLink="/timesheet/insights/company" routerLinkActive="mat-list-item-button-active" mat-button   >  
 										<p>	Insights </p> 
 										<fa-icon [icon]="faChartLine" ></fa-icon>
 									</button>
@@ -210,7 +211,7 @@
 										<button 
 											routerLink="/timesheet/settings"  
 									 
-											routerLinkActive="mat-list-item-button-active" mat-button  fxLayout="row" >  
+											routerLinkActive="mat-list-item-button-active" mat-button   >  
 										 <p>	Settings </p> 
 										 <fa-icon [icon]="faCog" ></fa-icon>
 									 </button>
@@ -222,7 +223,7 @@
 									 <button 
 										 routerLink="/timesheet/report"  
 									
-										 routerLinkActive="mat-list-item-button-active" mat-button  fxLayout="row" >  
+										 routerLinkActive="mat-list-item-button-active" mat-button   >  
 										<p>	Reports </p> 
 										<fa-icon [icon]="faPaste" ></fa-icon>
 									</button>
@@ -370,7 +371,7 @@
 						
 						
 						<mat-divider ></mat-divider>
-						<mat-expansion-panel expanded="true" >
+						<mat-expansion-panel expanded="false" >
 							<mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
 						   
 						   
@@ -414,11 +415,11 @@
 											<fa-icon  [icon]="faFireAlt" ></fa-icon>
 										</button>
 								</mat-list-item>
-								<mat-list-item *ngIf="userService.hasPermission(39)" > 
+							<!-- 	<mat-list-item *ngIf="userService.hasPermission(39)" > 
 										 <button routerLink="/xps/database" routerLinkActive="mat-list-item-button-active" mat-button> <p>XPS </p>
 											<fa-icon  [icon]="faBolt" ></fa-icon>
 										</button>
-								</mat-list-item>
+								</mat-list-item> -->
 						
 									<mat-list-item   > 
 										 <button routerLink="/xrd/database" routerLinkActive="mat-list-item-button-active" mat-button>
@@ -498,7 +499,7 @@
 						</mat-expansion-panel>
 
 						<mat-divider></mat-divider>
-						<mat-expansion-panel expanded="true">
+						<mat-expansion-panel expanded="false">
 								 <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
 								
 								

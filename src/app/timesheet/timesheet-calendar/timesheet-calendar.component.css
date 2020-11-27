@@ -1,28 +1,4 @@
-/deep/ .fc-title{
 
-    font-size: 11px;
-}
-
-/deep/ .fc-center h2
-{
-
-    font-size: 24px;
-}
-
-/deep/ .fc-button-group{
-
-
-    font-size: 12px;
-}
-
-/deep/ .fc-title{
-
-    color: white;
-}
-
-::ng-deep .fc button, .fc table, body .fc {
-    font-size: 0.9em !important;
-}
 
 /*!
  * FullCalendar v3.8.1
@@ -40,6 +16,18 @@
     :host {
         visibility: visible;
         
+    }
+
+    .donotprint {
+        display:none !important;
+    }
+
+    /deep/ .fc-day-sun {
+        display:none !important;
+    }
+    
+    /deep/ .fc-day-sat {
+        display:none !important;
     }
 
     * {
@@ -74,6 +62,20 @@
         
     }
 
+    /deep/ .fc-daygrid-body
+    {
+        width: 100% !important;
+    }
+
+    /deep/ .fc-col-header
+    {
+        width:100% !important;
+    }  
+    
+    /deep/ .fc-scrollgrid-sync-table
+    {
+        width:100% !important;
+    }
     .print {
         position: fixed;
         left: 0;
@@ -81,6 +83,8 @@
         top: 0;
         bottom: 0;
         z-index:9999999;
+        margin-left: 40px;
+          margin-right: 40px;
       }
 
 

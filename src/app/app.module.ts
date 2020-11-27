@@ -79,8 +79,8 @@ export function gettoken () {
 
          config: {
          tokenGetter: gettoken,
-          whitelistedDomains: [environment.apiUrl],
-          blacklistedRoutes: [environment.apiUrl + '/auth']
+         // whitelistedDomains: [environment.apiUrl],
+         // blacklistedRoutes: [environment.apiUrl + '/auth']
         }
 
       }),

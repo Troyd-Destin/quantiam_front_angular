@@ -12,24 +12,17 @@
 
 <ag-grid-angular 
 
-	[toolPanelSuppressSideButtons] = "true"
-  
 	
 	#agGrid	
 	style="width: calc(100%); height:calc(70vh); margin-top:25px;" 
     class="ag-theme-material"
-	[showToolPanel]="false"
     [rowData]="rowData" 
-	[toolPanelSuppressSideButtons] = "true"
     [columnDefs]="columnDefs"
 	[defaultColDef]="defaultColDef"
-	[enableSorting]="true"
-    [enableFilter]="true"	
     (gridReady)="onGridReady($event)"
 	(cellDoubleClicked)="onCellDoubleClicked($event)"
 	(cellEditingStopped)="onCellEditingStopped($event)"
 	(cellEditingStarted)="onCellEditingStarted($event)"
-	[enableColResize]="true"
 	[enableRangeSelection]="true"
 	[pagination]="false"
 	
