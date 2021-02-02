@@ -8,6 +8,9 @@ import { SampleCreationDialogComponent } from '../sample-creation-dialog/sample-
 
 import { MatDialog } from '@angular/material/dialog';
 
+
+import { AllModules  } from '@ag-grid-enterprise/all-modules';
+
 @Component({
   selector: 'app-sample-database',
   templateUrl: './sample-database.component.html',
@@ -16,20 +19,22 @@ import { MatDialog } from '@angular/material/dialog';
 export class SampleDatabaseComponent implements OnInit {
 
 
-  private gridApi;
-  private gridColumnApi;
+   gridApi;
+   gridColumnApi;
    rowData = [];
 
    columnDefs;
    defaultColDef;
-  private rowModelType;
-  private cacheBlockSize;
-  private maxBlocksInCache;
-  private getRowNodeId;
-  private icons;
-  private cellOldValue;
+   rowModelType;
+   cacheBlockSize;
+   maxBlocksInCache;
+   getRowNodeId;
+   icons;
+   cellOldValue;
 
-  private sampleTypeList: any[] = ['5 % H2 Treatment (furnace)', 'Sintered Pellet', 'Carbon Impregnation', 'Post Cracking', 'Pellet Reduction', 'Carbon Physical Mixture'];
+   modules = AllModules;
+
+   sampleTypeList: any[] = ['5 % H2 Treatment (furnace)', 'Sintered Pellet', 'Carbon Impregnation', 'Post Cracking', 'Pellet Reduction', 'Carbon Physical Mixture'];
 
 
   constructor(

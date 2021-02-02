@@ -12,15 +12,43 @@ Change Log
 
 ### To do list
 
-- Overlays for XRD viewer
+- Overlays for XRD viewer 
+- Fix XRD datasource
 - Display (fix) EDS data display in the SEM viewer 
-- keywords for material searches
-- printable standard labels using WHIMS pictograms
-- Settings section in Materials
-- Who receives empty notifications (Fu, Supervisor, Sherry) Materials settings
-- Approving an RTO doesn't doesn't trigger the timesheet calculation process.
+- keywords for material searches 
+- Settings section in Materials (low)
+- Who receives empty notifications (Fu, Supervisor, Sherry) Materials settings (low priority)
+- Bug:: Approving an RTO doesn't doesn't trigger the timesheet calculation process.
 - Add merge material function
 - Steel Creation Dialog
+
+# 2021.3
+
+### Fixes
+
+- Timesheet -> Settings -> Machine page Operators popup works again
+
+# 2021.1
+
+### Changes
+
+- RTOs vacation time can now be taken in 1 hour increments, reflecting the change in RTO policy, effective 1-Jan-2021.
+- Arbin graph x axis now defaults to Step_Time
+- Arbin graph exports now default to  1920x1080 px (16:9)
+- Arbin database doesn't reload every time you visit the page
+
+# 2020.50
+
+### Fixes
+
+- Because 2020 loves being different, the timesheet now supports a unique 27th payperiod for 2020. 
+
+# 2020.45
+
+### Fixes
+
+- Patch note history and contents now scroll indepedantly. 
+- The current patchnotes you are viewing are now highlighted in the history column 
 
 # 2020.43
 

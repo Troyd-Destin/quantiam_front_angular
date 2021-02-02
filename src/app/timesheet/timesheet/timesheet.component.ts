@@ -38,7 +38,7 @@ export class TimesheetComponent implements OnInit {
   timesheetEndYear;
   currentYear = (new Date()).getFullYear();
   timesheetYears = [];
-  timesheetPayperoids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26];
+  timesheetPayperoids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,27];
   timeSheetObj;
   timeSheetFramework = [];
   lastCellEdited;
@@ -560,6 +560,17 @@ export class TimesheetComponent implements OnInit {
   }
 
   previousPayPeroid() {
+
+
+    if(this.timeSheetObj.payPeriod.previousPayPeriodYear)
+    {
+      this.router.navigate([`/timesheet/${this.routeParams.userId}/year/${this.timeSheetObj.payPeriod.previousPayPeriodYear}/payperiod/${this.timeSheetObj.payPeriod.previousPayPeriod}`]);
+  
+    }
+    else
+    {
+
+   
     this.routeParams.payperiod  = parseInt(this.routeParams.payperiod, null) - 1;
     if (this.routeParams.payperiod  === 0) {
 
@@ -569,20 +580,32 @@ export class TimesheetComponent implements OnInit {
     }
 
     this.router.navigate([`/timesheet/${this.routeParams.userId}/year/${this.routeParams.year}/payperiod/${this.routeParams.payperiod}`]);
-
+  }
   }
 
   nextPayPeroid() {
-    this.routeParams.payperiod  = parseInt(this.routeParams.payperiod, null) + 1;
-    if (this.routeParams.payperiod  === 27) {
 
-      this.routeParams.payperiod = 1;
-      this.routeParams.year = parseInt(this.routeParams.year, null) + 1;
+    if(this.timeSheetObj.payPeriod.nextPayPeriod)
+    {
+
+     
+    }
+    else
+    {
+
+      this.routeParams.payperiod  = parseInt(this.routeParams.payperiod, null) + 1;
+      if (this.routeParams.payperiod  >= 27) {
+  
+        this.routeParams.payperiod = 1;
+        this.routeParams.year = parseInt(this.routeParams.year, null) + 1;
+  
+      }
+  
+      this.router.navigate([`/timesheet/${this.routeParams.userId}/year/${this.routeParams.year}/payperiod/${this.routeParams.payperiod}`]);
+  
 
     }
-
-    this.router.navigate([`/timesheet/${this.routeParams.userId}/year/${this.routeParams.year}/payperiod/${this.routeParams.payperiod}`]);
-
+   
   }
 
   changePayperoid() {

@@ -73,6 +73,7 @@ import { jqxCheckBoxModule } from 'jqwidgets-ng/jqxcheckbox';
 import { jqxTabsModule } from 'jqwidgets-ng/jqxtabs';
 import { FileAssociatorComponent } from './file-associator/file-associator.component';
 import { SelectCampaignComponent } from './select-campaign/select-campaign.component';
+import { SelectSteelTypeComponent } from './select-steel-type/select-steel-type.component';
 
 
 @NgModule({
@@ -132,6 +133,7 @@ import { SelectCampaignComponent } from './select-campaign/select-campaign.compo
         SelectMaterialLotComponent,
         FileAssociatorComponent,
         SelectCampaignComponent,
+        SelectSteelTypeComponent,
     ],
     exports: [
         SelectArbinTestComponent,

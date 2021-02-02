@@ -5,7 +5,6 @@ import { FormBuilder, FormGroup} from '@angular/forms';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { AuthService } from '../services/auth/auth.service';
 import { UserService } from '../services/user/user.service';
-
 import { TimesheetService } from '../timesheet/timesheet.service';
 import { catchError, map, tap, delay } from 'rxjs/operators';
 import {
@@ -99,6 +98,7 @@ export class CoreComponent implements OnInit, OnDestroy {
   hasSwitchedUser = false;
   devTokenFound = false;
 
+  menuCollapseState = {}; //locally saved collapse state
 
   currentYear = (new Date()).getFullYear();
   currentTimesheet = {userId: '', year: '', payperiod: ''};
@@ -204,6 +204,12 @@ export class CoreComponent implements OnInit, OnDestroy {
 
 
     });
+
+
+    //retrieve menu settings 
+
+    this.menuCollapseState = this.settings.get('menuCollapseState');
+
   }
 
   prepareRoute(outlet) {

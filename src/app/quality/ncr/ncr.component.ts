@@ -281,7 +281,7 @@ export class NcrComponent implements OnInit {
     if(this.ncrObject.cars.length > 0)
     {
       const unfinishedCar = this.ncrObject.cars.filter((car)=>{
-          return car.completed === 0 || (car.completed && !car.effective);
+          return car.completed === 0 ;
       })
 
       if(unfinishedCar.length > 0) { return false; }

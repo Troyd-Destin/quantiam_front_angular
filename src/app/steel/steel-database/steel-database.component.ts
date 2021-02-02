@@ -75,46 +75,69 @@ export class SteelDatabaseComponent implements OnInit {
       headerName: 'Cut',
       field: 'cut',
       width: 40,
+      hide:true,
     },
     
     {
       headerName: 'Reworked',
       field: 'rework',
       width: 40,
+      hide:true,
     },
     {
       headerName: 'Part Name',
       field: 'steel_type.part_name',
-      width: 80,
+      width: 100,
+    },  
+    {
+      headerName: 'Length',
+      field: 'steel_type.length',
+      width: 40,
     },
+
     {
       headerName: 'Part Number',
       field: 'steel_type.client_part_number',
       width: 60,
+      hide:true,
     },
     {
       headerName: 'Manufacturer',
       field: 'steel_type.manufacturer',
       width: 60,
+      hide:true,
     },
     {
-      headerName: 'Manufacturer',
+      headerName: 'Metallurgy',
       field: 'steel_type.metallurgy',
       width: 60,
+      hide:true,
     },
     {
       headerName: 'Campaign',
       field: 'campaign.campaign_name',
       width: 80,
     },
+    
+    {
+      headerName: 'Hold',
+      field: 'hold',
+      width: 40,
+    },
+    {
+      headerName: 'Comments',
+      field: 'Comments',
+      width: 80,
+    },
     {
       headerName: 'Created',
       field: 'created_at',
       width: 90,
+      hide:true,
     },    
     {
       headerName: 'Actions',
-      width: 50,
+      width: 40,
     },
   ];
 

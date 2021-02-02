@@ -37,7 +37,7 @@ export class ArbinTestComponent implements OnInit {
 
   indexTracker = 0;
 
-  currentXField = 'Current';
+  currentXField = 'Step_Time';
   currentYField = 'Voltage';
   fields = ['Charge_Capacity','Discharge_Capacity','Charge_Energy','Seconds','Minutes','Hours','Step_Time','Data_Point','Channel_ID','Date_Time','Current','Voltage'];
  
@@ -87,6 +87,13 @@ export class ArbinTestComponent implements OnInit {
       zoomType: 'xy',
       panKey:'shift',
     },
+    exporting: {
+      sourceWidth: 1920,
+      sourceHeight: 1080,
+      scale: 1, 
+      chartOptions: {
+      }
+  },  
     title: { text: '' },
     credits:{text: 'Quantiam Technologies', href:''},
     /*  mapNavigation: {

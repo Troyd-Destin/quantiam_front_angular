@@ -124,16 +124,16 @@ export class TimesheetRtoViewComponent implements OnInit {
 
 
 
-        if (this.requestTime.type === 'pto' && (this.requestTime.hours < 1 && this.requestTime.hours > -1)) {
+        if ((this.requestTime.type === 'pto' || this.requestTime.type === 'vacation') && (this.requestTime.hours < 1 && this.requestTime.hours > -1)) {
             this.notification.error('Error', 'PTO must be a minimum of 1 hour. ', {timeOut: 4000});
             return false;
         }
 
-        if (this.requestTime.type === 'vacation' && (this.requestTime.hours < 8 && this.requestTime.hours > -8) && !this.userService.hasPermission(11)) {
+      /*   if (this.requestTime.type === 'vacation' && (this.requestTime.hours < 8 && this.requestTime.hours > -8) && !this.userService.hasPermission(11)) {
             this.notification.error('Error', 'Vacation must taken in full days. ', {timeOut: 4000});
             return false;
         }
-
+ */
         return true;
     }
 

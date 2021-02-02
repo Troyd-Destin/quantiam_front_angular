@@ -15,11 +15,13 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
     'SemDatabase','SemRun',
     'XrdDatabase','XrdView',
     'xpsDatabase',
-    'ArbinTest',
+    //'ArbinTest',
+    'ArbinTestDatabase',
     'company-insight-unpaid',
     'company-insight-headcount',
     'company-insight-hours',
-    '3dmodels-database'
+    '3dmodels-database',
+    
 
    ];
   storedRouteHandles = new Map<string, DetachedRouteHandle>();

@@ -77,13 +77,13 @@ export class TimesheetMachinesComponent implements OnInit {
     ],
 
     afterOnCellMouseDown: (event, coords, TD) => {
-     // console.log(event);
-      if (event.realTarget.id === 'deleteButton' && coords.col === 7) {
+    //  console.log();
+      if (TD.firstElementChild.getAttribute('id') === 'deleteButton' && coords.col === 7) {
         this.deleteMachineFromRow(coords);
       }
-
-      if (event.realTarget.id === 'usersButton' && coords.col === 8) {
-        console.log('test');
+     
+      if (TD.firstElementChild.getAttribute('id') === 'usersButton' && coords.col === 8) {
+  //      console.log('test');
         this.usersPopup(coords);
       }
 

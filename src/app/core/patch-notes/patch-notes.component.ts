@@ -21,6 +21,7 @@ export class PatchNotesComponent implements OnInit {
 
   ChangeLog;
   versionArray = [];
+  selectedVersionButton = 1;
   selectedVersion;
   defaultVersionIndex = 1;
 
@@ -86,6 +87,7 @@ export class PatchNotesComponent implements OnInit {
 
     this.versionArray.shift();
     this.selectedVersion = this.versionArray[this.defaultVersionIndex];
+    
 
     
     //this.versionArray
