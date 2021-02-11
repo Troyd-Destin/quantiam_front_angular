@@ -16,13 +16,18 @@ Change Log
 - Fix XRD datasource
 - Display (fix) EDS data display in the SEM viewer 
 - keywords for material searches 
-- Settings section in Materials (low)
-- Who receives empty notifications (Fu, Supervisor, Sherry) Materials settings (low priority)
 - Bug:: Approving an RTO doesn't doesn't trigger the timesheet calculation process.
 - Add merge material function
 - Steel Creation Dialog
+- Active / Inactive filter for Employee Screen
+- Set up synchronization scripts for XRD directories
+- Material Container Creation Rework ---- Supplier -> Select Material From List  , reduce duplicate Materials
 
-# 2021.3
+# 2021.4
+
+### Changes
+
+- XRD database is now searchble for 2020. It will only reflect what XRD data has been transffered to the Q drive.  (Lags by one month+ )
 
 ### Fixes
 
