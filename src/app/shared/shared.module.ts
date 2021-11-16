@@ -34,6 +34,8 @@ import { AgGridSemTypeComponent } from '../sem/sem-database/ag-grid-sem-type/ag-
 import { AgGridSemContainerSteelCellDisplayComponent } from '../sem/sem-database/ag-grid-sem-container-steel-cell-display/ag-grid-sem-container-steel-cell-display.component';
 import { AgGridSemContainerSteelEditComponent } from '../sem/sem-database/ag-grid-sem-container-steel-edit/ag-grid-sem-container-steel-edit.component';
 
+import { AgGridParticlePdfComponent } from '../particle-size/particle-size-database/ag-grid-particle-pdf/ag-grid-particle-pdf.component';
+
 import { XrdAnalysesFileRendererComponent } from '../xrd/xrd-database/xrd-analyses-file-renderer/xrd-analyses-file-renderer.component';
 
 import { SelectMaterialComponent } from './select-material/select-material.component';
@@ -42,6 +44,9 @@ import { AgGridDurationComponent } from './ag-grid-duration/ag-grid-duration.com
 import { AgGridSelectSteelOrContainerComponent } from './ag-grid-select-steel-or-container/ag-grid-select-steel-or-container.component';
 
 import { AgGridTimesheetValueEditorComponent } from '../timesheet/timesheet/ag-grid-timesheet-value-editor/ag-grid-timesheet-value-editor.component';
+
+
+import { DisplayAnalysisCellComponent } from '../material/material-container-database/display-analysis-cell/display-analysis-cell.component';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
@@ -81,7 +86,7 @@ import { SelectSteelTypeComponent } from './select-steel-type/select-steel-type.
         AgGridModule.withComponents([
             AgGridSelectProjectEditorComponent, AgGridSelectUserComponent,
              AgGridSemTypeComponent, AgGridDurationComponent,
-             AgGridSemContainerSteelCellDisplayComponent, AgGridSemContainerSteelEditComponent,
+             AgGridSemContainerSteelCellDisplayComponent, AgGridSemContainerSteelEditComponent,AgGridParticlePdfComponent,DisplayAnalysisCellComponent,
              XrdAnalysesFileRendererComponent,
              AgGridTimesheetValueEditorComponent]),
         CommonModule,
@@ -111,6 +116,7 @@ import { SelectSteelTypeComponent } from './select-steel-type/select-steel-type.
         AgGridSelectProjectEditorComponent,
         AgGridSelectUserComponent,
         AgGridSemTypeComponent,
+        AgGridParticlePdfComponent,
         SelectSemrunTypeComponent,
         SelectMaterialComponent,
         SelectMaterialSupplierComponent,
@@ -119,6 +125,7 @@ import { SelectSteelTypeComponent } from './select-steel-type/select-steel-type.
         AgGridTimesheetValueEditorComponent,
         AgGridSemContainerSteelCellDisplayComponent,
         AgGridSemContainerSteelEditComponent,
+        DisplayAnalysisCellComponent,
         XrdAnalysesFileRendererComponent,
         SelectSteelComponent,
         PopUpSteelCardComponent,

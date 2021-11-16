@@ -13,15 +13,49 @@ Change Log
 ### To do list
 
 - Overlays for XRD viewer 
-- Fix XRD datasource
 - Display (fix) EDS data display in the SEM viewer 
 - keywords for material searches 
 - Bug:: Approving an RTO doesn't doesn't trigger the timesheet calculation process.
 - Add merge material function
 - Steel Creation Dialog
 - Active / Inactive filter for Employee Screen
-- Set up synchronization scripts for XRD directories
 - Material Container Creation Rework ---- Supplier -> Select Material From List  , reduce duplicate Materials
+- astersizer now autopopulates it's respective timesheet at the press of a button on the particle database screen. 
+
+
+# 2021.45
+
+### Updates
+
+- Particle Size Database Screen now has a refresh button
+- Particle Size Database columns can be resized
+
+
+
+# 2021.8
+
+### New
+
+- Particle Size Database v1  <br><img  style="margin:5px;" src="https://imgur.com/HqTXocq.png" width="80%"><br>
+- Mastersizer Timesheet now automatically updates the last 17 days on a daily basis, ignores current day activities. 
+
+### Changes 
+- Container view now links XRD, SEM & Particle Analysis  <br><img  style="margin:5px;" src="https://imgur.com/uZZrZCn.png" width="50%"><br>
+- Container database now indicates related analyses in icon format <br> <img  style="margin:5px;" src="https://imgur.com/5NcmVEM.png" width="30%"><br>
+
+
+### Fixes
+
+- Column menus on database tables are now a visible white  
+
+# 2021.7
+
+### Changes
+
+- XRD database will now update on a daily timeframe. Assuming someone bothers to move data from the XRD computers to the Q drive.
+- XRD database now automatically links QCIDs to containers if a QCID is found in the analysis name. <img  style="margin:5px;" src="https://imgur.com/6tyP6i9.png" width="80%"><br>
+- XRD database now checks for missing EVA files and alerts XRD managers & QA/QC on an hourly basis. <img  style="margin:5px;" src="https://imgur.com/p0amFgw.png" width="50%"><br>
+- XRD viewer now defaults to images found on the Q drive first, rather then patterns in the graph. 
 
 # 2021.4
 

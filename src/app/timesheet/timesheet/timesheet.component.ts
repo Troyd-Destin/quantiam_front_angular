@@ -825,7 +825,7 @@ export class TimesheetComponent implements OnInit {
       }
      });
     if (!test) {
-      this.notification.error('Not Enough Hours',  'You must have a minimum of 8 hours entered for weekdays you have worked.', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
+      this.notification.error('Not Enough Hours',  'Salaried employees must have a minimum of 8 hours entered for weekdays you have worked.', {timeOut: 4000, showProgressBar: false, clickToClose: true}); /// Daily OT notificaton
       return test;
     }
 

@@ -5,6 +5,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { MaterialCreationDialogComponent } from '../../material/material-creation-dialog/material-creation-dialog.component';
+import { MaterialCreationDialog2021Component } from '../../material/material-creation-dialog2021/material-creation-dialog2021.component';
 
 import { AllModules  } from '@ag-grid-enterprise/all-modules';
 
@@ -13,6 +14,8 @@ import { MaterialLotContainerService } from '../../services/material-lot-contain
 import {  ContainerAggridService } from '../../material/services/container-aggrid.service';
 import { LocationService } from '../../services/location/location.service';
 import {  environment} from '../../../environments/environment';
+
+import { DisplayAnalysisCellComponent } from './display-analysis-cell/display-analysis-cell.component';
 
 import { UserService } from '../../services/user/user.service';
 
@@ -84,7 +87,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         field: 'lot.material.id',
         width: 100,
         hide: true,
-        headerName: 'Material ID',
+        headerName: 'M ID',
 
       },
       {
@@ -153,7 +156,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
       {
         width: 95,
         field: 'lot.material.supplier.supplier_name',
-        headerName: 'Suplier',
+        headerName: 'Supplier',
       },
       {
         field: 'lot.lot_name',
@@ -244,6 +247,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
         field: 'empty',
         width: 80,
         headerName: 'Empty',
+        hide: true,
         cellRenderer: function(cell) {
 
           // console.log(cell);
@@ -260,9 +264,15 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
       },
       {
+        headerName: 'Documents',
+        cellRenderer: 'DisplayAnalysisCellComponent'        
+
+      },
+      {
         field: 'sds',
         width: 60,
         headerName: 'SDS',
+        hide:true,
         cellRenderer: function(cell) {
 
           if (!cell.hasOwnProperty('data')) { return ''; }
@@ -321,6 +331,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
       cacheBlockSize: 18,
       enableRangeSelection: true,
        maxBlocksInCache: 2,
+       rowHeight: 35,
      //  enableServerSideFilter: true,
       enableServerSideSorting: false,
       rowModelType: 'serverSide',
@@ -337,7 +348,7 @@ export class MaterialContainerDatabaseComponent implements OnInit {
 
     this.context = { componentParent: this };
     this.frameworkComponents = {
-     // 'aggridActiveParentComponent': AggridActiveParentComponent,
+      'DisplayAnalysisCellComponent': DisplayAnalysisCellComponent,
     };
 
 
@@ -567,6 +578,23 @@ export class MaterialContainerDatabaseComponent implements OnInit {
    // dialogConfig.height = '0vh';
     dialogConfig.position = {'top': '50px'};
     const dialogRef = this.dialog.open(MaterialCreationDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(result => {
+    //  console.log('The dialog was closed');
+      this.refreshDatabase();
+    });
+}
+
+
+  openDialog2021() {
+
+    const dialogConfig = new MatDialogConfig();
+
+    //dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '1200px';
+   // dialogConfig.height = '0vh';
+    dialogConfig.position = {'top': '50px'};
+    const dialogRef = this.dialog.open(MaterialCreationDialog2021Component, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
     //  console.log('The dialog was closed');
       this.refreshDatabase();

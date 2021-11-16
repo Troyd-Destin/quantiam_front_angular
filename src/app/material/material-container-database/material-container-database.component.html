@@ -28,9 +28,13 @@
             <button  (click)="downloadIventoryList()" mat-raised-button color="primary"> 
                 SDS List
             </button>
+            <button *ngIf="userService.hasPermission([40,41,39])"  (click)="openDialog2021()" mat-raised-button color="accent"> 
+                 Create Container (Beta)
+            </button>
             <button *ngIf="userService.hasPermission([40,41])"  (click)="openDialog()" mat-raised-button color="primary"> 
                 Create Container
             </button>
+            
             <button (click)="refreshDatabase()" mat-raised-button> 
                 Refresh
                 <mat-icon  >refresh</mat-icon>
@@ -79,7 +83,7 @@
         #agGrid
            
               
-        style="width: calc(100%); height:calc(60vh); margin-top:10px;" 
+        style="width: calc(100%); height:calc(70vh); margin-top:10px;" 
         class="ag-theme-balham"
         animateRows="true"
         
@@ -89,7 +93,9 @@
         [columnDefs]="columnDefs"
       
         [defaultColDef]="defaultColDef"
-        [gridOptions]="gridOptions"              
+        [gridOptions]="gridOptions" 
+        [frameworkComponents] = "frameworkComponents"
+
         [modules]="modules"
         (gridReady)="onGridReady($event)"
         (rowDoubleClicked)="onRowDoubleClicked($event)"

@@ -35,6 +35,21 @@
 
 
         <mat-tab-group fxFlex>
+          <mat-tab label="Images"  >
+            <ng-template matTabContent>
+              <div  fxLayoutGap="10px" fxLayout="row wrap" *ngIf="images[0]">
+
+
+                  <a [href]="img.url" *ngFor="let img of images" target="_blank" class="clickable">
+                        <img    class="clickable" [src]="img.url" alt="" width="300px">
+                    </a>
+                </div> 
+
+                <div  fxLayoutGap="10px" fxLayout="row wrap" *ngIf="!images[0]">
+                      
+                </div>
+            </ng-template>
+          </mat-tab>
             <mat-tab label="Patterns" >
                
               <ng-template matTabContent >
@@ -190,17 +205,7 @@
                     
               </ng-template>
             </mat-tab>
-            <mat-tab label="Images" *ngIf="images[0]" >
-              <ng-template matTabContent>
-                <div  fxLayoutGap="10px" fxLayout="row wrap">
-
-
-                    <a [href]="img.url" *ngFor="let img of images" target="_blank" class="clickable">
-                          <img    class="clickable" [src]="img.url" alt="" width="300px">
-                      </a>
-                  </div> 
-              </ng-template>
-            </mat-tab>
+           
           </mat-tab-group>
 
     </div>

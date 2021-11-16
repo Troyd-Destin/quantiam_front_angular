@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ToolsIndexComponent } from './tools-index/tools-index.component';
 import { ToolsScalebarComponent } from './tools-scalebar/tools-scalebar.component';
+import { TypescriptmodelformatterComponent } from './typescriptmodelformatter/typescriptmodelformatter.component';
 
 const routes: Routes = [
   {path:'',
@@ -12,6 +13,10 @@ const routes: Routes = [
        {
         path:'scale-bar',
         component: ToolsScalebarComponent,
+       },
+        {
+        path:'typescript-model-formatter',
+        component: TypescriptmodelformatterComponent,
        }, 
     ]
 

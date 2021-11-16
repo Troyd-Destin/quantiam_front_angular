@@ -50,6 +50,11 @@ const routes: Routes = [
 			// 	pathMatch: 'prefix',
 			},
 			{
+				path: 'slip',
+				loadChildren: () => import('../slip/slip.module').then(m => m.SlipModule),
+			// 	pathMatch: 'prefix',
+			},
+			{
 				path: 'sem',
 				loadChildren: () => import('../sem/sem.module').then(m => m.SemModule),
 			// 	pathMatch: 'prefix',
@@ -72,6 +77,11 @@ const routes: Routes = [
 		 	{
 				path: 'tga',
 				loadChildren: () => import('../tga/tga.module').then(m => m.TgaModule),
+			// 	pathMatch: 'prefix',
+			}, 
+			{
+				path: 'tapecast',
+				loadChildren: () => import('../tapecast/tapecast.module').then(m => m.TapecastModule),
 			// 	pathMatch: 'prefix',
 			}, 
 			{
@@ -100,6 +110,12 @@ const routes: Routes = [
 			{
 				path: 'quality',
 				loadChildren: () => import('../quality/quality.module').then(m => m.QualityModule),
+				// pathMatch: 'prefix',
+
+			},
+			{
+				path: 'particle-size',
+				loadChildren: () => import('../particle-size/particle-size.module').then(m => m.ParticleSizeModule),
 				// pathMatch: 'prefix',
 
 			},

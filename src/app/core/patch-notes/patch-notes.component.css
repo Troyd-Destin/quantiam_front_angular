@@ -23,6 +23,7 @@ markdown ::ng-deep ul {
 
 markdown ::ng-deep li {
     font-size: 12px;
+    padding-bottom: 10px;
 }
 
 markdown ::ng-deep h1 {
@@ -71,3 +72,5 @@ markdown ::ng-deep h2 {
   .hoverscrollbar:hover, .hoverscrollbar:active, .hoverscrollbar:focus ::ng-deep{
     overflow: auto;
   }
+
+  

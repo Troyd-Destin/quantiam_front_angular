@@ -63,21 +63,17 @@ export class TimesheetProjectComponent implements OnInit {
       if(changes)
       {
         const rowProp: any = this.hotRegisterer.getInstance('id').getSourceDataAtRow(changes[0][0]);
-        
-
         if(changes[0][1] === 'Category'){  changes[0][3] = this.categoryListIdMap[changes[0][3]]; changes[0][1] = 'category_id'; }
         if(changes[0][1] === 'start_date' || changes[0][1] === 'retire_date'){ 
-           if(changes[0][3] === 'Invalid date') { changes[0][3] = null; }          
-        }
+        if(changes[0][3] === 'Invalid date') { changes[0][3] = null; }          
       
-
+      }
         const payload:any = {};
-        payload[changes[0][1]] = changes[0][3];
-        
-        payload.id = rowProp.projectid;
-          
+        payload[changes[0][1]] = changes[0][3];        
+        payload.id = rowProp.projectid;          
         if(changes[0][1] === 'projectid' && (changes[0][2] !== changes[0][3])){
-          payload.id = changes[0][2];
+        payload.id = changes[0][2];
+      
       }
 
         if(changes[0][2] !== changes [0][3]){ // only trigger if different 
@@ -186,6 +182,8 @@ export class TimesheetProjectComponent implements OnInit {
       this.http.post(environment.apiUrl + `/project`,null).subscribe((r:any)=>{
         this.hotRegisterer.getInstance('id').alter('insert_row',0);
         this.hotRegisterer.getInstance('id').setDataAtCell(0,0, r.projectid );
+        this.notify.success('Success', 'You created a project ' + r.projectid + ' at the top of the spreadsheet.', { timeOut: 4000, showProgressBar: false, clickToClose: true }); /// Daily OT notificaton
+  
       })
     }
 

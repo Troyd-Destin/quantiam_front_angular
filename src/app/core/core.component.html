@@ -429,12 +429,18 @@
 
 										 </button>
 								</mat-list-item>
+								<mat-list-item  > 
+									<button routerLink="/particle-size/database" routerLinkActive="mat-list-item-button-active" mat-button> <p>Particle Size</p>
+									
+										<fa-icon  [icon]="faBraille" ></fa-icon>
+									</button>
+							</mat-list-item>
 					
 								<mat-list-item   > 
 									<button routerLink="/arbin/test/database" routerLinkActive="mat-list-item-button-active" mat-button>
 										
 									   <p>Arbin</p>
-									   <fa-icon  [icon]="faXRay" ></fa-icon>
+									   <fa-icon  [icon]="faSun" ></fa-icon>
 
 									</button>
 						   </mat-list-item>
@@ -516,6 +522,11 @@
 								 <mat-list-item  > 
 										 <button routerLink="/tools/scale-bar" routerLinkActive="mat-list-item-button-active" mat-button>Scale Bar</button>
 								</mat-list-item>
+								<mat-list-item  *ngIf="userService.hasPermission([39])"> 
+									<button routerLink="/tools/typescript-model-formatter" routerLinkActive="mat-list-item-button-active" mat-button> <p> Models </p>
+										<fa-icon  [icon]="faFireAlt" ></fa-icon>
+									</button>
+							</mat-list-item>
 								
 								</mat-list>
 						</mat-expansion-panel>

@@ -7,7 +7,22 @@
 		<form [formGroup]="materialFormGroup" id="materialForm" >
 		<ng-template matStepLabel>Material </ng-template>
 
-		
+			<div>
+				<app-select-material-supplier 
+				style="min-width: 200px;"
+				name="supplier_name"
+				addTag="true"
+				placeholder="Supplier (Required)"
+				*ngIf="creatingMaterial"
+				[selectedValue]="material.supplier_id"
+				(change)="selectSupplier($event)"
+				(clear)="clearSupplier()"
+				>
+				</app-select-material-supplier>
+				 
+			</div>	
+
+
 			<!-- <h4 style="margin-top:0px !important;">Material  </h4>	 -->
 			<div *ngIf="!newMaterial" fxLayout="column" style="margin-bottom:30px;" fxLayoutGap="20px" fxLayoutAlign="start center" >
 				
@@ -88,7 +103,7 @@
 						
 						  <mat-form-field class="full-width" fxFlex>
 							  <input   #Cas type="text" matInput placeholder="CAS #" [(ngModel)] ='material.cas'  [ngModelOptions]="{standalone: true}" name="cas"  [disabled]="!creatingMaterial" >
-							  <mat-hint> Optional |  Enter multiple CAS numbers delimited with a comma. Eg;  78954-4546-45,4775-45-54,456-5876-45 </mat-hint>
+							  <mat-hint> Optional |  Eg: 78954-4546-45,4775-45-54,456-5876-45 - Do not use words </mat-hint>
 						 </mat-form-field>
 						 
 					</div>
@@ -97,20 +112,20 @@
 					
 				 
 						<mat-form-field class="full-width" fxFlex>
-							<input #Nomenclature  type="text" matInput placeholder="Formula / Chemical Name" [(ngModel)] ='material.formula' [ngModelOptions]="{standalone: true}" name="formula" [disabled]="!creatingMaterial" >
-							  <mat-hint> Optional </mat-hint>
+							<input #Nomenclature  type="text" matInput placeholder="Molecular Formula" [(ngModel)] ='material.formula' [ngModelOptions]="{standalone: true}" name="formula" [disabled]="!creatingMaterial" >
+							  <mat-hint> Optional | Eg: Mo2C, TaO3, H2O  </mat-hint>
 					  </mat-form-field>  
 					
 
 						 <mat-form-field class="full-width" fxFlex>
 							  <input #Density type="text" matInput placeholder="Density (g/ml)" [(ngModel)] ='material.density' [ngModelOptions]="{standalone: true}" name="density"   [disabled]="!creatingMaterial">
-							  <mat-hint> Optional </mat-hint>
+							  <mat-hint> Optional | Eg:  2.95 kg/m3 </mat-hint>
 						 </mat-form-field> 
 
 						 
 						 <mat-form-field class="full-width" fxFlex>
-							  <input #FormulaWeight type="text" matInput placeholder="Formula Wight" [(ngModel)] ='material.formula_weight' [ngModelOptions]="{standalone: true}" name="formula_weight"   [disabled]="!creatingMaterial">
-							  <mat-hint> Optional </mat-hint>
+							  <input #FormulaWeight type="text" matInput placeholder="Formula Weight" [(ngModel)] ='material.formula_weight' [ngModelOptions]="{standalone: true}" name="formula_weight"   [disabled]="!creatingMaterial">
+							  <mat-hint> Optional | Eg:  192.8 g/mol</mat-hint>
 						 </mat-form-field> 
 					</div>
 			</div>
@@ -181,9 +196,9 @@
 					<mat-form-field  fxFlex>
 						<input  #ContainerName  
 						formControlName="thirdCtrl"  [ngModelOptions]="{standalone: true}"
-						type="text" matInput placeholder="Container Name" [(ngModel)] ='container.container_name' 
+						type="text" matInput placeholder="Nickname" [(ngModel)] ='container.container_name' 
 						name="container_name" >
-						<mat-hint>Optional: eg. "Robert's Chinese Tungsten"</mat-hint>
+						<mat-hint>Optional | eg. "Robert's Chinese Tungsten", "Ryan's Homemade Manganese"</mat-hint>
 					</mat-form-field>  
 				</div>
 		

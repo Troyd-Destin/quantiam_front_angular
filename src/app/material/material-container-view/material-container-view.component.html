@@ -4,25 +4,45 @@
 	
 </div>
 
-<div *ngIf="container && container.hasOwnProperty('id')" fxLayout="column" style='height:100%;' fxLayoutGap="10px" fxLayoutAlign="start start">
+<div *ngIf="container && container.hasOwnProperty('id')" fxLayout="column" style='height:100%; margin-top:20px;' fxLayoutGap="10px" fxLayoutAlign="start start">
 
-	<!-- <div *ngIf="container.xrd_runs[0]"> -->
-	<div >
-		<mat-button-toggle-group  value='container'class="mat-elevation-z1"  >
-				<mat-button-toggle value="container" [routerLink]="['/material/container',container.id]"> Container </mat-button-toggle>
-				<mat-button-toggle value="log" [routerLink]="['/material/container',container.id,'log']"> Log </mat-button-toggle>
-				<mat-button-toggle value="analysis" [routerLink]="['/material/container',container.id,'analysis']"  > Analysis </mat-button-toggle>
-			
+	
+
+
+<div fxLayoutGap="20px"  fxLayout.gt-lg="row wrap" style="height:100%;" fxLayout="column" fxLayoutAlign="start stretch">
+		
+		
+	<div id="left column" fxLayout="column" fxFlex fxLayoutGap="10px">
+
+
+					<!-- <div *ngIf="container.xrd_runs[0]"> -->
+			<div fxLayoutGap="20px">
 				
-				</mat-button-toggle-group>
-	</div> 
+				<button *ngIf="container?.sem_runs[0]" mat-raised-button [matMenuTriggerFor]="semMenu"  [matBadge]="container.sem_runs.length">SEM Analysis</button>
+				
+				<button   *ngIf="container?.xrd_runs[0]" [matBadge]="container.xrd_runs.length" mat-raised-button [matMenuTriggerFor]="xrdMenu"> XRD Analysis </button>
+				<button *ngIf="container?.particle_size[0]" [matBadge]="container.particle_size.length"  mat-raised-button [matMenuTriggerFor]="particleMenu"> Particle Size Analysis </button>
 
 
+				<mat-menu #semMenu="matMenu">
+					<button *ngFor="let semrun of container.sem_runs" mat-menu-item [routerLink]="['/sem/run/', semrun.semrun_id]"> <b> {{semrun.semrun_id}} </b> - {{semrun.samplename}} </button> 
+				</mat-menu>	
 
-	<div fxLayoutGap="20px"  fxLayout.gt-lg="row wrap" style="height:100%;" fxLayout="column" fxLayoutAlign="start stretch">
-		
-		
-		<div id="left column" fxLayout="column" fxFlex fxLayoutGap="10px">
+				<mat-menu #xrdMenu="matMenu">
+					<div *ngFor="let xrdrun of container.xrd_runs" >
+						<button *ngFor="let analysis of xrdrun.xrd_analysis"  mat-menu-item [routerLink]="['/xrd/analysis', analysis.id]">  <b>{{xrdrun.name}} </b> - {{analysis.name}} </button> 
+					</div>
+					
+				</mat-menu>	
+				
+				<mat-menu #particleMenu="matMenu">
+					<button *ngFor="let particlerun of container.particle_size" mat-menu-item [routerLink]="['/particle-size/analysis/', particlerun.id]"> <b> {{particlerun.id}} </b> </button> 
+				
+				</mat-menu>
+
+
+			</div> 
+
 
 			<mat-card id="material card" class="quantiam-mat-card" style="padding-bottom:10px !important;"   >
 						<mat-card-title style="margin:0px"  >
@@ -87,7 +107,7 @@
 							
 							
 							<mat-form-field class="full-width" fxFlex>
-								<input #Nomenclature [disabled]="!editMaterial" (change)="updateMaterial(Nomenclature)" type="text" matInput placeholder="Formula / Chemical Name" [(ngModel)] ='container.lot.material.formula' name="formula" >
+								<input #Nomenclature [disabled]="!editMaterial" (change)="updateMaterial(Nomenclature)" type="text" matInput placeholder="Molecular Formula" [(ngModel)] ='container.lot.material.formula' name="formula" >
 								<mat-hint> "CrO2","MnO2","W","NaCl" </mat-hint>
 							</mat-form-field>  
 							
@@ -221,7 +241,7 @@
 						</div>
 					
 							<mat-form-field class="full-width" fxFlex=15>
-									<input  #ContainerName (change)="updateContainerField(ContainerName)" [disabled]="!editContainer"   type="text" matInput placeholder="Container Name " [(ngModel)] ='container.container_name' name="container_name" >
+									<input  #ContainerName (change)="updateContainerField(ContainerName)" [disabled]="!editContainer"   type="text" matInput placeholder="Container Nickname" [(ngModel)] ='container.container_name' name="container_name" >
 									<mat-hint> Optional </mat-hint>
 								</mat-form-field >  
 								<mat-form-field fxFlex=10>

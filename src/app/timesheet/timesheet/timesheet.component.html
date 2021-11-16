@@ -198,13 +198,13 @@
       </div>
 
       <div fxFlex fxLayout="column">
-          <h3 class="page-header" *ngIf="timeSheetObj.overhours[0]">Overtime 
+          <h3 class="page-header" *ngIf="timeSheetObj?.overhours[0]">Overtime 
           <small>
             
               <a style="float:right" target="_blank" href="https://work.alberta.ca/documents/Overtime-Hours-and-Overtime-Pay.pdf">Overtime Explanation</a>
           </small> 
           </h3>
-          <table *ngIf="timeSheetObj.overhours[0]" class="stattable table table-stats table-condensed table-striped table-shadow"> 
+          <table *ngIf="timeSheetObj?.overhours[0]" class="stattable table table-stats table-condensed table-striped table-shadow"> 
             <thead> 
                 <tr>
                   <th> Week </th>
