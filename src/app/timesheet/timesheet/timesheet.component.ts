@@ -222,7 +222,7 @@ export class TimesheetComponent implements OnInit {
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    setTimeout( (x)=>{params.api.sizeColumnsToFit()},1000);
+    setTimeout( (x)=>{params.api.sizeColumnsToFit()},2000);
 
   }
 
