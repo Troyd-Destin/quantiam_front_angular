@@ -61,7 +61,7 @@
     "highcharts-angular": "^2.4.0",
     "jquery": "^3.4.1",
     "ml-savitzky-golay": "^4.1.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "ng-http-loader": "^6.*",
     "ng2-select2": "^1.0.0-beta.16",
     "ngx-cacheable": "^1.3.2",
